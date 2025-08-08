@@ -1,0 +1,154 @@
+"use client"
+
+import { FileInput } from "@/components/form/file-input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
+
+export default function FileInputDocs() {
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
+
+  return (
+    <div className="container mx-auto py-8 max-w-4xl">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold mb-4">File Input</h1>
+        <p className="text-lg text-muted-foreground mb-4">
+          A file upload component with drag and drop support and file preview.
+        </p>
+        <Badge variant="secondary">Form Component</Badge>
+      </div>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Installation</CardTitle>
+          <CardDescription>Install the File Input component via CLI</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-muted p-4 rounded-md">
+            <code className="text-sm">npx shadcn@latest add https://ui-components.dev/file-input</code>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Usage</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-muted p-4 rounded-md mb-4">
+            <code className="text-sm">
+              {`import { FileInput } from "@/components/form/file-input"`}
+            </code>
+          </div>
+          <div className="bg-muted p-4 rounded-md">
+            <code className="text-sm">
+              {`<FileInput onFileSelect={(files) => console.log(files)} />`}
+            </code>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Examples</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Default</h3>
+            <FileInput />
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-2">With Label</h3>
+            <div className="space-y-2">
+              <Label>Upload Document</Label>
+              <FileInput />
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-2">With File Preview</h3>
+            <FileInput 
+              showPreview 
+              onFileSelect={setSelectedFiles}
+            />
+            {selectedFiles && (
+              <p className="text-sm text-muted-foreground mt-2">
+                Selected {selectedFiles.length} file(s)
+              </p>
+            )}
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Image Only</h3>
+            <FileInput 
+              accept="image/*"
+              showPreview
+            />
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Multiple Files</h3>
+            <FileInput 
+              multiple
+              showPreview
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Props</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-border">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left p-2 font-semibold">Prop</th>
+                  <th className="text-left p-2 font-semibold">Type</th>
+                  <th className="text-left p-2 font-semibold">Default</th>
+                  <th className="text-left p-2 font-semibold">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="p-2 font-mono text-sm">onFileSelect</td>
+                  <td className="p-2">function</td>
+                  <td className="p-2">-</td>
+                  <td className="p-2">Callback when files are selected</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-2 font-mono text-sm">showPreview</td>
+                  <td className="p-2">boolean</td>
+                  <td className="p-2">false</td>
+                  <td className="p-2">Whether to show file preview</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-2 font-mono text-sm">accept</td>
+                  <td className="p-2">string</td>
+                  <td className="p-2">-</td>
+                  <td className="p-2">File types to accept</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-2 font-mono text-sm">multiple</td>
+                  <td className="p-2">boolean</td>
+                  <td className="p-2">false</td>
+                  <td className="p-2">Allow multiple file selection</td>
+                </tr>
+                <tr>
+                  <td className="p-2 font-mono text-sm">className</td>
+                  <td className="p-2">string</td>
+                  <td className="p-2">-</td>
+                  <td className="p-2">Additional CSS classes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
