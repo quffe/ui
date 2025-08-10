@@ -1,4 +1,4 @@
-import { Input } from "@/components/form/input"
+import { Input } from "@/components/Form/Input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,7 +61,7 @@ export default function InputDocs() {
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
                 <code className="text-sm">
-                  {`import { Input } from "@/components/form/input"`}
+                  {`import { Input } from "@/components/Form/Input"`}
                 </code>
               </div>
               <div className="bg-muted p-4 rounded-md">

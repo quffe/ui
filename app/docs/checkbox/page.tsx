@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/form/checkbox"
+import { Checkbox } from "@/components/Form/Checkbox"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
@@ -32,7 +32,7 @@ export default function CheckboxDocs() {
         <CardContent>
           <div className="bg-muted p-4 rounded-md mb-4">
             <code className="text-sm">
-              {`import { Checkbox } from "@/components/form/checkbox"`}
+              {`import { Checkbox } from "@/components/Form/Checkbox"`}
             </code>
           </div>
           <div className="bg-muted p-4 rounded-md">

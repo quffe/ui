@@ -1,4 +1,4 @@
-import { Select } from "@/components/form/select"
+import { Select } from "@/components/Form/Select"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -33,7 +33,7 @@ export default function SelectDocs() {
         <CardContent>
           <div className="bg-muted p-4 rounded-md mb-4">
             <code className="text-sm">
-              {`import { Select } from "@/components/form/select"`}
+              {`import { Select } from "@/components/Form/Select"`}
             </code>
           </div>
           <div className="bg-muted p-4 rounded-md">

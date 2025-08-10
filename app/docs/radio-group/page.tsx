@@ -1,6 +1,6 @@
 "use client"
 
-import { RadioGroup } from "@/components/form/radio-group"
+import { RadioGroup } from "@/components/Form/RadioGroup"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -54,7 +54,7 @@ export default function RadioGroupDocs() {
         <CardContent>
           <div className="bg-muted p-4 rounded-md mb-4">
             <code className="text-sm">
-              {`import { RadioGroup } from "@/components/form/radio-group"`}
+              {`import { RadioGroup } from "@/components/Form/RadioGroup"`}
             </code>
           </div>
           <div className="bg-muted p-4 rounded-md">

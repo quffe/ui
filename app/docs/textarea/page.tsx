@@ -1,4 +1,4 @@
-import { Textarea } from "@/components/form/textarea"
+import { Textarea } from "@/components/Form/Textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,7 +61,7 @@ export default function TextareaDocs() {
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
                 <code className="text-sm">
-                  {`import { Textarea } from "@/components/form/textarea"`}
+                  {`import { Textarea } from "@/components/Form/Textarea"`}
                 </code>
               </div>
               <div className="bg-muted p-4 rounded-md">

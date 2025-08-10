@@ -1,6 +1,6 @@
 "use client"
 
-import { FileInput } from "@/components/form/file-input"
+import { FileInput } from "@/components/Form/FileInput"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -38,7 +38,7 @@ export default function FileInputDocs() {
         <CardContent>
           <div className="bg-muted p-4 rounded-md mb-4">
             <code className="text-sm">
-              {`import { FileInput } from "@/components/form/file-input"`}
+              {`import { FileInput } from "@/components/Form/FileInput"`}
             </code>
           </div>
           <div className="bg-muted p-4 rounded-md">

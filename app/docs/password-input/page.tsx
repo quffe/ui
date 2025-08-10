@@ -1,4 +1,4 @@
-import { PasswordInput } from "@/components/form/password-input"
+import { PasswordInput } from "@/components/Form/PasswordInput"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -62,7 +62,7 @@ export default function PasswordInputDocs() {
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
                 <code className="text-sm">
-                  {`import { PasswordInput } from "@/components/form/password-input"`}
+                  {`import { PasswordInput } from "@/components/Form/PasswordInput"`}
                 </code>
               </div>
               <div className="bg-muted p-4 rounded-md">

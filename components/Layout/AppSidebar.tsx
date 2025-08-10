@@ -3,7 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { FileText, Home, Type, Lock, AlignLeft, ChevronDown, CheckSquare, Circle, Upload, Search } from 'lucide-react'
+import { FileText, Home, Type, Lock, AlignLeft, ChevronDown, CheckSquare, Circle, Upload, Search, Table, DollarSign, Hash, Calendar, SquareStack, Menu, MousePointer, List, Navigation } from 'lucide-react'
 
 import {
   Sidebar,
@@ -22,47 +22,123 @@ import {
 import { Label } from "@/components/ui/label"
 
 const components = [
+  // Data Components
+  {
+    title: "DataTable",
+    url: "/docs/data-table",
+    icon: Table,
+    description: "Powerful data table with sorting and pagination",
+    category: "Data"
+  },
+  // Input Components
+  {
+    title: "InputAmount",
+    url: "/docs/input-amount",
+    icon: DollarSign,
+    description: "Specialized input for monetary amounts",
+    category: "Input"
+  },
+  {
+    title: "OtpInput",
+    url: "/docs/otp-input",
+    icon: Hash,
+    description: "One-time password input with multiple fields",
+    category: "Input"
+  },
+  {
+    title: "DateRangePicker",
+    url: "/docs/date-range-picker",
+    icon: Calendar,
+    description: "Date range picker with presets",
+    category: "Input"
+  },
+  // Layout Components
+  {
+    title: "AppSidebar",
+    url: "/docs/app-sidebar",
+    icon: Menu,
+    description: "Application sidebar with search and navigation",
+    category: "Layout"
+  },
+  // Modal Components
+  {
+    title: "Modal",
+    url: "/docs/modal",
+    icon: SquareStack,
+    description: "Flexible modal component with customizable sizing",
+    category: "Modal"
+  },
+  // Navigation Components
+  {
+    title: "Dropdown",
+    url: "/docs/dropdown",
+    icon: ChevronDown,
+    description: "Searchable dropdown with Command and Popover",
+    category: "Navigation"
+  },
+  {
+    title: "InputSelect",
+    url: "/docs/input-select",
+    icon: List,
+    description: "Type-safe select input with labels and validation",
+    category: "Navigation"
+  },
+  {
+    title: "SelectDropdown",
+    url: "/docs/select-dropdown",
+    icon: MousePointer,
+    description: "Custom dropdown with keyboard navigation",
+    category: "Navigation"
+  },
+  // Legacy/Basic Components
   {
     title: "Input",
     url: "/docs/input",
     icon: Type,
-    description: "Basic text input field"
+    description: "Basic text input field",
+    category: "Basic"
   },
   {
     title: "Password Input",
     url: "/docs/password-input",
     icon: Lock,
-    description: "Password input with toggle"
+    description: "Password input with toggle",
+    category: "Basic"
   },
   {
     title: "Textarea",
     url: "/docs/textarea",
     icon: AlignLeft,
-    description: "Multi-line text input"
+    description: "Multi-line text input",
+    category: "Basic"
   },
   {
     title: "Select",
     url: "/docs/select",
     icon: ChevronDown,
-    description: "Dropdown select component"
+    description: "Dropdown select component",
+    category: "Basic"
   },
   {
     title: "Checkbox",
     url: "/docs/checkbox",
     icon: CheckSquare,
-    description: "Checkbox with label"
+    description: "Checkbox with label",
+    category: "Basic"
   },
   {
     title: "Radio Group",
     url: "/docs/radio-group",
     icon: Circle,
-    description: "Radio button group"
+    description: "Radio button group",
+    category: "Basic"
   },
   {
     title: "File Input",
     url: "/docs/file-input",
     icon: Upload,
-    description: "File upload component"
+    description: "File upload component",
+    category: "Basic"
   }
 ]
 
@@ -74,6 +150,16 @@ export function AppSidebar() {
     component.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     component.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  // Group components by category
+  const groupedComponents = filteredComponents.reduce((acc, component) => {
+    const category = component.category || 'Other'
+    if (!acc[category]) {
+      acc[category] = []
+    }
+    acc[category].push(component)
+    return acc
+  }, {} as Record<string, typeof components>)
 
   return (
     <Sidebar>
@@ -124,23 +210,25 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Components</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {filteredComponents.map((component) => (
-                <SidebarMenuItem key={component.title}>
-                  <SidebarMenuButton asChild isActive={pathname === component.url}>
-                    <Link href={component.url}>
-                      <component.icon className="size-4" />
-                      <span>{component.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+{Object.entries(groupedComponents).map(([category, categoryComponents]) => (
+          <SidebarGroup key={category}>
+            <SidebarGroupLabel>{category} Components</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {categoryComponents.map((component) => (
+                  <SidebarMenuItem key={component.title}>
+                    <SidebarMenuButton asChild isActive={pathname === component.url}>
+                      <Link href={component.url}>
+                        <component.icon className="size-4" />
+                        <span>{component.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
 
         {searchQuery && filteredComponents.length === 0 && (
           <SidebarGroup>
