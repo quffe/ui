@@ -1,0 +1,18 @@
+{
+  "name": "modal-trigger",
+  "type": "registry:ui",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "button",
+    "modal"
+  ],
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "ui/modal-trigger.tsx",
+      "content": "'use client'\n\nimport * as React from 'react'\nimport type { VariantProps } from 'class-variance-authority'\n\nimport { Button, type ButtonProps } from '@/components/ui/button'\nimport { Modal, type ModalProps } from './Modal'\n\ninterface ModalTriggerProps\n  extends Omit<ModalProps, 'open' | 'onClose' | 'children'>,\n    Omit<VariantProps<typeof Button>, 'size'> {\n  trigger: React.ReactNode\n  children?: React.ReactNode\n  renderContent?: (props: { onClose: () => void }) => React.ReactNode\n  buttonProps?: ButtonProps\n  passCloseToChildren?: boolean\n  onOpen?: () => void\n  onClose?: () => void\n}\n\nexport function ModalTrigger({\n  trigger,\n  children,\n  title,\n  description,\n  position,\n  size,\n  showCloseButton,\n  closeOnOutsideClick,\n  closeOnEsc,\n  className,\n  contentClassName,\n  buttonProps,\n  renderContent,\n  onOpen,\n  onClose,\n}: ModalTriggerProps) {\n  const [open, setOpen] = React.useState(false)\n\n  const handleOpen = React.useCallback(() => {\n    setOpen(true)\n    onOpen?.()\n  }, [onOpen])\n\n  const handleClose = React.useCallback(() => {\n    setOpen(false)\n    onClose?.()\n  }, [onClose])\n\n  // Render children with onClose prop if needed\n  const renderChildren = () => {\n    if (renderContent) {\n      return renderContent({ onClose: handleClose })\n    }\n\n    // Default: render children as-is\n    return children\n  }\n\n  return (\n    <>\n      {React.isValidElement(trigger) ? (\n        React.cloneElement(\n          trigger as React.ReactElement<{ onClick?: () => void }>,\n          {\n            onClick: handleOpen,\n          }\n        )\n      ) : (\n        <Button onClick={handleOpen} {...buttonProps}>\n          {trigger}\n        </Button>\n      )}\n      <Modal\n        open={open}\n        onClose={handleClose}\n        title={title}\n        description={description}\n        position={position}\n        size={size}\n        showCloseButton={showCloseButton}\n        closeOnOutsideClick={closeOnOutsideClick}\n        closeOnEsc={closeOnEsc}\n        className={className}\n        contentClassName={contentClassName}\n      >\n        {renderChildren()}\n      </Modal>\n    </>\n  )\n}\n\n ModalTrigger.displayName = 'ModalTrigger'"
+    }
+  ]
+}

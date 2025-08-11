@@ -13,6 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/InstallationTabs"
 import { useState } from "react"
 
 export default function InputAmountDocs() {
@@ -50,12 +51,10 @@ export default function InputAmountDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Import the InputAmount component</CardDescription>
+              <CardDescription>Install the InputAmount component using your preferred package manager</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">import {`{ InputAmount }`} from "@/components/Input"</code>
-              </div>
+              <InstallationTabs componentName="input-amount" />
             </CardContent>
           </Card>
 

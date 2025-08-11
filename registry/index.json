@@ -1,0 +1,65 @@
+[
+  {
+    "name": "data-table",
+    "type": "registry:ui",
+    "description": "A powerful data table with sorting, filtering, and pagination",
+    "dependencies": ["@tanstack/react-table", "lucide-react"],
+    "registryDependencies": ["button", "table"]
+  },
+  {
+    "name": "input-amount",
+    "type": "registry:ui", 
+    "description": "Specialized input for monetary amounts with currency support",
+    "dependencies": [],
+    "registryDependencies": ["input", "label"]
+  },
+  {
+    "name": "otp-input",
+    "type": "registry:ui",
+    "description": "One-time password input with multiple fields",
+    "dependencies": [],
+    "registryDependencies": ["input"]
+  },
+  {
+    "name": "date-range-picker",
+    "type": "registry:ui",
+    "description": "Date range picker with presets and dual calendar view",
+    "dependencies": ["lucide-react", "react-day-picker", "date-fns"],
+    "registryDependencies": ["button", "calendar", "popover"]
+  },
+  {
+    "name": "modal",
+    "type": "registry:ui",
+    "description": "Flexible modal component with customizable sizing",
+    "dependencies": ["lucide-react", "class-variance-authority"],
+    "registryDependencies": ["button"]
+  },
+  {
+    "name": "dropdown",
+    "type": "registry:ui",
+    "description": "Searchable dropdown with Command and Popover primitives",
+    "dependencies": ["lucide-react"],
+    "registryDependencies": ["button", "command", "popover"]
+  },
+  {
+    "name": "select-dropdown",
+    "type": "registry:ui",
+    "description": "Custom dropdown with keyboard navigation",
+    "dependencies": ["lucide-react", "class-variance-authority"],
+    "registryDependencies": ["button"]
+  },
+  {
+    "name": "app-sidebar",
+    "type": "registry:ui", 
+    "description": "Application sidebar with navigation and search",
+    "dependencies": ["lucide-react", "next"],
+    "registryDependencies": ["sidebar", "label"]
+  },
+  {
+    "name": "modal-trigger",
+    "type": "registry:ui",
+    "description": "Modal trigger component with button integration",
+    "dependencies": ["class-variance-authority"],
+    "registryDependencies": ["button", "modal"]
+  }
+]

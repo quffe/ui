@@ -13,6 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/InstallationTabs"
 
 export default function AppSidebarDocs() {
   return (
@@ -46,12 +47,10 @@ export default function AppSidebarDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Import the AppSidebar component</CardDescription>
+              <CardDescription>Install the component using your preferred package manager</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">import {`{ AppSidebar }`} from "@/components/Layout"</code>
-              </div>
+              <InstallationTabs componentName="app-sidebar" />
             </CardContent>
           </Card>
 

@@ -13,6 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/InstallationTabs"
 import { useState } from "react"
 import type { DateRange } from "react-day-picker"
 
@@ -54,12 +55,10 @@ export default function DateRangePickerDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Import the DateRangePicker component</CardDescription>
+              <CardDescription>Install the component using your preferred package manager</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">import {`{ DateRangePicker }`} from "@/components/Input"</code>
-              </div>
+              <InstallationTabs componentName="date-range-picker" />
             </CardContent>
           </Card>
 

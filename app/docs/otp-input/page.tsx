@@ -13,6 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/InstallationTabs"
 import { useState } from "react"
 
 export default function OtpInputDocs() {
@@ -51,12 +52,10 @@ export default function OtpInputDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Import the OtpInput component</CardDescription>
+              <CardDescription>Install the component using your preferred package manager</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">import {`{ OtpInput }`} from "@/components/Input"</code>
-              </div>
+              <InstallationTabs componentName="otp-input" />
             </CardContent>
           </Card>
 

@@ -1,0 +1,19 @@
+{
+  "name": "dropdown",
+  "type": "registry:ui",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "command",
+    "popover"
+  ],
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "ui/dropdown.tsx",
+      "content": "'use client'\n\nimport * as React from 'react'\nimport { Check, ChevronDown } from 'lucide-react'\n\nimport { cn } from '@/lib/utils'\nimport { Button } from '@/components/ui/button'\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from '@/components/ui/command'\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover'\n\nexport interface DropdownOption {\n  value: string\n  label: string\n  disabled?: boolean\n}\n\ninterface DropdownProps {\n  value?: string\n  options: DropdownOption[]\n  onChange?: (value: string) => void\n  placeholder?: string\n  searchable?: boolean\n  className?: string\n  disabled?: boolean\n}\n\nexport function Dropdown({\n  value,\n  options,\n  onChange,\n  placeholder = 'Select an option...',\n  searchable = false,\n  className,\n  disabled = false,\n}: DropdownProps) {\n  const [open, setOpen] = React.useState(false)\n\n  const selectedOption = options.find((option) => option.value === value)\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger asChild>\n        <Button\n          variant=\"outline\"\n          role=\"combobox\"\n          aria-expanded={open}\n          className={cn('w-full justify-between', className)}\n          disabled={disabled}\n        >\n          {selectedOption ? selectedOption.label : placeholder}\n          <ChevronDown className=\"ml-2 h-4 w-4 shrink-0 opacity-50\" />\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className=\"w-full p-0\" align=\"start\">\n        <Command>\n          {searchable && <CommandInput placeholder=\"Search options...\" />}\n          <CommandList>\n            <CommandEmpty>No option found.</CommandEmpty>\n            <CommandGroup>\n              {options.map((option) => (\n                <CommandItem\n                  key={option.value}\n                  value={option.value}\n                  disabled={option.disabled}\n                  onSelect={(currentValue) => {\n                    if (currentValue !== value) {\n                      onChange?.(currentValue)\n                    }\n                    setOpen(false)\n                  }}\n                >\n                  <Check\n                    className={cn(\n                      'mr-2 h-4 w-4',\n                      value === option.value ? 'opacity-100' : 'opacity-0'\n                    )}\n                  />\n                  {option.label}\n                </CommandItem>\n              ))}\n            </CommandGroup>\n          </CommandList>\n        </Command>\n      </PopoverContent>\n    </Popover>\n  )\n}"
+    }
+  ]
+}

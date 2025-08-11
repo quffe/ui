@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/InstallationTabs"
 import { useState } from "react"
 
 export default function ModalDocs() {
@@ -52,12 +53,10 @@ export default function ModalDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Import the Modal component</CardDescription>
+              <CardDescription>Install the component using your preferred package manager</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">import {`{ Modal }`} from "@/components/Modal"</code>
-              </div>
+              <InstallationTabs componentName="modal" />
             </CardContent>
           </Card>
 

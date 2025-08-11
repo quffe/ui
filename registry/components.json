@@ -1,0 +1,49 @@
+{
+  "$schema": "./schema.json",
+  "name": "ui-components",
+  "description": "A comprehensive collection of reusable UI components",
+  "url": "https://ui-components.dev",
+  "author": {
+    "name": "ui-components",
+    "url": "https://ui-components.dev"
+  },
+  "license": "MIT",
+  "dependencies": [
+    "@radix-ui/react-avatar",
+    "@radix-ui/react-dialog", 
+    "@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-label",
+    "@radix-ui/react-popover",
+    "@radix-ui/react-select",
+    "@radix-ui/react-separator",
+    "@radix-ui/react-slot",
+    "@radix-ui/react-tooltip",
+    "@tanstack/react-table",
+    "class-variance-authority",
+    "clsx",
+    "cmdk",
+    "date-fns",
+    "lucide-react",
+    "react-day-picker",
+    "sonner",
+    "swr",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/react",
+    "@types/react-dom"
+  ],
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "app/globals.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
