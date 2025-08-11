@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { InstallationTabs } from "@/components/InstallationTabs"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -13,45 +14,83 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { config } from "@/lib/config"
+import { Terminal, CheckCircle, AlertCircle, Code, Package, Zap } from "lucide-react"
+import Link from "next/link"
 
-const components = [
+const steps = [
+  {
+    title: "Prerequisites",
+    description: "Make sure you have a React project set up",
+    icon: CheckCircle,
+    color: "text-green-500"
+  },
+  {
+    title: "Initialize Shadcn/UI",
+    description: "Set up shadcn/ui in your project",
+    icon: Terminal,
+    color: "text-blue-500"
+  },
+  {
+    title: "Install Components",
+    description: "Add components using the CLI",
+    icon: Package,
+    color: "text-purple-500"
+  },
+  {
+    title: "Start Building",
+    description: "Import and use components in your app",
+    icon: Zap,
+    color: "text-orange-500"
+  }
+]
+
+const frameworks = [
+  {
+    name: "Next.js",
+    command: "npx create-next-app@latest my-app --typescript --tailwind --eslint",
+    docs: "https://nextjs.org/docs"
+  },
+  {
+    name: "Vite",
+    command: "npm create vite@latest my-app -- --template react-ts",
+    docs: "https://vitejs.dev/guide/"
+  },
+  {
+    name: "Create React App",
+    command: "npx create-react-app my-app --template typescript",
+    docs: "https://create-react-app.dev/"
+  }
+]
+
+const exampleComponents = [
   {
     name: "data-table",
     title: "DataTable",
-    description: "A powerful data table with sorting, filtering, and pagination",
-    category: "Data",
+    description: "Perfect for displaying tabular data with sorting and pagination",
+    useCase: "Admin dashboards, user management, reports",
+    dependencies: ["@tanstack/react-table", "lucide-react"]
   },
   {
     name: "input-amount",
-    title: "InputAmount", 
-    description: "Specialized input for monetary amounts with currency support",
-    category: "Input",
+    title: "InputAmount",
+    description: "Handles monetary input with proper formatting",
+    useCase: "E-commerce, finance apps, payment forms",
+    dependencies: []
   },
   {
     name: "otp-input",
     title: "OtpInput",
-    description: "One-time password input with multiple fields",
-    category: "Input",
-  },
-  {
-    name: "date-range-picker",
-    title: "DateRangePicker",
-    description: "Date range picker with presets and dual calendar view",
-    category: "Input",
+    description: "One-time password input with keyboard navigation",
+    useCase: "Authentication, verification flows",
+    dependencies: []
   },
   {
     name: "modal",
     title: "Modal",
-    description: "Flexible modal component with customizable sizing",
-    category: "Modal",
-  },
-  {
-    name: "dropdown",
-    title: "Dropdown",
-    description: "Searchable dropdown with Command and Popover primitives",
-    category: "Navigation",
-  },
+    description: "Flexible modal with multiple size and position options",
+    useCase: "Confirmations, forms, detailed views",
+    dependencies: ["lucide-react", "class-variance-authority"]
+  }
 ]
 
 export default function InstallationPage() {
@@ -63,7 +102,7 @@ export default function InstallationPage() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              <BreadcrumbLink href="/">Introduction</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -72,129 +111,262 @@ export default function InstallationPage() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
+        <div className="container mx-auto max-w-5xl">
+          {/* Header */}
+          <div className="mb-12">
             <h1 className="text-4xl font-bold mb-4">Installation</h1>
-            <p className="text-lg text-muted-foreground mb-4">
-              Install components directly using the Shadcn CLI with dynamic URLs based on your environment.
+            <p className="text-xl text-muted-foreground mb-6">
+              Get started with our component library in minutes. Choose your setup method and start building.
             </p>
+            <div className="flex gap-3">
+              <Link href="#quick-start">
+                <Button>Quick Start</Button>
+              </Link>
+              <Link href="/components">
+                <Button variant="outline">Browse Components</Button>
+              </Link>
+            </div>
           </div>
 
-          <Card className="mb-8">
+          {/* Installation Steps */}
+          <Card className="mb-12">
             <CardHeader>
-              <CardTitle>Environment Configuration</CardTitle>
-              <CardDescription>Current registry URL based on environment variables</CardDescription>
+              <CardTitle className="text-2xl">Installation Process</CardTitle>
+              <CardDescription>Follow these steps to set up the component library</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">Registry URL</Badge>
-                  <code className="text-sm bg-muted px-2 py-1 rounded">
-                    {config.registry.baseUrl}
-                  </code>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline">Environment</Badge>
-                  <code className="text-sm bg-muted px-2 py-1 rounded">
-                    {config.isDev ? 'development' : 'production'}
-                  </code>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Quick Start</CardTitle>
-              <CardDescription>Prerequisites and setup</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="font-semibold mb-2">1. Initialize Shadcn UI in your project</h3>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm">pnpm dlx shadcn@latest init</code>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                {steps.map((step, index) => (
+                  <div key={step.title} className="text-center">
+                    <div className="mb-4 flex items-center justify-center">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-background border-2 border-muted">
+                        <step.icon className={`h-6 w-6 ${step.color}`} />
+                      </div>
+                    </div>
+                    <h3 className="font-semibold mb-2">{index + 1}. {step.title}</h3>
+                    <p className="text-sm text-muted-foreground">{step.description}</p>
                   </div>
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">2. Install any component</h3>
-                  <InstallationTabs componentName="data-table" />
-                </div>
+                ))}
               </div>
             </CardContent>
           </Card>
 
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Available Components</h2>
-            
-            {components.reduce((acc, component) => {
-              const category = component.category
-              if (!acc[category]) {
-                acc[category] = []
-              }
-              acc[category].push(component)
-              return acc
-            }, {} as Record<string, typeof components>)}
-            
-            {Object.entries(
-              components.reduce((acc, component) => {
-                const category = component.category
-                if (!acc[category]) {
-                  acc[category] = []
-                }
-                acc[category].push(component)
-                return acc
-              }, {} as Record<string, typeof components>)
-            ).map(([category, categoryComponents]) => (
-              <div key={category}>
-                <h3 className="text-xl font-semibold mb-4 text-primary">{category} Components</h3>
-                <div className="grid gap-4">
-                  {categoryComponents.map((component) => (
-                    <Card key={component.name}>
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">{component.title}</CardTitle>
-                          <Badge variant="secondary">{category}</Badge>
-                        </div>
-                        <CardDescription>{component.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <InstallationTabs componentName={component.name} />
-                      </CardContent>
+          {/* Quick Start Section */}
+          <section id="quick-start" className="mb-12">
+            <h2 className="text-3xl font-bold mb-6">Quick Start</h2>
+
+            {/* Step 1: Project Setup */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-600">
+                    <CheckCircle className="h-5 w-5" />
+                  </div>
+                  Step 1: Set up your React project
+                </CardTitle>
+                <CardDescription>Choose your preferred framework</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-3">
+                  {frameworks.map((framework) => (
+                    <Card key={framework.name} className="p-4">
+                      <h4 className="font-semibold mb-2">{framework.name}</h4>
+                      <div className="bg-muted p-2 rounded text-sm font-mono mb-2">
+                        {framework.command}
+                      </div>
+                      <a href={framework.docs} target="_blank" rel="noopener noreferrer">
+                        <Button variant="link" size="sm" className="p-0 h-auto">
+                          Documentation →
+                        </Button>
+                      </a>
                     </Card>
                   ))}
                 </div>
-              </div>
-            ))}
-          </div>
+              </CardContent>
+            </Card>
 
-          <Card className="mt-8">
+            {/* Step 2: Shadcn Init */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                    <Terminal className="h-5 w-5" />
+                  </div>
+                  Step 2: Initialize Shadcn/UI
+                </CardTitle>
+                <CardDescription>Set up the shadcn/ui CLI and configuration</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-2">Navigate to your project directory and run:</p>
+                  <div className="bg-muted p-4 rounded-md">
+                    <code className="text-sm font-mono">pnpm dlx shadcn@latest init</code>
+                  </div>
+                </div>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-yellow-800">Note</p>
+                      <p className="text-sm text-yellow-700">
+                        This will create the necessary configuration files and install required dependencies.
+                        Answer the prompts to configure your project.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Step 3: Install Components */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+                    <Package className="h-5 w-5" />
+                  </div>
+                  Step 3: Install Components
+                </CardTitle>
+                <CardDescription>Add components using the Shadcn CLI</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-sm">Install any component from our registry:</p>
+                  <InstallationTabs componentName="data-table" />
+                  <p className="text-sm text-muted-foreground">
+                    The component will be installed to your <code className="bg-muted px-1 rounded">components/ui</code> directory.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Step 4: Usage */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-100 text-orange-600">
+                    <Code className="h-5 w-5" />
+                  </div>
+                  Step 4: Import and Use
+                </CardTitle>
+                <CardDescription>Start using components in your application</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-2">Import the component:</p>
+                  <div className="bg-muted p-3 rounded-md">
+                    <code className="text-sm font-mono">
+                      import {"{ DataTable }"} from "@/components/ui/data-table"
+                    </code>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm font-medium mb-2">Use it in your JSX:</p>
+                  <div className="bg-muted p-3 rounded-md">
+                    <code className="text-sm font-mono whitespace-pre-line">
+                      {`<DataTable
+  columns={columns}
+  data={data}
+  pageSize={10}
+/>`}
+                    </code>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Example Components */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-6">Popular Components</h2>
+            <p className="text-muted-foreground mb-6">
+              Start with these commonly used components to get familiar with the library.
+            </p>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {exampleComponents.map((component) => (
+                <Card key={component.name} className="h-full">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-lg">{component.title}</CardTitle>
+                    <CardDescription className="text-sm leading-relaxed">
+                      {component.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-1">USE CASES</p>
+                      <p className="text-sm">{component.useCase}</p>
+                    </div>
+
+                    {component.dependencies.length > 0 && (
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground mb-2">DEPENDENCIES</p>
+                        <div className="flex flex-wrap gap-1">
+                          {component.dependencies.map((dep) => (
+                            <Badge key={dep} variant="outline" className="text-xs">
+                              {dep}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <InstallationTabs componentName={component.name} />
+
+                    <Link href={`/docs/${component.name}`}>
+                      <Button variant="link" size="sm" className="p-0 h-auto">
+                        View Documentation →
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          {/* Troubleshooting */}
+          <Card>
             <CardHeader>
-              <CardTitle>Environment Variables</CardTitle>
-              <CardDescription>Configure your registry URLs</CardDescription>
+              <CardTitle>Troubleshooting</CardTitle>
+              <CardDescription>Common issues and solutions</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold mb-2">Development (.env.local)</h4>
-                  <div className="bg-muted p-3 rounded-md">
-                    <pre className="text-sm">
-{`NEXT_PUBLIC_REGISTRY_URL=http://localhost:3001/api/registry
-NEXT_PUBLIC_SITE_URL=http://localhost:3001`}
-                    </pre>
-                  </div>
+            <CardContent className="space-y-6">
+              <div>
+                <h4 className="font-semibold mb-2">Component not found</h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  If you get an error about a component not being found, make sure:
+                </p>
+                <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
+                  <li>You've initialized shadcn/ui with <code className="bg-muted px-1 rounded">pnpm dlx shadcn@latest init</code></li>
+                  <li>The component was installed successfully</li>
+                  <li>You're importing from the correct path</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-2">Missing dependencies</h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Some components require additional dependencies. Install them manually if needed:
+                </p>
+                <div className="bg-muted p-3 rounded-md">
+                  <code className="text-sm font-mono">
+                    pnpm install @tanstack/react-table lucide-react date-fns
+                  </code>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Production (.env.production)</h4>
-                  <div className="bg-muted p-3 rounded-md">
-                    <pre className="text-sm">
-{`NEXT_PUBLIC_REGISTRY_URL=https://your-domain.com/api/registry
-NEXT_PUBLIC_SITE_URL=https://your-domain.com`}
-                    </pre>
-                  </div>
-                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-2">Need help?</h4>
+                <p className="text-sm text-muted-foreground">
+                  Check the individual component documentation for specific usage examples and API details.
+                </p>
+                <Link href="/components">
+                  <Button variant="link" size="sm" className="p-0 h-auto mt-2">
+                    Browse All Components →
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>

@@ -3,7 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { FileText, Home, Type, Lock, AlignLeft, ChevronDown, CheckSquare, Circle, Upload, Search, Table, DollarSign, Hash, Calendar, SquareStack, Menu, MousePointer, List, Navigation } from 'lucide-react'
+import { FileText, Home, Download, Type, Lock, AlignLeft, ChevronDown, CheckSquare, Circle, Upload, Search, Table, DollarSign, Hash, Calendar, SquareStack, Menu, MousePointer, List, Navigation } from 'lucide-react'
 
 import {
   Sidebar,
@@ -169,7 +169,7 @@ export function AppSidebar() {
             <FileText className="size-4" />
           </div>
           <div className="flex flex-col gap-0.5 leading-none">
-            <span className="font-semibold">Form Components</span>
+            <span className="font-semibold">UI Components</span>
             <span className="text-xs">Documentation</span>
           </div>
         </div>
@@ -195,14 +195,30 @@ export function AppSidebar() {
       
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel>Getting Started</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname === "/"}>
                   <Link href="/">
                     <Home className="size-4" />
-                    <span>Home</span>
+                    <span>Introduction</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/installation"}>
+                  <Link href="/installation">
+                    <Download className="size-4" />
+                    <span>Installation</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/components"}>
+                  <Link href="/components">
+                    <SquareStack className="size-4" />
+                    <span>All Components</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
