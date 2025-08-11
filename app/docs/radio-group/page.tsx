@@ -14,7 +14,7 @@ export default function RadioGroupDocs() {
     { value: "credit", label: "Credit Card" },
     { value: "debit", label: "Debit Card" },
     { value: "paypal", label: "PayPal" },
-    { value: "bank", label: "Bank Transfer" }
+    { value: "bank", label: "Bank Transfer" },
   ]
 
   const sizeOptions = [
@@ -22,7 +22,7 @@ export default function RadioGroupDocs() {
     { value: "s", label: "Small" },
     { value: "m", label: "Medium" },
     { value: "l", label: "Large" },
-    { value: "xl", label: "Extra Large", disabled: true }
+    { value: "xl", label: "Extra Large", disabled: true },
   ]
 
   return (
@@ -42,7 +42,9 @@ export default function RadioGroupDocs() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">npx shadcn@latest add https://ui-components.dev/radio-group</code>
+            <code className="text-sm">
+              npx shadcn@latest add https://ui-components.dev/radio-group
+            </code>
           </div>
         </CardContent>
       </Card>
@@ -59,7 +61,7 @@ export default function RadioGroupDocs() {
           </div>
           <div className="bg-muted p-4 rounded-md">
             <pre className="text-sm">
-{`const options = [
+              {`const options = [
   { value: "option1", label: "Option 1" },
   { value: "option2", label: "Option 2" }
 ]
@@ -82,8 +84,8 @@ export default function RadioGroupDocs() {
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-2">Payment Method</h3>
-            <RadioGroup 
-              name="payment" 
+            <RadioGroup
+              name="payment"
               options={paymentOptions}
               value={selectedValue}
               onChange={setSelectedValue}
@@ -94,27 +96,23 @@ export default function RadioGroupDocs() {
               </p>
             )}
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">With Label</h3>
             <div className="space-y-2">
               <Label>Size</Label>
-              <RadioGroup 
-                name="size" 
+              <RadioGroup
+                name="size"
                 options={sizeOptions}
                 value={selectedSize}
                 onChange={setSelectedSize}
               />
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Disabled Group</h3>
-            <RadioGroup 
-              name="disabled" 
-              options={paymentOptions}
-              disabled
-            />
+            <RadioGroup name="disabled" options={paymentOptions} disabled />
           </div>
         </CardContent>
       </Card>

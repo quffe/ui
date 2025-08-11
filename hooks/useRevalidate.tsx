@@ -1,9 +1,9 @@
-import { useSWRConfig } from 'swr'
+import { useSWRConfig } from "swr"
 
 const useRevalidate = () => {
   const { mutate } = useSWRConfig()
   const revalidate = (urls: string[]) => {
-    urls.forEach((url) => {
+    urls.forEach(url => {
       mutate((key: { url: string }) => key.url === url)
     })
   }

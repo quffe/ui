@@ -1,37 +1,37 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 /**
  * A hook that runs an effect only once when the component mounts
- * 
+ *
  * This is useful when you need to ensure an effect runs exactly once,
  * even if the dependencies change or the component re-renders.
- * 
+ *
  * Features:
  * - Runs effect only on first mount
  * - Ignores dependency changes after first run
  * - Proper cleanup handling
  * - TypeScript support
- * 
+ *
  * @param effect - The effect function to run on mount
  * @param dependencies - Optional dependencies array (effect runs when these change on first render only)
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {
  *   useOnMountEffect(() => {
  *     console.log('This runs only once on mount')
- *     
+ *
  *     return () => {
  *       console.log('Cleanup on unmount')
  *     }
  *   })
- *   
+ *
  *   return <div>Component content</div>
  * }
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // With dependencies (still only runs once)
@@ -39,7 +39,7 @@ import * as React from 'react'
  *   useOnMountEffect(() => {
  *     fetchUserData(userId)
  *   }, [userId]) // userId is captured on mount, changes ignored
- *   
+ *
  *   return <div>User profile</div>
  * }
  * ```
@@ -56,7 +56,7 @@ export function useOnMountEffect(
       hasRunRef.current = true
       cleanupRef.current = effect()
     }
-    
+
     // Return cleanup function that calls the original cleanup
     return () => {
       if (cleanupRef.current) {
@@ -69,11 +69,11 @@ export function useOnMountEffect(
 
 /**
  * A hook that runs an effect only once on the first render, ignoring all dependencies
- * 
+ *
  * This is a stricter version of useOnMountEffect that completely ignores dependencies.
- * 
+ *
  * @param effect - The effect function to run on mount
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {
@@ -81,7 +81,7 @@ export function useOnMountEffect(
  *     // This runs exactly once, no matter what
  *     initializeApp()
  *   })
- *   
+ *
  *   return <div>App content</div>
  * }
  * ```
@@ -95,7 +95,7 @@ export function useStrictMountEffect(effect: React.EffectCallback): void {
       hasRunRef.current = true
       cleanupRef.current = effect()
     }
-    
+
     return () => {
       if (cleanupRef.current) {
         cleanupRef.current()
@@ -107,31 +107,31 @@ export function useStrictMountEffect(effect: React.EffectCallback): void {
 
 /**
  * A hook that tracks whether the component has mounted
- * 
+ *
  * Useful for conditional rendering or effects that should only run after mount.
- * 
+ *
  * @returns boolean indicating if the component has mounted
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {
  *   const hasMounted = useHasMounted()
- *   
+ *
  *   if (!hasMounted) {
  *     return <div>Loading...</div>
  *   }
- *   
+ *
  *   return <div>Component is mounted!</div>
  * }
  * ```
  */
 export function useHasMounted(): boolean {
   const [hasMounted, setHasMounted] = React.useState(false)
-  
+
   React.useEffect(() => {
     setHasMounted(true)
   }, [])
-  
+
   return hasMounted
 }
 
@@ -141,7 +141,7 @@ export function useHasMounted(): boolean {
  */
 const useOnMountEffect_Legacy = (callback: () => void): void => {
   const renderRef = React.useRef(true)
-  
+
   React.useEffect(() => {
     if (renderRef.current) {
       callback()

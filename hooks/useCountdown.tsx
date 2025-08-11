@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 /**
  * Options for the countdown loop timer hook
@@ -50,7 +50,7 @@ export interface UseCountdownLoopTimerReturn {
 
 /**
  * A hook for creating countdown timers with loop functionality
- * 
+ *
  * Features:
  * - Customizable interval and duration
  * - Auto-restart capability
@@ -59,10 +59,10 @@ export interface UseCountdownLoopTimerReturn {
  * - Progress tracking
  * - Async callback support
  * - Automatic cleanup
- * 
+ *
  * @param options - Configuration options
  * @returns Object with timer controls and state
- * 
+ *
  * @example
  * ```tsx
  * function CountdownTimer() {
@@ -83,7 +83,7 @@ export interface UseCountdownLoopTimerReturn {
  *     autoRestart: true,
  *     maxLoops: 5
  *   })
- * 
+ *
  *   return (
  *     <div>
  *       <div>Time remaining: {remainingSeconds}s</div>
@@ -109,7 +109,7 @@ export function useCountdownLoopTimer({
   const [isRunning, setIsRunning] = React.useState(false)
   const [isPaused, setIsPaused] = React.useState(false)
   const [loopCount, setLoopCount] = React.useState(0)
-  
+
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
   const savedCallback = React.useRef(onTick)
   const startTimeRef = React.useRef<number>(0)
@@ -153,7 +153,7 @@ export function useCountdownLoopTimer({
     try {
       await savedCallback.current()
     } catch (error) {
-      console.error('Error in onTick callback:', error)
+      console.error("Error in onTick callback:", error)
     }
 
     setLoopCount(prev => prev + 1)
@@ -161,7 +161,7 @@ export function useCountdownLoopTimer({
     // Check if we should restart
     const newLoopCount = loopCount + 1
     const shouldRestart = autoRestart && (maxLoops === 0 || newLoopCount < maxLoops)
-    
+
     if (shouldRestart) {
       setRemainingMs(durationMs)
       setIsRunning(true)
@@ -184,11 +184,11 @@ export function useCountdownLoopTimer({
    */
   const startTimer = React.useCallback(() => {
     if (isRunning || (maxLoops > 0 && loopCount >= maxLoops)) return
-    
+
     setIsRunning(true)
     setIsPaused(false)
     startTimeRef.current = Date.now()
-    
+
     if (intervalRef.current) clearInterval(intervalRef.current)
     intervalRef.current = setInterval(tick, intervalMs)
   }, [isRunning, maxLoops, loopCount, tick, intervalMs])
@@ -207,7 +207,7 @@ export function useCountdownLoopTimer({
    */
   const pauseTimer = React.useCallback(() => {
     if (!isRunning || isPaused) return
-    
+
     setIsPaused(true)
     setIsRunning(false)
     pausedTimeRef.current = Date.now()
@@ -219,11 +219,11 @@ export function useCountdownLoopTimer({
    */
   const resumeTimer = React.useCallback(() => {
     if (!isPaused) return
-    
+
     setIsPaused(false)
     setIsRunning(true)
     startTimeRef.current = Date.now() - (pausedTimeRef.current - startTimeRef.current)
-    
+
     if (intervalRef.current) clearInterval(intervalRef.current)
     intervalRef.current = setInterval(tick, intervalMs)
   }, [isPaused, tick, intervalMs])
@@ -236,7 +236,7 @@ export function useCountdownLoopTimer({
     setRemainingMs(durationMs)
     setLoopCount(0)
     setIsPaused(false)
-    
+
     if (start || isRunning) {
       setIsRunning(true)
       startTimeRef.current = Date.now()
@@ -251,7 +251,7 @@ export function useCountdownLoopTimer({
     if (start && !isRunning) {
       startTimer()
     }
-    
+
     // Cleanup on unmount
     return () => {
       clearCurrentInterval()
@@ -282,18 +282,18 @@ export function useCountdownLoopTimer({
 
 /**
  * Simple countdown hook for basic use cases
- * 
+ *
  * @param initialTime - Initial countdown time in seconds
  * @param onComplete - Callback when countdown reaches zero
  * @returns Object with countdown state and controls
- * 
+ *
  * @example
  * ```tsx
  * function SimpleCountdown() {
  *   const { seconds, start, stop, reset, isActive } = useCountdown(60, () => {
  *     alert('Time is up!')
  *   })
- *   
+ *
  *   return (
  *     <div>
  *       <div>{seconds} seconds remaining</div>
@@ -305,17 +305,8 @@ export function useCountdownLoopTimer({
  * }
  * ```
  */
-export function useCountdown(
-  initialTime: number,
-  onComplete?: () => void
-) {
-  const {
-    startTimer,
-    stopTimer,
-    resetTimer,
-    remainingSeconds,
-    isRunning,
-  } = useCountdownLoopTimer({
+export function useCountdown(initialTime: number, onComplete?: () => void) {
+  const { startTimer, stopTimer, resetTimer, remainingSeconds, isRunning } = useCountdownLoopTimer({
     intervalMs: 1000,
     durationMs: initialTime * 1000,
     onTick: onComplete || (() => {}),

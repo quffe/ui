@@ -26,7 +26,9 @@ export default function FileInputDocs() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">npx shadcn@latest add https://ui-components.dev/file-input</code>
+            <code className="text-sm">
+              npx shadcn@latest add https://ui-components.dev/file-input
+            </code>
           </div>
         </CardContent>
       </Card>
@@ -58,7 +60,7 @@ export default function FileInputDocs() {
             <h3 className="text-lg font-semibold mb-2">Default</h3>
             <FileInput />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">With Label</h3>
             <div className="space-y-2">
@@ -66,34 +68,25 @@ export default function FileInputDocs() {
               <FileInput />
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">With File Preview</h3>
-            <FileInput 
-              showPreview 
-              onFileSelect={setSelectedFiles}
-            />
+            <FileInput showPreview onFileSelect={setSelectedFiles} />
             {selectedFiles && (
               <p className="text-sm text-muted-foreground mt-2">
                 Selected {selectedFiles.length} file(s)
               </p>
             )}
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Image Only</h3>
-            <FileInput 
-              accept="image/*"
-              showPreview
-            />
+            <FileInput accept="image/*" showPreview />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Multiple Files</h3>
-            <FileInput 
-              multiple
-              showPreview
-            />
+            <FileInput multiple showPreview />
           </div>
         </CardContent>
       </Card>

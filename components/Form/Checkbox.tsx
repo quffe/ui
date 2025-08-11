@@ -1,11 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { Check } from 'lucide-react'
+import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export interface CheckboxProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
 }
 

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 /** Default mobile breakpoint in pixels */
 const DEFAULT_MOBILE_BREAKPOINT = 768
@@ -19,23 +19,23 @@ export interface UseMobileOptions {
 
 /**
  * A hook that detects whether the current viewport is mobile-sized
- * 
+ *
  * Features:
  * - Responsive breakpoint detection
  * - SSR-safe with proper hydration
  * - Customizable breakpoint
  * - Automatic cleanup
  * - Performance optimized with matchMedia API
- * 
+ *
  * @param options - Configuration options
  * @returns boolean indicating if the viewport is mobile-sized
- * 
+ *
  * @example
  * ```tsx
  * function MyComponent() {
  *   const isMobile = useMobile()
  *   const isTablet = useMobile({ breakpoint: 1024 })
- *   
+ *
  *   return (
  *     <div>
  *       {isMobile ? 'Mobile Layout' : 'Desktop Layout'}
@@ -50,16 +50,18 @@ export function useMobile({
   ssrSafe = true,
 }: UseMobileOptions = {}): boolean {
   const [isMobile, setIsMobile] = React.useState<boolean>(
-    ssrSafe ? defaultValue : () => {
-      if (typeof window === 'undefined') return defaultValue
-      return window.innerWidth < breakpoint
-    }
+    ssrSafe
+      ? defaultValue
+      : () => {
+          if (typeof window === "undefined") return defaultValue
+          return window.innerWidth < breakpoint
+        }
   )
-  
+
   const [isHydrated, setIsHydrated] = React.useState(!ssrSafe)
 
   React.useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === "undefined") return
 
     // Handle hydration mismatch
     if (ssrSafe && !isHydrated) {
@@ -69,7 +71,7 @@ export function useMobile({
     }
 
     const mediaQuery = window.matchMedia(`(max-width: ${breakpoint - 1}px)`)
-    
+
     const handleChange = (event: MediaQueryListEvent) => {
       setIsMobile(event.matches)
     }
@@ -79,7 +81,7 @@ export function useMobile({
 
     // Add listener
     if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange)
+      mediaQuery.addEventListener("change", handleChange)
     } else {
       // Fallback for older browsers
       mediaQuery.addListener(handleChange)
@@ -87,7 +89,7 @@ export function useMobile({
 
     return () => {
       if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleChange)
+        mediaQuery.removeEventListener("change", handleChange)
       } else {
         // Fallback for older browsers
         mediaQuery.removeListener(handleChange)

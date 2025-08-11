@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/Layout/AppSidebar"
@@ -11,9 +11,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
     </SidebarProvider>
   )
 }

@@ -1,15 +1,15 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs")
+const path = require("path")
 
 // Component mapping: folder name -> component name for CLI
 const componentMap = {
-  'otp-input': 'otp-input',
-  'date-range-picker': 'date-range-picker', 
-  'modal': 'modal',
-  'dropdown': 'dropdown',
-  'input-select': 'input-select',
-  'select-dropdown': 'select-dropdown',
-  'app-sidebar': 'app-sidebar'
+  "otp-input": "otp-input",
+  "date-range-picker": "date-range-picker",
+  modal: "modal",
+  dropdown: "dropdown",
+  "input-select": "input-select",
+  "select-dropdown": "select-dropdown",
+  "app-sidebar": "app-sidebar",
 }
 
 // Function to update a documentation file
@@ -19,10 +19,10 @@ function updateDocFile(filePath, componentName) {
     return
   }
 
-  let content = fs.readFileSync(filePath, 'utf8')
-  
+  let content = fs.readFileSync(filePath, "utf8")
+
   // Skip if already has InstallCommand import
-  if (content.includes('InstallCommand')) {
+  if (content.includes("InstallCommand")) {
     console.log(`Skipping ${filePath} - already updated`)
     return
   }
@@ -34,7 +34,8 @@ function updateDocFile(filePath, componentName) {
   )
 
   // Replace Installation section
-  const installationPattern = /(<Card className="mb-8">\s*<CardHeader>\s*<CardTitle>Installation<\/CardTitle>\s*<CardDescription>[^<]*<\/CardDescription>\s*<\/CardHeader>\s*<CardContent>\s*<div className="bg-muted p-4 rounded-md">\s*<code className="text-sm">import[^<]*<\/code>\s*<\/div>\s*<\/CardContent>\s*<\/Card>)/s
+  const installationPattern =
+    /(<Card className="mb-8">\s*<CardHeader>\s*<CardTitle>Installation<\/CardTitle>\s*<CardDescription>[^<]*<\/CardDescription>\s*<\/CardHeader>\s*<CardContent>\s*<div className="bg-muted p-4 rounded-md">\s*<code className="text-sm">import[^<]*<\/code>\s*<\/div>\s*<\/CardContent>\s*<\/Card>)/s
 
   const newInstallationSection = `<Card className="mb-8">
             <CardHeader>
@@ -54,8 +55,8 @@ function updateDocFile(filePath, componentName) {
 
   if (installationPattern.test(content)) {
     content = content.replace(installationPattern, newInstallationSection)
-    
-    fs.writeFileSync(filePath, content, 'utf8')
+
+    fs.writeFileSync(filePath, content, "utf8")
     console.log(`✅ Updated ${filePath}`)
   } else {
     console.log(`⚠️  Could not find installation section in ${filePath}`)
@@ -64,23 +65,23 @@ function updateDocFile(filePath, componentName) {
 
 function getImportName(componentName) {
   const nameMap = {
-    'otp-input': '`{ OtpInput }`',
-    'date-range-picker': '`{ DateRangePicker }`',
-    'modal': '`{ Modal }`', 
-    'dropdown': '`{ Dropdown }`',
-    'input-select': '`{ InputSelect }`',
-    'select-dropdown': '`{ SelectDropdown }`',
-    'app-sidebar': '`{ AppSidebar }`'
+    "otp-input": "`{ OtpInput }`",
+    "date-range-picker": "`{ DateRangePicker }`",
+    modal: "`{ Modal }`",
+    dropdown: "`{ Dropdown }`",
+    "input-select": "`{ InputSelect }`",
+    "select-dropdown": "`{ SelectDropdown }`",
+    "app-sidebar": "`{ AppSidebar }`",
   }
   return nameMap[componentName] || `\`{ ${componentName} }\``
 }
 
 // Main execution
-console.log('🚀 Updating documentation files...\n')
+console.log("🚀 Updating documentation files...\n")
 
 Object.entries(componentMap).forEach(([folder, componentName]) => {
-  const filePath = path.join(__dirname, '../app/docs', folder, 'page.tsx')
+  const filePath = path.join(__dirname, "../app/docs", folder, "page.tsx")
   updateDocFile(filePath, componentName)
 })
 
-console.log('\n✨ Documentation update complete!')
+console.log("\n✨ Documentation update complete!")

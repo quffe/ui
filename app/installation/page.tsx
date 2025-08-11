@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { InstallationTabs } from "@/components/InstallationTabs"
@@ -22,44 +22,44 @@ const steps = [
     title: "Prerequisites",
     description: "Make sure you have a React project set up",
     icon: CheckCircle,
-    color: "text-green-500"
+    color: "text-green-500",
   },
   {
     title: "Initialize Shadcn/UI",
     description: "Set up shadcn/ui in your project",
     icon: Terminal,
-    color: "text-blue-500"
+    color: "text-blue-500",
   },
   {
     title: "Install Components",
     description: "Add components using the CLI",
     icon: Package,
-    color: "text-purple-500"
+    color: "text-purple-500",
   },
   {
     title: "Start Building",
     description: "Import and use components in your app",
     icon: Zap,
-    color: "text-orange-500"
-  }
+    color: "text-orange-500",
+  },
 ]
 
 const frameworks = [
   {
     name: "Next.js",
     command: "npx create-next-app@latest my-app --typescript --tailwind --eslint",
-    docs: "https://nextjs.org/docs"
+    docs: "https://nextjs.org/docs",
   },
   {
     name: "Vite",
     command: "npm create vite@latest my-app -- --template react-ts",
-    docs: "https://vitejs.dev/guide/"
+    docs: "https://vitejs.dev/guide/",
   },
   {
     name: "Create React App",
     command: "npx create-react-app my-app --template typescript",
-    docs: "https://create-react-app.dev/"
-  }
+    docs: "https://create-react-app.dev/",
+  },
 ]
 
 const exampleComponents = [
@@ -68,29 +68,29 @@ const exampleComponents = [
     title: "DataTable",
     description: "Perfect for displaying tabular data with sorting and pagination",
     useCase: "Admin dashboards, user management, reports",
-    dependencies: ["@tanstack/react-table", "lucide-react"]
+    dependencies: ["@tanstack/react-table", "lucide-react"],
   },
   {
     name: "input-amount",
     title: "InputAmount",
     description: "Handles monetary input with proper formatting",
     useCase: "E-commerce, finance apps, payment forms",
-    dependencies: []
+    dependencies: [],
   },
   {
     name: "otp-input",
     title: "OtpInput",
     description: "One-time password input with keyboard navigation",
     useCase: "Authentication, verification flows",
-    dependencies: []
+    dependencies: [],
   },
   {
     name: "modal",
     title: "Modal",
     description: "Flexible modal with multiple size and position options",
     useCase: "Confirmations, forms, detailed views",
-    dependencies: ["lucide-react", "class-variance-authority"]
-  }
+    dependencies: ["lucide-react", "class-variance-authority"],
+  },
 ]
 
 export default function InstallationPage() {
@@ -118,7 +118,8 @@ export default function InstallationPage() {
           <div className="mb-12">
             <h1 className="text-4xl font-bold mb-4">Installation</h1>
             <p className="text-xl text-muted-foreground mb-6">
-              Get started with our component library in minutes. Choose your setup method and start building.
+              Get started with our component library in minutes. Choose your setup method and start
+              building.
             </p>
             <div className="flex gap-3">
               <Link href="#quick-start">
@@ -145,7 +146,9 @@ export default function InstallationPage() {
                         <step.icon className={`h-6 w-6 ${step.color}`} />
                       </div>
                     </div>
-                    <h3 className="font-semibold mb-2">{index + 1}. {step.title}</h3>
+                    <h3 className="font-semibold mb-2">
+                      {index + 1}. {step.title}
+                    </h3>
                     <p className="text-sm text-muted-foreground">{step.description}</p>
                   </div>
                 ))}
@@ -170,7 +173,7 @@ export default function InstallationPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-3">
-                  {frameworks.map((framework) => (
+                  {frameworks.map(framework => (
                     <Card key={framework.name} className="p-4">
                       <h4 className="font-semibold mb-2">{framework.name}</h4>
                       <div className="bg-muted p-2 rounded text-sm font-mono mb-2">
@@ -200,7 +203,9 @@ export default function InstallationPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium mb-2">Navigate to your project directory and run:</p>
+                  <p className="text-sm font-medium mb-2">
+                    Navigate to your project directory and run:
+                  </p>
                   <div className="bg-muted p-4 rounded-md">
                     <code className="text-sm font-mono">pnpm dlx shadcn@latest init</code>
                   </div>
@@ -211,8 +216,8 @@ export default function InstallationPage() {
                     <div>
                       <p className="text-sm font-medium text-yellow-800">Note</p>
                       <p className="text-sm text-yellow-700">
-                        This will create the necessary configuration files and install required dependencies.
-                        Answer the prompts to configure your project.
+                        This will create the necessary configuration files and install required
+                        dependencies. Answer the prompts to configure your project.
                       </p>
                     </div>
                   </div>
@@ -236,7 +241,8 @@ export default function InstallationPage() {
                   <p className="text-sm">Install any component from our registry:</p>
                   <InstallationTabs componentName="data-table" />
                   <p className="text-sm text-muted-foreground">
-                    The component will be installed to your <code className="bg-muted px-1 rounded">components/ui</code> directory.
+                    The component will be installed to your{" "}
+                    <code className="bg-muted px-1 rounded">components/ui</code> directory.
                   </p>
                 </div>
               </CardContent>
@@ -286,7 +292,7 @@ export default function InstallationPage() {
             </p>
 
             <div className="grid gap-6 md:grid-cols-2">
-              {exampleComponents.map((component) => (
+              {exampleComponents.map(component => (
                 <Card key={component.name} className="h-full">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-lg">{component.title}</CardTitle>
@@ -302,9 +308,11 @@ export default function InstallationPage() {
 
                     {component.dependencies.length > 0 && (
                       <div>
-                        <p className="text-xs font-medium text-muted-foreground mb-2">DEPENDENCIES</p>
+                        <p className="text-xs font-medium text-muted-foreground mb-2">
+                          DEPENDENCIES
+                        </p>
                         <div className="flex flex-wrap gap-1">
-                          {component.dependencies.map((dep) => (
+                          {component.dependencies.map(dep => (
                             <Badge key={dep} variant="outline" className="text-xs">
                               {dep}
                             </Badge>
@@ -339,7 +347,10 @@ export default function InstallationPage() {
                   If you get an error about a component not being found, make sure:
                 </p>
                 <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
-                  <li>You've initialized shadcn/ui with <code className="bg-muted px-1 rounded">pnpm dlx shadcn@latest init</code></li>
+                  <li>
+                    You've initialized shadcn/ui with{" "}
+                    <code className="bg-muted px-1 rounded">pnpm dlx shadcn@latest init</code>
+                  </li>
                   <li>The component was installed successfully</li>
                   <li>You're importing from the correct path</li>
                 </ul>
@@ -360,7 +371,8 @@ export default function InstallationPage() {
               <div>
                 <h4 className="font-semibold mb-2">Need help?</h4>
                 <p className="text-sm text-muted-foreground">
-                  Check the individual component documentation for specific usage examples and API details.
+                  Check the individual component documentation for specific usage examples and API
+                  details.
                 </p>
                 <Link href="/components">
                   <Button variant="link" size="sm" className="p-0 h-auto mt-2">

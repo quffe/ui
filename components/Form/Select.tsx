@@ -1,11 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export interface SelectProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   placeholder?: string
 }
 

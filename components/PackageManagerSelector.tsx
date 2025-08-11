@@ -1,33 +1,33 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { ChevronDown, Package } from 'lucide-react'
-import { usePackageManager, type PackageManager } from '@/hooks/usePackageManager'
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown, Package } from "lucide-react"
+import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
 
 const packageManagers: { value: PackageManager; label: string; icon: string }[] = [
-  { value: 'pnpm', label: 'pnpm', icon: '📦' },
-  { value: 'npm', label: 'npm', icon: '📋' },
-  { value: 'yarn', label: 'Yarn', icon: '🧶' },
-  { value: 'bun', label: 'Bun', icon: '🥟' },
+  { value: "pnpm", label: "pnpm", icon: "📦" },
+  { value: "npm", label: "npm", icon: "📋" },
+  { value: "yarn", label: "Yarn", icon: "🧶" },
+  { value: "bun", label: "Bun", icon: "🥟" },
 ]
 
 interface PackageManagerSelectorProps {
-  size?: 'sm' | 'default' | 'lg'
-  variant?: 'default' | 'outline' | 'ghost'
+  size?: "sm" | "default" | "lg"
+  variant?: "default" | "outline" | "ghost"
   showIcon?: boolean
 }
 
-export function PackageManagerSelector({ 
-  size = 'sm', 
-  variant = 'outline',
-  showIcon = true 
+export function PackageManagerSelector({
+  size = "sm",
+  variant = "outline",
+  showIcon = true,
 }: PackageManagerSelectorProps) {
   const { packageManager, setPackageManager, isLoaded } = usePackageManager()
 
@@ -52,7 +52,7 @@ export function PackageManagerSelector({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-32">
-        {packageManagers.map((pm) => (
+        {packageManagers.map(pm => (
           <DropdownMenuItem
             key={pm.value}
             onClick={() => setPackageManager(pm.value)}
@@ -60,9 +60,7 @@ export function PackageManagerSelector({
           >
             <span className="text-base">{pm.icon}</span>
             <span className="font-mono">{pm.label}</span>
-            {pm.value === packageManager && (
-              <span className="ml-auto text-primary">✓</span>
-            )}
+            {pm.value === packageManager && <span className="ml-auto text-primary">✓</span>}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

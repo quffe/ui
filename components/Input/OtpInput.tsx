@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import React, { useImperativeHandle, useRef, useEffect } from 'react'
-import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import React, { useImperativeHandle, useRef, useEffect } from "react"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 /**
  * Props for the OtpInput component
@@ -31,7 +31,7 @@ interface OtpInputProps {
   /** Error state */
   error?: boolean
   /** Size variant */
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
 }
 
 /**
@@ -48,7 +48,7 @@ export interface OtpInputRef {
 
 /**
  * A one-time password (OTP) input component with multiple input fields
- * 
+ *
  * Features:
  * - Configurable number of digits
  * - Auto-focus next field on input
@@ -59,7 +59,7 @@ export interface OtpInputRef {
  * - Size variants
  * - Error states
  * - Auto-submit on completion
- * 
+ *
  * @example
  * ```tsx
  * <OtpInput
@@ -72,20 +72,23 @@ export interface OtpInputRef {
  * ```
  */
 export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
-  ({
-    length = 6,
-    value,
-    onChange,
-    disabled = false,
-    placeholder = '',
-    mask = false,
-    className,
-    inputClassName,
-    autoSubmit = false,
-    onComplete,
-    error = false,
-    size = 'md',
-  }, ref) => {
+  (
+    {
+      length = 6,
+      value,
+      onChange,
+      disabled = false,
+      placeholder = "",
+      mask = false,
+      className,
+      inputClassName,
+      autoSubmit = false,
+      onComplete,
+      error = false,
+      size = "md",
+    },
+    ref
+  ) => {
     const inputRefs = useRef<HTMLInputElement[]>([])
 
     useImperativeHandle(ref, () => ({
@@ -93,7 +96,7 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
         inputRefs.current[0]?.focus()
       },
       clear: () => {
-        onChange('')
+        onChange("")
         inputRefs.current[0]?.focus()
       },
       getValue: () => value,
@@ -124,7 +127,7 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
 
       if (inputValue.length > 1) {
         // Handle paste - extract only numeric characters
-        const pastedValue = inputValue.replace(/\D/g, '').slice(0, length)
+        const pastedValue = inputValue.replace(/\D/g, "").slice(0, length)
         onChange(pastedValue)
 
         // Focus the appropriate input after paste
@@ -136,9 +139,9 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
       }
 
       // Handle single character input
-      const newValue = value.split('')
+      const newValue = value.split("")
       newValue[index] = inputValue
-      const updatedValue = newValue.join('')
+      const updatedValue = newValue.join("")
       onChange(updatedValue)
 
       // Move to next input if current input is filled
@@ -152,12 +155,9 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
     /**
      * Handle keyboard navigation and special keys
      */
-    const handleKeyDown = (
-      index: number,
-      e: React.KeyboardEvent<HTMLInputElement>
-    ) => {
+    const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
-        case 'Backspace':
+        case "Backspace":
           if (!value[index] && index > 0) {
             // Move to previous input on backspace if current input is empty
             setTimeout(() => {
@@ -165,44 +165,41 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
             }, 0)
           }
           break
-        case 'ArrowLeft':
+        case "ArrowLeft":
           if (index > 0) {
             e.preventDefault()
             inputRefs.current[index - 1]?.focus()
           }
           break
-        case 'ArrowRight':
+        case "ArrowRight":
           if (index < length - 1) {
             e.preventDefault()
             inputRefs.current[index + 1]?.focus()
           }
           break
-        case 'Delete':
+        case "Delete":
           // Clear current field and stay focused
           e.preventDefault()
-          const newValue = value.split('')
-          newValue[index] = ''
-          onChange(newValue.join(''))
+          const newValue = value.split("")
+          newValue[index] = ""
+          onChange(newValue.join(""))
           break
       }
     }
 
     const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
       e.preventDefault()
-      const pasted = e.clipboardData
-        .getData('Text')
-        .replace(/\D/g, '')
-        .slice(0, length)
+      const pasted = e.clipboardData.getData("Text").replace(/\D/g, "").slice(0, length)
       if (!pasted) return
 
       const newValues = []
       for (let i = 0; i < length; i++) {
-        newValues[i] = pasted[i] || ''
+        newValues[i] = pasted[i] || ""
         if (inputRefs.current[i]) {
-          inputRefs.current[i]!.value = pasted[i] || ''
+          inputRefs.current[i]!.value = pasted[i] || ""
         }
       }
-      onChange(newValues.join(''))
+      onChange(newValues.join(""))
 
       // Focus the last filled input
       const last = Math.min(pasted.length, length) - 1
@@ -211,21 +208,21 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
 
     // Size variants
     const sizeClasses = {
-      sm: 'w-8 h-8 text-sm',
-      md: 'w-12 h-12 text-lg',
-      lg: 'w-16 h-16 text-xl',
+      sm: "w-8 h-8 text-sm",
+      md: "w-12 h-12 text-lg",
+      lg: "w-16 h-16 text-xl",
     }
 
     return (
-      <div className={cn('flex gap-2 justify-center', className)}>
+      <div className={cn("flex gap-2 justify-center", className)}>
         {Array.from({ length }, (_, index) => {
-          const fieldValue = value[index] || ''
-          const displayValue = mask && fieldValue ? '•' : fieldValue
-          
+          const fieldValue = value[index] || ""
+          const displayValue = mask && fieldValue ? "•" : fieldValue
+
           return (
             <Input
               key={index}
-              ref={(el) => {
+              ref={el => {
                 if (el) {
                   inputRefs.current[index] = el
                 } else {
@@ -233,23 +230,23 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
                 }
               }}
               onPaste={handlePaste}
-              type={mask ? 'password' : 'text'}
+              type={mask ? "password" : "text"}
               inputMode="numeric"
               pattern="[0-9]*"
               maxLength={length} // Allow paste of full value
               value={displayValue}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
+              onChange={e => handleChange(index, e.target.value)}
+              onKeyDown={e => handleKeyDown(index, e)}
               disabled={disabled}
               placeholder={placeholder}
               className={cn(
-                'text-center font-semibold transition-colors',
+                "text-center font-semibold transition-colors",
                 sizeClasses[size],
-                error && 'border-destructive focus-visible:ring-destructive',
+                error && "border-destructive focus-visible:ring-destructive",
                 inputClassName
               )}
               aria-label={`OTP digit ${index + 1} of ${length}`}
-              aria-describedby={error ? 'otp-error' : undefined}
+              aria-describedby={error ? "otp-error" : undefined}
               autoComplete="one-time-code"
             />
           )
@@ -259,4 +256,4 @@ export const OtpInput = React.forwardRef<OtpInputRef, OtpInputProps>(
   }
 )
 
-OtpInput.displayName = 'OtpInput'
+OtpInput.displayName = "OtpInput"

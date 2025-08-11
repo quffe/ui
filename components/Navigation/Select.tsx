@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 import {
   Select,
   SelectContent,
@@ -8,9 +8,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 
 export interface SelectOption<T> {
   label: string
@@ -34,7 +34,7 @@ interface InputSelectProps<T> {
   required?: boolean
   name?: string
   id?: string
-  size?: 'default' | 'sm' | 'lg'
+  size?: "default" | "sm" | "lg"
   onOpenChange?: (open: boolean) => void
 }
 
@@ -42,7 +42,7 @@ export function InputSelect<T>({
   options,
   value,
   onChange,
-  placeholder = 'Select an option',
+  placeholder = "Select an option",
   label,
   error,
   className,
@@ -54,7 +54,7 @@ export function InputSelect<T>({
   required,
   name,
   id,
-  size = 'default',
+  size = "default",
   onOpenChange,
 }: InputSelectProps<T>) {
   const selectId = React.useId()
@@ -62,13 +62,13 @@ export function InputSelect<T>({
 
   // Handle size variants
   const sizeClasses = {
-    sm: 'h-8 text-xs',
-    default: 'h-10',
-    lg: 'h-12 text-base',
+    sm: "h-8 text-xs",
+    default: "h-10",
+    lg: "h-12 text-base",
   }
 
   return (
-    <div className={cn('space-y-2', className)}>
+    <div className={cn("space-y-2", className)}>
       {label && (
         <Label htmlFor={finalId} className={labelClassName}>
           {label} {required && <span className="text-destructive">*</span>}
@@ -85,7 +85,7 @@ export function InputSelect<T>({
           id={finalId}
           className={cn(
             sizeClasses[size],
-            error && 'border-destructive ring-destructive',
+            error && "border-destructive ring-destructive",
             triggerClassName
           )}
           aria-invalid={!!error}
@@ -96,11 +96,7 @@ export function InputSelect<T>({
         <SelectContent className={contentClassName}>
           <SelectGroup>
             {options.map((option, index) => (
-              <SelectItem
-                key={index}
-                value={String(option.value)}
-                disabled={option.disabled}
-              >
+              <SelectItem key={index} value={String(option.value)} disabled={option.disabled}>
                 {option.label}
               </SelectItem>
             ))}
@@ -108,10 +104,7 @@ export function InputSelect<T>({
         </SelectContent>
       </Select>
       {error && (
-        <p
-          id={`${finalId}-error`}
-          className={cn('text-xs text-destructive', errorClassName)}
-        >
+        <p id={`${finalId}-error`} className={cn("text-xs text-destructive", errorClassName)}>
           {error}
         </p>
       )}

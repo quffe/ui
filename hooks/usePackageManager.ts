@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
-export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun'
+export type PackageManager = "pnpm" | "npm" | "yarn" | "bun"
 
-const STORAGE_KEY = 'ui-components-package-manager'
-const DEFAULT_PACKAGE_MANAGER: PackageManager = 'pnpm'
+const STORAGE_KEY = "ui-components-package-manager"
+const DEFAULT_PACKAGE_MANAGER: PackageManager = "pnpm"
 
 export function usePackageManager() {
   const [packageManager, setPackageManagerState] = useState<PackageManager>(DEFAULT_PACKAGE_MANAGER)
@@ -14,7 +14,7 @@ export function usePackageManager() {
   // Load from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as PackageManager
-    if (stored && ['pnpm', 'npm', 'yarn', 'bun'].includes(stored)) {
+    if (stored && ["pnpm", "npm", "yarn", "bun"].includes(stored)) {
       setPackageManagerState(stored)
     }
     setIsLoaded(true)

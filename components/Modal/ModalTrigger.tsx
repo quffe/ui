@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import type { VariantProps } from 'class-variance-authority'
+import * as React from "react"
+import type { VariantProps } from "class-variance-authority"
 
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { Modal, type ModalProps } from './Modal'
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { Modal, type ModalProps } from "./Modal"
 
 interface ModalTriggerProps
-  extends Omit<ModalProps, 'open' | 'onClose' | 'children'>,
-    Omit<VariantProps<typeof Button>, 'size'> {
+  extends Omit<ModalProps, "open" | "onClose" | "children">,
+    Omit<VariantProps<typeof Button>, "size"> {
   trigger: React.ReactNode
   children?: React.ReactNode
   renderContent?: (props: { onClose: () => void }) => React.ReactNode
@@ -60,12 +60,9 @@ export function ModalTrigger({
   return (
     <>
       {React.isValidElement(trigger) ? (
-        React.cloneElement(
-          trigger as React.ReactElement<{ onClick?: () => void }>,
-          {
-            onClick: handleOpen,
-          }
-        )
+        React.cloneElement(trigger as React.ReactElement<{ onClick?: () => void }>, {
+          onClick: handleOpen,
+        })
       ) : (
         <Button onClick={handleOpen} {...buttonProps}>
           {trigger}
@@ -90,4 +87,4 @@ export function ModalTrigger({
   )
 }
 
-ModalTrigger.displayName = 'ModalTrigger'
+ModalTrigger.displayName = "ModalTrigger"

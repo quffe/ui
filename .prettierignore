@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Cache
+.turbo/
+*.tsbuildinfo
+
+# Environment files
+.env*
+
+# Logs
+*.log
+
+# Package manager files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+
+# Registry files (these have specific formatting requirements)
+registry/
+
+# Generated files
+*.md

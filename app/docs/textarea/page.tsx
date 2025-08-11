@@ -31,7 +31,7 @@ export default function TextareaDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
@@ -49,7 +49,9 @@ export default function TextareaDocs() {
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">npx shadcn@latest add https://ui-components.dev/textarea</code>
+                <code className="text-sm">
+                  npx shadcn@latest add https://ui-components.dev/textarea
+                </code>
               </div>
             </CardContent>
           </Card>
@@ -81,7 +83,7 @@ export default function TextareaDocs() {
                 <h3 className="text-lg font-semibold mb-2">Default</h3>
                 <Textarea placeholder="Enter your message..." />
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">With Label</h3>
                 <div className="space-y-2">
@@ -89,15 +91,12 @@ export default function TextareaDocs() {
                   <Textarea id="message" placeholder="Enter your message..." />
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Custom Height</h3>
-                <Textarea 
-                  placeholder="Larger textarea..." 
-                  className="min-h-[120px]"
-                />
+                <Textarea placeholder="Larger textarea..." className="min-h-[120px]" />
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Disabled</h3>
                 <Textarea placeholder="Disabled textarea" disabled />

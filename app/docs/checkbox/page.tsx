@@ -20,7 +20,9 @@ export default function CheckboxDocs() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">npx shadcn@latest add https://ui-components.dev/checkbox</code>
+            <code className="text-sm">
+              npx shadcn@latest add https://ui-components.dev/checkbox
+            </code>
           </div>
         </CardContent>
       </Card>
@@ -52,12 +54,12 @@ export default function CheckboxDocs() {
             <h3 className="text-lg font-semibold mb-2">Default</h3>
             <Checkbox id="default" />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">With Label</h3>
             <Checkbox id="terms" label="I accept the terms and conditions" />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Multiple Options</h3>
             <div className="space-y-3">
@@ -66,7 +68,7 @@ export default function CheckboxDocs() {
               <Checkbox id="marketing" label="Marketing communications" />
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Disabled</h3>
             <div className="space-y-3">

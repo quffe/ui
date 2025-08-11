@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { InstallationTabs } from "@/components/InstallationTabs"
@@ -24,7 +24,7 @@ const components = [
   },
   {
     name: "input-amount",
-    title: "InputAmount", 
+    title: "InputAmount",
     description: "Specialized input for monetary amounts with currency support",
     category: "Input",
     dependencies: [],
@@ -81,14 +81,17 @@ const components = [
 ]
 
 export default function ComponentsPage() {
-  const groupedComponents = components.reduce((acc, component) => {
-    const category = component.category
-    if (!acc[category]) {
-      acc[category] = []
-    }
-    acc[category].push(component)
-    return acc
-  }, {} as Record<string, typeof components>)
+  const groupedComponents = components.reduce(
+    (acc, component) => {
+      const category = component.category
+      if (!acc[category]) {
+        acc[category] = []
+      }
+      acc[category].push(component)
+      return acc
+    },
+    {} as Record<string, typeof components>
+  )
 
   return (
     <div className="flex flex-col">
@@ -107,13 +110,14 @@ export default function ComponentsPage() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">All Components</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              Browse and install all available UI components. Select your preferred package manager in the top-right corner.
+              Browse and install all available UI components. Select your preferred package manager
+              in the top-right corner.
             </p>
           </div>
 
@@ -124,9 +128,9 @@ export default function ComponentsPage() {
                   <h2 className="text-2xl font-bold text-primary">{category} Components</h2>
                   <Badge variant="outline">{categoryComponents.length} components</Badge>
                 </div>
-                
+
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {categoryComponents.map((component) => (
+                  {categoryComponents.map(component => (
                     <Card key={component.name} className="h-full">
                       <CardHeader className="pb-4">
                         <div className="flex items-start justify-between">
@@ -141,7 +145,7 @@ export default function ComponentsPage() {
                           {component.description}
                         </CardDescription>
                       </CardHeader>
-                      
+
                       <CardContent className="space-y-4">
                         {component.dependencies.length > 0 && (
                           <div>
@@ -149,7 +153,7 @@ export default function ComponentsPage() {
                               Dependencies:
                             </p>
                             <div className="flex flex-wrap gap-1">
-                              {component.dependencies.map((dep) => (
+                              {component.dependencies.map(dep => (
                                 <Badge key={dep} variant="outline" className="text-xs">
                                   {dep}
                                 </Badge>
@@ -157,7 +161,7 @@ export default function ComponentsPage() {
                             </div>
                           </div>
                         )}
-                        
+
                         <InstallationTabs componentName={component.name} />
                       </CardContent>
                     </Card>

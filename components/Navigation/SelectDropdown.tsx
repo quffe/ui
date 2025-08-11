@@ -1,29 +1,29 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { Check, ChevronDown } from 'lucide-react'
-import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from "react"
+import { Check, ChevronDown } from "lucide-react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 const dropdownVariants = cva(
-  'relative w-full rounded-md border border-input bg-background text-sm ring-offset-background',
+  "relative w-full rounded-md border border-input bg-background text-sm ring-offset-background",
   {
     variants: {
       variant: {
-        default: 'border-input',
-        error: 'border-destructive',
+        default: "border-input",
+        error: "border-destructive",
       },
       size: {
-        default: 'h-10',
-        sm: 'h-8 text-xs',
-        lg: 'h-12 text-base',
+        default: "h-10",
+        sm: "h-8 text-xs",
+        lg: "h-12 text-base",
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: "default",
+      size: "default",
     },
   }
 )
@@ -45,14 +45,14 @@ interface DropdownProps<T> extends VariantProps<typeof dropdownVariants> {
   name?: string
   required?: boolean
   id?: string
-  'aria-label'?: string
+  "aria-label"?: string
 }
 
 export function SelectDropdown<T>({
   options,
   value,
   onChange,
-  placeholder = 'Select an option',
+  placeholder = "Select an option",
   disabled = false,
   className,
   variant,
@@ -60,7 +60,7 @@ export function SelectDropdown<T>({
   error,
   name,
   required,
-  'aria-label': ariaLabel,
+  "aria-label": ariaLabel,
 }: DropdownProps<T>) {
   const [isOpen, setIsOpen] = React.useState(false)
   const dropdownRef = React.useRef<HTMLDivElement>(null)
@@ -68,22 +68,19 @@ export function SelectDropdown<T>({
   const listboxId = React.useId()
 
   // Find the selected option
-  const selectedOption = options.find((option) => option.value === value)
+  const selectedOption = options.find(option => option.value === value)
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
 
@@ -91,12 +88,12 @@ export function SelectDropdown<T>({
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (disabled) return
 
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       setIsOpen(false)
       return
     }
 
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault()
 
       if (!isOpen) {
@@ -104,38 +101,32 @@ export function SelectDropdown<T>({
         return
       }
 
-      const currentIndex =
-        value !== null
-          ? options.findIndex((option) => option.value === value)
-          : -1
-      const availableOptions = options.filter((option) => !option.disabled)
+      const currentIndex = value !== null ? options.findIndex(option => option.value === value) : -1
+      const availableOptions = options.filter(option => !option.disabled)
 
       if (availableOptions.length === 0) return
 
       let nextIndex: number
 
       if (currentIndex === -1) {
-        nextIndex = event.key === 'ArrowDown' ? 0 : availableOptions.length - 1
+        nextIndex = event.key === "ArrowDown" ? 0 : availableOptions.length - 1
       } else {
-        const currentAvailableIndex = availableOptions.findIndex(
-          (option) => option.value === value
-        )
+        const currentAvailableIndex = availableOptions.findIndex(option => option.value === value)
 
-        if (event.key === 'ArrowDown') {
+        if (event.key === "ArrowDown") {
           nextIndex = (currentAvailableIndex + 1) % availableOptions.length
         } else {
           nextIndex =
-            (currentAvailableIndex - 1 + availableOptions.length) %
-            availableOptions.length
+            (currentAvailableIndex - 1 + availableOptions.length) % availableOptions.length
         }
       }
 
       onChange(availableOptions[nextIndex].value)
     }
 
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault()
-      setIsOpen((prev) => !prev)
+      setIsOpen(prev => !prev)
     }
   }
 
@@ -143,10 +134,7 @@ export function SelectDropdown<T>({
     <div className="space-y-1">
       <div
         ref={dropdownRef}
-        className={cn(
-          dropdownVariants({ variant: error ? 'error' : variant, size }),
-          className
-        )}
+        className={cn(dropdownVariants({ variant: error ? "error" : variant, size }), className)}
         onKeyDown={handleKeyDown}
       >
         <Button
@@ -154,8 +142,8 @@ export function SelectDropdown<T>({
           type="button"
           variant="ghost"
           className={cn(
-            'flex h-full w-full justify-between font-normal',
-            !selectedOption && 'text-muted-foreground'
+            "flex h-full w-full justify-between font-normal",
+            !selectedOption && "text-muted-foreground"
           )}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
@@ -164,14 +152,9 @@ export function SelectDropdown<T>({
           aria-labelledby={ariaLabel}
           aria-controls={isOpen ? listboxId : undefined}
         >
-          <span className="truncate">
-            {selectedOption ? selectedOption.label : placeholder}
-          </span>
+          <span className="truncate">{selectedOption ? selectedOption.label : placeholder}</span>
           <ChevronDown
-            className={cn(
-              'ml-2 h-4 w-4 shrink-0 opacity-50',
-              isOpen && 'rotate-180 transform'
-            )}
+            className={cn("ml-2 h-4 w-4 shrink-0 opacity-50", isOpen && "rotate-180 transform")}
           />
         </Button>
 
@@ -191,12 +174,11 @@ export function SelectDropdown<T>({
                   aria-selected={value === option.value}
                   aria-disabled={option.disabled}
                   className={cn(
-                    'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
-                    value === option.value &&
-                      'bg-accent text-accent-foreground',
+                    "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none",
+                    value === option.value && "bg-accent text-accent-foreground",
                     !option.disabled &&
-                      'cursor-pointer hover:bg-accent hover:text-accent-foreground',
-                    option.disabled && 'pointer-events-none opacity-50'
+                      "cursor-pointer hover:bg-accent hover:text-accent-foreground",
+                    option.disabled && "pointer-events-none opacity-50"
                   )}
                   onClick={() => {
                     if (!option.disabled) {
@@ -221,7 +203,7 @@ export function SelectDropdown<T>({
         <input
           type="hidden"
           name={name}
-          value={value !== null ? String(value) : ''}
+          value={value !== null ? String(value) : ""}
           required={required}
         />
       )}

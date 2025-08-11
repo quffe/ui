@@ -22,7 +22,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ className, name, options, value, onChange, disabled, ...props }, ref) => {
     return (
       <div className={cn("space-y-2", className)} ref={ref} {...props}>
-        {options.map((option) => (
+        {options.map(option => (
           <div key={option.value} className="flex items-center space-x-2">
             <input
               type="radio"
@@ -30,7 +30,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
               name={name}
               value={option.value}
               checked={value === option.value}
-              onChange={(e) => onChange?.(e.target.value)}
+              onChange={e => onChange?.(e.target.value)}
               disabled={disabled || option.disabled}
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300 focus:ring-2"
             />

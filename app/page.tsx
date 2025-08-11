@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
-import { 
+import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
@@ -40,20 +40,20 @@ const quickLinks = [
     title: "Installation Guide",
     description: "Learn how to install and configure components",
     href: "/installation",
-    badge: "Start here"
+    badge: "Start here",
   },
   {
     title: "All Components",
     description: "Browse all available components with examples",
     href: "/components",
-    badge: "Catalog"
+    badge: "Catalog",
   },
   {
     title: "Data Components",
     description: "Tables, charts, and data visualization components",
     href: "/docs/data-table",
-    badge: "Featured"
-  }
+    badge: "Featured",
+  },
 ]
 
 export default function Introduction() {
@@ -75,12 +75,10 @@ export default function Introduction() {
         <div className="container mx-auto max-w-6xl">
           {/* Hero Section */}
           <div className="mb-16 text-center">
-            <h1 className="text-6xl font-bold tracking-tight mb-6">
-              UI Components
-            </h1>
+            <h1 className="text-6xl font-bold tracking-tight mb-6">UI Components</h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              A comprehensive collection of beautifully designed, accessible, and reusable UI components 
-              built with React, TypeScript, and Tailwind CSS.
+              A comprehensive collection of beautifully designed, accessible, and reusable UI
+              components built with React, TypeScript, and Tailwind CSS.
             </p>
             <div className="flex gap-4 justify-center">
               <Link href="/installation">
@@ -100,7 +98,7 @@ export default function Introduction() {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12">Why Choose Our Components?</h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {features.map((feature) => (
+              {features.map(feature => (
                 <Card key={feature.title} className="text-center">
                   <CardHeader>
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
@@ -122,7 +120,7 @@ export default function Introduction() {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12">Quick Start</h2>
             <div className="grid gap-6 md:grid-cols-3">
-              {quickLinks.map((link) => (
+              {quickLinks.map(link => (
                 <Link key={link.title} href={link.href}>
                   <Card className="h-full hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
                     <CardHeader>
@@ -151,9 +149,7 @@ export default function Introduction() {
           <Card className="mb-16">
             <CardHeader>
               <CardTitle className="text-2xl">Quick Installation</CardTitle>
-              <CardDescription>
-                Get started in seconds with the Shadcn CLI
-              </CardDescription>
+              <CardDescription>Get started in seconds with the Shadcn CLI</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -165,7 +161,9 @@ export default function Introduction() {
               <div>
                 <p className="text-sm font-medium mb-2">2. Install any component</p>
                 <div className="bg-muted p-3 rounded-md font-mono text-sm">
-                  pnpm dlx shadcn@latest add {process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/api/registry/data-table
+                  pnpm dlx shadcn@latest add{" "}
+                  {process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}
+                  /api/registry/data-table
                 </div>
               </div>
               <div>
@@ -175,9 +173,7 @@ export default function Introduction() {
                 </div>
               </div>
               <Link href="/installation" className="w-full">
-                <Button className="w-full">
-                  View Full Installation Guide
-                </Button>
+                <Button className="w-full">View Full Installation Guide</Button>
               </Link>
             </CardContent>
           </Card>

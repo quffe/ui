@@ -31,7 +31,7 @@ export default function InputDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
@@ -49,7 +49,9 @@ export default function InputDocs() {
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">npx shadcn@latest add https://ui-components.dev/input</code>
+                <code className="text-sm">
+                  npx shadcn@latest add https://ui-components.dev/input
+                </code>
               </div>
             </CardContent>
           </Card>
@@ -60,9 +62,7 @@ export default function InputDocs() {
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { Input } from "@/components/Form/Input"`}
-                </code>
+                <code className="text-sm">{`import { Input } from "@/components/Form/Input"`}</code>
               </div>
               <div className="bg-muted p-4 rounded-md">
                 <code className="text-sm">
@@ -81,7 +81,7 @@ export default function InputDocs() {
                 <h3 className="text-lg font-semibold mb-2">Default</h3>
                 <Input type="text" placeholder="Enter text..." />
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">With Label</h3>
                 <div className="space-y-2">
@@ -89,12 +89,12 @@ export default function InputDocs() {
                   <Input id="email" type="email" placeholder="Enter your email" />
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Disabled</h3>
                 <Input type="text" placeholder="Disabled input" disabled />
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Different Types</h3>
                 <div className="space-y-4">

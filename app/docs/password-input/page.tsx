@@ -31,7 +31,7 @@ export default function PasswordInputDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           {/* Keep the rest of the existing content */}
@@ -50,7 +50,9 @@ export default function PasswordInputDocs() {
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">npx shadcn@latest add https://ui-components.dev/password-input</code>
+                <code className="text-sm">
+                  npx shadcn@latest add https://ui-components.dev/password-input
+                </code>
               </div>
             </CardContent>
           </Card>
@@ -82,7 +84,7 @@ export default function PasswordInputDocs() {
                 <h3 className="text-lg font-semibold mb-2">Default</h3>
                 <PasswordInput placeholder="Enter your password" />
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">With Label</h3>
                 <div className="space-y-2">
@@ -90,7 +92,7 @@ export default function PasswordInputDocs() {
                   <PasswordInput id="password" placeholder="Enter your password" />
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Disabled</h3>
                 <PasswordInput placeholder="Disabled password input" disabled />

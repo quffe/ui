@@ -1,15 +1,10 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect } from "react"
 
-export const useStateChangeEffect = <T>(
-  effect: () => void,
-  states: T[]
-): void => {
+export const useStateChangeEffect = <T>(effect: () => void, states: T[]): void => {
   const previousStatesRef = useRef<T[]>(states)
   useEffect(() => {
     const areStatesEqual = states.every(
-      (state, index) =>
-        JSON.stringify(state) ===
-        JSON.stringify(previousStatesRef.current[index])
+      (state, index) => JSON.stringify(state) === JSON.stringify(previousStatesRef.current[index])
     )
     if (!areStatesEqual) {
       effect()

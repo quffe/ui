@@ -1,18 +1,14 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { CalendarIcon } from 'lucide-react'
-import type { DateRange } from 'react-day-picker'
-import { format } from 'date-fns'
+import * as React from "react"
+import { CalendarIcon } from "lucide-react"
+import type { DateRange } from "react-day-picker"
+import { format } from "date-fns"
 
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 interface DateRangePickerProps {
   value?: DateRange
@@ -29,7 +25,7 @@ export function DateRangePicker({
   onChange,
   minDate,
   maxDate,
-  placeholder = 'Pick a date range',
+  placeholder = "Pick a date range",
   className,
   disabled = false,
 }: DateRangePickerProps) {
@@ -46,18 +42,10 @@ export function DateRangePicker({
 
     const thisMonthStart = new Date(today.getFullYear(), today.getMonth(), 1)
 
-    const lastMonthStart = new Date(
-      today.getFullYear(),
-      today.getMonth() - 1,
-      1
-    )
+    const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1)
     const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0)
 
-    const last3MonthsStart = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 91
-    )
+    const last3MonthsStart = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 91)
 
     // Helper function to clamp dates to min/max bounds
     const clampDateRange = (from: Date, to: Date): DateRange => {
@@ -68,27 +56,27 @@ export function DateRangePicker({
 
     return [
       {
-        label: 'Today',
+        label: "Today",
         range: clampDateRange(today, today),
       },
       {
-        label: 'Yesterday',
+        label: "Yesterday",
         range: clampDateRange(yesterday, yesterday),
       },
       {
-        label: 'Last Week',
+        label: "Last Week",
         range: clampDateRange(lastWeekStart, today),
       },
       {
-        label: 'This Month',
+        label: "This Month",
         range: clampDateRange(thisMonthStart, today),
       },
       {
-        label: 'Last Month',
+        label: "Last Month",
         range: clampDateRange(lastMonthStart, lastMonthEnd),
       },
       {
-        label: 'Last 3 Months',
+        label: "Last 3 Months",
         range: clampDateRange(last3MonthsStart, today),
       },
     ]
@@ -102,22 +90,22 @@ export function DateRangePicker({
     }
 
     if (!range.to) {
-      return format(range.from, 'MMM dd, yyyy')
+      return format(range.from, "MMM dd, yyyy")
     }
 
-    return `${format(range.from, 'MMM dd, yyyy')} - ${format(range.to, 'MMM dd, yyyy')}`
+    return `${format(range.from, "MMM dd, yyyy")} - ${format(range.to, "MMM dd, yyyy")}`
   }
 
   return (
-    <div className={cn('grid gap-2', className)}>
+    <div className={cn("grid gap-2", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant="outline"
             className={cn(
-              'w-full justify-start text-left font-normal',
-              !value?.from && 'text-muted-foreground'
+              "w-full justify-start text-left font-normal",
+              !value?.from && "text-muted-foreground"
             )}
             disabled={disabled}
             onClick={() => setIsSelectingFrom(true)}
@@ -130,10 +118,8 @@ export function DateRangePicker({
           <div className="flex">
             {/* Presets sidebar */}
             <div className="flex flex-col border-r bg-muted/50 p-2 space-y-1 min-w-[140px]">
-              <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
-                Presets
-              </div>
-              {presets.map((preset) => (
+              <div className="px-2 py-1 text-xs font-medium text-muted-foreground">Presets</div>
+              {presets.map(preset => (
                 <Button
                   key={preset.label}
                   variant="ghost"
@@ -172,7 +158,7 @@ export function DateRangePicker({
                   }
                 }}
                 numberOfMonths={2}
-                disabled={(date) => {
+                disabled={date => {
                   if (minDate && date < minDate) return true
                   if (maxDate && date > maxDate) return true
 

@@ -32,13 +32,11 @@ export default function SelectDocs() {
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-md mb-4">
-            <code className="text-sm">
-              {`import { Select } from "@/components/Form/Select"`}
-            </code>
+            <code className="text-sm">{`import { Select } from "@/components/Form/Select"`}</code>
           </div>
           <div className="bg-muted p-4 rounded-md">
             <pre className="text-sm">
-{`<Select placeholder="Choose an option">
+              {`<Select placeholder="Choose an option">
   <option value="option1">Option 1</option>
   <option value="option2">Option 2</option>
 </Select>`}
@@ -60,7 +58,7 @@ export default function SelectDocs() {
               <option value="option3">Option 3</option>
             </Select>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">With Label</h3>
             <div className="space-y-2">
@@ -73,7 +71,7 @@ export default function SelectDocs() {
               </Select>
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-lg font-semibold mb-2">Disabled</h3>
             <Select placeholder="Disabled select" disabled>
