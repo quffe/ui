@@ -222,7 +222,7 @@ export default function InputSelectDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: T | null) => void</td>
+                      <td className="p-2">(value: T | null) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when selection changes</td>
                     </tr>

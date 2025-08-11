@@ -23,7 +23,16 @@ import {
   Menu,
   MousePointer,
   List,
-  Navigation,
+  Copy,
+  Timer,
+  Database,
+  Play,
+  Monitor,
+  Package,
+  RefreshCw,
+  Zap,
+  Smartphone,
+  BookOpen,
 } from "lucide-react"
 
 import {
@@ -38,7 +47,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Label } from "@/components/ui/label"
 
@@ -49,29 +57,29 @@ const components = [
     url: "/docs/data-table",
     icon: Table,
     description: "Powerful data table with sorting and pagination",
-    category: "Data",
+    category: "Data & Display",
   },
-  // Input Components
+  // Advanced Input Components
   {
     title: "InputAmount",
     url: "/docs/input-amount",
     icon: DollarSign,
     description: "Specialized input for monetary amounts",
-    category: "Input",
+    category: "Advanced Inputs",
   },
   {
     title: "OtpInput",
     url: "/docs/otp-input",
     icon: Hash,
     description: "One-time password input with multiple fields",
-    category: "Input",
+    category: "Advanced Inputs",
   },
   {
     title: "DateRangePicker",
     url: "/docs/date-range-picker",
     icon: Calendar,
     description: "Date range picker with presets",
-    category: "Input",
+    category: "Advanced Inputs",
   },
   // Layout Components
   {
@@ -79,7 +87,7 @@ const components = [
     url: "/docs/app-sidebar",
     icon: Menu,
     description: "Application sidebar with search and navigation",
-    category: "Layout",
+    category: "Layout & Navigation",
   },
   // Modal Components
   {
@@ -87,7 +95,7 @@ const components = [
     url: "/docs/modal",
     icon: SquareStack,
     description: "Flexible modal component with customizable sizing",
-    category: "Modal",
+    category: "Overlays & Modals",
   },
   // Navigation Components
   {
@@ -95,71 +103,140 @@ const components = [
     url: "/docs/dropdown",
     icon: ChevronDown,
     description: "Searchable dropdown with Command and Popover",
-    category: "Navigation",
+    category: "Layout & Navigation",
   },
   {
     title: "InputSelect",
     url: "/docs/input-select",
     icon: List,
     description: "Type-safe select input with labels and validation",
-    category: "Navigation",
+    category: "Layout & Navigation",
   },
   {
     title: "SelectDropdown",
     url: "/docs/select-dropdown",
     icon: MousePointer,
     description: "Custom dropdown with keyboard navigation",
-    category: "Navigation",
+    category: "Layout & Navigation",
   },
-  // Legacy/Basic Components
+  // Form Components
   {
     title: "Input",
     url: "/docs/input",
     icon: Type,
     description: "Basic text input field",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "Password Input",
     url: "/docs/password-input",
     icon: Lock,
     description: "Password input with toggle",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "Textarea",
     url: "/docs/textarea",
     icon: AlignLeft,
     description: "Multi-line text input",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "Select",
     url: "/docs/select",
     icon: ChevronDown,
     description: "Dropdown select component",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "Checkbox",
     url: "/docs/checkbox",
     icon: CheckSquare,
     description: "Checkbox with label",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "Radio Group",
     url: "/docs/radio-group",
     icon: Circle,
     description: "Radio button group",
-    category: "Basic",
+    category: "Form Controls",
   },
   {
     title: "File Input",
     url: "/docs/file-input",
     icon: Upload,
     description: "File upload component",
-    category: "Basic",
+    category: "Form Controls",
+  },
+]
+
+const hooks = [
+  // Device & Layout Hooks
+  {
+    title: "useMobile",
+    url: "/docs/hooks/use-mobile",
+    icon: Smartphone,
+    description: "Responsive viewport detection with SSR support",
+    category: "Device & Layout",
+  },
+  {
+    title: "useOnWindowResize",
+    url: "/docs/hooks/useOnWindowResize",
+    icon: Monitor,
+    description: "Window resize event handling",
+    category: "Device & Layout",
+  },
+  // State Management Hooks
+  {
+    title: "useLocalStorage",
+    url: "/docs/hooks/useLocalStorage",
+    icon: Database,
+    description: "Persistent localStorage state management",
+    category: "State Management",
+  },
+  {
+    title: "usePackageManager",
+    url: "/docs/hooks/usePackageManager",
+    icon: Package,
+    description: "Package manager preference storage",
+    category: "State Management",
+  },
+  {
+    title: "useStateChangeEffect",
+    url: "/docs/hooks/useStateChangeEffect",
+    icon: Zap,
+    description: "Effect triggered by state changes",
+    category: "State Management",
+  },
+  // Utility Hooks
+  {
+    title: "useCopyToClipboard",
+    url: "/docs/hooks/use-copy-to-clipboard",
+    icon: Copy,
+    description: "Advanced clipboard operations",
+    category: "Utilities",
+  },
+  {
+    title: "useCountdown",
+    url: "/docs/hooks/useCountdown",
+    icon: Timer,
+    description: "Countdown timers with loop support",
+    category: "Utilities",
+  },
+  {
+    title: "useOnMountEffect",
+    url: "/docs/hooks/useOnMountEffect",
+    icon: Play,
+    description: "Mount-only effect execution",
+    category: "Utilities",
+  },
+  {
+    title: "useRevalidate",
+    url: "/docs/hooks/useRevalidate",
+    icon: RefreshCw,
+    description: "SWR cache revalidation helper",
+    category: "Utilities",
   },
 ]
 
@@ -173,6 +250,12 @@ export function AppSidebar() {
       component.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  const filteredHooks = hooks.filter(
+    hook =>
+      hook.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      hook.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   // Group components by category
   const groupedComponents = filteredComponents.reduce(
     (acc, component) => {
@@ -184,6 +267,19 @@ export function AppSidebar() {
       return acc
     },
     {} as Record<string, typeof components>
+  )
+
+  // Group hooks by category
+  const groupedHooks = filteredHooks.reduce(
+    (acc, hook) => {
+      const category = hook.category || "Other"
+      if (!acc[category]) {
+        acc[category] = []
+      }
+      acc[category].push(hook)
+      return acc
+    },
+    {} as Record<string, typeof hooks>
   )
 
   return (
@@ -207,7 +303,7 @@ export function AppSidebar() {
               </Label>
               <SidebarInput
                 id="search"
-                placeholder="Search components..."
+                placeholder="Search components & hooks..."
                 className="pl-8"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
@@ -247,13 +343,21 @@ export function AppSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/hooks"}>
+                  <Link href="/hooks">
+                    <BookOpen className="size-4" />
+                    <span>React Hooks</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
         {Object.entries(groupedComponents).map(([category, categoryComponents]) => (
           <SidebarGroup key={category}>
-            <SidebarGroupLabel>{category} Components</SidebarGroupLabel>
+            <SidebarGroupLabel>{category}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {categoryComponents.map(component => (
@@ -271,11 +375,31 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
 
-        {searchQuery && filteredComponents.length === 0 && (
+        {Object.entries(groupedHooks).map(([category, categoryHooks]) => (
+          <SidebarGroup key={`hooks-${category}`}>
+            <SidebarGroupLabel>{category} Hooks</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {categoryHooks.map(hook => (
+                  <SidebarMenuItem key={hook.title}>
+                    <SidebarMenuButton asChild isActive={pathname === hook.url}>
+                      <Link href={hook.url}>
+                        <hook.icon className="size-4" />
+                        <span>{hook.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+
+        {searchQuery && filteredComponents.length === 0 && filteredHooks.length === 0 && (
           <SidebarGroup>
             <SidebarGroupContent>
               <div className="px-2 py-4 text-sm text-muted-foreground">
-                No components found for "{searchQuery}"
+                No components or hooks found for "{searchQuery}"
               </div>
             </SidebarGroupContent>
           </SidebarGroup>

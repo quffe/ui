@@ -153,7 +153,7 @@ export default function InputAmountDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: number | null) => void</td>
+                      <td className="p-2">(value: number | null) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback fired when value changes</td>
                     </tr>

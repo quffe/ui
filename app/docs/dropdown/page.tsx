@@ -174,7 +174,7 @@ export default function DropdownDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: string) => void</td>
+                      <td className="p-2">(value: string) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when selection changes</td>
                     </tr>

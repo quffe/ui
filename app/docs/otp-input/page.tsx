@@ -173,13 +173,13 @@ export default function OtpInputDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: string) => void</td>
+                      <td className="p-2">(value: string) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when OTP value changes</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onComplete</td>
-                      <td className="p-2">(value: string) => void</td>
+                      <td className="p-2">(value: string) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when OTP is complete</td>
                     </tr>

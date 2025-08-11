@@ -160,7 +160,7 @@ export default function DateRangePickerDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(range: DateRange | undefined) => void</td>
+                      <td className="p-2">(range: DateRange | undefined) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Date range change callback</td>
                     </tr>

@@ -179,7 +179,7 @@ export default function ModalDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onClose</td>
-                      <td className="p-2">() => void</td>
+                      <td className="p-2">() =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Function called when modal should close</td>
                     </tr>

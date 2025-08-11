@@ -148,7 +148,7 @@ export default function DataTableDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onRowClick</td>
-                      <td className="p-2">(row: TData) => void</td>
+                      <td className="p-2">(row: TData) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when row is clicked</td>
                     </tr>
@@ -166,7 +166,7 @@ export default function DataTableDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onPaginationChange</td>
-                      <td className="p-2">(pagination) => void</td>
+                      <td className="p-2">(pagination) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Pagination change callback</td>
                     </tr>

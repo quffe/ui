@@ -230,7 +230,7 @@ export default function SelectDropdownDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: T) => void</td>
+                      <td className="p-2">(value: T) =&gt; void</td>
                       <td className="p-2">-</td>
                       <td className="p-2">Callback when selection changes</td>
                     </tr>

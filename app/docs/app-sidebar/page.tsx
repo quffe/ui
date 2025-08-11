@@ -1,6 +1,4 @@
 "use client"
-
-import { AppSidebar } from "@/components/Layout/AppSidebar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
