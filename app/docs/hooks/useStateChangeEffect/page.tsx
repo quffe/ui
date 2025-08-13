@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -20,17 +20,17 @@ import { useState } from "react"
 import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
 
 export default function UseStateChangeEffectDocs() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState("")
   const [age, setAge] = useState(0)
-  const [settings, setSettings] = useState({ theme: 'light', lang: 'en' })
+  const [settings, setSettings] = useState({ theme: "light", lang: "en" })
   const [effectCount, setEffectCount] = useState(0)
-  const [lastChange, setLastChange] = useState<string>('')
+  const [lastChange, setLastChange] = useState<string>("")
 
   // Demonstrate the hook
   useStateChangeEffect(() => {
     setEffectCount(prev => prev + 1)
     setLastChange(new Date().toLocaleTimeString())
-    console.log('State changed:', { name, age, settings })
+    console.log("State changed:", { name, age, settings })
   }, [name, age, settings])
 
   return (
@@ -50,13 +50,14 @@ export default function UseStateChangeEffectDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useStateChangeEffect</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A hook that executes effects when specific states change, with deep comparison support for complex objects.
+              A hook that executes effects when specific states change, with deep comparison support
+              for complex objects.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">React Hook</Badge>
@@ -67,7 +68,9 @@ export default function UseStateChangeEffectDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="useStateChangeEffect" />
@@ -84,9 +87,9 @@ export default function UseStateChangeEffectDocs() {
                   {`import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"`}
                 </CodeBlock>
               </div>
-              
+
               <CodeBlock language="tsx">
-{`function DataProcessor() {
+                {`function DataProcessor() {
   const [data, setData] = useState(null)
   const [filters, setFilters] = useState({})
   const [sortOrder, setSortOrder] = useState('asc')
@@ -116,7 +119,7 @@ export default function UseStateChangeEffectDocs() {
                       <Input
                         id="name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={e => setName(e.target.value)}
                         placeholder="Enter your name..."
                       />
                     </div>
@@ -126,7 +129,7 @@ export default function UseStateChangeEffectDocs() {
                         id="age"
                         type="number"
                         value={age}
-                        onChange={(e) => setAge(Number(e.target.value))}
+                        onChange={e => setAge(Number(e.target.value))}
                         placeholder="Enter your age..."
                       />
                     </div>
@@ -138,7 +141,7 @@ export default function UseStateChangeEffectDocs() {
                         id="theme"
                         className="w-full p-2 border rounded-md"
                         value={settings.theme}
-                        onChange={(e) => setSettings({...settings, theme: e.target.value})}
+                        onChange={e => setSettings({ ...settings, theme: e.target.value })}
                       >
                         <option value="light">Light</option>
                         <option value="dark">Dark</option>
@@ -151,7 +154,7 @@ export default function UseStateChangeEffectDocs() {
                         id="language"
                         className="w-full p-2 border rounded-md"
                         value={settings.lang}
-                        onChange={(e) => setSettings({...settings, lang: e.target.value})}
+                        onChange={e => setSettings({ ...settings, lang: e.target.value })}
                       >
                         <option value="en">English</option>
                         <option value="es">Spanish</option>
@@ -160,9 +163,15 @@ export default function UseStateChangeEffectDocs() {
                     </div>
                   </div>
                   <div className="text-sm text-muted-foreground space-y-1">
-                    <div>Effect trigger count: <strong>{effectCount}</strong></div>
-                    <div>Last change: <strong>{lastChange || 'Never'}</strong></div>
-                    <div>Current values: <code>{JSON.stringify({ name, age, settings })}</code></div>
+                    <div>
+                      Effect trigger count: <strong>{effectCount}</strong>
+                    </div>
+                    <div>
+                      Last change: <strong>{lastChange || "Never"}</strong>
+                    </div>
+                    <div>
+                      Current values: <code>{JSON.stringify({ name, age, settings })}</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -170,7 +179,7 @@ export default function UseStateChangeEffectDocs() {
               <div>
                 <h3 className="text-sm font-medium mb-2">Form Validation</h3>
                 <CodeBlock language="tsx">
-{`function FormWithValidation() {
+                  {`function FormWithValidation() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -232,7 +241,7 @@ export default function UseStateChangeEffectDocs() {
               <div>
                 <h3 className="text-sm font-medium mb-2">API Request Debouncing</h3>
                 <CodeBlock language="tsx">
-{`function SearchComponent() {
+                  {`function SearchComponent() {
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState({ category: '', priceRange: [0, 100] })
   const [results, setResults] = useState([])
@@ -290,7 +299,7 @@ export default function UseStateChangeEffectDocs() {
               <div>
                 <h3 className="text-sm font-medium mb-2">Local Storage Sync</h3>
                 <CodeBlock language="tsx">
-{`function UserPreferences() {
+                  {`function UserPreferences() {
   const [preferences, setPreferences] = useState({
     theme: 'light',
     language: 'en',
@@ -356,7 +365,7 @@ export default function UseStateChangeEffectDocs() {
               <div>
                 <h3 className="text-sm font-medium mb-2">Analytics Tracking</h3>
                 <CodeBlock language="tsx">
-{`function AnalyticsWrapper() {
+                  {`function AnalyticsWrapper() {
   const [user, setUser] = useState(null)
   const [page, setPage] = useState('/')
   const [filters, setFilters] = useState({})
@@ -397,7 +406,7 @@ export default function UseStateChangeEffectDocs() {
               <div>
                 <h3 className="text-sm font-medium mb-2">Complex State Dependencies</h3>
                 <CodeBlock language="tsx">
-{`function DataVisualization() {
+                  {`function DataVisualization() {
   const [data, setData] = useState([])
   const [chartConfig, setChartConfig] = useState({
     type: 'bar',
@@ -488,7 +497,7 @@ export default function UseStateChangeEffectDocs() {
                 <div>
                   <h3 className="font-semibold mb-3">Type Signature</h3>
                   <CodeBlock language="typescript">
-                      useStateChangeEffect&lt;T&gt;(effect: () =&gt; void, states: T[]): void
+                    useStateChangeEffect&lt;T&gt;(effect: () =&gt; void, states: T[]): void
                   </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
                     The hook is generic and can monitor any type of state values.
@@ -498,14 +507,16 @@ export default function UseStateChangeEffectDocs() {
                 <div>
                   <h3 className="font-semibold mb-3">Comparison Method</h3>
                   <div className="text-sm space-y-2">
-                    <p>The hook uses <code>JSON.stringify</code> for deep comparison of state values.</p>
+                    <p>
+                      The hook uses <code>JSON.stringify</code> for deep comparison of state values.
+                    </p>
                     <CodeBlock language="tsx">
-                        const areStatesEqual = states.every((state, index) =&gt; 
-                          JSON.stringify(state) === JSON.stringify(previousStates[index])
-                        )
+                      const areStatesEqual = states.every((state, index) =&gt; JSON.stringify(state)
+                      === JSON.stringify(previousStates[index]) )
                     </CodeBlock>
                     <p className="text-muted-foreground">
-                      This means the hook can detect changes in nested objects and arrays, but may not work correctly with functions, dates, or other non-serializable values.
+                      This means the hook can detect changes in nested objects and arrays, but may
+                      not work correctly with functions, dates, or other non-serializable values.
                     </p>
                   </div>
                 </div>
@@ -550,7 +561,7 @@ export default function UseStateChangeEffectDocs() {
                     <li>Circular references will cause errors</li>
                   </ul>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-sm">Performance Considerations</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground mt-2">
@@ -563,7 +574,7 @@ export default function UseStateChangeEffectDocs() {
                 <div>
                   <h4 className="font-semibold text-sm">Alternative Approaches</h4>
                   <CodeBlock language="tsx">
-{`// For simple value comparison, use regular useEffect
+                    {`// For simple value comparison, use regular useEffect
 useEffect(() => {
   // Effect code
 }, [simpleValue])

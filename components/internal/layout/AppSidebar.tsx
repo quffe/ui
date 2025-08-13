@@ -20,7 +20,6 @@ import {
   Hash,
   Calendar,
   SquareStack,
-  Menu,
   MousePointer,
   List,
   Copy,
@@ -179,19 +178,48 @@ const hooks = [
     description: "Window resize event handling",
     category: "Device & Layout",
   },
-  // State Management Hooks
+  // Life Cycles Hooks
   {
-    title: "useLocalStorage",
-    url: "/docs/hooks/useLocalStorage",
-    icon: Database,
-    description: "Persistent localStorage state management",
-    category: "State Management",
+    title: "useOnMountEffect",
+    url: "/docs/hooks/useOnMountEffect",
+    icon: Play,
+    description: "Mount-only effect execution",
+    category: "Life Cycles",
+  },
+  {
+    title: "useOnMountLayoutEffect",
+    url: "/docs/hooks/useOnMountLayoutEffect",
+    icon: Zap,
+    description: "Mount-only layout effect with synchronous execution",
+    category: "Life Cycles",
+  },
+  {
+    title: "useOnUnmountEffect",
+    url: "/docs/hooks/useOnUnmountEffect",
+    icon: Package,
+    description: "Cleanup logic that runs only on unmount",
+    category: "Life Cycles",
   },
   {
     title: "useStateChangeEffect",
     url: "/docs/hooks/useStateChangeEffect",
     icon: Zap,
     description: "Effect triggered by state changes",
+    category: "Life Cycles",
+  },
+  {
+    title: "useIsomorphicLayoutEffect",
+    url: "/docs/hooks/useIsomorphicLayoutEffect",
+    icon: Monitor,
+    description: "SSR-safe layout effects for universal apps",
+    category: "Life Cycles",
+  },
+  // State Management Hooks
+  {
+    title: "useLocalStorage",
+    url: "/docs/hooks/useLocalStorage",
+    icon: Database,
+    description: "Persistent localStorage state management",
     category: "State Management",
   },
   // Utility Hooks
@@ -207,13 +235,6 @@ const hooks = [
     url: "/docs/hooks/useCountdown",
     icon: Timer,
     description: "Countdown timers with loop support",
-    category: "Utilities",
-  },
-  {
-    title: "useOnMountEffect",
-    url: "/docs/hooks/useOnMountEffect",
-    icon: Play,
-    description: "Mount-only effect execution",
     category: "Utilities",
   },
   {
