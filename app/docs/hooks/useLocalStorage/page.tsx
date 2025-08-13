@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -15,18 +15,22 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useState, useEffect } from "react"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 export default function UseLocalStorageDocs() {
   const [mounted, setMounted] = useState(false)
-  const [name, setName] = useLocalStorage<string>('demo-name', '')
-  const [preferences, setPreferences] = useLocalStorage<{theme: string, language: string}>('demo-preferences', {
-    theme: 'light',
-    language: 'en'
-  })
-  const [counter, setCounter] = useLocalStorage<number>('demo-counter', 0)
+  const [name, setName] = useLocalStorage<string>("demo-name", "")
+  const [preferences, setPreferences] = useLocalStorage<{ theme: string; language: string }>(
+    "demo-preferences",
+    {
+      theme: "light",
+      language: "en",
+    }
+  )
+  const [counter, setCounter] = useLocalStorage<number>("demo-counter", 0)
 
   useEffect(() => {
     setMounted(true)
@@ -53,13 +57,14 @@ export default function UseLocalStorageDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useLocalStorage</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A hook for managing localStorage state with automatic JSON serialization and error handling.
+              A hook for managing localStorage state with automatic JSON serialization and error
+              handling.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">React Hook</Badge>
@@ -69,8 +74,10 @@ export default function UseLocalStorageDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="useLocalStorage" />
@@ -79,17 +86,17 @@ export default function UseLocalStorageDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { useLocalStorage } from "@/hooks/useLocalStorage"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`function MyComponent() {
+
+              <CodeBlock language="tsx">
+                {`function MyComponent() {
   // String value with default
   const [name, setName] = useLocalStorage<string>('user-name', 'Guest')
   
@@ -113,14 +120,13 @@ export default function UseLocalStorageDocs() {
     </div>
   )
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -131,7 +137,7 @@ export default function UseLocalStorageDocs() {
                     <Input
                       id="name"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={e => setName(e.target.value)}
                       placeholder="Enter your name..."
                     />
                     <div className="text-sm text-muted-foreground">
@@ -148,11 +154,11 @@ export default function UseLocalStorageDocs() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="theme">Theme</Label>
-                        <select 
+                        <select
                           id="theme"
                           className="w-full p-2 border rounded"
                           value={preferences.theme}
-                          onChange={(e) => setPreferences({...preferences, theme: e.target.value})}
+                          onChange={e => setPreferences({ ...preferences, theme: e.target.value })}
                         >
                           <option value="light">Light</option>
                           <option value="dark">Dark</option>
@@ -161,11 +167,13 @@ export default function UseLocalStorageDocs() {
                       </div>
                       <div>
                         <Label htmlFor="language">Language</Label>
-                        <select 
+                        <select
                           id="language"
                           className="w-full p-2 border rounded"
                           value={preferences.language}
-                          onChange={(e) => setPreferences({...preferences, language: e.target.value})}
+                          onChange={e =>
+                            setPreferences({ ...preferences, language: e.target.value })
+                          }
                         >
                           <option value="en">English</option>
                           <option value="es">Spanish</option>
@@ -187,7 +195,9 @@ export default function UseLocalStorageDocs() {
                     <Button onClick={() => setCounter(counter - 1)}>-</Button>
                     <div className="text-lg font-mono">Count: {counter}</div>
                     <Button onClick={() => setCounter(counter + 1)}>+</Button>
-                    <Button variant="outline" onClick={() => setCounter(0)}>Reset</Button>
+                    <Button variant="outline" onClick={() => setCounter(0)}>
+                      Reset
+                    </Button>
                   </div>
                   <div className="text-sm text-muted-foreground mt-2">
                     Stored value: <code>{counter}</code>
@@ -197,9 +207,8 @@ export default function UseLocalStorageDocs() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Advanced Usage</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`// Custom types
+                <CodeBlock language="tsx">
+                  {`// Custom types
 interface UserSettings {
   notifications: boolean
   autoSave: boolean
@@ -254,8 +263,7 @@ function TodoList() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -322,13 +330,12 @@ function TodoList() {
 
                 <div>
                   <h3 className="font-semibold mb-3">Generic Type</h3>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm">
-                      useLocalStorage&lt;T&gt;(keyName: string, defaultValue?: T): [T, (val: T) =&gt; void]
-                    </code>
-                  </div>
+                  <CodeBlock language="typescript">
+                    {`useLocalStorage<T>(keyName: string, defaultValue?: T): [T, (val: T) => void]`}
+                  </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
-                    The hook is generic and will infer the type from the default value, or you can explicitly specify the type.
+                    The hook is generic and will infer the type from the default value, or you can
+                    explicitly specify the type.
                   </p>
                 </div>
               </div>
@@ -337,7 +344,7 @@ function TodoList() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

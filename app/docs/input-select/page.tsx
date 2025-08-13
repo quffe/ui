@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { InputSelect } from "@/components/Navigation/Select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,14 +13,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { useState } from "react"
 
 export default function InputSelectDocs() {
   const [basicValue, setBasicValue] = useState<string | null>(null)
   const [numberValue, setNumberValue] = useState<number | null>(null)
   const [errorValue, setErrorValue] = useState<string | null>(null)
-  
+
   const stringOptions = [
     { label: "Option 1", value: "option1" },
     { label: "Option 2", value: "option2" },
@@ -59,21 +59,24 @@ export default function InputSelectDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">InputSelect</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A flexible, type-safe select input component with support for various data types, sizes, labels, and error states.
+              A flexible, type-safe select input component with support for various data types,
+              sizes, labels, and error states.
             </p>
             <Badge variant="secondary">Navigation Component</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the component using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the component using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="input-select" />
@@ -82,7 +85,7 @@ export default function InputSelectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
@@ -92,7 +95,7 @@ export default function InputSelectDocs() {
               </div>
               <div className="bg-muted p-4 rounded-md">
                 <code className="text-sm whitespace-pre-line">
-{`<InputSelect
+                  {`<InputSelect
   options={options}
   value={selectedValue}
   onChange={setSelectedValue}
@@ -106,7 +109,7 @@ export default function InputSelectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -119,7 +122,7 @@ export default function InputSelectDocs() {
                   placeholder="Select an option"
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {basicValue || 'None'}
+                  Selected: {basicValue || "None"}
                 </p>
               </div>
 
@@ -158,7 +161,7 @@ export default function InputSelectDocs() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {numberValue || 'None'}
+                  Selected: {numberValue || "None"}
                 </p>
               </div>
 
@@ -174,7 +177,7 @@ export default function InputSelectDocs() {
                   error={!errorValue ? "Priority is required" : undefined}
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {errorValue || 'None'}
+                  Selected: {errorValue || "None"}
                 </p>
               </div>
 
@@ -194,7 +197,7 @@ export default function InputSelectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -287,7 +290,7 @@ export default function InputSelectDocs() {
             <CardContent>
               <div className="bg-muted p-4 rounded-md">
                 <code className="text-sm whitespace-pre-line">
-{`interface SelectOption<T> {
+                  {`interface SelectOption<T> {
   label: string
   value: T
   disabled?: boolean
@@ -299,7 +302,7 @@ export default function InputSelectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

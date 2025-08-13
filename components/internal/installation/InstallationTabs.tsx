@@ -2,7 +2,7 @@
 
 import { CodeBlock } from "@/components/ui/code-block"
 import { config } from "@/lib/config"
-import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
+import { usePackageManager, type PackageManager } from "@/hooks/internal"
 
 interface InstallationTabsProps {
   componentName: string

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -12,7 +12,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useState, useEffect } from "react"
 import { useOnWindowResize } from "@/hooks/useOnWindowResize"
 
@@ -25,7 +26,7 @@ export default function UseOnWindowResizeDocs() {
   useOnWindowResize(() => {
     setWindowSize({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     })
     setResizeCount(prev => prev + 1)
   })
@@ -35,11 +36,11 @@ export default function UseOnWindowResizeDocs() {
   }, [])
 
   const getBreakpoint = () => {
-    if (windowSize.width >= 1200) return 'xl'
-    if (windowSize.width >= 1024) return 'lg' 
-    if (windowSize.width >= 768) return 'md'
-    if (windowSize.width >= 640) return 'sm'
-    return 'xs'
+    if (windowSize.width >= 1200) return "xl"
+    if (windowSize.width >= 1024) return "lg"
+    if (windowSize.width >= 768) return "md"
+    if (windowSize.width >= 640) return "sm"
+    return "xs"
   }
 
   return (
@@ -59,13 +60,14 @@ export default function UseOnWindowResizeDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useOnWindowResize</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A simple hook for listening to window resize events with automatic cleanup and immediate execution.
+              A simple hook for listening to window resize events with automatic cleanup and
+              immediate execution.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">React Hook</Badge>
@@ -75,8 +77,10 @@ export default function UseOnWindowResizeDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="useOnWindowResize" />
@@ -85,17 +89,17 @@ export default function UseOnWindowResizeDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { useOnWindowResize } from "@/hooks/useOnWindowResize"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`function ResponsiveComponent() {
+
+              <CodeBlock language="tsx">
+                {`function ResponsiveComponent() {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
 
   useOnWindowResize(() => {
@@ -112,24 +116,31 @@ export default function UseOnWindowResizeDocs() {
     </div>
   )
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-sm font-medium mb-2">Live Window Size Tracking</h3>
                 <div className="border rounded-lg p-4">
                   <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>Width: <strong>{mounted ? windowSize.width : 0}px</strong></div>
-                    <div>Height: <strong>{mounted ? windowSize.height : 0}px</strong></div>
-                    <div>Breakpoint: <strong>{mounted ? getBreakpoint() : 'xs'}</strong></div>
-                    <div>Resize events: <strong>{resizeCount}</strong></div>
+                    <div>
+                      Width: <strong>{mounted ? windowSize.width : 0}px</strong>
+                    </div>
+                    <div>
+                      Height: <strong>{mounted ? windowSize.height : 0}px</strong>
+                    </div>
+                    <div>
+                      Breakpoint: <strong>{mounted ? getBreakpoint() : "xs"}</strong>
+                    </div>
+                    <div>
+                      Resize events: <strong>{resizeCount}</strong>
+                    </div>
                   </div>
                   <div className="text-xs text-muted-foreground mt-2">
                     Resize your browser window to see the values update in real-time.
@@ -139,9 +150,8 @@ export default function UseOnWindowResizeDocs() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Responsive Layout</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ResponsiveLayout() {
+                <CodeBlock language="tsx">
+                  {`function ResponsiveLayout() {
   const [isMobile, setIsMobile] = useState(false)
   const [columns, setColumns] = useState(1)
 
@@ -166,15 +176,13 @@ export default function UseOnWindowResizeDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Chart Resizing</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ResponsiveChart() {
+                <CodeBlock language="tsx">
+                  {`function ResponsiveChart() {
   const chartRef = useRef<HTMLDivElement>(null)
   const [chartInstance, setChartInstance] = useState(null)
 
@@ -204,15 +212,13 @@ export default function UseOnWindowResizeDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Dynamic Navigation</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function DynamicNavigation() {
+                <CodeBlock language="tsx">
+                  {`function DynamicNavigation() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [navLayout, setNavLayout] = useState<'horizontal' | 'vertical'>('horizontal')
 
@@ -248,15 +254,13 @@ export default function UseOnWindowResizeDocs() {
     </nav>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Performance Optimization</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`// Debounced version for expensive operations
+                <CodeBlock language="tsx">
+                  {`// Debounced version for expensive operations
 function useDebounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
   const timeoutRef = useRef<NodeJS.Timeout>()
   
@@ -281,15 +285,13 @@ function PerformantComponent() {
 
   return <div className={layout}>Optimized content</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Viewport-Based Effects</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ViewportEffects() {
+                <CodeBlock language="tsx">
+                  {`function ViewportEffects() {
   const [viewportClass, setViewportClass] = useState('')
 
   useOnWindowResize(() => {
@@ -324,8 +326,7 @@ function PerformantComponent() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -379,7 +380,7 @@ function PerformantComponent() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

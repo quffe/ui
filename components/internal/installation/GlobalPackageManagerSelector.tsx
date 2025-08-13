@@ -1,6 +1,6 @@
 "use client"
 
-import { PackageManagerSelector } from "@/components/PackageManagerSelector"
+import { PackageManagerSelector } from "./PackageManagerSelector"
 import { Badge } from "@/components/ui/badge"
 
 export function GlobalPackageManagerSelector() {

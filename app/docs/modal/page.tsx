@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Modal } from "@/components/Modal/Modal"
 import { Button } from "@/components/ui/button"
@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { useState } from "react"
 
 export default function ModalDocs() {
@@ -39,21 +39,24 @@ export default function ModalDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">Modal</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A flexible modal component with customizable positioning, sizing, and behavior. Supports multiple sizes, animations, and accessibility features.
+              A flexible modal component with customizable positioning, sizing, and behavior.
+              Supports multiple sizes, animations, and accessibility features.
             </p>
             <Badge variant="secondary">Modal Component</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the component using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the component using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="modal" />
@@ -62,7 +65,7 @@ export default function ModalDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
@@ -72,7 +75,7 @@ export default function ModalDocs() {
               </div>
               <div className="bg-muted p-4 rounded-md">
                 <code className="text-sm whitespace-pre-line">
-{`<Modal
+                  {`<Modal
   open={isOpen}
   onClose={() => setIsOpen(false)}
   title="Modal Title"
@@ -87,7 +90,7 @@ export default function ModalDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -103,7 +106,9 @@ export default function ModalDocs() {
                     <p>This is the modal content. You can put any content here.</p>
                     <div className="flex gap-2">
                       <Button onClick={() => setIsOpen(false)}>Close</Button>
-                      <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+                      <Button variant="outline" onClick={() => setIsOpen(false)}>
+                        Cancel
+                      </Button>
                     </div>
                   </div>
                 </Modal>
@@ -111,7 +116,9 @@ export default function ModalDocs() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Confirmation Modal</h3>
-                <Button variant="destructive" onClick={() => setConfirmOpen(true)}>Delete Item</Button>
+                <Button variant="destructive" onClick={() => setConfirmOpen(true)}>
+                  Delete Item
+                </Button>
                 <Modal
                   open={confirmOpen}
                   onClose={() => setConfirmOpen(false)}
@@ -120,10 +127,13 @@ export default function ModalDocs() {
                   size="sm"
                 >
                   <div className="flex gap-2 mt-4">
-                    <Button variant="destructive" onClick={() => {
-                      alert("Item deleted!")
-                      setConfirmOpen(false)
-                    }}>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        alert("Item deleted!")
+                        setConfirmOpen(false)
+                      }}
+                    >
                       Delete
                     </Button>
                     <Button variant="outline" onClick={() => setConfirmOpen(false)}>
@@ -157,7 +167,7 @@ export default function ModalDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -197,7 +207,9 @@ export default function ModalDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
-                      <td className="p-2">'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full'</td>
+                      <td className="p-2">
+                        'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full'
+                      </td>
                       <td className="p-2">'md'</td>
                       <td className="p-2">Modal size variant</td>
                     </tr>
@@ -233,7 +245,7 @@ export default function ModalDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

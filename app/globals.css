@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,71 +43,43 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Poimandres Dark Theme Only - matches your Neovim */
+  --background: oklch(0.13 0.007 249.02);
+  --foreground: oklch(0.936 0.01 235.76);
+  --card: oklch(0.114 0.008 249.02);
+  --card-foreground: oklch(0.936 0.01 235.76);
+  --popover: oklch(0.114 0.008 249.02);
+  --popover-foreground: oklch(0.936 0.01 235.76);
+  --primary: oklch(0.844 0.104 166.77);
+  --primary-foreground: oklch(0.13 0.007 249.02);
+  --secondary: oklch(0.235 0.011 249.02);
+  --secondary-foreground: oklch(0.936 0.01 235.76);
+  --muted: oklch(0.235 0.011 249.02);
+  --muted-foreground: oklch(0.71 0.03 249.02);
+  --accent: oklch(0.235 0.011 249.02);
+  --accent-foreground: oklch(0.936 0.01 235.76);
+  --destructive: oklch(0.655 0.137 336.89);
+  --border: oklch(0.545 0.041 249.02 / 15%);
+  --input: oklch(0.545 0.041 249.02 / 20%);
+  --ring: oklch(0.844 0.104 166.77);
+
+  /* Chart colors using Poimandres palette */
+  --chart-1: oklch(0.844 0.104 166.77); /* teal1 */
+  --chart-2: oklch(0.853 0.081 234.47); /* blue1 */
+  --chart-3: oklch(0.735 0.053 234.47); /* blue3 */
+  --chart-4: oklch(0.721 0.065 166.77); /* teal2 */
+  --chart-5: oklch(0.86 0.062 234.47); /* blue2 */
+
+  /* Sidebar */
+  --sidebar: oklch(0.114 0.008 249.02);
+  --sidebar-foreground: oklch(0.936 0.01 235.76);
+  --sidebar-primary: oklch(0.844 0.104 166.77);
+  --sidebar-primary-foreground: oklch(0.13 0.007 249.02);
+  --sidebar-accent: oklch(0.235 0.011 249.02);
+  --sidebar-accent-foreground: oklch(0.936 0.01 235.76);
+  --sidebar-border: oklch(0.545 0.041 249.02 / 15%);
+  --sidebar-ring: oklch(0.844 0.104 166.77);
 }
 
 @layer base {
@@ -118,5 +88,73 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Custom Poimandres Scrollbars - Dark Mode Only */
+  * {
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.545 0.041 249.02 / 50%) oklch(0.114 0.008 249.02);
+  }
+
+  /* Webkit scrollbars (Chrome, Safari, Edge) */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: oklch(0.114 0.008 249.02);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: oklch(0.545 0.041 249.02 / 50%);
+    border-radius: 4px;
+    border: 1px solid oklch(0.43 0.033 249.02 / 30%);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.71 0.03 249.02 / 70%);
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background: oklch(0.844 0.104 166.77 / 80%); /* teal1 when active */
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: oklch(0.114 0.008 249.02);
+  }
+
+  /* Thin scrollbars for code blocks */
+  .code-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .code-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .code-scrollbar::-webkit-scrollbar-thumb {
+    background: oklch(0.71 0.03 249.02 / 40%);
+    border-radius: 3px;
+  }
+
+  .code-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.844 0.104 166.77 / 60%);
+  }
+
+  /* Rounded scrollbars for dropdowns and modals */
+  [data-radix-popper-content-wrapper] *::-webkit-scrollbar,
+  [role="dialog"] *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  [data-radix-popper-content-wrapper] *::-webkit-scrollbar-thumb,
+  [role="dialog"] *::-webkit-scrollbar-thumb {
+    background: oklch(0.71 0.03 249.02 / 60%);
+    border-radius: 3px;
   }
 }

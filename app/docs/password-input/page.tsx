@@ -45,7 +45,7 @@ export default function PasswordInputDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
               <CardDescription>Install the Password Input component via CLI</CardDescription>
             </CardHeader>
             <CardContent>
@@ -59,7 +59,7 @@ export default function PasswordInputDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
@@ -77,7 +77,7 @@ export default function PasswordInputDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -102,7 +102,7 @@ export default function PasswordInputDocs() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">

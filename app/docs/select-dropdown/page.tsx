@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { SelectDropdown } from "@/components/Navigation/SelectDropdown"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,14 +13,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { useState } from "react"
 
 export default function SelectDropdownDocs() {
   const [basicValue, setBasicValue] = useState<string | null>(null)
   const [numberValue, setNumberValue] = useState<number | null>(null)
   const [errorValue, setErrorValue] = useState<string | null>(null)
-  
+
   const stringOptions = [
     { label: "Apple", value: "apple" },
     { label: "Banana", value: "banana" },
@@ -61,21 +61,24 @@ export default function SelectDropdownDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">SelectDropdown</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A custom dropdown component with full keyboard navigation, accessibility support, and type safety. Features custom styling and behavior.
+              A custom dropdown component with full keyboard navigation, accessibility support, and
+              type safety. Features custom styling and behavior.
             </p>
             <Badge variant="secondary">Navigation Component</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the component using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the component using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="select-dropdown" />
@@ -84,7 +87,7 @@ export default function SelectDropdownDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md mb-4">
@@ -94,7 +97,7 @@ export default function SelectDropdownDocs() {
               </div>
               <div className="bg-muted p-4 rounded-md">
                 <code className="text-sm whitespace-pre-line">
-{`<SelectDropdown
+                  {`<SelectDropdown
   options={options}
   value={selectedValue}
   onChange={setSelectedValue}
@@ -107,7 +110,7 @@ export default function SelectDropdownDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -119,7 +122,7 @@ export default function SelectDropdownDocs() {
                   placeholder="Choose a fruit"
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {basicValue || 'None'}
+                  Selected: {basicValue || "None"}
                 </p>
               </div>
 
@@ -132,7 +135,7 @@ export default function SelectDropdownDocs() {
                   placeholder="Pick a number"
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {numberValue || 'None'}
+                  Selected: {numberValue || "None"}
                 </p>
               </div>
 
@@ -183,7 +186,7 @@ export default function SelectDropdownDocs() {
                   required
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {errorValue || 'None'}
+                  Selected: {errorValue || "None"}
                 </p>
               </div>
 
@@ -202,7 +205,7 @@ export default function SelectDropdownDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -312,7 +315,7 @@ export default function SelectDropdownDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

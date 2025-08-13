@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { DataTable } from "@/components/Data/DataTable"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { useState } from "react"
 
 // Sample data for demonstration
@@ -66,15 +66,18 @@ export default function DataTableDocs() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">DataTable</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A powerful, flexible data table component with sorting, filtering, and pagination support.
+              A powerful, flexible data table component with sorting, filtering, and pagination
+              support.
             </p>
             <Badge variant="secondary">Data Component</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the DataTable component using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the DataTable component using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="data-table" />
@@ -83,7 +86,7 @@ export default function DataTableDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-4">
@@ -91,9 +94,9 @@ export default function DataTableDocs() {
                   {`import { DataTable } from "@/components/Data/DataTable"`}
                 </CodeBlock>
               </div>
-              
+
               <CodeBlock language="tsx">
-{`<DataTable
+                {`<DataTable
   columns={columns}
   data={data}
   pageSize={10}
@@ -105,7 +108,7 @@ export default function DataTableDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Example</CardTitle>
+              <CardTitle className="text-2xl font-bold">Example</CardTitle>
               <CardDescription>Basic data table with sample data</CardDescription>
             </CardHeader>
             <CardContent>
@@ -113,14 +116,14 @@ export default function DataTableDocs() {
                 columns={sampleColumns}
                 data={data}
                 pageSize={5}
-                onRowClick={(row) => alert(`Clicked on ${row.name}`)}
+                onRowClick={row => alert(`Clicked on ${row.name}`)}
               />
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">

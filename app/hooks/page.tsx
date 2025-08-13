@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -20,7 +20,6 @@ import {
   Database,
   Play,
   Monitor,
-  Package,
   RefreshCw,
   Zap,
   Smartphone,
@@ -53,14 +52,6 @@ const hooks = [
     description: "Persistent localStorage state management",
     category: "State Management",
     features: ["JSON serialization", "TypeScript generics", "Error handling"],
-  },
-  {
-    title: "usePackageManager",
-    url: "/docs/hooks/usePackageManager",
-    icon: Package,
-    description: "Package manager preference storage",
-    category: "State Management",
-    features: ["Type safety", "Validation", "Default fallbacks"],
   },
   {
     title: "useStateChangeEffect",
@@ -141,7 +132,8 @@ export default function HooksOverview() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">React Hooks</h1>
             <p className="text-lg text-muted-foreground mb-6">
-              A comprehensive collection of custom React hooks built with TypeScript for enhanced functionality and developer experience.
+              A comprehensive collection of custom React hooks built with TypeScript for enhanced
+              functionality and developer experience.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">{hooks.length} Hooks</Badge>
@@ -202,9 +194,7 @@ export default function HooksOverview() {
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <CardDescription className="mb-4">
-                        {hook.description}
-                      </CardDescription>
+                      <CardDescription className="mb-4">{hook.description}</CardDescription>
 
                       <div className="mb-4">
                         <h5 className="text-sm font-medium mb-2">Key Features:</h5>
@@ -219,7 +209,10 @@ export default function HooksOverview() {
                       </div>
 
                       <Link href={hook.url}>
-                        <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <Button
+                          variant="outline"
+                          className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                        >
                           View Documentation
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
@@ -242,14 +235,10 @@ export default function HooksOverview() {
               <CardContent>
                 <div className="flex justify-center gap-4">
                   <Link href="/installation">
-                    <Button variant="outline">
-                      Installation Guide
-                    </Button>
+                    <Button variant="outline">Installation Guide</Button>
                   </Link>
                   <Link href="/components">
-                    <Button variant="outline">
-                      View Components
-                    </Button>
+                    <Button variant="outline">View Components</Button>
                   </Link>
                 </div>
               </CardContent>

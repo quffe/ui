@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,7 +13,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useState } from "react"
 import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"
 
@@ -25,21 +26,21 @@ export default function UseOnMountEffectDocs() {
 
   // Demonstrate useOnMountEffect
   useOnMountEffect(() => {
-    console.log('useOnMountEffect: Component mounted!')
+    console.log("useOnMountEffect: Component mounted!")
     setMountCount(prev => prev + 1)
-    
+
     return () => {
-      console.log('useOnMountEffect: Cleanup on unmount')
+      console.log("useOnMountEffect: Cleanup on unmount")
     }
   })
 
-  // Demonstrate useStrictMountEffect  
+  // Demonstrate useStrictMountEffect
   useStrictMountEffect(() => {
-    console.log('useStrictMountEffect: Component mounted!')
+    console.log("useStrictMountEffect: Component mounted!")
     setStrictMountCount(prev => prev + 1)
-    
+
     return () => {
-      console.log('useStrictMountEffect: Cleanup on unmount')
+      console.log("useStrictMountEffect: Cleanup on unmount")
     }
   })
 
@@ -64,13 +65,14 @@ export default function UseOnMountEffectDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useOnMountEffect</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A collection of hooks for running effects only once when components mount, with proper cleanup handling.
+              A collection of hooks for running effects only once when components mount, with proper
+              cleanup handling.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">React Hook</Badge>
@@ -80,8 +82,10 @@ export default function UseOnMountEffectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="useOnMountEffect" />
@@ -90,17 +94,17 @@ export default function UseOnMountEffectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`// Basic usage - runs once on mount
+
+              <CodeBlock language="tsx">
+                {`// Basic usage - runs once on mount
 function MyComponent() {
   useOnMountEffect(() => {
     console.log('Component mounted!')
@@ -134,24 +138,31 @@ function ConditionalComponent() {
   
   return <div>Component is mounted!</div>
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-sm font-medium mb-2">Live Demonstration</h3>
                 <div className="border rounded-lg p-4">
                   <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                    <div>useOnMountEffect runs: <strong>{mountCount} time(s)</strong></div>
-                    <div>useStrictMountEffect runs: <strong>{strictMountCount} time(s)</strong></div>
-                    <div>Component re-renders: <strong>{rerenderCount} time(s)</strong></div>
-                    <div>Has mounted: <strong>{hasMounted ? 'Yes' : 'No'}</strong></div>
+                    <div>
+                      useOnMountEffect runs: <strong>{mountCount} time(s)</strong>
+                    </div>
+                    <div>
+                      useStrictMountEffect runs: <strong>{strictMountCount} time(s)</strong>
+                    </div>
+                    <div>
+                      Component re-renders: <strong>{rerenderCount} time(s)</strong>
+                    </div>
+                    <div>
+                      Has mounted: <strong>{hasMounted ? "Yes" : "No"}</strong>
+                    </div>
                   </div>
                   <Button onClick={triggerRerender}>
                     Trigger Re-render (count: {rerenderCount})
@@ -164,9 +175,8 @@ function ConditionalComponent() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Data Fetching on Mount</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function UserProfile({ userId }: { userId: string }) {
+                <CodeBlock language="tsx">
+                  {`function UserProfile({ userId }: { userId: string }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -192,15 +202,13 @@ function ConditionalComponent() {
   
   return <div>Welcome, {user.name}!</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Event Listeners Setup</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function KeyboardShortcuts() {
+                <CodeBlock language="tsx">
+                  {`function KeyboardShortcuts() {
   useOnMountEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key === 's') {
@@ -243,15 +251,13 @@ function WindowResize() {
 
   return <div>Window: {windowSize.width} x {windowSize.height}</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Analytics and Tracking</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function AnalyticsTracker({ page }: { page: string }) {
+                <CodeBlock language="tsx">
+                  {`function AnalyticsTracker({ page }: { page: string }) {
   useStrictMountEffect(() => {
     // Track page view once per component mount
     analytics.track('page_view', {
@@ -278,15 +284,13 @@ function AdComponent() {
 
   return <div id="ad-container">Advertisement</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">SSR-Safe Rendering</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ClientOnlyComponent() {
+                <CodeBlock language="tsx">
+                  {`function ClientOnlyComponent() {
   const hasMounted = useHasMounted()
   
   // Avoid hydration mismatch by only rendering client-specific content after mount
@@ -319,8 +323,7 @@ function ThemeComponent() {
   
   return <div className={\`theme-\${theme}\`}>Themed content</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -336,7 +339,7 @@ function ThemeComponent() {
                   <p className="text-sm text-muted-foreground mb-3">
                     Runs an effect only once when the component mounts, even if dependencies change.
                   </p>
-                  
+
                   <h4 className="font-medium mb-2">Parameters</h4>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
@@ -356,7 +359,9 @@ function ThemeComponent() {
                         <tr className="border-b">
                           <td className="p-2 font-mono">dependencies</td>
                           <td className="p-2">React.DependencyList</td>
-                          <td className="p-2">Optional dependencies array (captured on first render only)</td>
+                          <td className="p-2">
+                            Optional dependencies array (captured on first render only)
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -369,9 +374,10 @@ function ThemeComponent() {
                 <div>
                   <h3 className="font-semibold mb-3">useStrictMountEffect</h3>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Runs an effect exactly once on first render, completely ignoring all dependencies.
+                    Runs an effect exactly once on first render, completely ignoring all
+                    dependencies.
                   </p>
-                  
+
                   <h4 className="font-medium mb-2">Parameters</h4>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
@@ -399,9 +405,10 @@ function ThemeComponent() {
                 <div>
                   <h3 className="font-semibold mb-3">useHasMounted</h3>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Returns a boolean indicating whether the component has completed its initial mount.
+                    Returns a boolean indicating whether the component has completed its initial
+                    mount.
                   </p>
-                  
+
                   <h4 className="font-medium mb-2">Parameters</h4>
                   <div className="text-sm">None</div>
 
@@ -417,7 +424,9 @@ function ThemeComponent() {
                       <tbody>
                         <tr className="border-b">
                           <td className="p-2 font-mono">boolean</td>
-                          <td className="p-2">True if component has mounted, false during initial render</td>
+                          <td className="p-2">
+                            True if component has mounted, false during initial render
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -429,7 +438,7 @@ function ThemeComponent() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

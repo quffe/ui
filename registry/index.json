@@ -49,13 +49,6 @@
     "registryDependencies": ["button"]
   },
   {
-    "name": "app-sidebar",
-    "type": "registry:ui", 
-    "description": "Application sidebar with navigation and search",
-    "dependencies": ["lucide-react", "next"],
-    "registryDependencies": ["sidebar", "label"]
-  },
-  {
     "name": "modal-trigger",
     "type": "registry:ui",
     "description": "Modal trigger component with button integration",

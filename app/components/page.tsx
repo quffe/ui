@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -70,13 +70,6 @@ const components = [
     description: "Custom dropdown with keyboard navigation",
     category: "Navigation",
     dependencies: ["class-variance-authority"],
-  },
-  {
-    name: "app-sidebar",
-    title: "AppSidebar",
-    description: "Application sidebar with navigation and search",
-    category: "Layout",
-    dependencies: [],
   },
 ]
 

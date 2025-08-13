@@ -19,7 +19,7 @@ const setGlobalPackageManager = (pm: PackageManager) => {
 }
 
 const getGlobalPackageManager = (): PackageManager => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const stored = localStorage.getItem(STORAGE_KEY) as PackageManager
     if (stored && ["pnpm", "npm", "yarn", "bun"].includes(stored)) {
       globalPackageManager = stored

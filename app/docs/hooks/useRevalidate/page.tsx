@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,14 +13,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useState } from "react"
 import useRevalidate from "@/hooks/useRevalidate"
 import { RefreshCw, Database, Server } from "lucide-react"
 
 export default function UseRevalidateDocs() {
   const [revalidateCount, setRevalidateCount] = useState(0)
-  const [lastRevalidate, setLastRevalidate] = useState<string>('')
+  const [lastRevalidate, setLastRevalidate] = useState<string>("")
   const { revalidate } = useRevalidate()
 
   const handleRevalidate = (urls: string[]) => {
@@ -29,12 +30,7 @@ export default function UseRevalidateDocs() {
     setLastRevalidate(new Date().toLocaleTimeString())
   }
 
-  const sampleUrls = [
-    '/api/users',
-    '/api/posts', 
-    '/api/comments',
-    '/api/analytics'
-  ]
+  const sampleUrls = ["/api/users", "/api/posts", "/api/comments", "/api/analytics"]
 
   return (
     <div className="flex flex-col">
@@ -53,13 +49,14 @@ export default function UseRevalidateDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useRevalidate</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A SWR integration hook for revalidating cached data by matching URL patterns, perfect for refreshing multiple API endpoints.
+              A SWR integration hook for revalidating cached data by matching URL patterns, perfect
+              for refreshing multiple API endpoints.
             </p>
             <div className="flex gap-2">
               <Badge variant="secondary">React Hook</Badge>
@@ -69,8 +66,10 @@ export default function UseRevalidateDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="useRevalidate" />
@@ -80,17 +79,14 @@ export default function UseRevalidateDocs() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle>Prerequisites</CardTitle>
-              <CardDescription>This hook requires SWR to be installed and configured</CardDescription>
+              <CardDescription>
+                This hook requires SWR to be installed and configured
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  npm install swr
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`// Wrap your app with SWR configuration
+              <CodeBlock language="typescript">{`npm install swr`}</CodeBlock>
+              <CodeBlock language="tsx">
+                {`// Wrap your app with SWR configuration
 import { SWRConfig } from 'swr'
 
 function MyApp({ Component, pageProps }) {
@@ -105,24 +101,20 @@ function MyApp({ Component, pageProps }) {
     </SWRConfig>
   )
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import useRevalidate from "@/hooks/useRevalidate"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`function DataManager() {
+              <CodeBlock language="typescript">
+                {`import useRevalidate from "@/hooks/useRevalidate"`}
+              </CodeBlock>
+              <CodeBlock language="tsx">
+                {`function DataManager() {
   const { revalidate } = useRevalidate()
 
   const handleRefreshData = () => {
@@ -139,27 +131,30 @@ function MyApp({ Component, pageProps }) {
     </button>
   )
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-sm font-medium mb-2">Bulk Data Revalidation</h3>
                 <div className="border rounded-lg p-4">
                   <div className="mb-4 text-sm text-muted-foreground">
-                    <div>Revalidate count: <strong>{revalidateCount}</strong></div>
-                    <div>Last revalidate: <strong>{lastRevalidate || 'Never'}</strong></div>
+                    <div>
+                      Revalidate count: <strong>{revalidateCount}</strong>
+                    </div>
+                    <div>
+                      Last revalidate: <strong>{lastRevalidate || "Never"}</strong>
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       size="sm"
-                      onClick={() => handleRevalidate(['/api/users'])}
+                      onClick={() => handleRevalidate(["/api/users"])}
                       variant="outline"
                     >
                       <Database className="h-4 w-4 mr-2" />
@@ -167,7 +162,7 @@ function MyApp({ Component, pageProps }) {
                     </Button>
                     <Button
                       size="sm"
-                      onClick={() => handleRevalidate(['/api/posts', '/api/comments'])}
+                      onClick={() => handleRevalidate(["/api/posts", "/api/comments"])}
                       variant="outline"
                     >
                       <Server className="h-4 w-4 mr-2" />
@@ -190,9 +185,8 @@ function MyApp({ Component, pageProps }) {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Form Submission with Revalidation</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function UserForm() {
+                <CodeBlock language="tsx">
+                  {`function UserForm() {
   const { revalidate } = useRevalidate()
   const [formData, setFormData] = useState({ name: '', email: '' })
 
@@ -240,15 +234,13 @@ function MyApp({ Component, pageProps }) {
     </form>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Admin Dashboard Actions</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function AdminDashboard() {
+                <CodeBlock language="tsx">
+                  {`function AdminDashboard() {
   const { revalidate } = useRevalidate()
 
   const refreshUserData = () => {
@@ -305,15 +297,13 @@ function MyApp({ Component, pageProps }) {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Real-time Updates</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function RealTimeComponent() {
+                <CodeBlock language="tsx">
+                  {`function RealTimeComponent() {
   const { revalidate } = useRevalidate()
 
   useEffect(() => {
@@ -376,15 +366,13 @@ function SSEComponent() {
 
   return <div>SSE-powered components</div>
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Error Recovery</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ErrorRecovery() {
+                <CodeBlock language="tsx">
+                  {`function ErrorRecovery() {
   const { revalidate } = useRevalidate()
   const [retryCount, setRetryCount] = useState(0)
 
@@ -420,15 +408,13 @@ function SSEComponent() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Conditional Revalidation</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`function ConditionalRevalidation() {
+                <CodeBlock language="tsx">
+                  {`function ConditionalRevalidation() {
   const { revalidate } = useRevalidate()
   const [user, setUser] = useState(null)
 
@@ -494,8 +480,7 @@ function SSEComponent() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -535,17 +520,16 @@ function SSEComponent() {
 
                 <div>
                   <h3 className="font-semibold mb-3">Revalidation Logic</h3>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm whitespace-pre-line">
-{`const revalidate = (urls: string[]) => {
+                  <CodeBlock language="tsx">
+                    {`const revalidate = (urls: string[]) => {
   urls.forEach(url => {
     mutate((key: { url: string }) => key.url === url)
   })
 }`}
-                    </code>
-                  </div>
+                  </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
-                    The hook uses SWR's mutate function to match cache keys by URL and trigger revalidation.
+                    The hook uses SWR's mutate function to match cache keys by URL and trigger
+                    revalidation.
                   </p>
                 </div>
 
@@ -554,7 +538,9 @@ function SSEComponent() {
                   <div className="text-sm space-y-2">
                     <p>This hook works with SWR's cache key matching system:</p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                      <li>Matches cache entries where the key's URL property equals the provided URL</li>
+                      <li>
+                        Matches cache entries where the key's URL property equals the provided URL
+                      </li>
                       <li>Triggers revalidation for all matching cache entries</li>
                       <li>Works with SWR's global mutate function</li>
                       <li>Supports both string keys and object keys with URL properties</li>
@@ -567,7 +553,7 @@ function SSEComponent() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

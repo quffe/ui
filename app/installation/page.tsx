@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Terminal, CheckCircle, AlertCircle, Code, Package, Zap } from "lucide-react"
+import { CodeBlock } from "@/components/ui/code-block"
 import Link from "next/link"
 
 const steps = [
@@ -164,7 +165,7 @@ export default function InstallationPage() {
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-600">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <CheckCircle className="h-5 w-5" />
                   </div>
                   Step 1: Set up your React project
@@ -176,9 +177,9 @@ export default function InstallationPage() {
                   {frameworks.map(framework => (
                     <Card key={framework.name} className="p-4">
                       <h4 className="font-semibold mb-2">{framework.name}</h4>
-                      <div className="bg-muted p-2 rounded text-sm font-mono mb-2">
+                      <CodeBlock language="bash" showCopyButton={true} className="mb-2">
                         {framework.command}
-                      </div>
+                      </CodeBlock>
                       <a href={framework.docs} target="_blank" rel="noopener noreferrer">
                         <Button variant="link" size="sm" className="p-0 h-auto">
                           Documentation →
@@ -194,7 +195,7 @@ export default function InstallationPage() {
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-accent-foreground">
                     <Terminal className="h-5 w-5" />
                   </div>
                   Step 2: Initialize Shadcn/UI
@@ -206,16 +207,16 @@ export default function InstallationPage() {
                   <p className="text-sm font-medium mb-2">
                     Navigate to your project directory and run:
                   </p>
-                  <div className="bg-muted p-4 rounded-md">
-                    <code className="text-sm font-mono">pnpm dlx shadcn@latest init</code>
-                  </div>
+                  <CodeBlock language="bash" showCopyButton={true}>
+                    pnpm dlx shadcn@latest init
+                  </CodeBlock>
                 </div>
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="bg-secondary border border-border rounded-lg p-4">
                   <div className="flex items-start gap-2">
-                    <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
+                    <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="text-sm font-medium text-yellow-800">Note</p>
-                      <p className="text-sm text-yellow-700">
+                      <p className="text-sm font-medium">Note</p>
+                      <p className="text-sm text-muted-foreground">
                         This will create the necessary configuration files and install required
                         dependencies. Answer the prompts to configure your project.
                       </p>
@@ -229,7 +230,7 @@ export default function InstallationPage() {
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-foreground">
                     <Package className="h-5 w-5" />
                   </div>
                   Step 3: Install Components
@@ -242,7 +243,7 @@ export default function InstallationPage() {
                   <InstallationTabs componentName="data-table" />
                   <p className="text-sm text-muted-foreground">
                     The component will be installed to your{" "}
-                    <code className="bg-muted px-1 rounded">components/ui</code> directory.
+                    <CodeBlock inline={true}>components/ui</CodeBlock> directory.
                   </p>
                 </div>
               </CardContent>
@@ -252,7 +253,7 @@ export default function InstallationPage() {
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-100 text-orange-600">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary">
                     <Code className="h-5 w-5" />
                   </div>
                   Step 4: Import and Use
@@ -262,23 +263,19 @@ export default function InstallationPage() {
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-sm font-medium mb-2">Import the component:</p>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm font-mono">
-                      import {"{ DataTable }"} from "@/components/ui/data-table"
-                    </code>
-                  </div>
+                  <CodeBlock language="typescript" showCopyButton={true}>
+                    {`import { DataTable } from "@/components/ui/data-table"`}
+                  </CodeBlock>
                 </div>
                 <div>
                   <p className="text-sm font-medium mb-2">Use it in your JSX:</p>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm font-mono whitespace-pre-line">
-                      {`<DataTable
+                  <CodeBlock language="tsx" showCopyButton={true}>
+                    {`<DataTable
   columns={columns}
   data={data}
   pageSize={10}
 />`}
-                    </code>
-                  </div>
+                  </CodeBlock>
                 </div>
               </CardContent>
             </Card>
@@ -337,7 +334,7 @@ export default function InstallationPage() {
           {/* Troubleshooting */}
           <Card>
             <CardHeader>
-              <CardTitle>Troubleshooting</CardTitle>
+              <CardTitle className="text-2xl font-bold">Troubleshooting</CardTitle>
               <CardDescription>Common issues and solutions</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -349,7 +346,7 @@ export default function InstallationPage() {
                 <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
                   <li>
                     You've initialized shadcn/ui with{" "}
-                    <code className="bg-muted px-1 rounded">pnpm dlx shadcn@latest init</code>
+                    <CodeBlock inline={true}>pnpm dlx shadcn@latest init</CodeBlock>
                   </li>
                   <li>The component was installed successfully</li>
                   <li>You're importing from the correct path</li>
@@ -361,11 +358,9 @@ export default function InstallationPage() {
                 <p className="text-sm text-muted-foreground mb-2">
                   Some components require additional dependencies. Install them manually if needed:
                 </p>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm font-mono">
-                    pnpm install @tanstack/react-table lucide-react date-fns
-                  </code>
-                </div>
+                <CodeBlock language="bash" showCopyButton={true}>
+                  pnpm install @tanstack/react-table lucide-react date-fns
+                </CodeBlock>
               </div>
 
               <div>

@@ -14,7 +14,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useState } from "react"
 import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
 
@@ -78,13 +79,13 @@ export default function UseStateChangeEffectDocs() {
               <CardTitle>Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
+              
+              <CodeBlock language="tsx">
 {`function DataProcessor() {
   const [data, setData] = useState(null)
   const [filters, setFilters] = useState({})
@@ -97,8 +98,7 @@ export default function UseStateChangeEffectDocs() {
 
   return <div>Data processing component</div>
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
@@ -169,8 +169,7 @@ export default function UseStateChangeEffectDocs() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Form Validation</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
+                <CodeBlock language="tsx">
 {`function FormWithValidation() {
   const [formData, setFormData] = useState({
     email: '',
@@ -227,14 +226,12 @@ export default function UseStateChangeEffectDocs() {
     </form>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">API Request Debouncing</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
+                <CodeBlock language="tsx">
 {`function SearchComponent() {
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState({ category: '', priceRange: [0, 100] })
@@ -287,14 +284,12 @@ export default function UseStateChangeEffectDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Local Storage Sync</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
+                <CodeBlock language="tsx">
 {`function UserPreferences() {
   const [preferences, setPreferences] = useState({
     theme: 'light',
@@ -355,14 +350,12 @@ export default function UseStateChangeEffectDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Analytics Tracking</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
+                <CodeBlock language="tsx">
 {`function AnalyticsWrapper() {
   const [user, setUser] = useState(null)
   const [page, setPage] = useState('/')
@@ -398,14 +391,12 @@ export default function UseStateChangeEffectDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">Complex State Dependencies</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
+                <CodeBlock language="tsx">
 {`function DataVisualization() {
   const [data, setData] = useState([])
   const [chartConfig, setChartConfig] = useState({
@@ -451,8 +442,7 @@ export default function UseStateChangeEffectDocs() {
     </div>
   )
 }`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -497,11 +487,9 @@ export default function UseStateChangeEffectDocs() {
 
                 <div>
                   <h3 className="font-semibold mb-3">Type Signature</h3>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-sm">
+                  <CodeBlock language="typescript">
                       useStateChangeEffect&lt;T&gt;(effect: () =&gt; void, states: T[]): void
-                    </code>
-                  </div>
+                  </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
                     The hook is generic and can monitor any type of state values.
                   </p>
@@ -511,13 +499,11 @@ export default function UseStateChangeEffectDocs() {
                   <h3 className="font-semibold mb-3">Comparison Method</h3>
                   <div className="text-sm space-y-2">
                     <p>The hook uses <code>JSON.stringify</code> for deep comparison of state values.</p>
-                    <div className="bg-muted p-3 rounded-md">
-                      <code className="text-sm">
+                    <CodeBlock language="tsx">
                         const areStatesEqual = states.every((state, index) =&gt; 
                           JSON.stringify(state) === JSON.stringify(previousStates[index])
                         )
-                      </code>
-                    </div>
+                    </CodeBlock>
                     <p className="text-muted-foreground">
                       This means the hook can detect changes in nested objects and arrays, but may not work correctly with functions, dates, or other non-serializable values.
                     </p>
@@ -576,8 +562,7 @@ export default function UseStateChangeEffectDocs() {
 
                 <div>
                   <h4 className="font-semibold text-sm">Alternative Approaches</h4>
-                  <div className="bg-muted p-3 rounded-md mt-2">
-                    <code className="text-sm whitespace-pre-line">
+                  <CodeBlock language="tsx">
 {`// For simple value comparison, use regular useEffect
 useEffect(() => {
   // Effect code
@@ -593,8 +578,7 @@ function useDeepCompareEffect(callback, dependencies) {
   
   useEffect(callback, ref.current)
 }`}
-                    </code>
-                  </div>
+                  </CodeBlock>
                 </div>
               </div>
             </CardContent>

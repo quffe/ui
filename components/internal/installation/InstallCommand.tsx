@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { config } from "@/lib/config"
 import { Copy, Check } from "lucide-react"
-import { PackageManagerSelector } from "@/components/PackageManagerSelector"
-import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
+import { PackageManagerSelector } from "./PackageManagerSelector"
+import { usePackageManager, type PackageManager } from "@/hooks/internal"
 
 interface InstallCommandProps {
   componentName: string

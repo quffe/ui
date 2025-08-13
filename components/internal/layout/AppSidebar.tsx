@@ -81,14 +81,6 @@ const components = [
     description: "Date range picker with presets",
     category: "Advanced Inputs",
   },
-  // Layout Components
-  {
-    title: "AppSidebar",
-    url: "/docs/app-sidebar",
-    icon: Menu,
-    description: "Application sidebar with search and navigation",
-    category: "Layout & Navigation",
-  },
   // Modal Components
   {
     title: "Modal",
@@ -193,13 +185,6 @@ const hooks = [
     url: "/docs/hooks/useLocalStorage",
     icon: Database,
     description: "Persistent localStorage state management",
-    category: "State Management",
-  },
-  {
-    title: "usePackageManager",
-    url: "/docs/hooks/usePackageManager",
-    icon: Package,
-    description: "Package manager preference storage",
     category: "State Management",
   },
   {

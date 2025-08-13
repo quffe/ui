@@ -12,7 +12,6 @@ A comprehensive collection of reusable React hooks built with TypeScript for enh
 ### State Management & Storage
 
 - **[useLocalStorage](#uselocalstorage)** - Persistent localStorage state management
-- **[usePackageManager](#usepackagemanager)** - Package manager preference storage
 - **[useStateChangeEffect](#usestatechangeeffect)** - Effect triggered by state changes
 
 ### Utilities & Effects
@@ -325,55 +324,6 @@ function ResponsiveComponent() {
 **API:**
 ```tsx
 function useOnWindowResize(handler: () => void): void
-```
-
----
-
-### usePackageManager
-
-Manage package manager preferences with localStorage persistence.
-
-**Features:**
-- Supports pnpm, npm, yarn, bun
-- localStorage persistence
-- Loading state tracking
-- Type-safe package manager selection
-
-```tsx
-import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
-
-function PackageManagerSelector() {
-  const { packageManager, setPackageManager, isLoaded } = usePackageManager()
-
-  if (!isLoaded) {
-    return <div>Loading...</div>
-  }
-
-  return (
-    <select
-      value={packageManager}
-      onChange={(e) => setPackageManager(e.target.value as PackageManager)}
-    >
-      <option value="pnpm">pnpm</option>
-      <option value="npm">npm</option>
-      <option value="yarn">yarn</option>
-      <option value="bun">bun</option>
-    </select>
-  )
-}
-```
-
-**API:**
-```tsx
-type PackageManager = "pnpm" | "npm" | "yarn" | "bun"
-
-interface UsePackageManagerReturn {
-  packageManager: PackageManager
-  setPackageManager: (pm: PackageManager) => void
-  isLoaded: boolean
-}
-
-function usePackageManager(): UsePackageManagerReturn
 ```
 
 ---

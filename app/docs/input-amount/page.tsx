@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { InputAmount } from "@/components/Input/InputAmount"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
 import { useState } from "react"
 
 export default function InputAmountDocs() {
@@ -38,21 +38,24 @@ export default function InputAmountDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">InputAmount</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A specialized input component for entering monetary amounts with automatic formatting, validation, and currency symbol support.
+              A specialized input component for entering monetary amounts with automatic formatting,
+              validation, and currency symbol support.
             </p>
             <Badge variant="secondary">Input Component</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the InputAmount component using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the InputAmount component using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="input-amount" />
@@ -61,7 +64,7 @@ export default function InputAmountDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-4">
@@ -69,9 +72,9 @@ export default function InputAmountDocs() {
                   {`import { InputAmount } from "@/components/Input/InputAmount"`}
                 </CodeBlock>
               </div>
-              
+
               <CodeBlock language="tsx">
-{`<InputAmount
+                {`<InputAmount
   value={amount}
   onChange={setAmount}
   label="Enter amount"
@@ -83,7 +86,7 @@ export default function InputAmountDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -95,7 +98,7 @@ export default function InputAmountDocs() {
                   placeholder="0.00"
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Current value: {amount?.toString() || 'null'}
+                  Current value: {amount?.toString() || "null"}
                 </p>
               </div>
 
@@ -110,7 +113,7 @@ export default function InputAmountDocs() {
                   currency="$"
                 />
                 <p className="text-sm text-muted-foreground mt-2">
-                  Current value: {currencyAmount?.toString() || 'null'}
+                  Current value: {currencyAmount?.toString() || "null"}
                 </p>
               </div>
 
@@ -131,7 +134,7 @@ export default function InputAmountDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Props</CardTitle>
+              <CardTitle className="text-2xl font-bold">Props</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">

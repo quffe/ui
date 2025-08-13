@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown, Package } from "lucide-react"
-import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
+import { usePackageManager, type PackageManager } from "@/hooks/internal"
 
 const packageManagers: { value: PackageManager; label: string; icon: string }[] = [
   { value: "pnpm", label: "pnpm", icon: "📦" },

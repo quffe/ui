@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,14 +13,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { InstallationTabs } from "@/components/InstallationTabs"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/ui/code-block"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { Copy, Check, AlertCircle } from "lucide-react"
 
 export default function UseCopyToClipboardDocs() {
   const { copy, copied, error, isLoading } = useCopyToClipboard({
-    onSuccess: (text) => console.log('Copied:', text),
-    timeout: 3000
+    onSuccess: text => console.log("Copied:", text),
+    timeout: 3000,
   })
 
   const sampleCode = `import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
@@ -52,21 +53,24 @@ function CopyButton() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">useCopyToClipboard</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              A comprehensive hook for copying text to clipboard with modern API support, fallbacks, and state management.
+              A comprehensive hook for copying text to clipboard with modern API support, fallbacks,
+              and state management.
             </p>
             <Badge variant="secondary">React Hook</Badge>
           </div>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook using your preferred package manager</CardDescription>
+              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
+              <CardDescription>
+                Install the hook using your preferred package manager
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <InstallationTabs componentName="use-copy-to-clipboard" />
@@ -75,17 +79,17 @@ function CopyButton() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-{`function CopyButton({ text }) {
+
+              <CodeBlock language="tsx">
+                {`function CopyButton({ text }) {
   const { copy, copied, error, isLoading } = useCopyToClipboard({
     onSuccess: (text) => console.log('Copied:', text),
     timeout: 3000
@@ -100,20 +104,19 @@ function CopyButton() {
     </button>
   )
 }`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Examples</CardTitle>
+              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <h3 className="text-sm font-medium mb-2">Basic Copy Button</h3>
                 <div className="flex items-center gap-2 mb-4">
-                  <Button 
+                  <Button
                     onClick={() => copy("Hello, World!", "greeting")}
                     disabled={isLoading}
                     size="sm"
@@ -144,11 +147,9 @@ function CopyButton() {
               <div>
                 <h3 className="text-sm font-medium mb-2">Copy Code Example</h3>
                 <div className="relative">
-                  <div className="bg-muted p-4 rounded-md pr-12">
-                    <code className="text-sm font-mono whitespace-pre-line">
-                      {sampleCode}
-                    </code>
-                  </div>
+                  <CodeBlock language="tsx" showCopyButton={false}>
+                    {sampleCode}
+                  </CodeBlock>
                   <Button
                     onClick={() => copy(sampleCode, "code example")}
                     variant="ghost"
@@ -162,9 +163,8 @@ function CopyButton() {
 
               <div>
                 <h3 className="text-sm font-medium mb-2">With Success Callback</h3>
-                <div className="bg-muted p-3 rounded-md">
-                  <code className="text-sm whitespace-pre-line">
-{`const { copy } = useCopyToClipboard({
+                <CodeBlock language="tsx">
+                  {`const { copy } = useCopyToClipboard({
   onSuccess: (text) => {
     toast.success(\`Copied: \${text}\`)
   },
@@ -173,8 +173,7 @@ function CopyButton() {
   },
   timeout: 5000
 })`}
-                  </code>
-                </div>
+                </CodeBlock>
               </div>
             </CardContent>
           </Card>
@@ -275,7 +274,7 @@ function CopyButton() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Features</CardTitle>
+              <CardTitle className="text-2xl font-bold">Features</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-2 text-sm">

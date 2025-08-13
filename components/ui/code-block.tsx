@@ -1,11 +1,11 @@
 "use client"
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 import { Button } from "@/components/ui/button"
 import { Copy, Check } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { poimandresTheme } from "@/lib/poimandres-theme"
 
 interface CodeBlockProps {
   children: string
@@ -33,10 +33,12 @@ export function CodeBlock({
   // For inline code
   if (inline) {
     return (
-      <code className={cn(
-        "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
-        className
-      )}>
+      <code
+        className={cn(
+          "relative rounded bg-muted border border-border px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+          className
+        )}
+      >
         {children}
       </code>
     )
@@ -45,10 +47,10 @@ export function CodeBlock({
   // For code blocks
   return (
     <div className={cn("relative group", className)}>
-      <div className="bg-zinc-950 rounded-md overflow-hidden">
+      <div className="bg-card rounded-md overflow-hidden border border-border code-scrollbar">
         <SyntaxHighlighter
           language={language}
-          style={oneDark}
+          style={poimandresTheme}
           customStyle={{
             margin: 0,
             padding: "1rem",
@@ -63,19 +65,15 @@ export function CodeBlock({
           {children}
         </SyntaxHighlighter>
       </div>
-      
+
       {showCopyButton && (
         <Button
           size="sm"
           variant="ghost"
-          className="absolute top-2 right-2 h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity bg-zinc-800 hover:bg-zinc-700"
+          className="absolute top-2 right-2 h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground"
           onClick={copyToClipboard}
         >
-          {copied ? (
-            <Check className="h-4 w-4 text-green-500" />
-          ) : (
-            <Copy className="h-4 w-4" />
-          )}
+          {copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
         </Button>
       )}
     </div>
