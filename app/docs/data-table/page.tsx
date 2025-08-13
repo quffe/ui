@@ -3,6 +3,7 @@
 import { DataTable } from "@/components/Data/DataTable"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CodeBlock } from "@/components/ui/code-block"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -30,7 +31,7 @@ const sampleColumns = [
     header: "Name",
   },
   {
-    accessorKey: "email", 
+    accessorKey: "email",
     header: "Email",
   },
   {
@@ -59,7 +60,7 @@ export default function DataTableDocs() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
@@ -85,21 +86,20 @@ export default function DataTableDocs() {
               <CardTitle>Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { DataTable } from "@/components/Data/DataTable"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
+              
+              <CodeBlock language="tsx">
 {`<DataTable
   columns={columns}
   data={data}
   pageSize={10}
   onRowClick={(row) => console.log(row)}
 />`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 

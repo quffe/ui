@@ -42,7 +42,7 @@ const hooks = [
     url: "/docs/hooks/useOnWindowResize",
     icon: Monitor,
     description: "Window resize event handling",
-    category: "Device & Layout", 
+    category: "Device & Layout",
     features: ["Auto cleanup", "Immediate execution", "Event listeners"],
   },
   // State Management Hooks
@@ -135,7 +135,7 @@ export default function HooksOverview() {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      
+
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-8">
@@ -151,7 +151,7 @@ export default function HooksOverview() {
           </div>
 
           <div className="mb-8">
-            <Card>
+            <Card className="w-1/2">
               <CardHeader>
                 <CardTitle>Quick Start</CardTitle>
                 <CardDescription>
@@ -159,7 +159,7 @@ export default function HooksOverview() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 md:grid-cols-1">
                   <div>
                     <h4 className="font-semibold mb-2">Import & Use</h4>
                     <div className="bg-muted p-3 rounded-md">
@@ -205,7 +205,7 @@ export default function HooksOverview() {
                       <CardDescription className="mb-4">
                         {hook.description}
                       </CardDescription>
-                      
+
                       <div className="mb-4">
                         <h5 className="text-sm font-medium mb-2">Key Features:</h5>
                         <ul className="text-sm space-y-1">

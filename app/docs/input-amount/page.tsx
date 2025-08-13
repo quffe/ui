@@ -3,6 +3,7 @@
 import { InputAmount } from "@/components/Input/InputAmount"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CodeBlock } from "@/components/ui/code-block"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -63,21 +64,20 @@ export default function InputAmountDocs() {
               <CardTitle>Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
+              <div className="mb-4">
+                <CodeBlock language="typescript">
                   {`import { InputAmount } from "@/components/Input/InputAmount"`}
-                </code>
+                </CodeBlock>
               </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
+              
+              <CodeBlock language="tsx">
 {`<InputAmount
   value={amount}
   onChange={setAmount}
   label="Enter amount"
   placeholder="0.00"
 />`}
-                </code>
-              </div>
+              </CodeBlock>
             </CardContent>
           </Card>
 

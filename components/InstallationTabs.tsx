@@ -1,9 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { CodeBlock } from "@/components/ui/code-block"
 import { config } from "@/lib/config"
-import { Copy, Check } from "lucide-react"
 import { usePackageManager, type PackageManager } from "@/hooks/usePackageManager"
 
 interface InstallationTabsProps {
@@ -32,14 +30,7 @@ const getInstallCommand = (packageManager: PackageManager, componentName: string
 }
 
 export function InstallationTabs({ componentName, className }: InstallationTabsProps) {
-  const [copied, setCopied] = useState(false)
   const { packageManager, setPackageManager, isLoaded } = usePackageManager()
-
-  const copyToClipboard = async (command: string) => {
-    await navigator.clipboard.writeText(command)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
 
   if (!isLoaded) {
     return (
@@ -70,28 +61,16 @@ export function InstallationTabs({ componentName, className }: InstallationTabsP
       </div>
 
       {/* Install Command */}
-      <div className="bg-muted p-4 rounded-md flex items-center justify-between">
-        <code className="text-sm flex-1 mr-2 font-mono">
-          {getInstallCommand(packageManager, componentName)}
-        </code>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => copyToClipboard(getInstallCommand(packageManager, componentName))}
-          className="h-8 w-8 p-0"
-        >
-          {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-        </Button>
-      </div>
+      <CodeBlock language="bash" showCopyButton={true}>
+        {getInstallCommand(packageManager, componentName)}
+      </CodeBlock>
 
       {/* Import Instructions */}
       <div className="pt-4 border-t">
         <p className="text-sm text-muted-foreground mb-2">Then import the component:</p>
-        <div className="bg-muted p-4 rounded-md">
-          <code className="text-sm">
-            import {`{ ${getComponentName(componentName)} }`} from "@/components/ui/{componentName}"
-          </code>
-        </div>
+        <CodeBlock language="typescript" showCopyButton={true}>
+          {`import { ${getComponentName(componentName)} } from "@/components/ui/${componentName}"`}
+        </CodeBlock>
       </div>
     </div>
   )

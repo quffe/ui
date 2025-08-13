@@ -129,7 +129,7 @@ export default function ComponentsPage() {
                   <Badge variant="outline">{categoryComponents.length} components</Badge>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
                   {categoryComponents.map(component => (
                     <Card key={component.name} className="h-full">
                       <CardHeader className="pb-4">
