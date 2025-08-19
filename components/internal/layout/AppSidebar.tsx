@@ -32,6 +32,7 @@ import {
   Zap,
   Smartphone,
   BookOpen,
+  Keyboard,
 } from "lucide-react"
 
 import {
@@ -242,6 +243,13 @@ const hooks = [
     url: "/docs/hooks/useRevalidate",
     icon: RefreshCw,
     description: "SWR cache revalidation helper",
+    category: "Utilities",
+  },
+  {
+    title: "useKeyboardShortcut",
+    url: "/docs/hooks/useKeyboardShortcut",
+    icon: Keyboard,
+    description: "Global keyboard shortcuts with tooltip system",
     category: "Utilities",
   },
 ]
