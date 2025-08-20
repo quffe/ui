@@ -8,16 +8,20 @@ interface PreviewTabsProps {
   preview: React.ReactNode
   code: string
   language?: string
+  title?: string
 }
 
-export function PreviewTabs({ preview, code, language = "tsx" }: PreviewTabsProps) {
+export function PreviewTabs({ preview, code, language = "tsx", title }: PreviewTabsProps) {
   return (
-    <div className="-mt-18">
+    <div>
       <Tabs defaultValue="preview" className="w-full">
-        <div className="flex items-center justify-end">
-          <TabsList className="cursor-pointer">
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
+        <div className={`flex items-start gap-4 ${title ? 'justify-between flex-col sm:flex-row sm:items-center' : 'justify-end'}`}>
+          {title && (
+            <h4 className="text-lg font-semibold flex-1">{title}</h4>
+          )}
+          <TabsList className="shrink-0">
+            <TabsTrigger className="cursor-pointer" value="preview">Preview</TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value="code">Code</TabsTrigger>
           </TabsList>
         </div>
 

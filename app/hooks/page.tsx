@@ -14,7 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { PreviewTabs } from "@/components/ui/preview-tabs"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 // Hook examples
 import { useMobile } from "@/hooks/use-mobile"
@@ -23,6 +23,10 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { useCountdown } from "@/hooks/useCountdown"
 import { useOnMountEffect } from "@/hooks/useOnMountEffect"
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut"
+import { useOnWindowResize } from "@/hooks/useOnWindowResize"
+import { useOnMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"
+import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Dropdown } from "@/components/Navigation/Dropdown"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 
@@ -152,6 +156,263 @@ function UseKeyboardShortcutDemo() {
   )
 }
 
+function UseOnWindowResizeDemo() {
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [isResizing, setIsResizing] = useState(false)
+  const [resizeCount, setResizeCount] = useState(0)
+
+  useOnWindowResize(() => {
+    setIsResizing(true)
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    })
+    setResizeCount(prev => prev + 1)
+    
+    // Reset resizing state after delay to show the debouncing effect
+    const timeout = setTimeout(() => setIsResizing(false), 500)
+    return () => clearTimeout(timeout)
+  })
+
+  return (
+    <div className="text-center space-y-4">
+      <div className="text-2xl font-bold">Window Resize Monitor</div>
+      
+      {/* Window Dimensions */}
+      <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+        <div className="p-3 bg-muted rounded-md">
+          <div className="text-sm text-muted-foreground">Width (X)</div>
+          <div className="text-xl font-semibold">{windowSize.width}px</div>
+        </div>
+        <div className="p-3 bg-muted rounded-md">
+          <div className="text-sm text-muted-foreground">Height (Y)</div>
+          <div className="text-xl font-semibold">{windowSize.height}px</div>
+        </div>
+      </div>
+
+      {/* Status and Counter */}
+      <div className="space-y-2">
+        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+          isResizing 
+            ? "bg-yellow-100 text-yellow-800 border border-yellow-200" 
+            : "bg-green-100 text-green-800 border border-green-200"
+        }`}>
+          <div className={`w-2 h-2 rounded-full ${isResizing ? "bg-yellow-500" : "bg-green-500"}`} />
+          {isResizing ? "Resizing..." : "Stable"}
+        </div>
+        
+        <div className="text-sm text-muted-foreground">
+          Resize events: <span className="font-semibold">{resizeCount}</span>
+        </div>
+      </div>
+
+      <div className="text-sm text-muted-foreground">
+        Resize your browser window to see live updates with debouncing
+      </div>
+    </div>
+  )
+}
+
+function UseOnMountLayoutEffectDemo() {
+  const [measurements, setMeasurements] = useState({ width: 0, height: 0, timing: "" })
+  const elementRef = useRef<HTMLDivElement>(null)
+
+  useOnMountLayoutEffect(() => {
+    const startTime = performance.now()
+    if (elementRef.current) {
+      const rect = elementRef.current.getBoundingClientRect()
+      const endTime = performance.now()
+      setMeasurements({
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+        timing: `${(endTime - startTime).toFixed(2)}ms`
+      })
+    }
+  })
+
+  return (
+    <div className="text-center space-y-4">
+      <div className="text-lg font-bold">Layout Effect Measurement</div>
+      
+      <div ref={elementRef} className="mx-auto p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-300 max-w-xs">
+        <div className="text-sm font-medium">Measured Element</div>
+        <div className="text-xs text-muted-foreground mt-1">This element was measured before paint</div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
+        <div className="p-2 bg-muted rounded text-center">
+          <div className="text-xs text-muted-foreground">Width</div>
+          <div className="text-sm font-semibold">{measurements.width}px</div>
+        </div>
+        <div className="p-2 bg-muted rounded text-center">
+          <div className="text-xs text-muted-foreground">Height</div>
+          <div className="text-sm font-semibold">{measurements.height}px</div>
+        </div>
+        <div className="p-2 bg-muted rounded text-center">
+          <div className="text-xs text-muted-foreground">Timing</div>
+          <div className="text-sm font-semibold">{measurements.timing}</div>
+        </div>
+      </div>
+
+      <div className="text-xs text-muted-foreground">
+        ✅ Measured synchronously before browser paint
+      </div>
+    </div>
+  )
+}
+
+function UseStateChangeEffectDemo() {
+  const [name, setName] = useState("")
+  const [count, setCount] = useState(0)
+  const [color, setColor] = useState("blue")
+  const [effectTriggers, setEffectTriggers] = useState<string[]>([])
+
+  // Effect that only triggers on name and count changes (not color)
+  useStateChangeEffect(() => {
+    const trigger = `Effect triggered! Name: "${name}", Count: ${count}`
+    setEffectTriggers(prev => [trigger, ...prev.slice(0, 2)]) // Keep last 3
+  }, [name, count])
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center text-lg font-bold">State Change Effect Monitor</div>
+      
+      <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
+        <div>
+          <label className="text-sm font-medium block mb-1">Name (triggers effect)</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Type your name..."
+            className="w-full p-2 border rounded text-sm"
+          />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="text-sm font-medium block mb-1">Count (triggers effect)</label>
+            <div className="flex gap-1">
+              <Button size="sm" onClick={() => setCount(c => c - 1)}>-</Button>
+              <div className="flex-1 p-2 border rounded text-center text-sm">{count}</div>
+              <Button size="sm" onClick={() => setCount(c => c + 1)}>+</Button>
+            </div>
+          </div>
+          
+          <div>
+            <label className="text-sm font-medium block mb-1">Color (no effect)</label>
+            <Dropdown
+              value={color}
+              onChange={setColor}
+              options={[
+                { value: "blue", label: "Blue" },
+                { value: "red", label: "Red" },
+                { value: "green", label: "Green" },
+                { value: "purple", label: "Purple" },
+              ]}
+              placeholder="Select color..."
+              className="w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-md mx-auto">
+        <div className="text-sm font-medium mb-2">Effect Triggers (latest first):</div>
+        <div className="space-y-1 max-h-24 overflow-y-auto">
+          {effectTriggers.length === 0 ? (
+            <div className="text-xs text-muted-foreground italic">No effects triggered yet</div>
+          ) : (
+            effectTriggers.map((trigger, index) => (
+              <div key={index} className="text-xs p-2 bg-muted rounded">
+                {trigger}
+              </div>
+            ))
+          )}
+        </div>
+        <div className="text-xs text-muted-foreground mt-2">
+          ℹ️ Only name and count changes trigger the effect, not color
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Advanced useOnWindowResize Demo
+function AdvancedUseOnWindowResizeDemo() {
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [isResizing, setIsResizing] = useState(false)
+
+  useOnWindowResize(() => {
+    setIsResizing(true)
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    })
+    
+    // Reset resizing state after delay
+    const timeout = setTimeout(() => setIsResizing(false), 300)
+    return () => clearTimeout(timeout)
+  })
+
+  return (
+    <div className="text-center space-y-4">
+      <div className="text-lg font-bold">Simple Window Monitor</div>
+      <div className="space-y-2">
+        <div>Window: {windowSize.width} × {windowSize.height}</div>
+        <div>Status: {isResizing ? "Resizing..." : "Stable"}</div>
+      </div>
+    </div>
+  )
+}
+
+// Advanced useStateChangeEffect Demo
+function AdvancedUseStateChangeEffectDemo() {
+  const [user, setUser] = useState({ name: "", age: 0 })
+  const [lastUpdate, setLastUpdate] = useState("")
+
+  // This only runs when user values actually change
+  useStateChangeEffect(() => {
+    setLastUpdate(new Date().toLocaleTimeString())
+    console.log("useStateChangeEffect: User values changed")
+  }, [user])
+
+  return (
+    <div className="space-y-4 max-w-md mx-auto">
+      <div className="text-center text-lg font-bold">useEffect vs useStateChangeEffect</div>
+      
+      <div>
+        <label className="text-sm font-medium block mb-1">User Name</label>
+        <input 
+          value={user.name}
+          onChange={(e) => setUser(prev => ({ ...prev, name: e.target.value }))}
+          placeholder="Type your name..."
+          className="w-full p-2 border rounded text-sm"
+        />
+      </div>
+      
+      <div>
+        <label className="text-sm font-medium block mb-1">Age</label>
+        <input 
+          type="number"
+          value={user.age}
+          onChange={(e) => setUser(prev => ({ ...prev, age: parseInt(e.target.value) || 0 }))}
+          className="w-full p-2 border rounded text-sm"
+        />
+      </div>
+      
+      <div className="p-3 bg-muted rounded">
+        <div className="text-sm font-medium">Last meaningful update:</div>
+        <div className="text-xs text-muted-foreground">{lastUpdate || "No updates yet"}</div>
+      </div>
+      
+      <div className="text-xs text-muted-foreground">
+        ℹ️ Only triggers when user values actually change, not on every render
+      </div>
+    </div>
+  )
+}
+
 const hooks = [
   // Device & Layout Hooks
   {
@@ -175,22 +436,67 @@ export function Example() {
   {
     title: "useOnWindowResize",
     url: "/docs/hooks/useOnWindowResize",
-    description: "Window resize event handling",
+    description: "Window resize event handling with real-time dimensions",
     category: "Device & Layout",
-    preview: (
-      <div className="text-center p-4">
-        <div className="text-lg font-semibold mb-2">Window Resize Handler</div>
-        <div className="text-sm text-muted-foreground">Resize your window to trigger the event</div>
-      </div>
-    ),
+    preview: <UseOnWindowResizeDemo />,
     code: `import { useOnWindowResize } from "@/hooks/useOnWindowResize"
+import { useState } from "react"
 
 export function Example() {
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [isResizing, setIsResizing] = useState(false)
+  const [resizeCount, setResizeCount] = useState(0)
+
   useOnWindowResize(() => {
-    console.log("Window resized!")
+    setIsResizing(true)
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    })
+    setResizeCount(prev => prev + 1)
+    
+    // Reset resizing state after delay to show the debouncing effect
+    const timeout = setTimeout(() => setIsResizing(false), 500)
+    return () => clearTimeout(timeout)
   })
 
-  return <div>Resize the window to see logs</div>
+  return (
+    <div className="text-center space-y-4">
+      <div className="text-2xl font-bold">Window Resize Monitor</div>
+      
+      {/* Window Dimensions */}
+      <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+        <div className="p-3 bg-muted rounded-md">
+          <div className="text-sm text-muted-foreground">Width (X)</div>
+          <div className="text-xl font-semibold">{windowSize.width}px</div>
+        </div>
+        <div className="p-3 bg-muted rounded-md">
+          <div className="text-sm text-muted-foreground">Height (Y)</div>
+          <div className="text-xl font-semibold">{windowSize.height}px</div>
+        </div>
+      </div>
+
+      {/* Status and Counter */}
+      <div className="space-y-2">
+        <div className={\`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium \${
+          isResizing 
+            ? "bg-yellow-100 text-yellow-800 border border-yellow-200" 
+            : "bg-green-100 text-green-800 border border-green-200"
+        }\`}>
+          <div className={\`w-2 h-2 rounded-full \${isResizing ? "bg-yellow-500" : "bg-green-500"}\`} />
+          {isResizing ? "Resizing..." : "Stable"}
+        </div>
+        
+        <div className="text-sm text-muted-foreground">
+          Resize events: <span className="font-semibold">{resizeCount}</span>
+        </div>
+      </div>
+
+      <div className="text-sm text-muted-foreground">
+        Resize your browser window to see live updates with debouncing
+      </div>
+    </div>
+  )
 }`,
   },
   // Life Cycles Hooks
@@ -217,49 +523,176 @@ export function Example() {
   {
     title: "useOnMountLayoutEffect",
     url: "/docs/hooks/useOnMountLayoutEffect",
-    description: "Mount-only layout effect with synchronous execution",
+    description: "DOM measurements before paint with synchronous execution",
     category: "Life Cycles",
-    preview: (
-      <div className="text-center p-4">
-        <div className="text-lg font-semibold mb-2">Layout Effect</div>
-        <div className="text-sm text-muted-foreground">Runs synchronously before browser paint</div>
-      </div>
-    ),
+    preview: <UseOnMountLayoutEffectDemo />,
     code: `import { useOnMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"
+import { useState, useRef } from "react"
 
 export function Example() {
+  const [measurements, setMeasurements] = useState({ width: 0, height: 0 })
+  const elementRef = useRef<HTMLDivElement>(null)
+
   useOnMountLayoutEffect(() => {
-    // Runs synchronously before paint
-    console.log("Layout effect executed!")
+    // Measure DOM element synchronously before browser paint
+    if (elementRef.current) {
+      const rect = elementRef.current.getBoundingClientRect()
+      setMeasurements({
+        width: Math.round(rect.width),
+        height: Math.round(rect.height)
+      })
+    }
   })
 
-  return <div>Check console for layout effect</div>
+  return (
+    <div>
+      <div ref={elementRef} className="p-4 bg-blue-100 rounded">
+        Measured Element
+      </div>
+      <div>Width: {measurements.width}px</div>
+      <div>Height: {measurements.height}px</div>
+    </div>
+  )
+}
+
+// Advanced example with cleanup
+export function AdvancedExample() {
+  const observerRef = useRef<ResizeObserver>()
+
+  useOnMountLayoutEffect(() => {
+    // Setup that must happen before paint
+    const element = document.getElementById('target')
+    if (element) {
+      observerRef.current = new ResizeObserver(entries => {
+        console.log('Element resized:', entries[0].contentRect)
+      })
+      observerRef.current.observe(element)
+    }
+
+    // Cleanup function
+    return () => {
+      observerRef.current?.disconnect()
+    }
+  })
+
+  return <div id="target">Observed element</div>
 }`,
   },
   {
     title: "useStateChangeEffect",
     url: "/docs/hooks/useStateChangeEffect",
-    description: "Effect triggered by state changes",
+    description: "Selective effect triggering based on specific state changes",
     category: "Life Cycles",
-    preview: (
-      <div className="text-center p-4">
-        <div className="text-lg font-semibold mb-2">State Change Effect</div>
-        <div className="text-sm text-muted-foreground">
-          Triggers effects when specific states change
-        </div>
-      </div>
-    ),
+    preview: <UseStateChangeEffectDemo />,
     code: `import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Dropdown } from "@/components/Navigation/Dropdown"
+import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
 export function Example() {
+  const [name, setName] = useState("")
   const [count, setCount] = useState(0)
-  
-  useStateChangeEffect(() => {
-    console.log(\`Count changed to: \${count}\`)
-  }, [count])
+  const [color, setColor] = useState("blue")
+  const [effectTriggers, setEffectTriggers] = useState([])
 
-  return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+  // Effect that only triggers on name and count changes (not color)
+  useStateChangeEffect(() => {
+    const trigger = \`Effect triggered! Name: "\${name}", Count: \${count}\`
+    setEffectTriggers(prev => [trigger, ...prev.slice(0, 2)]) // Keep last 3
+  }, [name, count])
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center text-lg font-bold">State Change Effect Monitor</div>
+      
+      <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
+        <div>
+          <label className="text-sm font-medium block mb-1">Name (triggers effect)</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Type your name..."
+            className="w-full p-2 border rounded text-sm"
+          />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="text-sm font-medium block mb-1">Count (triggers effect)</label>
+            <div className="flex gap-1">
+              <Button size="sm" onClick={() => setCount(c => c - 1)}>-</Button>
+              <div className="flex-1 p-2 border rounded text-center text-sm">{count}</div>
+              <Button size="sm" onClick={() => setCount(c => c + 1)}>+</Button>
+            </div>
+          </div>
+          
+          <div>
+            <label className="text-sm font-medium block mb-1">Color (no effect)</label>
+            <Dropdown
+              value={color}
+              onChange={setColor}
+              options={[
+                { value: "blue", label: "Blue" },
+                { value: "red", label: "Red" },
+                { value: "green", label: "Green" },
+                { value: "purple", label: "Purple" },
+              ]}
+              placeholder="Select color..."
+              className="w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-md mx-auto">
+        <div className="text-sm font-medium mb-2">Effect Triggers (latest first):</div>
+        <div className="space-y-1 max-h-24 overflow-y-auto">
+          {effectTriggers.length === 0 ? (
+            <div className="text-xs text-muted-foreground italic">No effects triggered yet</div>
+          ) : (
+            effectTriggers.map((trigger, index) => (
+              <div key={index} className="text-xs p-2 bg-muted rounded">
+                {trigger}
+              </div>
+            ))
+          )}
+        </div>
+        <div className="text-xs text-muted-foreground mt-2">
+          ℹ️ Only name and count changes trigger the effect, not color
+        </div>
+      </div>
+    </div>
+  )
+}`,
+    advancedCode: `import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { useState, useEffect } from "react"
+
+// Compare with regular useEffect
+export function ComparisonExample() {
+  const [user, setUser] = useState({ name: "", age: 0 })
+  const [lastUpdate, setLastUpdate] = useState("")
+
+  // This runs on every render if user object reference changes
+  useEffect(() => {
+    console.log("useEffect: User changed")
+  }, [user])
+
+  // This only runs when user values actually change
+  useStateChangeEffect(() => {
+    setLastUpdate(new Date().toLocaleTimeString())
+    console.log("useStateChangeEffect: User values changed")
+  }, [user])
+
+  return (
+    <div>
+      <input 
+        value={user.name}
+        onChange={(e) => setUser(prev => ({ ...prev, name: e.target.value }))}
+      />
+      <div>Last meaningful update: {lastUpdate}</div>
+    </div>
+  )
 }`,
   },
   // State Management Hooks
@@ -353,35 +786,6 @@ export function Example() {
   return <div>Count: {count} (Press Shift+Space)</div>
 }`,
   },
-  {
-    title: "useRevalidate",
-    url: "/docs/hooks/useRevalidate",
-    description: "SWR cache revalidation helper",
-    category: "Utilities",
-    preview: (
-      <div className="text-center p-4">
-        <div className="text-lg font-semibold mb-2">SWR Revalidation</div>
-        <div className="text-sm text-muted-foreground">
-          Helper hook for managing SWR cache revalidation
-        </div>
-      </div>
-    ),
-    code: `import { useRevalidate } from "@/hooks/useRevalidate"
-
-export function Example() {
-  const revalidate = useRevalidate()
-  
-  const handleRefresh = () => {
-    revalidate("/api/data") // Revalidate specific URL
-  }
-
-  return (
-    <button onClick={handleRefresh}>
-      Refresh Data
-    </button>
-  )
-}`,
-  },
 ]
 
 const groupedHooks = hooks.reduce(
@@ -466,10 +870,26 @@ export default function HooksOverview() {
                       </CardHeader>
 
                       <CardContent>
-                        <PreviewTabs
-                          preview={hook.preview}
-                          code={hook.code}
-                        />
+                        <div className="space-y-8">
+                          <PreviewTabs
+                            title="Interactive Example"
+                            preview={hook.preview}
+                            code={hook.code}
+                          />
+                          {hook.advancedCode && (
+                            <PreviewTabs
+                              title={
+                                hook.title === "useStateChangeEffect" ? "Comparison with Regular useEffect Hook" :
+                                "Advanced Usage"
+                              }
+                              preview={
+                                hook.title === "useStateChangeEffect" ? <AdvancedUseStateChangeEffectDemo /> :
+                                <div className="text-center p-4 text-muted-foreground">Advanced functionality - see code example</div>
+                              }
+                              code={hook.advancedCode}
+                            />
+                          )}
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
