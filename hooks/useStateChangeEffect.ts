@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useEffect } from "react"
 
 export const useStateChangeEffect = <T>(effect: () => void, states: T[]): void => {
