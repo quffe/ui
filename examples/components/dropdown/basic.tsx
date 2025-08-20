@@ -40,9 +40,7 @@ export function Example() {
           placeholder="Select a fruit..."
           searchable={false}
         />
-        <p className="text-xs text-muted-foreground">
-          Selected: {basicValue || "None"}
-        </p>
+        <p className="text-xs text-muted-foreground">Selected: {basicValue || "None"}</p>
       </div>
 
       {/* Searchable Dropdown */}
@@ -56,9 +54,7 @@ export function Example() {
           searchable={true}
           className="w-full"
         />
-        <p className="text-xs text-muted-foreground">
-          Selected: {searchableValue}
-        </p>
+        <p className="text-xs text-muted-foreground">Selected: {searchableValue}</p>
       </div>
 
       {/* Disabled Dropdown */}

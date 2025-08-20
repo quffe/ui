@@ -118,7 +118,11 @@ function MyComponent() {
 
               <PreviewTabs
                 title="SSR Configuration"
-                preview={<div className="text-center p-4 text-muted-foreground">See code for SSR configuration options</div>}
+                preview={
+                  <div className="text-center p-4 text-muted-foreground">
+                    See code for SSR configuration options
+                  </div>
+                }
                 code={`import { useMobile } from "@/hooks/use-mobile"
 
 // Disable SSR-safe mode for immediate detection

@@ -10,9 +10,7 @@ export function AdvancedExample() {
   return (
     <div className="space-y-4">
       {/* Basic Modal */}
-      <Button onClick={() => setBasicModal(true)}>
-        Basic Modal
-      </Button>
+      <Button onClick={() => setBasicModal(true)}>Basic Modal</Button>
       <Modal
         open={basicModal}
         onClose={() => setBasicModal(false)}
@@ -45,9 +43,7 @@ export function AdvancedExample() {
             <Button variant="outline" onClick={() => setLargeModal(false)}>
               Cancel
             </Button>
-            <Button onClick={() => setLargeModal(false)}>
-              Save Changes
-            </Button>
+            <Button onClick={() => setLargeModal(false)}>Save Changes</Button>
           </div>
         </div>
       </Modal>
@@ -68,9 +64,7 @@ export function AdvancedExample() {
         <div className="space-y-4">
           <p>This modal can only be closed using the button below.</p>
           <div className="flex justify-center">
-            <Button onClick={() => setRestrictedModal(false)}>
-              Close Modal (Only Way)
-            </Button>
+            <Button onClick={() => setRestrictedModal(false)}>Close Modal (Only Way)</Button>
           </div>
         </div>
       </Modal>

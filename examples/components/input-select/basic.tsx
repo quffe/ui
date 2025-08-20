@@ -40,16 +40,16 @@ export function Example() {
 
   const handleSubmit = () => {
     const newErrors: Record<string, string> = {}
-    
+
     if (!selectedUser) {
       newErrors.user = "Please select a user"
     }
     if (!selectedPriority) {
       newErrors.priority = "Priority is required"
     }
-    
+
     setErrors(newErrors)
-    
+
     if (Object.keys(newErrors).length === 0) {
       console.log("Form submitted:", { selectedUser, selectedSize, selectedPriority })
     }
@@ -72,7 +72,7 @@ export function Example() {
       {/* Different Sizes */}
       <div className="space-y-4">
         <h4 className="font-medium">Size Variants</h4>
-        
+
         <InputSelect
           options={sizeOptions}
           value={selectedSize}
@@ -81,7 +81,7 @@ export function Example() {
           size="sm"
           placeholder="Choose size..."
         />
-        
+
         <InputSelect
           options={sizeOptions}
           value={selectedSize}
@@ -90,7 +90,7 @@ export function Example() {
           size="default"
           placeholder="Choose size..."
         />
-        
+
         <InputSelect
           options={sizeOptions}
           value={selectedSize}
@@ -134,7 +134,7 @@ export function Example() {
         className="bg-muted/50"
         triggerClassName="border-2 border-primary"
         labelClassName="text-primary font-bold"
-        onOpenChange={(open) => console.log("Select opened:", open)}
+        onOpenChange={open => console.log("Select opened:", open)}
       />
 
       <button

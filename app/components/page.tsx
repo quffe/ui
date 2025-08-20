@@ -39,7 +39,6 @@ import dateRangePickerCode from "@/examples/components/date-range-picker/basic.t
 import dropdownCode from "@/examples/components/dropdown/basic.tsx?raw"
 import inputSelectCode from "@/examples/components/input-select/basic.tsx?raw"
 
-
 const components = [
   {
     name: "data-table",
@@ -175,7 +174,6 @@ export default function ComponentsPage() {
                               <Badge variant="secondary" className="text-sm">
                                 {category}
                               </Badge>
-
                             </CardTitle>
                             <CardDescription className="text-base leading-relaxed">
                               {component.description}
@@ -199,13 +197,18 @@ export default function ComponentsPage() {
                           {component.advancedCode && (
                             <PreviewTabs
                               title={
-                                component.name === "modal" ? "Multiple Modal Types with Different Configurations" :
-                                component.name === "data-table" ? "State Management with Dynamic Pagination" :
-                                "Advanced Usage"
+                                component.name === "modal"
+                                  ? "Multiple Modal Types with Different Configurations"
+                                  : component.name === "data-table"
+                                    ? "State Management with Dynamic Pagination"
+                                    : "Advanced Usage"
                               }
                               preview={
-                                component.advancedPreview || 
-                                <div className="text-center p-4 text-muted-foreground">Advanced functionality - see code example</div>
+                                component.advancedPreview || (
+                                  <div className="text-center p-4 text-muted-foreground">
+                                    Advanced functionality - see code example
+                                  </div>
+                                )
                               }
                               code={component.advancedCode}
                             />

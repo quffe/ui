@@ -18,29 +18,33 @@ export function Example() {
   return (
     <div className="space-y-4">
       <div className="text-center text-lg font-bold">State Change Effect Monitor</div>
-      
+
       <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
         <div>
           <label className="text-sm font-medium block mb-1">Name (triggers effect)</label>
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             placeholder="Type your name..."
             className="w-full p-2 border rounded text-sm"
           />
         </div>
-        
+
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="text-sm font-medium block mb-1">Count (triggers effect)</label>
             <div className="flex gap-1">
-              <Button size="sm" onClick={() => setCount(c => c - 1)}>-</Button>
+              <Button size="sm" onClick={() => setCount(c => c - 1)}>
+                -
+              </Button>
               <div className="flex-1 p-2 border rounded text-center text-sm">{count}</div>
-              <Button size="sm" onClick={() => setCount(c => c + 1)}>+</Button>
+              <Button size="sm" onClick={() => setCount(c => c + 1)}>
+                +
+              </Button>
             </div>
           </div>
-          
+
           <div>
             <label className="text-sm font-medium block mb-1">Color (no effect)</label>
             <Dropdown

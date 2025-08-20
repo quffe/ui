@@ -48,7 +48,6 @@ import useOnMountLayoutEffectCode from "@/examples/hooks/use-on-mount-layout-eff
 import useStateChangeEffectBasicCode from "@/examples/hooks/use-state-change-effect/basic.tsx?raw"
 import useStateChangeEffectAdvancedCode from "@/examples/hooks/use-state-change-effect/advanced.tsx?raw"
 
-
 const hooks = [
   // Device & Layout Hooks
   {
@@ -225,12 +224,16 @@ export default function HooksOverview() {
                           {hook.advancedCode && (
                             <PreviewTabs
                               title={
-                                hook.title === "useStateChangeEffect" ? "Comparison with Regular useEffect Hook" :
-                                "Advanced Usage"
+                                hook.title === "useStateChangeEffect"
+                                  ? "Comparison with Regular useEffect Hook"
+                                  : "Advanced Usage"
                               }
                               preview={
-                                hook.advancedPreview || 
-                                <div className="text-center p-4 text-muted-foreground">Advanced functionality - see code example</div>
+                                hook.advancedPreview || (
+                                  <div className="text-center p-4 text-muted-foreground">
+                                    Advanced functionality - see code example
+                                  </div>
+                                )
                               }
                               code={hook.advancedCode}
                             />

@@ -2,11 +2,46 @@ import { DataTable } from "@/components/Data/DataTable"
 import { useState } from "react"
 
 const data = [
-  { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", status: "Active", lastLogin: "2024-01-15" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User", status: "Active", lastLogin: "2024-01-14" },
-  { id: 3, name: "Bob Johnson", email: "bob@example.com", role: "User", status: "Inactive", lastLogin: "2024-01-10" },
-  { id: 4, name: "Alice Brown", email: "alice@example.com", role: "Editor", status: "Active", lastLogin: "2024-01-16" },
-  { id: 5, name: "Charlie Wilson", email: "charlie@example.com", role: "User", status: "Active", lastLogin: "2024-01-13" },
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    role: "Admin",
+    status: "Active",
+    lastLogin: "2024-01-15",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    role: "User",
+    status: "Active",
+    lastLogin: "2024-01-14",
+  },
+  {
+    id: 3,
+    name: "Bob Johnson",
+    email: "bob@example.com",
+    role: "User",
+    status: "Inactive",
+    lastLogin: "2024-01-10",
+  },
+  {
+    id: 4,
+    name: "Alice Brown",
+    email: "alice@example.com",
+    role: "Editor",
+    status: "Active",
+    lastLogin: "2024-01-16",
+  },
+  {
+    id: 5,
+    name: "Charlie Wilson",
+    email: "charlie@example.com",
+    role: "User",
+    status: "Active",
+    lastLogin: "2024-01-13",
+  },
 ]
 
 const columns = [
@@ -26,7 +61,13 @@ export function AdvancedExample() {
     // Handle row click action
   }
 
-  const handlePaginationChange = ({ pageIndex, pageSize }: { pageIndex: number; pageSize: number }) => {
+  const handlePaginationChange = ({
+    pageIndex,
+    pageSize,
+  }: {
+    pageIndex: number
+    pageSize: number
+  }) => {
     setPageIndex(pageIndex)
     setPageSize(pageSize)
     console.log("Pagination changed:", { pageIndex, pageSize })

@@ -3,13 +3,13 @@ import { useState } from "react"
 
 export function Example() {
   const [value, setValue] = useState("")
-  
+
   return (
-    <OtpInput 
+    <OtpInput
       value={value}
       onChange={setValue}
-      length={6} 
-      onComplete={(value: any) => console.log(value)} 
+      length={6}
+      onComplete={(value: any) => console.log(value)}
     />
   )
 }

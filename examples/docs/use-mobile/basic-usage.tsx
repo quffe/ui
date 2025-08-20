@@ -17,8 +17,7 @@ export function BasicUsageExample() {
         <strong>{mounted ? (isMobile ? "Mobile" : "Desktop") : "Loading..."}</strong>
       </div>
       <div className="text-sm">
-        Is tablet or smaller:{" "}
-        <strong>{mounted ? (isTablet ? "Yes" : "No") : "Loading..."}</strong>
+        Is tablet or smaller: <strong>{mounted ? (isTablet ? "Yes" : "No") : "Loading..."}</strong>
       </div>
     </div>
   )

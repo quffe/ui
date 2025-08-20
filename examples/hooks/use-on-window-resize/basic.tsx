@@ -13,7 +13,7 @@ export function Example() {
       height: window.innerHeight,
     })
     setResizeCount(prev => prev + 1)
-    
+
     // Reset resizing state after delay to show the debouncing effect
     const timeout = setTimeout(() => setIsResizing(false), 500)
     return () => clearTimeout(timeout)
@@ -22,7 +22,7 @@ export function Example() {
   return (
     <div className="text-center space-y-4">
       <div className="text-2xl font-bold">Window Resize Monitor</div>
-      
+
       {/* Window Dimensions */}
       <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
         <div className="p-3 bg-muted rounded-md">
@@ -37,15 +37,19 @@ export function Example() {
 
       {/* Status and Counter */}
       <div className="space-y-2">
-        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
-          isResizing 
-            ? "bg-yellow-100 text-yellow-800 border border-yellow-200" 
-            : "bg-green-100 text-green-800 border border-green-200"
-        }`}>
-          <div className={`w-2 h-2 rounded-full ${isResizing ? "bg-yellow-500" : "bg-green-500"}`} />
+        <div
+          className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+            isResizing
+              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+              : "bg-green-100 text-green-800 border border-green-200"
+          }`}
+        >
+          <div
+            className={`w-2 h-2 rounded-full ${isResizing ? "bg-yellow-500" : "bg-green-500"}`}
+          />
           {isResizing ? "Resizing..." : "Stable"}
         </div>
-        
+
         <div className="text-sm text-muted-foreground">
           Resize events: <span className="font-semibold">{resizeCount}</span>
         </div>

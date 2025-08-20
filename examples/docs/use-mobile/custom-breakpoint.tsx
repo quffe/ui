@@ -3,7 +3,7 @@ import { useMobile } from "@/hooks/use-mobile"
 export function CustomBreakpointExample() {
   // Custom breakpoint for tablet detection
   const isTablet = useMobile({ breakpoint: 1024 })
-  
+
   // Custom breakpoint for small desktop
   const isSmallDesktop = useMobile({ breakpoint: 1200 })
 

@@ -2,7 +2,9 @@ import { useCountdown } from "@/hooks/useCountdown"
 import { Button } from "@/components/ui/button"
 
 export function Example() {
-  const { seconds, start, stop, reset, isActive } = useCountdown(10, () => console.log("Countdown completed!"))
+  const { seconds, start, stop, reset, isActive } = useCountdown(10, () =>
+    console.log("Countdown completed!")
+  )
 
   const formatTime = (seconds: number) => {
     return `${seconds}s`

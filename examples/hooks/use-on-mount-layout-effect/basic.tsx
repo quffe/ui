@@ -13,7 +13,7 @@ export function Example() {
       setMeasurements({
         width: Math.round(rect.width),
         height: Math.round(rect.height),
-        timing: `${(endTime - startTime).toFixed(2)}ms`
+        timing: `${(endTime - startTime).toFixed(2)}ms`,
       })
     }
   })
@@ -21,10 +21,15 @@ export function Example() {
   return (
     <div className="text-center space-y-4">
       <div className="text-lg font-bold">Layout Effect Measurement</div>
-      
-      <div ref={elementRef} className="mx-auto p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-300 max-w-xs">
+
+      <div
+        ref={elementRef}
+        className="mx-auto p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-300 max-w-xs"
+      >
         <div className="text-sm font-medium">Measured Element</div>
-        <div className="text-xs text-muted-foreground mt-1">This element was measured before paint</div>
+        <div className="text-xs text-muted-foreground mt-1">
+          This element was measured before paint
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
