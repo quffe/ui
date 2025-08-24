@@ -211,9 +211,9 @@ export default function InstallationPage() {
                     pnpm dlx shadcn@latest init
                   </CodeBlock>
                 </div>
-                <div className="bg-secondary border border-border rounded-lg p-4">
+                <div className="bg-warn-soft/20 border border-border rounded-lg p-4">
                   <div className="flex items-start gap-2">
-                    <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
+                    <AlertCircle className="h-5 w-5 text-warn-amber mt-0.5" />
                     <div>
                       <p className="text-sm font-medium">Note</p>
                       <p className="text-sm text-muted-foreground">
@@ -241,10 +241,14 @@ export default function InstallationPage() {
                 <div className="space-y-4">
                   <p className="text-sm">Install any component from our registry:</p>
                   <InstallationTabs componentName="data-table" />
-                  <p className="text-sm text-muted-foreground">
-                    The component will be installed to your{" "}
-                    <CodeBlock inline={true}>components/ui</CodeBlock> directory.
-                  </p>
+                  <div className="text-sm text-muted-foreground space-y-1">
+                    <p>Components will be installed to:</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1">
+                      <li>UI components: <CodeBlock inline={true}>components/ui/</CodeBlock></li>
+                      <li>Complex components: <CodeBlock inline={true}>components/</CodeBlock></li>
+                      <li>Hooks: <CodeBlock inline={true}>hooks/</CodeBlock></li>
+                    </ul>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -264,7 +268,7 @@ export default function InstallationPage() {
                 <div>
                   <p className="text-sm font-medium mb-2">Import the component:</p>
                   <CodeBlock language="typescript" showCopyButton={true}>
-                    {`import { DataTable } from "@/components/ui/data-table"`}
+                    {`import { DataTable } from "@/components/data-table"`}
                   </CodeBlock>
                 </div>
                 <div>

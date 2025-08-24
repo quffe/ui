@@ -241,21 +241,21 @@ export default async function UseLocalStorageDocs() {
             </CardContent>
           </Card>
 
-          <Card className="border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-950">
+          <Card className="bg-warn-soft/10">
             <CardHeader>
-              <CardTitle className="text-orange-800 dark:text-orange-200">
+              <CardTitle className="text-accent-foreground text-2xl">
                 Important Notes: CSR vs SSR Behavior
               </CardTitle>
-              <CardDescription className="text-orange-700 dark:text-orange-300">
+              <CardDescription className="text-accent-foreground/70">
                 Understanding how this hook behaves in different rendering environments
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-semibold mb-2 text-orange-800 dark:text-orange-200">
+                <h4 className="font-semibold mb-2 text-accent-foreground">
                   Client-Side Rendering (CSR) - Create React App, Vite, etc.
                 </h4>
-                <div className="text-sm space-y-2">
+                <div className="text-sm text-accent-foreground/70 space-y-2">
                   <p>
                     In pure CSR applications, localStorage values are displayed immediately on first paint
                     with <strong>no visual flash</strong>. The hook reads from localStorage before the
@@ -274,17 +274,17 @@ function MyComponent() {
               </div>
 
               <div>
-                <h4 className="font-semibold mb-2 text-orange-800 dark:text-orange-200">
+                <h4 className="font-semibold mb-2 text-accent-foreground">
                   Server-Side Rendering (SSR) - Next.js, Remix, etc.
                 </h4>
-                <div className="text-sm space-y-2">
+                <div className="text-sm text-accent-foreground/70 space-y-2">
                   <p>
                     In SSR applications, localStorage is not available during server rendering, which can
                     cause hydration mismatches. The component initially shows the default value, then
                     updates to the localStorage value after hydration.
                   </p>
-                  
-                  <h5 className="font-medium mt-3 mb-2">Recommended SSR Pattern:</h5>
+
+                  <h5 className="font-medium mt-3 text-accent-foreground mb-2">Recommended SSR Pattern:</h5>
                   <CodeBlock language="tsx">
                     {`function MyComponent() {
   const [mounted, setMounted] = useState(false)
@@ -303,9 +303,9 @@ function MyComponent() {
   return <div>Current theme: {theme}</div>
 }`}
                   </CodeBlock>
-                  
-                  <div className="bg-amber-100 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded p-3 mt-3">
-                    <p className="text-xs text-amber-800 dark:text-amber-200">
+
+                  <div className="bg-warn-amber/20 border rounded p-3 mt-3">
+                    <p className="text-xs text-warn-bright">
                       <strong>Why this pattern is needed:</strong> During SSR, the server renders with
                       default values (no localStorage access), but the client has localStorage available.
                       This creates a mismatch that React detects during hydration. The mounting pattern

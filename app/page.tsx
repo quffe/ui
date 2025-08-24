@@ -169,7 +169,7 @@ export default function Introduction() {
               <div>
                 <p className="text-sm font-medium mb-2">3. Import and use</p>
                 <div className="bg-muted p-3 rounded-md font-mono text-sm">
-                  import {"{ DataTable }"} from &quot;@/components/ui/data-table&quot;
+                  import {"{ DataTable }"} from &quot;@/components/data-table&quot;
                 </div>
               </div>
               <Link href="/installation" className="w-full">
