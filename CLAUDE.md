@@ -21,6 +21,13 @@ pnpm start
 # Lint code
 pnpm lint
 
+# Code formatting
+pnpm format
+pnpm format:check
+
+# Registry management
+pnpm registry:update  # Regenerates all registry files from components and hooks
+
 # Type checking
 npx tsc --noEmit
 ```
@@ -29,27 +36,44 @@ npx tsc --noEmit
 
 ### Component Structure
 
-The codebase follows a three-tier component hierarchy:
+The codebase uses a **categorized folder structure** organized by functionality:
 
 1. **`/components/ui/`** - Base primitive components
    - Built on Radix UI primitives with custom styling
-   - Use `class-variance-authority` (CVA) for variant-based styling
+   - Use `class-variance-authority` (CVA) for variant-based styling  
    - All components use `data-slot` attributes for semantic identification
    - Examples: Button, Card, Input, Dialog
 
-2. **`/components/form/`** - Form-specific enhanced components
-   - Form validation and enhanced input functionality
-   - More opinionated styling compared to ui/ components
+2. **`/components/[Category]/`** - Categorized business components
+   - **`Data/`** - DataTable and data visualization components
+   - **`Form/`** - InputAmount, OtpInput, FileInput, PasswordInput, etc.
+   - **`Input/`** - DateRangePicker, InputSelect and input-related components
+   - **`Navigation/`** - Dropdown, SelectDropdown navigation components
+   - **`Modal/`** - Modal, ModalTrigger and overlay components
 
-3. **`/components/` (root)** - Complex composite components
-   - Business logic components and higher-level abstractions
-   - Examples: DataTable, DateRangePicker, Modal, InputSelect
+3. **`/components/internal/`** - Internal infrastructure components
+   - `installation/` - InstallationTabs, package manager selectors
+   - `layout/` - AppSidebar, SidebarLayout
+
+This structure enables **automatic registry generation** and **proper import path resolution**.
 
 ### Hooks Organization
 
 - **`/hooks/`** - Custom React hooks for reusable logic
+- **`/hooks/internal/`** - Internal hooks (usePackageManager)
 - Mix of utility hooks (useLocalStorage, useMobile) and business logic hooks
 - All hooks are properly typed with TypeScript
+
+### Registry System
+
+The project includes a **shadcn/ui compatible registry** for CLI installation:
+
+- **`/registry/`** - Auto-generated component and hook registry files
+- **`/app/api/registry/`** - API endpoints serving registry data
+- **`pnpm registry:update`** - Regenerates all registry files from source
+- **`scripts/generate-registry.js`** - Automated registry generation script
+
+Registry supports both components and hooks with proper categorization and dependency tracking.
 
 ## Code Conventions
 
@@ -62,7 +86,8 @@ The codebase follows a three-tier component hierarchy:
 ### Styling Conventions
 - **Utility function**: Use `cn()` for className merging (clsx + tailwind-merge)
 - **Variants**: Use CVA (class-variance-authority) with defaultVariants pattern
-- **Theming**: CSS variables for theme customization with light/dark support
+- **Theming**: **Poimandres dark theme only** with OKLCH colors in CSS variables
+- **Color system**: Custom red (`--red-soft`, `--red-bright`) and warning (`--warn-soft`) shades
 - **Component identification**: Use `data-slot` attributes consistently
 - **Responsive design**: Mobile-first approach with Tailwind classes
 
@@ -74,8 +99,10 @@ The codebase follows a three-tier component hierarchy:
 
 ### File Organization
 - Use named exports and barrel files for clean imports
-- Path aliases configured: `@/components`, `@/lib`, `@/hooks`
+- Path aliases configured: `@/components`, `@/lib`, `@/hooks`, `@/examples`
 - Type-only imports where appropriate
+- **Examples structure**: `/examples/docs/[component]/` for documentation examples
+- **Import path mapping**: InstallationTabs automatically resolves correct paths based on component category
 
 ## Key Technologies & Dependencies
 
