@@ -15,6 +15,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null)
     const inputRef = React.useRef<HTMLInputElement>(null)
 
+    React.useImperativeHandle(ref, () => inputRef.current!)
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files
       setSelectedFiles(files)

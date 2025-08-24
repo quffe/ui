@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,34 +14,23 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState, useEffect } from "react"
-import { useOnWindowResize } from "@/hooks/useOnWindowResize"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
+import LiveWindowTrackingExample from "@/examples/docs/hooks/useOnWindowResize/live-window-tracking"
+import ResponsiveLayoutExample from "@/examples/docs/hooks/useOnWindowResize/responsive-layout"
+import ChartResizingExample from "@/examples/docs/hooks/useOnWindowResize/chart-resizing"
+import DynamicNavigationExample from "@/examples/docs/hooks/useOnWindowResize/dynamic-navigation"
+import PerformanceOptimizationExample from "@/examples/docs/hooks/useOnWindowResize/performance-optimization"
+import ViewportBasedEffectsExample from "@/examples/docs/hooks/useOnWindowResize/viewport-based-effects"
 
-export default function UseOnWindowResizeDocs() {
-  const [mounted, setMounted] = useState(false)
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
-  const [resizeCount, setResizeCount] = useState(0)
+const liveWindowTrackingCode = getExampleCode("docs/hooks/useOnWindowResize/live-window-tracking.tsx")
+const responsiveLayoutCode = getExampleCode("docs/hooks/useOnWindowResize/responsive-layout.tsx")
+const chartResizingCode = getExampleCode("docs/hooks/useOnWindowResize/chart-resizing.tsx")
+const dynamicNavigationCode = getExampleCode("docs/hooks/useOnWindowResize/dynamic-navigation.tsx")
+const performanceOptimizationCode = getExampleCode("docs/hooks/useOnWindowResize/performance-optimization.tsx")
+const viewportBasedEffectsCode = getExampleCode("docs/hooks/useOnWindowResize/viewport-based-effects.tsx")
 
-  // Demonstrate the hook
-  useOnWindowResize(() => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    })
-    setResizeCount(prev => prev + 1)
-  })
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const getBreakpoint = () => {
-    if (windowSize.width >= 1200) return "xl"
-    if (windowSize.width >= 1024) return "lg"
-    if (windowSize.width >= 768) return "md"
-    if (windowSize.width >= 640) return "sm"
-    return "xs"
-  }
+export default async function UseOnWindowResizeDocs() {
 
   return (
     <div className="flex flex-col">
@@ -112,7 +101,7 @@ export default function UseOnWindowResizeDocs() {
   return (
     <div>
       <p>Window size: {windowSize.width} x {windowSize.height}</p>
-      <p>Is mobile: {windowSize.width < 768 ? 'Yes' : 'No'}</p>
+      <p>Is mobile: {windowSize.width < 768 ? &apos;Yes&apos; : &apos;No&apos;}</p>
     </div>
   )
 }`}
@@ -125,209 +114,17 @@ export default function UseOnWindowResizeDocs() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Live Window Size Tracking</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      Width: <strong>{mounted ? windowSize.width : 0}px</strong>
-                    </div>
-                    <div>
-                      Height: <strong>{mounted ? windowSize.height : 0}px</strong>
-                    </div>
-                    <div>
-                      Breakpoint: <strong>{mounted ? getBreakpoint() : "xs"}</strong>
-                    </div>
-                    <div>
-                      Resize events: <strong>{resizeCount}</strong>
-                    </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    Resize your browser window to see the values update in real-time.
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs preview={<LiveWindowTrackingExample />} code={liveWindowTrackingCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Responsive Layout</h3>
-                <CodeBlock language="tsx">
-                  {`function ResponsiveLayout() {
-  const [isMobile, setIsMobile] = useState(false)
-  const [columns, setColumns] = useState(1)
+              <PreviewTabs preview={<ResponsiveLayoutExample />} code={responsiveLayoutCode} />
 
-  useOnWindowResize(() => {
-    const width = window.innerWidth
-    setIsMobile(width < 768)
-    
-    // Dynamic column calculation
-    if (width >= 1200) setColumns(4)
-    else if (width >= 768) setColumns(3)
-    else if (width >= 640) setColumns(2)
-    else setColumns(1)
-  })
+              <PreviewTabs preview={<ChartResizingExample />} code={chartResizingCode} />
 
-  return (
-    <div className={\`grid grid-cols-\${columns} gap-4\`}>
-      {items.map(item => (
-        <div key={item.id} className={isMobile ? 'p-2' : 'p-4'}>
-          {item.content}
-        </div>
-      ))}
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<DynamicNavigationExample />} code={dynamicNavigationCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Chart Resizing</h3>
-                <CodeBlock language="tsx">
-                  {`function ResponsiveChart() {
-  const chartRef = useRef<HTMLDivElement>(null)
-  const [chartInstance, setChartInstance] = useState(null)
+              <PreviewTabs preview={<PerformanceOptimizationExample />} code={performanceOptimizationCode} />
 
-  useOnWindowResize(() => {
-    if (chartInstance && chartRef.current) {
-      // Resize chart to fit container
-      chartInstance.resize({
-        width: chartRef.current.offsetWidth,
-        height: chartRef.current.offsetHeight
-      })
-    }
-  })
-
-  useEffect(() => {
-    if (chartRef.current) {
-      // Initialize chart
-      const chart = new Chart(chartRef.current, chartConfig)
-      setChartInstance(chart)
-      
-      return () => chart.destroy()
-    }
-  }, [])
-
-  return (
-    <div ref={chartRef} className="w-full h-96">
-      {/* Chart container */}
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Dynamic Navigation</h3>
-                <CodeBlock language="tsx">
-                  {`function DynamicNavigation() {
-  const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [navLayout, setNavLayout] = useState<'horizontal' | 'vertical'>('horizontal')
-
-  useOnWindowResize(() => {
-    const width = window.innerWidth
-    
-    if (width < 768) {
-      setNavLayout('vertical')
-      setShowMobileMenu(false) // Close mobile menu on resize
-    } else {
-      setNavLayout('horizontal')
-      setShowMobileMenu(false)
-    }
-  })
-
-  return (
-    <nav className={navLayout === 'vertical' ? 'flex-col' : 'flex-row'}>
-      {navLayout === 'vertical' && (
-        <button onClick={() => setShowMobileMenu(!showMobileMenu)}>
-          Menu
-        </button>
-      )}
-      
-      <div className={
-        navLayout === 'vertical' 
-          ? \`\${showMobileMenu ? 'block' : 'hidden'} mt-2\`
-          : 'flex space-x-4'
-      }>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </div>
-    </nav>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Performance Optimization</h3>
-                <CodeBlock language="tsx">
-                  {`// Debounced version for expensive operations
-function useDebounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
-  const timeoutRef = useRef<NodeJS.Timeout>()
-  
-  return useCallback((...args: Parameters<T>) => {
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => fn(...args), delay)
-  }, [fn, delay])
-}
-
-function PerformantComponent() {
-  const [layout, setLayout] = useState('desktop')
-
-  const debouncedResize = useDebounce(() => {
-    const width = window.innerWidth
-    
-    // Expensive layout calculations
-    const newLayout = calculateOptimalLayout(width)
-    setLayout(newLayout)
-  }, 250) // Debounce by 250ms
-
-  useOnWindowResize(debouncedResize)
-
-  return <div className={layout}>Optimized content</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Viewport-Based Effects</h3>
-                <CodeBlock language="tsx">
-                  {`function ViewportEffects() {
-  const [viewportClass, setViewportClass] = useState('')
-
-  useOnWindowResize(() => {
-    const { innerWidth: width, innerHeight: height } = window
-    const aspectRatio = width / height
-    
-    let className = ''
-    
-    // Orientation-based styling
-    if (width > height) {
-      className += 'landscape '
-    } else {
-      className += 'portrait '
-    }
-    
-    // Aspect ratio classes
-    if (aspectRatio > 1.5) {
-      className += 'wide-screen'
-    } else if (aspectRatio < 0.8) {
-      className += 'tall-screen'
-    } else {
-      className += 'standard-screen'
-    }
-    
-    setViewportClass(className.trim())
-  })
-
-  return (
-    <div className={viewportClass}>
-      <h2>Viewport-aware content</h2>
-      <p>Layout adapts to screen orientation and aspect ratio</p>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<ViewportBasedEffectsExample />} code={viewportBasedEffectsCode} />
             </CardContent>
           </Card>
 

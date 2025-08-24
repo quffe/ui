@@ -1,3 +1,5 @@
+'use client'
+
 import { DataTable } from "@/components/Data/DataTable"
 import { useState } from "react"
 
@@ -56,7 +58,7 @@ export function AdvancedExample() {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(3)
 
-  const handleRowClick = (row: any) => {
+  const handleRowClick = (row) => {
     console.log("Row clicked:", row)
     // Handle row click action
   }

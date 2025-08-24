@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,45 +14,23 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState, useRef } from "react"
-import { useOnMountLayoutEffect, useStrictMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
+import LiveDemoExample from "@/examples/docs/hooks/useOnMountLayoutEffect/live-demo"
+import DOMMeasurementsExample from "@/examples/docs/hooks/useOnMountLayoutEffect/dom-measurements"
+import CriticalStyleSetupExample from "@/examples/docs/hooks/useOnMountLayoutEffect/critical-style-setup"
+import ScrollPositionRestorationExample from "@/examples/docs/hooks/useOnMountLayoutEffect/scroll-position-restoration"
+import AnimationSetupExample from "@/examples/docs/hooks/useOnMountLayoutEffect/animation-setup"
+import FocusManagementExample from "@/examples/docs/hooks/useOnMountLayoutEffect/focus-management"
 
-export default function UseOnMountLayoutEffectDocs() {
-  const [mountCount, setMountCount] = useState(0)
-  const [strictMountCount, setStrictMountCount] = useState(0)
-  const [rerenderCount, setRerenderCount] = useState(0)
-  const [elementHeight, setElementHeight] = useState(0)
-  const measureRef = useRef<HTMLDivElement>(null)
+const liveDemoCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/live-demo.tsx")
+const domMeasurementsCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/dom-measurements.tsx")
+const criticalStyleSetupCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/critical-style-setup.tsx")
+const scrollPositionRestorationCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/scroll-position-restoration.tsx")
+const animationSetupCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/animation-setup.tsx")
+const focusManagementCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/focus-management.tsx")
 
-  // Demonstrate useOnMountLayoutEffect
-  useOnMountLayoutEffect(() => {
-    console.log("useOnMountLayoutEffect: Component mounted!")
-    setMountCount(prev => prev + 1)
-
-    // Measure element synchronously before paint
-    if (measureRef.current) {
-      const height = measureRef.current.offsetHeight
-      setElementHeight(height)
-    }
-
-    return () => {
-      console.log("useOnMountLayoutEffect: Cleanup on unmount")
-    }
-  })
-
-  // Demonstrate useStrictMountLayoutEffect
-  useStrictMountLayoutEffect(() => {
-    console.log("useStrictMountLayoutEffect: Component mounted!")
-    setStrictMountCount(prev => prev + 1)
-
-    return () => {
-      console.log("useStrictMountLayoutEffect: Cleanup on unmount")
-    }
-  })
-
-  const triggerRerender = () => {
-    setRerenderCount(prev => prev + 1)
-  }
+export default async function UseOnMountLayoutEffectDocs() {
 
   return (
     <div className="flex flex-col">
@@ -120,12 +97,12 @@ function MyComponent() {
     // Measure or modify DOM synchronously
     if (ref.current) {
       const height = ref.current.offsetHeight
-      console.log('Element height:', height)
+      console.log(&apos;Element height:&apos;, height)
     }
     
     // Optional cleanup
     return () => {
-      console.log('Component unmounting')
+      console.log(&apos;Component unmounting&apos;)
     }
   })
 
@@ -150,176 +127,17 @@ function StrictComponent() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Live Demonstration</h3>
-                <div className="border rounded-lg p-4" ref={measureRef}>
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                    <div>
-                      useOnMountLayoutEffect runs: <strong>{mountCount} time(s)</strong>
-                    </div>
-                    <div>
-                      useStrictMountLayoutEffect runs: <strong>{strictMountCount} time(s)</strong>
-                    </div>
-                    <div>
-                      Component re-renders: <strong>{rerenderCount} time(s)</strong>
-                    </div>
-                    <div>
-                      Measured height: <strong>{elementHeight}px</strong>
-                    </div>
-                  </div>
-                  <Button onClick={triggerRerender}>
-                    Trigger Re-render (count: {rerenderCount})
-                  </Button>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    Notice how the mount effects only run once, even when re-rendering, and the
-                    height is measured before paint.
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">DOM Measurements</h3>
-                <CodeBlock language="tsx">
-                  {`function ResponsiveComponent() {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  const ref = useRef<HTMLDivElement>(null)
+              <PreviewTabs preview={<DOMMeasurementsExample />} code={domMeasurementsCode} />
 
-  useOnMountLayoutEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect()
-      setDimensions({
-        width: rect.width,
-        height: rect.height
-      })
-    }
-  })
+              <PreviewTabs preview={<CriticalStyleSetupExample />} code={criticalStyleSetupCode} />
 
-  return (
-    <div ref={ref}>
-      <p>Width: {dimensions.width}px</p>
-      <p>Height: {dimensions.height}px</p>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<ScrollPositionRestorationExample />} code={scrollPositionRestorationCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Critical Style Setup</h3>
-                <CodeBlock language="tsx">
-                  {`function ThemeProvider({ children, theme }) {
-  useStrictMountLayoutEffect(() => {
-    // Apply theme synchronously before paint to prevent flash
-    document.documentElement.setAttribute('data-theme', theme)
-    document.documentElement.style.colorScheme = theme
-    
-    return () => {
-      // Cleanup theme on unmount
-      document.documentElement.removeAttribute('data-theme')
-      document.documentElement.style.removeProperty('color-scheme')
-    }
-  })
+              <PreviewTabs preview={<AnimationSetupExample />} code={animationSetupCode} />
 
-  return <div className="theme-container">{children}</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Scroll Position Restoration</h3>
-                <CodeBlock language="tsx">
-                  {`function ScrollRestorer({ scrollKey }: { scrollKey: string }) {
-  useOnMountLayoutEffect(() => {
-    // Restore scroll position before paint to prevent jump
-    const savedPosition = sessionStorage.getItem(\`scroll-\${scrollKey}\`)
-    if (savedPosition) {
-      const position = JSON.parse(savedPosition)
-      window.scrollTo(position.x, position.y)
-    }
-
-    const savePosition = () => {
-      sessionStorage.setItem(\`scroll-\${scrollKey}\`, JSON.stringify({
-        x: window.scrollX,
-        y: window.scrollY
-      }))
-    }
-
-    window.addEventListener('beforeunload', savePosition)
-    
-    return () => {
-      window.removeEventListener('beforeunload', savePosition)
-    }
-  }, [scrollKey])
-
-  return null // This component doesn't render anything
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Animation Setup</h3>
-                <CodeBlock language="tsx">
-                  {`function AnimatedComponent() {
-  const elementRef = useRef<HTMLDivElement>(null)
-
-  useOnMountLayoutEffect(() => {
-    if (elementRef.current) {
-      // Set initial animation state before paint
-      elementRef.current.style.opacity = '0'
-      elementRef.current.style.transform = 'translateY(20px)'
-      
-      // Trigger animation on next frame
-      requestAnimationFrame(() => {
-        if (elementRef.current) {
-          elementRef.current.style.transition = 'all 0.3s ease'
-          elementRef.current.style.opacity = '1'
-          elementRef.current.style.transform = 'translateY(0)'
-        }
-      })
-    }
-  })
-
-  return (
-    <div ref={elementRef}>
-      <h2>Smoothly animated content</h2>
-      <p>This appears with a smooth fade-in animation</p>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Focus Management</h3>
-                <CodeBlock language="tsx">
-                  {`function FocusManager({ autoFocus }: { autoFocus?: boolean }) {
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  useStrictMountLayoutEffect(() => {
-    if (autoFocus && inputRef.current) {
-      // Focus input before paint to prevent visual jump
-      inputRef.current.focus()
-      
-      // Set cursor position if needed
-      const length = inputRef.current.value.length
-      inputRef.current.setSelectionRange(length, length)
-    }
-  })
-
-  return (
-    <div>
-      <label htmlFor="focused-input">Auto-focused Input:</label>
-      <input
-        ref={inputRef}
-        id="focused-input"
-        type="text"
-        placeholder="This will be focused on mount"
-      />
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<FocusManagementExample />} code={focusManagementCode} />
             </CardContent>
           </Card>
 

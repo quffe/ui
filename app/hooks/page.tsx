@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,11 +14,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { PreviewTabs } from "@/components/ui/preview-tabs"
-import { useState, useRef, useEffect } from "react"
-
-import { Dropdown } from "@/components/Navigation/Dropdown"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
+import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
 import { Example as UseMobileExample } from "@/examples/hooks/use-mobile/basic"
@@ -35,18 +33,18 @@ import { Example as UseStateChangeEffectExample } from "@/examples/hooks/use-sta
 import { AdvancedExample as UseStateChangeEffectAdvancedExample } from "@/examples/hooks/use-state-change-effect/advanced"
 
 // Raw imports
-import useMobileBasicCode from "@/examples/hooks/use-mobile/basic.tsx?raw"
-import useMobileAdvancedCode from "@/examples/hooks/use-mobile/advanced.tsx?raw"
-import useLocalStorageCode from "@/examples/hooks/use-local-storage/basic.tsx?raw"
-import useCopyToClipboardCode from "@/examples/hooks/use-copy-to-clipboard/basic.tsx?raw"
-import useCountdownCode from "@/examples/hooks/use-countdown/basic.tsx?raw"
-import useOnMountEffectCode from "@/examples/hooks/use-on-mount-effect/basic.tsx?raw"
-import useKeyboardShortcutCode from "@/examples/hooks/use-keyboard-shortcut/basic.tsx?raw"
-import useOnWindowResizeBasicCode from "@/examples/hooks/use-on-window-resize/basic.tsx?raw"
-import useOnWindowResizeAdvancedCode from "@/examples/hooks/use-on-window-resize/advanced.tsx?raw"
-import useOnMountLayoutEffectCode from "@/examples/hooks/use-on-mount-layout-effect/basic.tsx?raw"
-import useStateChangeEffectBasicCode from "@/examples/hooks/use-state-change-effect/basic.tsx?raw"
-import useStateChangeEffectAdvancedCode from "@/examples/hooks/use-state-change-effect/advanced.tsx?raw"
+const useMobileBasicCode = getExampleCode("hooks/use-mobile/basic.tsx")
+const useMobileAdvancedCode = getExampleCode("hooks/use-mobile/advanced.tsx")
+const useLocalStorageCode = getExampleCode("hooks/use-local-storage/basic.tsx")
+const useCopyToClipboardCode = getExampleCode("hooks/use-copy-to-clipboard/basic.tsx")
+const useCountdownCode = getExampleCode("hooks/use-countdown/basic.tsx")
+const useOnMountEffectCode = getExampleCode("hooks/use-on-mount-effect/basic.tsx")
+const useKeyboardShortcutCode = getExampleCode("hooks/use-keyboard-shortcut/basic.tsx")
+const useOnWindowResizeBasicCode = getExampleCode("hooks/use-on-window-resize/basic.tsx")
+const useOnWindowResizeAdvancedCode = getExampleCode("hooks/use-on-window-resize/advanced.tsx")
+const useOnMountLayoutEffectCode = getExampleCode("hooks/use-on-mount-layout-effect/basic.tsx")
+const useStateChangeEffectBasicCode = getExampleCode("hooks/use-state-change-effect/basic.tsx")
+const useStateChangeEffectAdvancedCode = getExampleCode("hooks/use-state-change-effect/advanced.tsx")
 
 const hooks = [
   // Device & Layout Hooks
@@ -57,8 +55,6 @@ const hooks = [
     category: "Device & Layout",
     preview: <UseMobileExample />,
     code: useMobileBasicCode,
-    advancedCode: useMobileAdvancedCode,
-    advancedPreview: <UseMobileAdvancedExample />,
   },
   {
     title: "useOnWindowResize",
@@ -67,8 +63,6 @@ const hooks = [
     category: "Device & Layout",
     preview: <UseOnWindowResizeExample />,
     code: useOnWindowResizeBasicCode,
-    advancedCode: useOnWindowResizeAdvancedCode,
-    advancedPreview: <UseOnWindowResizeAdvancedExample />,
   },
   // Life Cycles Hooks
   {
@@ -145,7 +139,7 @@ const groupedHooks = hooks.reduce(
   {} as Record<string, typeof hooks>
 )
 
-export default function HooksOverview() {
+export default async function HooksOverview() {
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -14,40 +13,23 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState, useEffect } from "react"
-import { useCountdown, useCountdownLoopTimer } from "@/hooks/useCountdown"
 
-export default function UseCountdownDocs() {
-  const [mounted, setMounted] = useState(false)
-  const { seconds, start, stop, reset, isActive } = useCountdown(30, () => {
-    alert("Simple countdown completed!")
-  })
+// Example components
+import { Example as BasicExample } from "@/examples/hooks/use-countdown/basic"
+import { SimpleCountdownExample } from "@/examples/docs/hooks/useCountdown/simple-countdown"
+import { AdvancedLoopExample } from "@/examples/docs/hooks/useCountdown/advanced-loop"
+import PomodoroTimerExample from "@/examples/docs/hooks/useCountdown/pomodoro-timer"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  const {
-    startTimer,
-    stopTimer,
-    pauseTimer,
-    resumeTimer,
-    resetTimer,
-    remainingSeconds,
-    isRunning,
-    isPaused,
-    loopCount,
-    progress,
-  } = useCountdownLoopTimer({
-    intervalMs: 1000,
-    durationMs: 10000, // 10 seconds
-    onTick: () => {
-      console.log("Loop completed!")
-    },
-    autoRestart: false,
-    maxLoops: 3,
-  })
+// Raw imports
+const basicExampleCode = getExampleCode("hooks/use-countdown/basic.tsx")
+const simpleCountdownCode = getExampleCode("docs/hooks/useCountdown/simple-countdown.tsx")
+const advancedLoopCode = getExampleCode("docs/hooks/useCountdown/advanced-loop.tsx")
+const pomodoroTimerCode = getExampleCode("docs/hooks/useCountdown/pomodoro-timer.tsx")
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+export default async function UseCountdownDocs() {
 
   return (
     <div className="flex flex-col">
@@ -98,54 +80,10 @@ export default function UseCountdownDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useCountdown, useCountdownLoopTimer } from "@/hooks/useCountdown"`}
-                </CodeBlock>
-              </div>
-
-              <CodeBlock language="tsx">
-                {`// Simple countdown
-function SimpleTimer() {
-  const { seconds, start, stop, reset, isActive } = useCountdown(60, () => {
-    alert('Time is up!')
-  })
-
-  return (
-    <div>
-      <div>{seconds} seconds remaining</div>
-      <button onClick={start}>Start</button>
-      <button onClick={stop}>Stop</button>
-      <button onClick={reset}>Reset</button>
-    </div>
-  )
-}
-
-// Advanced countdown with loops
-function AdvancedTimer() {
-  const { 
-    startTimer, 
-    stopTimer, 
-    remainingSeconds, 
-    loopCount,
-    progress 
-  } = useCountdownLoopTimer({
-    intervalMs: 1000,
-    durationMs: 30000, // 30 seconds
-    onTick: () => console.log('Loop completed!'),
-    autoRestart: true,
-    maxLoops: 5
-  })
-
-  return (
-    <div>
-      <div>Time: {remainingSeconds}s</div>
-      <div>Progress: {progress.toFixed(1)}%</div>
-      <div>Loop: {loopCount}</div>
-    </div>
-  )
-}`}
-              </CodeBlock>
+              <PreviewTabs
+                preview={<BasicExample />}
+                code={basicExampleCode}
+              />
             </CardContent>
           </Card>
 
@@ -154,109 +92,23 @@ function AdvancedTimer() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Simple Countdown</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="text-sm mb-4">
-                    Time remaining: <strong>{mounted ? seconds : 0} seconds</strong>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" onClick={start} disabled={isActive}>
-                      Start
-                    </Button>
-                    <Button size="sm" onClick={stop} disabled={!isActive}>
-                      Stop
-                    </Button>
-                    <Button size="sm" onClick={reset}>
-                      Reset
-                    </Button>
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    Status: {mounted ? (isActive ? "Running" : "Stopped") : "Loading..."}
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs
+                title="Simple Countdown"
+                preview={<SimpleCountdownExample />}
+                code={simpleCountdownCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Advanced Loop Timer</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-                    <div>
-                      Time: <strong>{mounted ? remainingSeconds : 0}s</strong>
-                    </div>
-                    <div>
-                      Progress: <strong>{mounted ? progress.toFixed(1) : 0}%</strong>
-                    </div>
-                    <div>
-                      Loop: <strong>{mounted ? loopCount : 0}</strong>
-                    </div>
-                    <div>
-                      Status:{" "}
-                      <strong>
-                        {mounted
-                          ? isRunning
-                            ? "Running"
-                            : isPaused
-                              ? "Paused"
-                              : "Stopped"
-                          : "Loading..."}
-                      </strong>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" onClick={startTimer} disabled={isRunning}>
-                      Start
-                    </Button>
-                    <Button size="sm" onClick={stopTimer} disabled={!isRunning && !isPaused}>
-                      Stop
-                    </Button>
-                    <Button size="sm" onClick={pauseTimer} disabled={!isRunning}>
-                      Pause
-                    </Button>
-                    <Button size="sm" onClick={resumeTimer} disabled={!isPaused}>
-                      Resume
-                    </Button>
-                    <Button size="sm" onClick={resetTimer}>
-                      Reset
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs
+                title="Advanced Loop Timer"
+                preview={<AdvancedLoopExample />}
+                code={advancedLoopCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Pomodoro Timer Example</h3>
-                <CodeBlock language="tsx">
-                  {`function PomodoroTimer() {
-  const [mode, setMode] = useState('work') // 'work' | 'break'
-  
-  const { startTimer, stopTimer, remainingSeconds, loopCount } = useCountdownLoopTimer({
-    intervalMs: 1000,
-    durationMs: mode === 'work' ? 25 * 60 * 1000 : 5 * 60 * 1000, // 25min work, 5min break
-    onTick: () => {
-      // Switch between work and break
-      setMode(prev => prev === 'work' ? 'break' : 'work')
-      // Show notification
-      new Notification(\`\${mode === 'work' ? 'Break' : 'Work'} time!\`)
-    },
-    autoRestart: true,
-    maxLoops: 0 // Infinite loops
-  })
-  
-  const minutes = Math.floor(remainingSeconds / 60)
-  const seconds = remainingSeconds % 60
-  
-  return (
-    <div className="text-center">
-      <h2>{mode === 'work' ? '🍅 Work Time' : '☕ Break Time'}</h2>
-      <div className="text-4xl font-mono">
-        {minutes:02d}:{seconds:02d}
-      </div>
-      <div>Session: {Math.floor(loopCount / 2) + 1}</div>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs
+                title="Pomodoro Timer"
+                preview={<PomodoroTimerExample />}
+                code={pomodoroTimerCode}
+              />
             </CardContent>
           </Card>
 

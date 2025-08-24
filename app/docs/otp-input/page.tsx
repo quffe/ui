@@ -1,6 +1,5 @@
-"use client"
+"use server"
 
-import { OtpInput } from "@/components/Input/OtpInput"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -14,12 +13,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 
-export default function OtpInputDocs() {
-  const [otp, setOtp] = useState("")
-  const [phoneOtp, setPhoneOtp] = useState("")
-  const [maskedOtp, setMaskedOtp] = useState("")
+// Example components
+import { BasicExample } from "@/examples/docs/otp-input/basic-example"
+import { PhoneVerificationExample } from "@/examples/docs/otp-input/phone-verification"
+import { MaskedInputExample } from "@/examples/docs/otp-input/masked-input"
+import { ErrorStateExample } from "@/examples/docs/otp-input/error-state"
+import { getExampleCode } from "@/lib/serverUtils"
+
+// Raw imports
+const basicExampleCode = getExampleCode("docs/otp-input/basic-example.tsx")
+const phoneVerificationCode = getExampleCode("docs/otp-input/phone-verification.tsx")
+const maskedInputCode = getExampleCode("docs/otp-input/masked-input.tsx")
+const errorStateCode = getExampleCode("docs/otp-input/error-state.tsx")
+
+export default async function OtpInputDocs() {
 
   return (
     <div className="flex flex-col">
@@ -64,72 +73,32 @@ export default function OtpInputDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { OtpInput } from "@/components/Input/OtpInput"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<OtpInput
-  length={6}
-  value={otpValue}
-  onChange={setOtpValue}
-  onComplete={(code) => console.log('Complete:', code)}
-/>`}
-                </code>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Email Verification (6 digits)</h3>
-                <OtpInput
-                  length={6}
-                  value={otp}
-                  onChange={setOtp}
-                  onComplete={code => alert(`Email OTP: ${code}`)}
-                />
-                <p className="text-sm text-muted-foreground mt-2">Current value: "{otp}"</p>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                title="Email Verification (6 digits)"
+                preview={<BasicExample />}
+                code={basicExampleCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Phone Verification (4 digits)</h3>
-                <OtpInput
-                  length={4}
-                  value={phoneOtp}
-                  onChange={setPhoneOtp}
-                  size="lg"
-                  onComplete={code => alert(`Phone OTP: ${code}`)}
-                />
-                <p className="text-sm text-muted-foreground mt-2">Current value: "{phoneOtp}"</p>
-              </div>
+              <PreviewTabs
+                title="Phone Verification (4 digits)"
+                preview={<PhoneVerificationExample />}
+                code={phoneVerificationCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Masked Input (Security)</h3>
-                <OtpInput
-                  length={6}
-                  value={maskedOtp}
-                  onChange={setMaskedOtp}
-                  mask={true}
-                  size="md"
-                />
-                <p className="text-sm text-muted-foreground mt-2">Current value: "{maskedOtp}"</p>
-              </div>
+              <PreviewTabs
+                title="Masked Input (Security)"
+                preview={<MaskedInputExample />}
+                code={maskedInputCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Error State</h3>
-                <OtpInput length={6} value="" onChange={() => {}} error={true} />
-                <p className="text-sm text-destructive mt-2">Invalid OTP code</p>
-              </div>
+              <PreviewTabs
+                title="Error State"
+                preview={<ErrorStateExample />}
+                code={errorStateCode}
+              />
             </CardContent>
           </Card>
 
@@ -175,8 +144,8 @@ export default function OtpInputDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
-                      <td className="p-2">'sm' | 'md' | 'lg'</td>
-                      <td className="p-2">'md'</td>
+                      <td className="p-2">&apos;sm&apos; | &apos;md&apos; | &apos;lg&apos;</td>
+                      <td className="p-2">&apos;md&apos;</td>
                       <td className="p-2">Size variant of input fields</td>
                     </tr>
                     <tr className="border-b">

@@ -1,6 +1,5 @@
-"use client"
+"use server"
 
-import { SelectDropdown } from "@/components/Navigation/SelectDropdown"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -14,35 +13,24 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-export default function SelectDropdownDocs() {
-  const [basicValue, setBasicValue] = useState<string | null>(null)
-  const [numberValue, setNumberValue] = useState<number | null>(null)
-  const [errorValue, setErrorValue] = useState<string | null>(null)
+// Example components
+import { BasicDropdownExample } from "@/examples/docs/select-dropdown/basic-dropdown"
+import { SizeVariantsExample } from "@/examples/docs/select-dropdown/size-variants"
+import { NumberValuesExample } from "@/examples/docs/select-dropdown/number-values"
+import { ErrorStateExample } from "@/examples/docs/select-dropdown/error-state"
+import { DisabledStateExample } from "@/examples/docs/select-dropdown/disabled-state"
 
-  const stringOptions = [
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
-    { label: "Cherry", value: "cherry" },
-    { label: "Date (Disabled)", value: "date", disabled: true },
-    { label: "Elderberry", value: "elderberry" },
-  ]
+// Raw imports
+const basicDropdownCode = getExampleCode("docs/select-dropdown/basic-dropdown.tsx")
+const sizeVariantsCode = getExampleCode("docs/select-dropdown/size-variants.tsx")
+const numberValuesCode = getExampleCode("docs/select-dropdown/number-values.tsx")
+const errorStateCode = getExampleCode("docs/select-dropdown/error-state.tsx")
+const disabledStateCode = getExampleCode("docs/select-dropdown/disabled-state.tsx")
 
-  const numberOptions = [
-    { label: "One", value: 1 },
-    { label: "Two", value: 2 },
-    { label: "Three", value: 3 },
-    { label: "Four", value: 4 },
-    { label: "Five", value: 5 },
-  ]
-
-  const statusOptions = [
-    { label: "Draft", value: "draft" },
-    { label: "In Review", value: "review" },
-    { label: "Published", value: "published" },
-    { label: "Archived", value: "archived" },
-  ]
+export default async function SelectDropdownDocs() {
 
   return (
     <div className="flex flex-col">
@@ -90,21 +78,11 @@ export default function SelectDropdownDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { SelectDropdown } from "@/components/Navigation/SelectDropdown"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<SelectDropdown
-  options={options}
-  value={selectedValue}
-  onChange={setSelectedValue}
-  placeholder="Choose an option"
-/>`}
-                </code>
-              </div>
+              <PreviewTabs
+                preview={<BasicDropdownExample />}
+                code={basicDropdownCode}
+                title="Basic Dropdown"
+              />
             </CardContent>
           </Card>
 
@@ -112,94 +90,30 @@ export default function SelectDropdownDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Dropdown</h3>
-                <SelectDropdown
-                  options={stringOptions}
-                  value={basicValue}
-                  onChange={setBasicValue}
-                  placeholder="Choose a fruit"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {basicValue || "None"}
-                </p>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<NumberValuesExample />}
+                code={numberValuesCode}
+                title="Number Values"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Number Values</h3>
-                <SelectDropdown
-                  options={numberOptions}
-                  value={numberValue}
-                  onChange={setNumberValue}
-                  placeholder="Pick a number"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {numberValue || "None"}
-                </p>
-              </div>
+              <PreviewTabs
+                preview={<SizeVariantsExample />}
+                code={sizeVariantsCode}
+                title="Size Variants"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Size Variants</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium">Small</label>
-                    <SelectDropdown
-                      options={statusOptions}
-                      value={null}
-                      onChange={() => {}}
-                      placeholder="Small dropdown"
-                      size="sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium">Default</label>
-                    <SelectDropdown
-                      options={statusOptions}
-                      value={null}
-                      onChange={() => {}}
-                      placeholder="Default dropdown"
-                      size="default"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium">Large</label>
-                    <SelectDropdown
-                      options={statusOptions}
-                      value={null}
-                      onChange={() => {}}
-                      placeholder="Large dropdown"
-                      size="lg"
-                    />
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs
+                preview={<ErrorStateExample />}
+                code={errorStateCode}
+                title="Error State"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Error State</h3>
-                <SelectDropdown
-                  options={statusOptions}
-                  value={errorValue}
-                  onChange={setErrorValue}
-                  placeholder="Select status"
-                  error={!errorValue ? "Status is required" : undefined}
-                  required
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {errorValue || "None"}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Disabled State</h3>
-                <SelectDropdown
-                  options={stringOptions}
-                  value="apple"
-                  onChange={() => {}}
-                  placeholder="Cannot change"
-                  disabled
-                />
-              </div>
+              <PreviewTabs
+                preview={<DisabledStateExample />}
+                code={disabledStateCode}
+                title="Disabled State"
+              />
             </CardContent>
           </Card>
 
@@ -240,19 +154,19 @@ export default function SelectDropdownDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">placeholder</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"Select an option"</td>
+                      <td className="p-2">&quot;Select an option&quot;</td>
                       <td className="p-2">Placeholder text</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
-                      <td className="p-2">'default' | 'sm' | 'lg'</td>
-                      <td className="p-2">'default'</td>
+                      <td className="p-2">&apos;default&apos; | &apos;sm&apos; | &apos;lg&apos;</td>
+                      <td className="p-2">&apos;default&apos;</td>
                       <td className="p-2">Size variant</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">variant</td>
-                      <td className="p-2">'default' | 'error'</td>
-                      <td className="p-2">'default'</td>
+                      <td className="p-2">&apos;default&apos; | &apos;error&apos;</td>
+                      <td className="p-2">&apos;default&apos;</td>
                       <td className="p-2">Visual variant</td>
                     </tr>
                     <tr className="border-b">

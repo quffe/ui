@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -14,27 +13,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CodeBlock } from "@/components/ui/code-block"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { Copy, Check, AlertCircle } from "lucide-react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 
-export default function UseCopyToClipboardDocs() {
-  const { copy, copied, error, isLoading } = useCopyToClipboard({
-    onSuccess: text => console.log("Copied:", text),
-    timeout: 3000,
-  })
+// Example components
+import { BasicUsageExample } from "@/examples/docs/use-copy-to-clipboard/basic-usage"
+import { WithCallbacksExample } from "@/examples/docs/use-copy-to-clipboard/with-callbacks"
+import { CodeCopyExample } from "@/examples/docs/use-copy-to-clipboard/code-copy"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  const sampleCode = `import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
+// Raw imports
+const basicUsageCode = getExampleCode("docs/use-copy-to-clipboard/basic-usage.tsx")
+const withCallbacksCode = getExampleCode("docs/use-copy-to-clipboard/with-callbacks.tsx")
+const codeCopyCode = getExampleCode("docs/use-copy-to-clipboard/code-copy.tsx")
 
-function CopyButton() {
-  const { copy, copied } = useCopyToClipboard()
-  
-  return (
-    <button onClick={() => copy("Hello World!")}>
-      {copied ? "Copied!" : "Copy"}
-    </button>
-  )
-}`
+export default async function UseCopyToClipboardDocs() {
 
   return (
     <div className="flex flex-col">
@@ -79,102 +71,26 @@ function CopyButton() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"`}
-                </CodeBlock>
-              </div>
-
-              <CodeBlock language="tsx">
-                {`function CopyButton({ text }) {
-  const { copy, copied, error, isLoading } = useCopyToClipboard({
-    onSuccess: (text) => console.log('Copied:', text),
-    timeout: 3000
-  })
-
-  return (
-    <button
-      onClick={() => copy(text, 'API Key')}
-      disabled={isLoading}
-    >
-      {isLoading ? 'Copying...' : copied ? 'Copied!' : 'Copy'}
-    </button>
-  )
-}`}
-              </CodeBlock>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Copy Button</h3>
-                <div className="flex items-center gap-2 mb-4">
-                  <Button
-                    onClick={() => copy("Hello, World!", "greeting")}
-                    disabled={isLoading}
-                    size="sm"
-                  >
-                    {isLoading ? (
-                      "Copying..."
-                    ) : copied ? (
-                      <>
-                        <Check className="h-4 w-4 mr-2" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copy Greeting
-                      </>
-                    )}
-                  </Button>
-                  {error && (
-                    <div className="flex items-center gap-1 text-red-600 text-sm">
-                      <AlertCircle className="h-4 w-4" />
-                      {error.message}
-                    </div>
-                  )}
-                </div>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                title="Basic Copy Button"
+                preview={<BasicUsageExample />}
+                code={basicUsageCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Copy Code Example</h3>
-                <div className="relative">
-                  <CodeBlock language="tsx" showCopyButton={false}>
-                    {sampleCode}
-                  </CodeBlock>
-                  <Button
-                    onClick={() => copy(sampleCode, "code example")}
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-2 right-2"
-                  >
-                    {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
+              <PreviewTabs
+                title="Copy Code with Button"
+                preview={<CodeCopyExample />}
+                code={codeCopyCode}
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">With Success Callback</h3>
-                <CodeBlock language="tsx">
-                  {`const { copy } = useCopyToClipboard({
-  onSuccess: (text) => {
-    toast.success(\`Copied: \${text}\`)
-  },
-  onError: (error) => {
-    toast.error(\`Failed: \${error.message}\`)
-  },
-  timeout: 5000
-})`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs
+                title="With Success Callback"
+                preview={<WithCallbacksExample />}
+                code={withCallbacksCode}
+              />
             </CardContent>
           </Card>
 

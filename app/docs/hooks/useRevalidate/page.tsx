@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,23 +14,23 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState } from "react"
-import useRevalidate from "@/hooks/useRevalidate"
-import { RefreshCw, Database, Server } from "lucide-react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
+import BulkDataRevalidationExample from "@/examples/docs/hooks/useRevalidate/bulk-data-revalidation"
+import FormSubmissionExample from "@/examples/docs/hooks/useRevalidate/form-submission"
+import AdminDashboardExample from "@/examples/docs/hooks/useRevalidate/admin-dashboard"
+import RealTimeUpdatesExample from "@/examples/docs/hooks/useRevalidate/real-time-updates"
+import ErrorRecoveryExample from "@/examples/docs/hooks/useRevalidate/error-recovery"
+import ConditionalRevalidationExample from "@/examples/docs/hooks/useRevalidate/conditional-revalidation"
 
-export default function UseRevalidateDocs() {
-  const [revalidateCount, setRevalidateCount] = useState(0)
-  const [lastRevalidate, setLastRevalidate] = useState<string>("")
-  const { revalidate } = useRevalidate()
+const bulkDataRevalidationCode = getExampleCode("docs/hooks/useRevalidate/bulk-data-revalidation.tsx")
+const formSubmissionCode = getExampleCode("docs/hooks/useRevalidate/form-submission.tsx")
+const adminDashboardCode = getExampleCode("docs/hooks/useRevalidate/admin-dashboard.tsx")
+const realTimeUpdatesCode = getExampleCode("docs/hooks/useRevalidate/real-time-updates.tsx")
+const errorRecoveryCode = getExampleCode("docs/hooks/useRevalidate/error-recovery.tsx")
+const conditionalRevalidationCode = getExampleCode("docs/hooks/useRevalidate/conditional-revalidation.tsx")
 
-  const handleRevalidate = (urls: string[]) => {
-    revalidate(urls)
-    setRevalidateCount(prev => prev + 1)
-    setLastRevalidate(new Date().toLocaleTimeString())
-  }
-
-  const sampleUrls = ["/api/users", "/api/posts", "/api/comments", "/api/analytics"]
-
+export default async function UseRevalidateDocs() {
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -87,7 +86,7 @@ export default function UseRevalidateDocs() {
               <CodeBlock language="typescript">{`npm install swr`}</CodeBlock>
               <CodeBlock language="tsx">
                 {`// Wrap your app with SWR configuration
-import { SWRConfig } from 'swr'
+import { SWRConfig } from &apos;swr&apos;
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -119,9 +118,9 @@ function MyApp({ Component, pageProps }) {
 
   const handleRefreshData = () => {
     revalidate([
-      '/api/users',
-      '/api/posts',
-      '/api/comments'
+      &apos;/api/users&apos;,
+      &apos;/api/posts&apos;,
+      &apos;/api/comments&apos;
     ])
   }
 
@@ -140,348 +139,17 @@ function MyApp({ Component, pageProps }) {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Bulk Data Revalidation</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="mb-4 text-sm text-muted-foreground">
-                    <div>
-                      Revalidate count: <strong>{revalidateCount}</strong>
-                    </div>
-                    <div>
-                      Last revalidate: <strong>{lastRevalidate || "Never"}</strong>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleRevalidate(["/api/users"])}
-                      variant="outline"
-                    >
-                      <Database className="h-4 w-4 mr-2" />
-                      Refresh Users
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleRevalidate(["/api/posts", "/api/comments"])}
-                      variant="outline"
-                    >
-                      <Server className="h-4 w-4 mr-2" />
-                      Refresh Content
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleRevalidate(sampleUrls)}
-                      variant="outline"
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Refresh All
-                    </Button>
-                  </div>
-                  <div className="mt-3 text-xs text-muted-foreground">
-                    Click the buttons to simulate SWR cache revalidation calls.
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs preview={<BulkDataRevalidationExample />} code={bulkDataRevalidationCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Form Submission with Revalidation</h3>
-                <CodeBlock language="tsx">
-                  {`function UserForm() {
-  const { revalidate } = useRevalidate()
-  const [formData, setFormData] = useState({ name: '', email: '' })
+              <PreviewTabs preview={<FormSubmissionExample />} code={formSubmissionCode} />
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    try {
-      await fetch('/api/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      
-      // Revalidate related data after successful submission
-      revalidate([
-        '/api/users',           // User list
-        '/api/users/stats',     // User statistics
-        '/api/dashboard'        // Dashboard data that includes user count
-      ])
-      
-      setFormData({ name: '', email: '' })
-      alert('User created successfully!')
-      
-    } catch (error) {
-      console.error('Failed to create user:', error)
-    }
-  }
+              <PreviewTabs preview={<AdminDashboardExample />} code={adminDashboardCode} />
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={formData.name}
-        onChange={(e) => setFormData({...formData, name: e.target.value})}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="email"
-        value={formData.email}
-        onChange={(e) => setFormData({...formData, email: e.target.value})}
-        placeholder="Email"
-        required
-      />
-      <button type="submit">Create User</button>
-    </form>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<RealTimeUpdatesExample />} code={realTimeUpdatesCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Admin Dashboard Actions</h3>
-                <CodeBlock language="tsx">
-                  {`function AdminDashboard() {
-  const { revalidate } = useRevalidate()
+              <PreviewTabs preview={<ErrorRecoveryExample />} code={errorRecoveryCode} />
 
-  const refreshUserData = () => {
-    revalidate([
-      '/api/users',
-      '/api/users/active',
-      '/api/users/stats',
-      '/api/analytics/users'
-    ])
-  }
-
-  const refreshContentData = () => {
-    revalidate([
-      '/api/posts',
-      '/api/posts/published',
-      '/api/posts/stats',
-      '/api/comments',
-      '/api/analytics/content'
-    ])
-  }
-
-  const refreshAllData = () => {
-    revalidate([
-      '/api/users',
-      '/api/posts',
-      '/api/comments',
-      '/api/analytics',
-      '/api/dashboard',
-      '/api/reports',
-      '/api/settings'
-    ])
-  }
-
-  return (
-    <div className="admin-dashboard">
-      <h2>Admin Dashboard</h2>
-      
-      <div className="refresh-controls">
-        <button onClick={refreshUserData}>
-          Refresh User Data
-        </button>
-        <button onClick={refreshContentData}>
-          Refresh Content Data
-        </button>
-        <button onClick={refreshAllData}>
-          Refresh Everything
-        </button>
-      </div>
-
-      {/* Dashboard components that use SWR to fetch data */}
-      <UserStats />
-      <ContentStats />
-      <RecentActivity />
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Real-time Updates</h3>
-                <CodeBlock language="tsx">
-                  {`function RealTimeComponent() {
-  const { revalidate } = useRevalidate()
-
-  useEffect(() => {
-    // Set up WebSocket connection for real-time updates
-    const ws = new WebSocket('ws://localhost:3001')
-    
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      
-      switch (data.type) {
-        case 'USER_UPDATED':
-          revalidate(['/api/users', \`/api/users/\${data.userId}\`])
-          break
-          
-        case 'POST_CREATED':
-          revalidate(['/api/posts', '/api/posts/recent'])
-          break
-          
-        case 'COMMENT_ADDED':
-          revalidate([
-            '/api/comments', 
-            \`/api/posts/\${data.postId}/comments\`
-          ])
-          break
-          
-        case 'BULK_UPDATE':
-          // Refresh multiple related endpoints
-          revalidate(data.endpoints)
-          break
-      }
-    }
-
-    return () => {
-      ws.close()
-    }
-  }, [revalidate])
-
-  return <div>Real-time data components</div>
-}
-
-// Server-sent events example
-function SSEComponent() {
-  const { revalidate } = useRevalidate()
-
-  useEffect(() => {
-    const eventSource = new EventSource('/api/events')
-    
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      
-      if (data.revalidate) {
-        revalidate(data.revalidate)
-      }
-    }
-
-    return () => {
-      eventSource.close()
-    }
-  }, [revalidate])
-
-  return <div>SSE-powered components</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Error Recovery</h3>
-                <CodeBlock language="tsx">
-                  {`function ErrorRecovery() {
-  const { revalidate } = useRevalidate()
-  const [retryCount, setRetryCount] = useState(0)
-
-  const handleRetry = async () => {
-    try {
-      setRetryCount(prev => prev + 1)
-      
-      // Attempt to refresh failed requests
-      revalidate([
-        '/api/users',
-        '/api/posts',
-        '/api/analytics'
-      ])
-      
-      // Wait a moment and check if data loaded successfully
-      setTimeout(() => {
-        // You could check SWR cache or component state here
-        // and show success/failure messages
-      }, 1000)
-      
-    } catch (error) {
-      console.error('Retry failed:', error)
-    }
-  }
-
-  return (
-    <div className="error-recovery">
-      <h3>Connection Issues?</h3>
-      <p>Some data failed to load. Try refreshing.</p>
-      <button onClick={handleRetry} disabled={retryCount > 3}>
-        {retryCount > 0 ? \`Retry (\${retryCount}/3)\` : 'Retry'}
-      </button>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Conditional Revalidation</h3>
-                <CodeBlock language="tsx">
-                  {`function ConditionalRevalidation() {
-  const { revalidate } = useRevalidate()
-  const [user, setUser] = useState(null)
-
-  const handleUserAction = async (action: string, payload: any) => {
-    try {
-      const response = await fetch(\`/api/actions/\${action}\`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-
-      if (response.ok) {
-        // Conditional revalidation based on user role and action
-        const urlsToRevalidate = []
-
-        // Always revalidate user's own data
-        urlsToRevalidate.push(\`/api/users/\${user.id}\`)
-
-        // Admin users get additional revalidations
-        if (user.role === 'admin') {
-          urlsToRevalidate.push(
-            '/api/users',
-            '/api/analytics',
-            '/api/reports'
-          )
-        }
-
-        // Action-specific revalidations
-        switch (action) {
-          case 'create-post':
-            urlsToRevalidate.push(
-              '/api/posts',
-              '/api/posts/recent',
-              \`/api/users/\${user.id}/posts\`
-            )
-            break
-
-          case 'update-profile':
-            urlsToRevalidate.push(
-              '/api/profile',
-              '/api/users'
-            )
-            break
-
-          case 'delete-comment':
-            urlsToRevalidate.push(
-              '/api/comments',
-              \`/api/posts/\${payload.postId}/comments\`
-            )
-            break
-        }
-
-        revalidate(urlsToRevalidate)
-      }
-    } catch (error) {
-      console.error('Action failed:', error)
-    }
-  }
-
-  return (
-    <div>
-      {/* Action buttons that trigger conditional revalidation */}
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<ConditionalRevalidationExample />} code={conditionalRevalidationCode} />
             </CardContent>
           </Card>
 
@@ -528,7 +196,7 @@ function SSEComponent() {
 }`}
                   </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
-                    The hook uses SWR's mutate function to match cache keys by URL and trigger
+                    The hook uses SWR&apos;s mutate function to match cache keys by URL and trigger
                     revalidation.
                   </p>
                 </div>
@@ -536,13 +204,13 @@ function SSEComponent() {
                 <div>
                   <h3 className="font-semibold mb-3">SWR Integration</h3>
                   <div className="text-sm space-y-2">
-                    <p>This hook works with SWR's cache key matching system:</p>
+                    <p>This hook works with SWR&apos;s cache key matching system:</p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                       <li>
-                        Matches cache entries where the key's URL property equals the provided URL
+                        Matches cache entries where the key&apos;s URL property equals the provided URL
                       </li>
                       <li>Triggers revalidation for all matching cache entries</li>
-                      <li>Works with SWR's global mutate function</li>
+                      <li>Works with SWR&apos;s global mutate function</li>
                       <li>Supports both string keys and object keys with URL properties</li>
                     </ul>
                   </div>

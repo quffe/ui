@@ -1,3 +1,5 @@
+'use client'
+
 import { DataTable } from "@/components/Data/DataTable"
 
 const data = [

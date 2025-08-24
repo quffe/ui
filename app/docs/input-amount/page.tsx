@@ -1,9 +1,7 @@
-"use client"
+"use server"
 
-import { InputAmount } from "@/components/Input/InputAmount"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CodeBlock } from "@/components/ui/code-block"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,11 +13,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-export default function InputAmountDocs() {
-  const [amount, setAmount] = useState<number | null>(null)
-  const [currencyAmount, setCurrencyAmount] = useState<number | null>(1000)
+// Example components
+import { BasicAmountExample } from "@/examples/docs/input-amount/basic-amount"
+import { CurrencyAmountExample } from "@/examples/docs/input-amount/currency-amount"
+import { ErrorStateExample } from "@/examples/docs/input-amount/error-state"
+
+// Raw imports
+const basicAmountCode = getExampleCode("docs/input-amount/basic-amount.tsx")
+const currencyAmountCode = getExampleCode("docs/input-amount/currency-amount.tsx")
+const errorStateCode = getExampleCode("docs/input-amount/error-state.tsx")
+
+export default async function InputAmountDocs() {
 
   return (
     <div className="flex flex-col">
@@ -67,20 +74,11 @@ export default function InputAmountDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { InputAmount } from "@/components/Input/InputAmount"`}
-                </CodeBlock>
-              </div>
-
-              <CodeBlock language="tsx">
-                {`<InputAmount
-  value={amount}
-  onChange={setAmount}
-  label="Enter amount"
-  placeholder="0.00"
-/>`}
-              </CodeBlock>
+              <PreviewTabs
+                preview={<BasicAmountExample />}
+                code={basicAmountCode}
+                title="Basic Amount Input"
+              />
             </CardContent>
           </Card>
 
@@ -88,46 +86,30 @@ export default function InputAmountDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Amount Input</h3>
-                <InputAmount
-                  value={amount}
-                  onChange={setAmount}
-                  label="Amount"
-                  placeholder="0.00"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Current value: {amount?.toString() || "null"}
-                </p>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<CurrencyAmountExample />}
+                code={currencyAmountCode}
+                title="With Currency Symbol"
+              />
+              
+              <PreviewTabs
+                preview={<ErrorStateExample />}
+                code={errorStateCode}
+                title="With Error State"
+              />
+            </CardContent>
+          </Card>
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">With Currency Symbol</h3>
-                <InputAmount
-                  value={currencyAmount}
-                  onChange={setCurrencyAmount}
-                  label="Price"
-                  placeholder="0.00"
-                  showCurrency
-                  currency="$"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Current value: {currencyAmount?.toString() || "null"}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">With Error State</h3>
-                <InputAmount
-                  value={null}
-                  onChange={() => {}}
-                  label="Budget"
-                  placeholder="0.00"
-                  error="Amount is required"
-                  showCurrency
-                  currency="€"
-                />
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Import</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-muted p-4 rounded-md">
+                <code className="text-sm">
+                  {`import { InputAmount } from "@/components/Input/InputAmount"`}
+                </code>
               </div>
             </CardContent>
           </Card>
@@ -169,7 +151,7 @@ export default function InputAmountDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">placeholder</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"0.00"</td>
+                      <td className="p-2">&quot;0.00&quot;</td>
                       <td className="p-2">Placeholder text</td>
                     </tr>
                     <tr className="border-b">
@@ -187,7 +169,7 @@ export default function InputAmountDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">currency</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"$"</td>
+                      <td className="p-2">&quot;$&quot;</td>
                       <td className="p-2">Currency symbol to display</td>
                     </tr>
                     <tr className="border-b">

@@ -1,9 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,23 +13,29 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState } from "react"
-import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
 
-export default function UseStateChangeEffectDocs() {
-  const [name, setName] = useState("")
-  const [age, setAge] = useState(0)
-  const [settings, setSettings] = useState({ theme: "light", lang: "en" })
-  const [effectCount, setEffectCount] = useState(0)
-  const [lastChange, setLastChange] = useState<string>("")
+// Example components
+import BasicUsageExample from "@/examples/docs/hooks/useStateChangeEffect/basic-usage"
+import LiveDemoExample from "@/examples/docs/hooks/useStateChangeEffect/live-demo"
+import FormValidationExample from "@/examples/docs/hooks/useStateChangeEffect/form-validation"
+import SearchDebouncingExample from "@/examples/docs/hooks/useStateChangeEffect/search-debouncing"
+import LocalStorageSyncExample from "@/examples/docs/hooks/useStateChangeEffect/local-storage-sync"
+import AnalyticsTrackingExample from "@/examples/docs/hooks/useStateChangeEffect/analytics-tracking"
+import DataVisualizationExample from "@/examples/docs/hooks/useStateChangeEffect/data-visualization"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  // Demonstrate the hook
-  useStateChangeEffect(() => {
-    setEffectCount(prev => prev + 1)
-    setLastChange(new Date().toLocaleTimeString())
-    console.log("State changed:", { name, age, settings })
-  }, [name, age, settings])
+// Raw imports
+const basicUsageCode = getExampleCode("docs/hooks/useStateChangeEffect/basic-usage.tsx")
+const liveDemoCode = getExampleCode("docs/hooks/useStateChangeEffect/live-demo.tsx")
+const formValidationCode = getExampleCode("docs/hooks/useStateChangeEffect/form-validation.tsx")
+const searchDebouncingCode = getExampleCode("docs/hooks/useStateChangeEffect/search-debouncing.tsx")
+const localStorageSyncCode = getExampleCode("docs/hooks/useStateChangeEffect/local-storage-sync.tsx")
+const analyticsTrackingCode = getExampleCode("docs/hooks/useStateChangeEffect/analytics-tracking.tsx")
+const dataVisualizationCode = getExampleCode("docs/hooks/useStateChangeEffect/data-visualization.tsx")
+
+export default async function UseStateChangeEffectDocs() {
 
   return (
     <div className="flex flex-col">
@@ -79,29 +83,28 @@ export default function UseStateChangeEffectDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Usage</CardTitle>
+              <CardTitle>Basic Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs
+                preview={<BasicUsageExample />}
+                code={basicUsageCode}
+              />
+            </CardContent>
+          </Card>
 
-              <CodeBlock language="tsx">
-                {`function DataProcessor() {
-  const [data, setData] = useState(null)
-  const [filters, setFilters] = useState({})
-  const [sortOrder, setSortOrder] = useState('asc')
-
-  useStateChangeEffect(() => {
-    // This runs whenever data, filters, or sortOrder changes
-    processData(data, filters, sortOrder)
-  }, [data, filters, sortOrder])
-
-  return <div>Data processing component</div>
-}`}
-              </CodeBlock>
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Live Demo</CardTitle>
+              <CardDescription>
+                Interactive example showing the hook in action with multiple state dependencies
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PreviewTabs
+                preview={<LiveDemoExample />}
+                code={liveDemoCode}
+              />
             </CardContent>
           </Card>
 
@@ -109,349 +112,45 @@ export default function UseStateChangeEffectDocs() {
             <CardHeader>
               <CardTitle>Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-8">
               <div>
-                <h3 className="text-sm font-medium mb-2">Live State Change Detection</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        id="name"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        placeholder="Enter your name..."
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="age">Age</Label>
-                      <Input
-                        id="age"
-                        type="number"
-                        value={age}
-                        onChange={e => setAge(Number(e.target.value))}
-                        placeholder="Enter your age..."
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <Label htmlFor="theme">Theme</Label>
-                      <select
-                        id="theme"
-                        className="w-full p-2 border rounded-md"
-                        value={settings.theme}
-                        onChange={e => setSettings({ ...settings, theme: e.target.value })}
-                      >
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="auto">Auto</option>
-                      </select>
-                    </div>
-                    <div>
-                      <Label htmlFor="language">Language</Label>
-                      <select
-                        id="language"
-                        className="w-full p-2 border rounded-md"
-                        value={settings.lang}
-                        onChange={e => setSettings({ ...settings, lang: e.target.value })}
-                      >
-                        <option value="en">English</option>
-                        <option value="es">Spanish</option>
-                        <option value="fr">French</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>
-                      Effect trigger count: <strong>{effectCount}</strong>
-                    </div>
-                    <div>
-                      Last change: <strong>{lastChange || "Never"}</strong>
-                    </div>
-                    <div>
-                      Current values: <code>{JSON.stringify({ name, age, settings })}</code>
-                    </div>
-                  </div>
-                </div>
+                <h3 className="text-lg font-medium mb-4">Form Validation</h3>
+                <PreviewTabs
+                  preview={<FormValidationExample />}
+                  code={formValidationCode}
+                />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Form Validation</h3>
-                <CodeBlock language="tsx">
-                  {`function FormWithValidation() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-
-  useStateChangeEffect(() => {
-    const newErrors: Record<string, string> = {}
-    
-    // Email validation
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email format'
-    }
-    
-    // Password validation
-    if (formData.password && formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
-    }
-    
-    // Confirm password validation
-    if (formData.confirmPassword && formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match'
-    }
-    
-    setErrors(newErrors)
-  }, [formData])
-
-  return (
-    <form>
-      <input
-        value={formData.email}
-        onChange={(e) => setFormData({...formData, email: e.target.value})}
-        placeholder="Email"
-      />
-      {errors.email && <span className="error">{errors.email}</span>}
-      
-      <input
-        type="password"
-        value={formData.password}
-        onChange={(e) => setFormData({...formData, password: e.target.value})}
-        placeholder="Password"
-      />
-      {errors.password && <span className="error">{errors.password}</span>}
-      
-      <input
-        type="password"
-        value={formData.confirmPassword}
-        onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-        placeholder="Confirm Password"
-      />
-      {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
-    </form>
-  )
-}`}
-                </CodeBlock>
+                <h3 className="text-lg font-medium mb-4">API Request Debouncing</h3>
+                <PreviewTabs
+                  preview={<SearchDebouncingExample />}
+                  code={searchDebouncingCode}
+                />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">API Request Debouncing</h3>
-                <CodeBlock language="tsx">
-                  {`function SearchComponent() {
-  const [query, setQuery] = useState('')
-  const [filters, setFilters] = useState({ category: '', priceRange: [0, 100] })
-  const [results, setResults] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  // Debounced search effect
-  useStateChangeEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (query.trim()) {
-        performSearch(query, filters)
-      } else {
-        setResults([])
-      }
-    }, 300) // 300ms debounce
-
-    return () => clearTimeout(timeoutId)
-  }, [query, filters])
-
-  const performSearch = async (searchQuery: string, searchFilters: any) => {
-    setLoading(true)
-    try {
-      const response = await fetch('/api/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery, filters: searchFilters })
-      })
-      const data = await response.json()
-      setResults(data.results)
-    } catch (error) {
-      console.error('Search failed:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <div>
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search products..."
-      />
-      <div className="filters">
-        {/* Filter components */}
-      </div>
-      <div className="results">
-        {loading ? <div>Searching...</div> : results.map(renderResult)}
-      </div>
-    </div>
-  )
-}`}
-                </CodeBlock>
+                <h3 className="text-lg font-medium mb-4">Local Storage Sync</h3>
+                <PreviewTabs
+                  preview={<LocalStorageSyncExample />}
+                  code={localStorageSyncCode}
+                />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Local Storage Sync</h3>
-                <CodeBlock language="tsx">
-                  {`function UserPreferences() {
-  const [preferences, setPreferences] = useState({
-    theme: 'light',
-    language: 'en',
-    notifications: true,
-    autoSave: false
-  })
-
-  // Sync preferences to localStorage whenever they change
-  useStateChangeEffect(() => {
-    localStorage.setItem('userPreferences', JSON.stringify(preferences))
-    console.log('Preferences saved to localStorage')
-  }, [preferences])
-
-  // Load preferences on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('userPreferences')
-    if (saved) {
-      try {
-        setPreferences(JSON.parse(saved))
-      } catch (error) {
-        console.error('Failed to parse saved preferences:', error)
-      }
-    }
-  }, [])
-
-  const updatePreference = (key: keyof typeof preferences, value: any) => {
-    setPreferences(prev => ({ ...prev, [key]: value }))
-  }
-
-  return (
-    <div className="preferences">
-      <h3>User Preferences</h3>
-      <label>
-        <input
-          type="checkbox"
-          checked={preferences.notifications}
-          onChange={(e) => updatePreference('notifications', e.target.checked)}
-        />
-        Enable Notifications
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={preferences.autoSave}
-          onChange={(e) => updatePreference('autoSave', e.target.checked)}
-        />
-        Auto Save
-      </label>
-      <select
-        value={preferences.theme}
-        onChange={(e) => updatePreference('theme', e.target.value)}
-      >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="auto">Auto</option>
-      </select>
-    </div>
-  )
-}`}
-                </CodeBlock>
+                <h3 className="text-lg font-medium mb-4">Analytics Tracking</h3>
+                <PreviewTabs
+                  preview={<AnalyticsTrackingExample />}
+                  code={analyticsTrackingCode}
+                />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Analytics Tracking</h3>
-                <CodeBlock language="tsx">
-                  {`function AnalyticsWrapper() {
-  const [user, setUser] = useState(null)
-  const [page, setPage] = useState('/')
-  const [filters, setFilters] = useState({})
-
-  // Track user interactions and state changes
-  useStateChangeEffect(() => {
-    // Track page views and filter changes
-    if (user) {
-      analytics.track('user_interaction', {
-        userId: user.id,
-        page: page,
-        filters: filters,
-        timestamp: new Date().toISOString()
-      })
-    }
-  }, [user, page, filters])
-
-  // Track specific user actions
-  useStateChangeEffect(() => {
-    if (user) {
-      analytics.identify(user.id, {
-        email: user.email,
-        name: user.name,
-        lastSeen: new Date().toISOString()
-      })
-    }
-  }, [user])
-
-  return (
-    <div>
-      {/* Your app content */}
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Complex State Dependencies</h3>
-                <CodeBlock language="tsx">
-                  {`function DataVisualization() {
-  const [data, setData] = useState([])
-  const [chartConfig, setChartConfig] = useState({
-    type: 'bar',
-    colors: ['#blue', '#red', '#green'],
-    animation: true
-  })
-  const [filters, setFilters] = useState({
-    dateRange: { start: null, end: null },
-    categories: [],
-    minValue: 0
-  })
-  const [viewMode, setViewMode] = useState<'chart' | 'table'>('chart')
-
-  // Recompute visualization whenever any dependency changes
-  useStateChangeEffect(() => {
-    const filteredData = applyFilters(data, filters)
-    const chartData = transformDataForChart(filteredData, chartConfig)
-    
-    if (viewMode === 'chart') {
-      renderChart(chartData, chartConfig)
-    } else {
-      renderTable(filteredData)
-    }
-    
-    // Update URL params for sharing
-    const params = new URLSearchParams()
-    params.set('config', JSON.stringify(chartConfig))
-    params.set('filters', JSON.stringify(filters))
-    params.set('view', viewMode)
-    
-    window.history.replaceState(null, '', \`?\${params.toString()}\`)
-  }, [data, chartConfig, filters, viewMode])
-
-  return (
-    <div className="visualization">
-      <div className="controls">
-        {/* Filter and configuration controls */}
-      </div>
-      <div className="display">
-        {/* Chart or table display */}
-      </div>
-    </div>
-  )
-}`}
-                </CodeBlock>
+                <h3 className="text-lg font-medium mb-4">Complex State Dependencies</h3>
+                <PreviewTabs
+                  preview={<DataVisualizationExample />}
+                  code={dataVisualizationCode}
+                />
               </div>
             </CardContent>
           </Card>
@@ -497,7 +196,7 @@ export default function UseStateChangeEffectDocs() {
                 <div>
                   <h3 className="font-semibold mb-3">Type Signature</h3>
                   <CodeBlock language="typescript">
-                    useStateChangeEffect&lt;T&gt;(effect: () =&gt; void, states: T[]): void
+                    {`useStateChangeEffect<T>(effect: () => void, states: T[]): void`}
                   </CodeBlock>
                   <p className="text-sm text-muted-foreground mt-2">
                     The hook is generic and can monitor any type of state values.
@@ -511,8 +210,7 @@ export default function UseStateChangeEffectDocs() {
                       The hook uses <code>JSON.stringify</code> for deep comparison of state values.
                     </p>
                     <CodeBlock language="tsx">
-                      const areStatesEqual = states.every((state, index) =&gt; JSON.stringify(state)
-                      === JSON.stringify(previousStates[index]) )
+                      {`const areStatesEqual = states.every((state, index) => JSON.stringify(state) === JSON.stringify(previousStates[index]))`}
                     </CodeBlock>
                     <p className="text-muted-foreground">
                       This means the hook can detect changes in nested objects and arrays, but may

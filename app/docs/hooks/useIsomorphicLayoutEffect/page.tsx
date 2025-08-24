@@ -14,14 +14,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CodeBlock } from "@/components/ui/code-block"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 import { useState, useRef } from "react"
 import {
   useIsomorphicLayoutEffect,
   useIsomorphicMountEffect,
 } from "@/hooks/useIsomorphicLayoutEffect"
 
-export default function UseIsomorphicLayoutEffectDocs() {
+function LiveDemonstrationExample() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   const [mountEffectRuns, setMountEffectRuns] = useState(0)
   const [rerenderCount, setRerenderCount] = useState(0)
@@ -44,6 +44,35 @@ export default function UseIsomorphicLayoutEffectDocs() {
   const triggerRerender = () => {
     setRerenderCount(prev => prev + 1)
   }
+
+  return (
+    <div className="border rounded-lg p-4" ref={measureRef}>
+      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+        <div>
+          Measured width: <strong>{dimensions.width}px</strong>
+        </div>
+        <div>
+          Measured height: <strong>{dimensions.height}px</strong>
+        </div>
+        <div>
+          Mount effect runs: <strong>{mountEffectRuns} time(s)</strong>
+        </div>
+        <div>
+          Re-render count: <strong>{rerenderCount}</strong>
+        </div>
+      </div>
+
+      <Button onClick={triggerRerender}>Trigger Re-measurement</Button>
+
+      <div className="text-xs text-muted-foreground mt-2">
+        The dimensions are measured using SSR-safe layout effects. Mount effect runs
+        only once.
+      </div>
+    </div>
+  )
+}
+
+export default function UseIsomorphicLayoutEffectDocs() {
 
   return (
     <div className="flex flex-col">
@@ -95,14 +124,11 @@ export default function UseIsomorphicLayoutEffectDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useIsomorphicLayoutEffect, useIsomorphicMountEffect } from "@/hooks/useIsomorphicLayoutEffect"`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs
+                preview={<LiveDemonstrationExample />}
+                code={`import { useIsomorphicLayoutEffect, useIsomorphicMountEffect } from "@/hooks/useIsomorphicLayoutEffect"
 
-              <CodeBlock language="tsx">
-                {`// Basic usage - SSR-safe layout effect
+// Basic usage - SSR-safe layout effect
 function ResponsiveComponent() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   const ref = useRef<HTMLDivElement>(null)
@@ -126,7 +152,7 @@ function SSRSafeSetup() {
 
   return <div>SSR-safe app</div>
 }`}
-              </CodeBlock>
+              />
             </CardContent>
           </Card>
 
@@ -135,37 +161,16 @@ function SSRSafeSetup() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Live Demonstration</h3>
-                <div className="border rounded-lg p-4" ref={measureRef}>
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                    <div>
-                      Measured width: <strong>{dimensions.width}px</strong>
-                    </div>
-                    <div>
-                      Measured height: <strong>{dimensions.height}px</strong>
-                    </div>
-                    <div>
-                      Mount effect runs: <strong>{mountEffectRuns} time(s)</strong>
-                    </div>
-                    <div>
-                      Re-render count: <strong>{rerenderCount}</strong>
-                    </div>
+
+              <PreviewTabs
+                title="Theme Provider with SSR"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">🎨 Theme Provider Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the SSR-safe implementation</div>
                   </div>
-
-                  <Button onClick={triggerRerender}>Trigger Re-measurement</Button>
-
-                  <div className="text-xs text-muted-foreground mt-2">
-                    The dimensions are measured using SSR-safe layout effects. Mount effect runs
-                    only once.
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Theme Provider with SSR</h3>
-                <CodeBlock language="tsx">
-                  {`function ThemeProvider({ 
+                }
+                code={`function ThemeProvider({ 
   children, 
   theme 
 }: { 
@@ -193,13 +198,17 @@ function SSRSafeSetup() {
     </div>
   )
 }`}
-                </CodeBlock>
-              </div>
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">DOM Measurements</h3>
-                <CodeBlock language="tsx">
-                  {`function AdaptiveLayout() {
+              <PreviewTabs
+                title="DOM Measurements"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">📏 DOM Measurements Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the adaptive layout implementation</div>
+                  </div>
+                }
+                code={`function AdaptiveLayout() {
   const [layout, setLayout] = useState<'mobile' | 'desktop'>('desktop')
   const [elementHeight, setElementHeight] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -235,13 +244,17 @@ function SSRSafeSetup() {
     </div>
   )
 }`}
-                </CodeBlock>
-              </div>
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Focus Management</h3>
-                <CodeBlock language="tsx">
-                  {`function AutoFocusModal({ 
+              <PreviewTabs
+                title="Focus Management"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">🎯 Focus Management Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the modal focus trap implementation</div>
+                  </div>
+                }
+                code={`function AutoFocusModal({ 
   isOpen, 
   onClose,
   children 
@@ -315,13 +328,17 @@ function SSRSafeSetup() {
     </div>
   )
 }`}
-                </CodeBlock>
-              </div>
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Scroll Position Restoration</h3>
-                <CodeBlock language="tsx">
-                  {`function ScrollRestorer({ 
+              <PreviewTabs
+                title="Scroll Position Restoration"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">📜 Scroll Restoration Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the scroll position implementation</div>
+                  </div>
+                }
+                code={`function ScrollRestorer({ 
   scrollKey,
   children 
 }: { 
@@ -364,13 +381,17 @@ function SSRSafeSetup() {
 
   return <>{children}</>
 }`}
-                </CodeBlock>
-              </div>
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Animation Setup</h3>
-                <CodeBlock language="tsx">
-                  {`function AnimatedEntry({ children }: { children: React.ReactNode }) {
+              <PreviewTabs
+                title="Animation Setup"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">✨ Animation Setup Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the animation implementation</div>
+                  </div>
+                }
+                code={`function AnimatedEntry({ children }: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -408,13 +429,17 @@ function SSRSafeSetup() {
     </div>
   )
 }`}
-                </CodeBlock>
-              </div>
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Viewport Detection</h3>
-                <CodeBlock language="tsx">
-                  {`function ViewportAwareComponent() {
+              <PreviewTabs
+                title="Viewport Detection"
+                preview={
+                  <div className="text-center p-8 text-muted-foreground">
+                    <div className="text-lg">📱 Viewport Detection Example</div>
+                    <div className="text-sm mt-2">Check the code tab to see the viewport tracking implementation</div>
+                  </div>
+                }
+                code={`function ViewportAwareComponent() {
   const [viewport, setViewport] = useState({
     width: 0,
     height: 0,
@@ -463,8 +488,7 @@ function SSRSafeSetup() {
     </div>
   )
 }`}
-                </CodeBlock>
-              </div>
+              />
             </CardContent>
           </Card>
 
@@ -482,10 +506,16 @@ function SSRSafeSetup() {
                   </p>
 
                   <div className="mb-4">
-                    <CodeBlock language="typescript">
-                      {`const useIsomorphicLayoutEffect = 
+                    <PreviewTabs
+                      preview={
+                        <div className="text-center p-4 text-muted-foreground">
+                          <div className="text-sm">Implementation details for SSR safety</div>
+                        </div>
+                      }
+                      code={`const useIsomorphicLayoutEffect = 
   typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect`}
-                    </CodeBlock>
+                      language="typescript"
+                    />
                   </div>
 
                   <h4 className="font-medium mb-2">Parameters</h4>

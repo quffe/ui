@@ -345,11 +345,11 @@ export default function InstallationPage() {
                 </p>
                 <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
                   <li>
-                    You've initialized shadcn/ui with{" "}
+                    You&apos;ve initialized shadcn/ui with{" "}
                     <CodeBlock inline={true}>pnpm dlx shadcn@latest init</CodeBlock>
                   </li>
                   <li>The component was installed successfully</li>
-                  <li>You're importing from the correct path</li>
+                  <li>You&apos;re importing from the correct path</li>
                 </ul>
               </div>
 

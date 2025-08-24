@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -27,17 +27,18 @@ import { Example as OtpInputExample } from "@/examples/components/otp-input/basi
 import { Example as DateRangePickerExample } from "@/examples/components/date-range-picker/basic"
 import { Example as DropdownExample } from "@/examples/components/dropdown/basic"
 import { Example as InputSelectExample } from "@/examples/components/input-select/basic"
+import { getExampleCode } from "@/lib/serverUtils"
 
 // Raw imports
-import dataTableBasicCode from "@/examples/components/data-table/basic.tsx?raw"
-import dataTableAdvancedCode from "@/examples/components/data-table/advanced.tsx?raw"
-import modalBasicCode from "@/examples/components/modal/basic.tsx?raw"
-import modalAdvancedCode from "@/examples/components/modal/advanced.tsx?raw"
-import inputAmountCode from "@/examples/components/input-amount/basic.tsx?raw"
-import otpInputCode from "@/examples/components/otp-input/basic.tsx?raw"
-import dateRangePickerCode from "@/examples/components/date-range-picker/basic.tsx?raw"
-import dropdownCode from "@/examples/components/dropdown/basic.tsx?raw"
-import inputSelectCode from "@/examples/components/input-select/basic.tsx?raw"
+const dataTableBasicCode = getExampleCode("components/data-table/basic.tsx")
+const dataTableAdvancedCode = getExampleCode("components/data-table/advanced.tsx")
+const modalBasicCode = getExampleCode("components/modal/basic.tsx")
+const modalAdvancedCode = getExampleCode("components/modal/advanced.tsx")
+const inputAmountCode = getExampleCode("components/input-amount/basic.tsx")
+const otpInputCode = getExampleCode("components/otp-input/basic.tsx")
+const dateRangePickerCode = getExampleCode("components/date-range-picker/basic.tsx")
+const dropdownCode = getExampleCode("components/dropdown/basic.tsx")
+const inputSelectCode = getExampleCode("components/input-select/basic.tsx")
 
 const components = [
   {
@@ -109,7 +110,7 @@ const components = [
   },
 ]
 
-export default function ComponentsPage() {
+export default async function ComponentsPage() {
   const groupedComponents = components.reduce(
     (acc, component) => {
       const category = component.category

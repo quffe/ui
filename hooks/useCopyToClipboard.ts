@@ -95,7 +95,7 @@ export function useCopyToClipboard({
       const successful = document.execCommand("copy")
       document.body.removeChild(textArea)
       return successful
-    } catch (err) {
+    } catch {
       document.body.removeChild(textArea)
       throw new Error("Fallback copy failed")
     }

@@ -413,7 +413,7 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <div className="px-2 py-4 text-sm text-muted-foreground">
-                No components or hooks found for "{searchQuery}"
+                No components or hooks found for &quot;{searchQuery}&quot;
               </div>
             </SidebarGroupContent>
           </SidebarGroup>

@@ -1,3 +1,5 @@
+'use client'
+
 import { InputSelect } from "@/components/Navigation/Select"
 import { useState } from "react"
 
@@ -133,13 +135,13 @@ export function Example() {
         placeholder="Custom classes..."
         className="bg-muted/50"
         triggerClassName="border-2 border-primary"
-        labelClassName="text-primary font-bold"
+        labelClassName="text-secondary font-bold"
         onOpenChange={open => console.log("Select opened:", open)}
       />
 
       <button
         onClick={handleSubmit}
-        className="w-full mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+        className="w-full mt-6 px-4 py-2 bg-primary text-secondary-foreground rounded-md hover:bg-primary/90"
       >
         Submit Form
       </button>

@@ -1,6 +1,5 @@
-"use client"
+"use server"
 
-import { Dropdown } from "@/components/Navigation/Dropdown"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -14,29 +13,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 
-export default function DropdownDocs() {
-  const [basicValue, setBasicValue] = useState<string>("")
-  const [searchableValue, setSearchableValue] = useState<string>("")
+// Example components
+import { BasicDropdownExample } from "@/examples/docs/dropdown/basic-dropdown"
+import { SearchableDropdownExample } from "@/examples/docs/dropdown/searchable-dropdown"
+import { DisabledStateExample } from "@/examples/docs/dropdown/disabled-state"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  const options = [
-    { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
-    { value: "disabled", label: "Disabled Option", disabled: true },
-  ]
+// Raw imports
+const basicDropdownCode = getExampleCode("docs/dropdown/basic-dropdown.tsx")
+const searchableDropdownCode = getExampleCode("docs/dropdown/searchable-dropdown.tsx")
+const disabledStateCode = getExampleCode("docs/dropdown/disabled-state.tsx")
 
-  const countryOptions = [
-    { value: "us", label: "United States" },
-    { value: "ca", label: "Canada" },
-    { value: "uk", label: "United Kingdom" },
-    { value: "au", label: "Australia" },
-    { value: "de", label: "Germany" },
-    { value: "fr", label: "France" },
-    { value: "jp", label: "Japan" },
-  ]
-
+export default async function DropdownDocs() {
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -83,22 +73,11 @@ export default function DropdownDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { Dropdown } from "@/components/Navigation/Dropdown"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<Dropdown
-  value={selectedValue}
-  onChange={setSelectedValue}
-  options={options}
-  placeholder="Select an option"
-  searchable
-/>`}
-                </code>
-              </div>
+              <PreviewTabs
+                preview={<BasicDropdownExample />}
+                code={basicDropdownCode}
+                title="Basic Dropdown"
+              />
             </CardContent>
           </Card>
 
@@ -106,44 +85,18 @@ export default function DropdownDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Dropdown</h3>
-                <Dropdown
-                  value={basicValue}
-                  onChange={setBasicValue}
-                  options={options}
-                  placeholder="Choose an option"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {basicValue || "None"}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Searchable Dropdown</h3>
-                <Dropdown
-                  value={searchableValue}
-                  onChange={setSearchableValue}
-                  options={countryOptions}
-                  placeholder="Search countries..."
-                  searchable
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {searchableValue || "None"}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Disabled State</h3>
-                <Dropdown
-                  value=""
-                  onChange={() => {}}
-                  options={options}
-                  placeholder="Disabled dropdown"
-                  disabled
-                />
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<SearchableDropdownExample />}
+                code={searchableDropdownCode}
+                title="Searchable Dropdown"
+              />
+              
+              <PreviewTabs
+                preview={<DisabledStateExample />}
+                code={disabledStateCode}
+                title="Disabled State"
+              />
             </CardContent>
           </Card>
 
@@ -184,7 +137,7 @@ export default function DropdownDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">placeholder</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"Select an option..."</td>
+                      <td className="p-2">&quot;Select an option...&quot;</td>
                       <td className="p-2">Placeholder text</td>
                     </tr>
                     <tr className="border-b">
@@ -207,23 +160,6 @@ export default function DropdownDocs() {
                     </tr>
                   </tbody>
                 </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>DropdownOption Interface</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`interface DropdownOption {
-  value: string
-  label: string
-  disabled?: boolean
-}`}
-                </code>
               </div>
             </CardContent>
           </Card>

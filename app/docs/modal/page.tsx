@@ -1,7 +1,5 @@
-"use client"
+"use server"
 
-import { Modal } from "@/components/Modal/Modal"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -15,12 +13,20 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-export default function ModalDocs() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [confirmOpen, setConfirmOpen] = useState(false)
-  const [largeOpen, setLargeOpen] = useState(false)
+// Example components
+import { BasicModalExample } from "@/examples/docs/modal/basic-modal"
+import { ConfirmationModalExample } from "@/examples/docs/modal/confirmation-modal"
+import { LargeModalExample } from "@/examples/docs/modal/large-modal"
+
+// Raw imports
+const basicModalCode = getExampleCode("docs/modal/basic-modal.tsx")
+const confirmationModalCode = getExampleCode("docs/modal/confirmation-modal.tsx")
+const largeModalCode = getExampleCode("docs/modal/large-modal.tsx")
+
+export default async function ModalDocs() {
 
   return (
     <div className="flex flex-col">
@@ -68,23 +74,11 @@ export default function ModalDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { Modal } from "@/components/Modal/Modal"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<Modal
-  open={isOpen}
-  onClose={() => setIsOpen(false)}
-  title="Modal Title"
-  size="md"
->
-  <p>Modal content goes here</p>
-</Modal>`}
-                </code>
-              </div>
+              <PreviewTabs
+                preview={<BasicModalExample />}
+                code={basicModalCode}
+                title="Basic Modal"
+              />
             </CardContent>
           </Card>
 
@@ -92,76 +86,18 @@ export default function ModalDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Modal</h3>
-                <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-                <Modal
-                  open={isOpen}
-                  onClose={() => setIsOpen(false)}
-                  title="Basic Modal"
-                  description="This is a basic modal example."
-                >
-                  <div className="space-y-4">
-                    <p>This is the modal content. You can put any content here.</p>
-                    <div className="flex gap-2">
-                      <Button onClick={() => setIsOpen(false)}>Close</Button>
-                      <Button variant="outline" onClick={() => setIsOpen(false)}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                </Modal>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Confirmation Modal</h3>
-                <Button variant="destructive" onClick={() => setConfirmOpen(true)}>
-                  Delete Item
-                </Button>
-                <Modal
-                  open={confirmOpen}
-                  onClose={() => setConfirmOpen(false)}
-                  title="Confirm Deletion"
-                  description="Are you sure you want to delete this item? This action cannot be undone."
-                  size="sm"
-                >
-                  <div className="flex gap-2 mt-4">
-                    <Button
-                      variant="destructive"
-                      onClick={() => {
-                        alert("Item deleted!")
-                        setConfirmOpen(false)
-                      }}
-                    >
-                      Delete
-                    </Button>
-                    <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-                      Cancel
-                    </Button>
-                  </div>
-                </Modal>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Large Modal</h3>
-                <Button onClick={() => setLargeOpen(true)}>Open Large Modal</Button>
-                <Modal
-                  open={largeOpen}
-                  onClose={() => setLargeOpen(false)}
-                  title="Large Modal"
-                  size="2xl"
-                >
-                  <div className="space-y-4">
-                    <p>This is a large modal with more space for content.</p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-4 bg-muted rounded">Column 1</div>
-                      <div className="p-4 bg-muted rounded">Column 2</div>
-                    </div>
-                    <Button onClick={() => setLargeOpen(false)}>Close</Button>
-                  </div>
-                </Modal>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<ConfirmationModalExample />}
+                code={confirmationModalCode}
+                title="Confirmation Modal"
+              />
+              
+              <PreviewTabs
+                preview={<LargeModalExample />}
+                code={largeModalCode}
+                title="Large Modal"
+              />
             </CardContent>
           </Card>
 
@@ -208,15 +144,15 @@ export default function ModalDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
                       <td className="p-2">
-                        'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full'
+                        &apos;sm&apos; | &apos;md&apos; | &apos;lg&apos; | &apos;xl&apos; | &apos;2xl&apos; | &apos;3xl&apos; | &apos;4xl&apos; | &apos;full&apos;
                       </td>
-                      <td className="p-2">'md'</td>
+                      <td className="p-2">&apos;md&apos;</td>
                       <td className="p-2">Modal size variant</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">position</td>
-                      <td className="p-2">'center' | 'top' | 'bottom'</td>
-                      <td className="p-2">'center'</td>
+                      <td className="p-2">&apos;center&apos; | &apos;top&apos; | &apos;bottom&apos;</td>
+                      <td className="p-2">&apos;center&apos;</td>
                       <td className="p-2">Modal positioning</td>
                     </tr>
                     <tr className="border-b">

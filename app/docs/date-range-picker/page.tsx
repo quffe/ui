@@ -1,6 +1,5 @@
-"use client"
+"use server"
 
-import { DateRangePicker } from "@/components/Input/DateRangePicker"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -14,15 +13,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
-import type { DateRange } from "react-day-picker"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-export default function DateRangePickerDocs() {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined)
-  const [reportRange, setReportRange] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-  })
+// Example components
+import { BasicPickerExample } from "@/examples/docs/date-range-picker/basic-picker"
+import { PrefilledPickerExample } from "@/examples/docs/date-range-picker/prefilled-picker"
+import { RestrictedPickerExample } from "@/examples/docs/date-range-picker/restricted-picker"
+import { DisabledPickerExample } from "@/examples/docs/date-range-picker/disabled-picker"
+
+// Raw imports
+const basicPickerCode = getExampleCode("docs/date-range-picker/basic-picker.tsx")
+const prefilledPickerCode = getExampleCode("docs/date-range-picker/prefilled-picker.tsx")
+const restrictedPickerCode = getExampleCode("docs/date-range-picker/restricted-picker.tsx")
+const disabledPickerCode = getExampleCode("docs/date-range-picker/disabled-picker.tsx")
+
+export default async function DateRangePickerDocs() {
 
   return (
     <div className="flex flex-col">
@@ -70,20 +76,11 @@ export default function DateRangePickerDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { DateRangePicker } from "@/components/Input/DateRangePicker"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<DateRangePicker
-  value={dateRange}
-  onChange={setDateRange}
-  placeholder="Select date range"
-/>`}
-                </code>
-              </div>
+              <PreviewTabs
+                preview={<BasicPickerExample />}
+                code={basicPickerCode}
+                title="Basic Date Range Picker"
+              />
             </CardContent>
           </Card>
 
@@ -91,53 +88,24 @@ export default function DateRangePickerDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic Date Range Picker</h3>
-                <DateRangePicker
-                  value={dateRange}
-                  onChange={setDateRange}
-                  placeholder="Pick a date range"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {dateRange?.from?.toDateString() || "None"} -{" "}
-                  {dateRange?.to?.toDateString() || "None"}
-                </p>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<PrefilledPickerExample />}
+                code={prefilledPickerCode}
+                title="Pre-filled Date Range"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Report Date Range (Pre-filled)</h3>
-                <DateRangePicker
-                  value={reportRange}
-                  onChange={setReportRange}
-                  placeholder="Report period"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {reportRange?.from?.toDateString() || "None"} -{" "}
-                  {reportRange?.to?.toDateString() || "None"}
-                </p>
-              </div>
+              <PreviewTabs
+                preview={<RestrictedPickerExample />}
+                code={restrictedPickerCode}
+                title="With Date Restrictions"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">With Date Restrictions</h3>
-                <DateRangePicker
-                  value={undefined}
-                  onChange={() => {}}
-                  placeholder="Future dates only"
-                  minDate={new Date()}
-                  maxDate={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}
-                />
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Disabled State</h3>
-                <DateRangePicker
-                  value={dateRange}
-                  onChange={setDateRange}
-                  placeholder="Disabled picker"
-                  disabled={true}
-                />
-              </div>
+              <PreviewTabs
+                preview={<DisabledPickerExample />}
+                code={disabledPickerCode}
+                title="Disabled State"
+              />
             </CardContent>
           </Card>
 
@@ -172,7 +140,7 @@ export default function DateRangePickerDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">placeholder</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"Pick a date range"</td>
+                      <td className="p-2">&quot;Pick a date range&quot;</td>
                       <td className="p-2">Placeholder text</td>
                     </tr>
                     <tr className="border-b">

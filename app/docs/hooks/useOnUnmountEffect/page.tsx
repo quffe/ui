@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -15,29 +14,23 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState } from "react"
-import { useOnUnmountEffect } from "@/hooks/useOnUnmountEffect"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
+import LiveDemoExample from "@/examples/docs/hooks/useOnUnmountEffect/live-demo"
+import EventListenerCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/event-listener-cleanup"
+import NetworkRequestCancellationExample from "@/examples/docs/hooks/useOnUnmountEffect/network-request-cancellation"
+import TimerCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/timer-cleanup"
+import WebSocketCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/websocket-cleanup"
+import AnalyticsCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/analytics-cleanup"
 
-export default function UseOnUnmountEffectDocs() {
-  const [componentMounted, setComponentMounted] = useState(true)
-  const [unmountCount, setUnmountCount] = useState(0)
+const liveDemoCode = getExampleCode("docs/hooks/useOnUnmountEffect/live-demo.tsx")
+const eventListenerCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/event-listener-cleanup.tsx")
+const networkRequestCancellationCode = getExampleCode("docs/hooks/useOnUnmountEffect/network-request-cancellation.tsx")
+const timerCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/timer-cleanup.tsx")
+const webSocketCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/websocket-cleanup.tsx")
+const analyticsCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/analytics-cleanup.tsx")
 
-  // Demo component to show unmount behavior
-  function DemoComponent() {
-    useOnUnmountEffect(() => {
-      console.log("DemoComponent is unmounting!")
-      setUnmountCount(prev => prev + 1)
-    })
-
-    return (
-      <div className="border rounded-lg p-4 bg-green-50">
-        <h4 className="font-medium">Demo Component</h4>
-        <p className="text-sm text-muted-foreground">
-          This component will log to console when unmounted
-        </p>
-      </div>
-    )
-  }
+export default async function UseOnUnmountEffectDocs() {
 
   return (
     <div className="flex flex-col">
@@ -89,17 +82,11 @@ export default function UseOnUnmountEffectDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useOnUnmountEffect } from "@/hooks/useOnUnmountEffect"`}
-                </CodeBlock>
-              </div>
-
               <CodeBlock language="tsx">
                 {`// Basic usage - cleanup on unmount only
 function MyComponent() {
   useOnUnmountEffect(() => {
-    console.log('Component is unmounting')
+    console.log(&apos;Component is unmounting&apos;)
     // Cleanup resources, cancel subscriptions, etc.
   })
 
@@ -114,173 +101,17 @@ function MyComponent() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Live Demonstration</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="mb-4">
-                    <div className="text-sm mb-2">
-                      Component unmount count: <strong>{unmountCount}</strong>
-                    </div>
-                    <Button
-                      onClick={() => setComponentMounted(!componentMounted)}
-                      variant={componentMounted ? "destructive" : "default"}
-                    >
-                      {componentMounted ? "Unmount Component" : "Mount Component"}
-                    </Button>
-                  </div>
+              <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
 
-                  {componentMounted && <DemoComponent />}
+              <PreviewTabs preview={<EventListenerCleanupExample />} code={eventListenerCleanupCode} />
 
-                  <div className="text-xs text-muted-foreground mt-2">
-                    Check the browser console to see unmount logs
-                  </div>
-                </div>
-              </div>
+              <PreviewTabs preview={<NetworkRequestCancellationExample />} code={networkRequestCancellationCode} />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Event Listener Cleanup</h3>
-                <CodeBlock language="tsx">
-                  {`function WindowEventComponent() {
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-      console.log('Escape pressed')
-    }
-  }
+              <PreviewTabs preview={<TimerCleanupExample />} code={timerCleanupCode} />
 
-  const handleResize = () => {
-    console.log('Window resized')
-  }
+              <PreviewTabs preview={<WebSocketCleanupExample />} code={webSocketCleanupCode} />
 
-  // Setup listeners in useEffect
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('resize', handleResize)
-  }, [])
-
-  // Cleanup only on unmount
-  useOnUnmountEffect(() => {
-    document.removeEventListener('keydown', handleKeyDown)
-    window.removeEventListener('resize', handleResize)
-  })
-
-  return <div>App with global event listeners</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Network Request Cancellation</h3>
-                <CodeBlock language="tsx">
-                  {`function DataFetcher() {
-  const abortControllerRef = useRef(new AbortController())
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    // Fetch data with abort signal
-    fetch('/api/data', { 
-      signal: abortControllerRef.current.signal 
-    })
-      .then(response => response.json())
-      .then(setData)
-      .catch(error => {
-        if (error.name !== 'AbortError') {
-          console.error('Fetch error:', error)
-        }
-      })
-  }, [])
-
-  // Cancel any pending requests on unmount
-  useOnUnmountEffect(() => {
-    abortControllerRef.current.abort()
-  })
-
-  return <div>Data: {JSON.stringify(data)}</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Timer Cleanup</h3>
-                <CodeBlock language="tsx">
-                  {`function TimerComponent() {
-  const [count, setCount] = useState(0)
-  const intervalRef = useRef<NodeJS.Timeout>()
-
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setCount(prev => prev + 1)
-    }, 1000)
-  }, [])
-
-  // Clear timer only on unmount
-  useOnUnmountEffect(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current)
-    }
-  })
-
-  return <div>Timer: {count}</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">WebSocket Connection Cleanup</h3>
-                <CodeBlock language="tsx">
-                  {`function WebSocketComponent() {
-  const wsRef = useRef<WebSocket>()
-  const [messages, setMessages] = useState<string[]>([])
-
-  useEffect(() => {
-    wsRef.current = new WebSocket('ws://localhost:8080')
-    
-    wsRef.current.onmessage = (event) => {
-      setMessages(prev => [...prev, event.data])
-    }
-  }, [])
-
-  // Close WebSocket connection on unmount
-  useOnUnmountEffect(() => {
-    if (wsRef.current) {
-      wsRef.current.close()
-    }
-  })
-
-  return (
-    <div>
-      <h3>Messages:</h3>
-      <ul>
-        {messages.map((msg, i) => <li key={i}>{msg}</li>)}
-      </ul>
-    </div>
-  )
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Analytics Cleanup</h3>
-                <CodeBlock language="tsx">
-                  {`function AnalyticsTracker() {
-  const sessionId = useRef(generateSessionId())
-
-  useEffect(() => {
-    // Start tracking session
-    analytics.startSession(sessionId.current)
-  }, [])
-
-  // End session only on unmount
-  useOnUnmountEffect(() => {
-    analytics.endSession(sessionId.current, {
-      duration: Date.now() - startTime,
-      pageViews: pageViewCount
-    })
-  })
-
-  return <div>Page content with analytics</div>
-}`}
-                </CodeBlock>
-              </div>
+              <PreviewTabs preview={<AnalyticsCleanupExample />} code={analyticsCleanupCode} />
             </CardContent>
           </Card>
 

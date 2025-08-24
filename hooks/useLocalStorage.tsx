@@ -1,33 +1,45 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useLayoutEffect, useRef } from "react"
 
 export const useLocalStorage = <T,>(keyName: string, defaultValue?: T): [T, (val: T) => void] => {
+  const defaultValueRef = useRef(defaultValue)
+  const initializedRef = useRef(false)
+  
+  // Always start with the default value to ensure SSR/client consistency
   const [storedValue, setStoredValue] = useState<T>(defaultValue as T)
 
-  // Initialize value from localStorage after component mounts (client-side only)
-  useEffect(() => {
+  // Update ref when defaultValue changes
+  defaultValueRef.current = defaultValue
+
+  // Load from localStorage after hydration (before paint)
+  useLayoutEffect(() => {
+    if (initializedRef.current) return // Prevent re-initialization
+    
     try {
       if (typeof window !== "undefined") {
         const value = window.localStorage.getItem(keyName)
-        if (value) {
-          setStoredValue(JSON.parse(value))
-        } else if (defaultValue !== undefined) {
-          window.localStorage.setItem(keyName, JSON.stringify(defaultValue))
+        if (value !== null) {
+          // Value exists in localStorage (even if it's an empty string)
+          const parsedValue = JSON.parse(value)
+          setStoredValue(parsedValue)
+        } else if (defaultValueRef.current !== undefined) {
+          // No value in localStorage, store the default
+          window.localStorage.setItem(keyName, JSON.stringify(defaultValueRef.current))
         }
+        initializedRef.current = true
       }
     } catch (error) {
       console.warn(`Error reading localStorage key "${keyName}":`, error)
+      initializedRef.current = true
     }
-  }, [keyName, defaultValue])
+  }, [keyName]) // Remove defaultValue from dependencies
 
   const setValue = (newValue: T) => {
     try {
       if (typeof window !== "undefined") {
-        window.localStorage.setItem(
-          keyName,
-          typeof newValue === "string" ? newValue : JSON.stringify(newValue)
-        )
+        // Always use JSON serialization for consistency
+        window.localStorage.setItem(keyName, JSON.stringify(newValue))
       }
       setStoredValue(newValue)
     } catch (error) {

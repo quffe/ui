@@ -1,3 +1,5 @@
+'use client'
+
 import { useOnWindowResize } from "@/hooks/useOnWindowResize"
 import { useState } from "react"
 
@@ -40,12 +42,12 @@ export function Example() {
         <div
           className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
             isResizing
-              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+              ? "bg-warn-soft/10 text-warn-soft border border-warn-soft/30"
               : "bg-green-100 text-green-800 border border-green-200"
           }`}
         >
           <div
-            className={`w-2 h-2 rounded-full ${isResizing ? "bg-yellow-500" : "bg-green-500"}`}
+            className={`w-2 h-2 rounded-full ${isResizing ? "bg-warn-bright" : "bg-green-500"}`}
           />
           {isResizing ? "Resizing..." : "Stable"}
         </div>

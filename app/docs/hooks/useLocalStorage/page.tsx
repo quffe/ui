@@ -1,10 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -16,29 +13,23 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState, useEffect } from "react"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
 
-export default function UseLocalStorageDocs() {
-  const [mounted, setMounted] = useState(false)
-  const [name, setName] = useLocalStorage<string>("demo-name", "")
-  const [preferences, setPreferences] = useLocalStorage<{ theme: string; language: string }>(
-    "demo-preferences",
-    {
-      theme: "light",
-      language: "en",
-    }
-  )
-  const [counter, setCounter] = useLocalStorage<number>("demo-counter", 0)
+// Example components
+import BasicUsageExample from "@/examples/docs/hooks/useLocalStorage/basic-usage"
+import ObjectStorageExample from "@/examples/docs/hooks/useLocalStorage/object-storage"
+import AdvancedUsageExample from "@/examples/docs/hooks/useLocalStorage/advanced-usage"
+import UsageExamplesExample from "@/examples/docs/hooks/useLocalStorage/usage-examples"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+// Raw imports
+const basicUsageCode = getExampleCode("docs/hooks/useLocalStorage/basic-usage.tsx")
+const objectStorageCode = getExampleCode("docs/hooks/useLocalStorage/object-storage.tsx")
+const advancedUsageCode = getExampleCode("docs/hooks/useLocalStorage/advanced-usage.tsx")
+const usageExamplesCode = getExampleCode("docs/hooks/useLocalStorage/usage-examples.tsx")
 
-  if (!mounted) {
-    return <div>Loading...</div>
-  }
+export default async function UseLocalStorageDocs() {
 
   return (
     <div className="flex flex-col">
@@ -95,32 +86,10 @@ export default function UseLocalStorageDocs() {
                 </CodeBlock>
               </div>
 
-              <CodeBlock language="tsx">
-                {`function MyComponent() {
-  // String value with default
-  const [name, setName] = useLocalStorage<string>('user-name', 'Guest')
-  
-  // Object value with default
-  const [preferences, setPreferences] = useLocalStorage<{theme: string}>('user-prefs', {
-    theme: 'light'
-  })
-  
-  // Number value
-  const [counter, setCounter] = useLocalStorage<number>('counter', 0)
-
-  return (
-    <div>
-      <input 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-      />
-      <button onClick={() => setCounter(counter + 1)}>
-        Count: {counter}
-      </button>
-    </div>
-  )
-}`}
-              </CodeBlock>
+              <PreviewTabs
+                preview={<UsageExamplesExample />}
+                code={usageExamplesCode}
+              />
             </CardContent>
           </Card>
 
@@ -130,140 +99,18 @@ export default function UseLocalStorageDocs() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium mb-2">String Storage</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name (persisted in localStorage)</Label>
-                    <Input
-                      id="name"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      placeholder="Enter your name..."
-                    />
-                    <div className="text-sm text-muted-foreground">
-                      Stored value: <code>"{name}"</code>
-                    </div>
-                  </div>
-                </div>
+                <h3 className="text-sm font-medium mb-4">Basic Usage</h3>
+                <PreviewTabs preview={<BasicUsageExample />} code={basicUsageCode} />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Object Storage</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="theme">Theme</Label>
-                        <select
-                          id="theme"
-                          className="w-full p-2 border rounded"
-                          value={preferences.theme}
-                          onChange={e => setPreferences({ ...preferences, theme: e.target.value })}
-                        >
-                          <option value="light">Light</option>
-                          <option value="dark">Dark</option>
-                          <option value="auto">Auto</option>
-                        </select>
-                      </div>
-                      <div>
-                        <Label htmlFor="language">Language</Label>
-                        <select
-                          id="language"
-                          className="w-full p-2 border rounded"
-                          value={preferences.language}
-                          onChange={e =>
-                            setPreferences({ ...preferences, language: e.target.value })
-                          }
-                        >
-                          <option value="en">English</option>
-                          <option value="es">Spanish</option>
-                          <option value="fr">French</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      Stored preferences: <code>{JSON.stringify(preferences)}</code>
-                    </div>
-                  </div>
-                </div>
+                <h3 className="text-sm font-medium mb-4">Object Storage</h3>
+                <PreviewTabs preview={<ObjectStorageExample />} code={objectStorageCode} />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Number Storage</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="flex items-center gap-4">
-                    <Button onClick={() => setCounter(counter - 1)}>-</Button>
-                    <div className="text-lg font-mono">Count: {counter}</div>
-                    <Button onClick={() => setCounter(counter + 1)}>+</Button>
-                    <Button variant="outline" onClick={() => setCounter(0)}>
-                      Reset
-                    </Button>
-                  </div>
-                  <div className="text-sm text-muted-foreground mt-2">
-                    Stored value: <code>{counter}</code>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Advanced Usage</h3>
-                <CodeBlock language="tsx">
-                  {`// Custom types
-interface UserSettings {
-  notifications: boolean
-  autoSave: boolean
-  maxItems: number
-}
-
-function SettingsComponent() {
-  const [settings, setSettings] = useLocalStorage<UserSettings>('app-settings', {
-    notifications: true,
-    autoSave: false,
-    maxItems: 10
-  })
-
-  const updateSetting = (key: keyof UserSettings, value: any) => {
-    setSettings(prev => ({ ...prev, [key]: value }))
-  }
-
-  return (
-    <div>
-      <label>
-        <input 
-          type="checkbox" 
-          checked={settings.notifications}
-          onChange={(e) => updateSetting('notifications', e.target.checked)}
-        />
-        Enable Notifications
-      </label>
-    </div>
-  )
-}
-
-// Array storage
-function TodoList() {
-  const [todos, setTodos] = useLocalStorage<string[]>('todo-list', [])
-
-  const addTodo = (todo: string) => {
-    setTodos(prev => [...prev, todo])
-  }
-
-  const removeTodo = (index: number) => {
-    setTodos(prev => prev.filter((_, i) => i !== index))
-  }
-
-  return (
-    <div>
-      {todos.map((todo, index) => (
-        <div key={index}>
-          {todo}
-          <button onClick={() => removeTodo(index)}>Remove</button>
-        </div>
-      ))}
-    </div>
-  )
-}`}
-                </CodeBlock>
+                <h3 className="text-sm font-medium mb-4">Advanced Usage</h3>
+                <PreviewTabs preview={<AdvancedUsageExample />} code={advancedUsageCode} />
               </div>
             </CardContent>
           </Card>
@@ -390,6 +237,92 @@ function TodoList() {
                     <div>• Application settings</div>
                   </div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-950">
+            <CardHeader>
+              <CardTitle className="text-orange-800 dark:text-orange-200">
+                Important Notes: CSR vs SSR Behavior
+              </CardTitle>
+              <CardDescription className="text-orange-700 dark:text-orange-300">
+                Understanding how this hook behaves in different rendering environments
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-2 text-orange-800 dark:text-orange-200">
+                  Client-Side Rendering (CSR) - Create React App, Vite, etc.
+                </h4>
+                <div className="text-sm space-y-2">
+                  <p>
+                    In pure CSR applications, localStorage values are displayed immediately on first paint
+                    with <strong>no visual flash</strong>. The hook reads from localStorage before the
+                    browser renders, providing instant access to stored values.
+                  </p>
+                  <CodeBlock language="tsx">
+                    {`// In CSR - Works perfectly without any workarounds
+function MyComponent() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light')
+  
+  // Shows localStorage value immediately on page load
+  return <div>Current theme: {theme}</div>
+}`}
+                  </CodeBlock>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-2 text-orange-800 dark:text-orange-200">
+                  Server-Side Rendering (SSR) - Next.js, Remix, etc.
+                </h4>
+                <div className="text-sm space-y-2">
+                  <p>
+                    In SSR applications, localStorage is not available during server rendering, which can
+                    cause hydration mismatches. The component initially shows the default value, then
+                    updates to the localStorage value after hydration.
+                  </p>
+                  
+                  <h5 className="font-medium mt-3 mb-2">Recommended SSR Pattern:</h5>
+                  <CodeBlock language="tsx">
+                    {`function MyComponent() {
+  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useLocalStorage('theme', 'light')
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return <div>Loading...</div>
+  }
+  
+  // Shows localStorage value after mounting
+  return <div>Current theme: {theme}</div>
+}`}
+                  </CodeBlock>
+                  
+                  <div className="bg-amber-100 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded p-3 mt-3">
+                    <p className="text-xs text-amber-800 dark:text-amber-200">
+                      <strong>Why this pattern is needed:</strong> During SSR, the server renders with
+                      default values (no localStorage access), but the client has localStorage available.
+                      This creates a mismatch that React detects during hydration. The mounting pattern
+                      ensures both server and client render the same content initially.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t pt-4">
+                <h5 className="font-medium mb-2">Performance Considerations</h5>
+                <ul className="text-sm space-y-1 list-disc list-inside">
+                  <li>Uses <code>useLayoutEffect</code> to minimize visual flash by updating before paint</li>
+                  <li>Lazy state initialization prevents unnecessary re-renders</li>
+                  <li>Stable object references prevent infinite re-initialization loops</li>
+                  <li>JSON serialization ensures consistent data handling across all data types</li>
+                </ul>
               </div>
             </CardContent>
           </Card>

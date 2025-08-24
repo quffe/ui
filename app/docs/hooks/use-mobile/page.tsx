@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,26 +14,17 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/ui/preview-tabs"
-import { useState, useEffect } from "react"
-import { useMobile } from "@/hooks/use-mobile"
+import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
 import { BasicUsageExample } from "@/examples/docs/use-mobile/basic-usage"
 import { CustomBreakpointExample } from "@/examples/docs/use-mobile/custom-breakpoint"
 
 // Raw imports
-import basicUsageCode from "@/examples/docs/use-mobile/basic-usage.tsx?raw"
-import customBreakpointCode from "@/examples/docs/use-mobile/custom-breakpoint.tsx?raw"
+const basicUsageCode = getExampleCode("docs/use-mobile/basic-usage.tsx")
+const customBreakpointCode = getExampleCode("docs/use-mobile/custom-breakpoint.tsx")
 
-export default function UseMobileDocs() {
-  const isMobile = useMobile()
-  const isTablet = useMobile({ breakpoint: 1024 })
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
+export default async function UseMobileDocs() {
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -77,30 +68,6 @@ export default function UseMobileDocs() {
 
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <PreviewTabs
-                title="Basic Implementation"
-                preview={<BasicUsageExample />}
-                code={`import { useMobile } from "@/hooks/use-mobile"
-
-function MyComponent() {
-  const isMobile = useMobile()
-  const isTablet = useMobile({ breakpoint: 1024 })
-
-  return (
-    <div>
-      {isMobile ? 'Mobile Layout' : 'Desktop Layout'}
-    </div>
-  )
-}`}
-              />
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
@@ -114,35 +81,6 @@ function MyComponent() {
                 title="Custom Breakpoints"
                 preview={<CustomBreakpointExample />}
                 code={customBreakpointCode}
-              />
-
-              <PreviewTabs
-                title="SSR Configuration"
-                preview={
-                  <div className="text-center p-4 text-muted-foreground">
-                    See code for SSR configuration options
-                  </div>
-                }
-                code={`import { useMobile } from "@/hooks/use-mobile"
-
-// Disable SSR-safe mode for immediate detection
-const isMobile = useMobile({ 
-  ssrSafe: false,
-  defaultValue: false 
-})
-
-// Custom default value during SSR
-const isMobileMobile = useMobile({ 
-  defaultValue: true  // Assume mobile during SSR
-})
-
-export function Example() {
-  return (
-    <div>
-      Device detection: {isMobile ? "Mobile" : "Desktop"}
-    </div>
-  )
-}`}
               />
             </CardContent>
           </Card>

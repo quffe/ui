@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,150 +14,32 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CodeBlock } from "@/components/ui/code-block"
-import { useState } from "react"
-import {
-  useKeyboardShortcut,
-  useKeyboardShortcutElement,
-  KeyboardShortcutProvider,
-} from "@/hooks/useKeyboardShortcut"
-import {
-  KeyboardShortcutOverlay,
-  KeyboardShortcutHelp,
-} from "@/components/ui/keyboard-shortcut-tooltip"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { KeyboardShortcutProvider } from "@/hooks/useKeyboardShortcut"
+import { KeyboardShortcutOverlay } from "@/components/ui/keyboard-shortcut-tooltip"
+import { getExampleCode } from "@/lib/serverUtils"
 
-// Demo components
-function DemoCounter() {
-  const [count, setCount] = useState(0)
-  const [showHelp, setShowHelp] = useState(false)
+// Example components
+import { BasicUsageExample } from "@/examples/docs/hooks/useKeyboardShortcut/basic-usage"
+import { ElementShortcutsExample } from "@/examples/docs/hooks/useKeyboardShortcut/element-shortcuts"
+import { LiveDemoExample } from "@/examples/docs/hooks/useKeyboardShortcut/live-demo"
+import { GlobalShortcutsExample } from "@/examples/docs/hooks/useKeyboardShortcut/global-shortcuts"
+import { FormNavigationExample } from "@/examples/docs/hooks/useKeyboardShortcut/form-navigation"
+import { ModalShortcutsExample } from "@/examples/docs/hooks/useKeyboardShortcut/modal-shortcuts"
+import { TableNavigationExample } from "@/examples/docs/hooks/useKeyboardShortcut/table-navigation"
+import { TextEditorExample } from "@/examples/docs/hooks/useKeyboardShortcut/text-editor"
 
-  // Global shortcuts
-  useKeyboardShortcut(
-    {
-      id: "increment-counter",
-      keys: "ctrl+plus",
-      description: "Increment counter",
-      category: "Counter",
-    },
-    () => setCount(prev => prev + 1)
-  )
+// Raw imports
+const basicUsageCode = getExampleCode("docs/hooks/useKeyboardShortcut/basic-usage.tsx")
+const elementShortcutsCode = getExampleCode("docs/hooks/useKeyboardShortcut/element-shortcuts.tsx")
+const liveDemoCode = getExampleCode("docs/hooks/useKeyboardShortcut/live-demo.tsx")
+const globalShortcutsCode = getExampleCode("docs/hooks/useKeyboardShortcut/global-shortcuts.tsx")
+const formNavigationCode = getExampleCode("docs/hooks/useKeyboardShortcut/form-navigation.tsx")
+const modalShortcutsCode = getExampleCode("docs/hooks/useKeyboardShortcut/modal-shortcuts.tsx")
+const tableNavigationCode = getExampleCode("docs/hooks/useKeyboardShortcut/table-navigation.tsx")
+const textEditorCode = getExampleCode("docs/hooks/useKeyboardShortcut/text-editor.tsx")
 
-  useKeyboardShortcut(
-    {
-      id: "decrement-counter",
-      keys: "ctrl+minus",
-      description: "Decrement counter",
-      category: "Counter",
-    },
-    () => setCount(prev => prev - 1)
-  )
-
-  useKeyboardShortcut(
-    {
-      id: "reset-counter",
-      keys: "ctrl+0",
-      description: "Reset counter to zero",
-      category: "Counter",
-    },
-    () => setCount(0)
-  )
-
-  // Element-based shortcuts
-  const incrementRef = useKeyboardShortcutElement<HTMLButtonElement>(
-    {
-      id: "increment-btn",
-      keys: "i",
-      description: "Increment counter (button)",
-      category: "Counter",
-    },
-    () => setCount(prev => prev + 1)
-  )
-
-  const decrementRef = useKeyboardShortcutElement<HTMLButtonElement>(
-    {
-      id: "decrement-btn",
-      keys: "d",
-      description: "Decrement counter (button)",
-      category: "Counter",
-    },
-    () => setCount(prev => prev - 1)
-  )
-
-  const resetRef = useKeyboardShortcutElement<HTMLButtonElement>(
-    {
-      id: "reset-btn",
-      keys: "r",
-      description: "Reset counter (button)",
-      category: "Counter",
-    },
-    () => setCount(0)
-  )
-
-  const helpRef = useKeyboardShortcutElement<HTMLButtonElement>(
-    {
-      id: "show-help",
-      keys: "h",
-      description: "Show keyboard shortcuts help",
-      category: "Help",
-    },
-    () => setShowHelp(true)
-  )
-
-  return (
-    <div className="border rounded-lg p-4 space-y-4">
-      <div className="text-center">
-        <div className="text-2xl font-bold mb-2">Counter: {count}</div>
-        <div className="text-sm text-muted-foreground mb-4">
-          Try the keyboard shortcuts! Press Shift+? to see all shortcuts.
-        </div>
-      </div>
-
-      <div className="flex gap-2 justify-center">
-        <Button ref={incrementRef} onClick={() => setCount(prev => prev + 1)}>
-          Increment (I)
-        </Button>
-        <Button ref={decrementRef} onClick={() => setCount(prev => prev - 1)} variant="outline">
-          Decrement (D)
-        </Button>
-        <Button ref={resetRef} onClick={() => setCount(0)} variant="destructive">
-          Reset (R)
-        </Button>
-        <Button ref={helpRef} onClick={() => setShowHelp(true)} variant="secondary">
-          Help (H)
-        </Button>
-      </div>
-
-      <div className="text-xs text-muted-foreground space-y-1">
-        <div>
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">+</kbd> = Increment
-        </div>
-        <div>
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">-</kbd> = Decrement
-        </div>
-        <div>
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">0</kbd> = Reset
-        </div>
-        <div>
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">I</kbd> /{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">D</kbd> /{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">R</kbd> /{" "}
-          <kbd className="bg-muted px-1 py-0.5 rounded text-xs">H</kbd> = Button shortcuts
-        </div>
-      </div>
-
-      {showHelp && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <KeyboardShortcutHelp onClose={() => setShowHelp(false)} />
-        </div>
-      )}
-    </div>
-  )
-}
-
-export default function UseKeyboardShortcutDocs() {
+export default async function UseKeyboardShortcutDocs() {
   return (
     <KeyboardShortcutProvider>
       <div className="flex flex-col">
@@ -209,539 +91,62 @@ export default function UseKeyboardShortcutDocs() {
 
             <Card className="mb-8">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold">Setup</CardTitle>
-                <CardDescription>Wrap your app with the KeyboardShortcutProvider</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CodeBlock language="tsx">
-                  {`import { KeyboardShortcutProvider } from "@/hooks/useKeyboardShortcut"
-import { KeyboardShortcutOverlay } from "@/components/ui/keyboard-shortcut-tooltip"
-
-function App() {
-  return (
-    <KeyboardShortcutProvider>
-      <YourAppContent />
-      <KeyboardShortcutOverlay />
-    </KeyboardShortcutProvider>
-  )
-}`}
-                </CodeBlock>
-              </CardContent>
-            </Card>
-
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-4">
-                  <CodeBlock language="typescript">
-                    {`import { 
-  useKeyboardShortcut, 
-  useKeyboardShortcutElement,
-  useKeyboardShortcutContext 
-} from "@/hooks/useKeyboardShortcut"`}
-                  </CodeBlock>
-                </div>
-
-                <CodeBlock language="tsx">
-                  {`// Basic global shortcut
-function SearchModal() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  useKeyboardShortcut(
-    {
-      id: 'open-search',
-      keys: 'ctrl+k',
-      description: 'Open search modal',
-      category: 'Navigation'
-    },
-    () => setIsOpen(true)
-  )
-
-  return isOpen ? <Modal>Search content</Modal> : null
-}
-
-// Element-based shortcut with tooltip
-function NavigationButton() {
-  const router = useRouter()
-  
-  const buttonRef = useKeyboardShortcutElement(
-    {
-      id: 'nav-home',
-      keys: 'g h',
-      description: 'Go to home page',
-      category: 'Navigation'
-    },
-    () => router.push('/')
-  )
-
-  return <button ref={buttonRef}>Home</button>
-}`}
-                </CodeBlock>
-              </CardContent>
-            </Card>
-
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold">Live Demo</CardTitle>
+                <CardTitle className="text-2xl font-bold">Examples</CardTitle>
                 <CardDescription>
-                  Interactive example with global and element-based shortcuts
+                  Interactive examples demonstrating various keyboard shortcut patterns
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <DemoCounter />
+              <CardContent className="space-y-8">
+                <PreviewTabs
+                  title="Basic Global Shortcuts"
+                  preview={<BasicUsageExample />}
+                  code={basicUsageCode}
+                />
+
+                <PreviewTabs
+                  title="Element-Based Shortcuts"
+                  preview={<ElementShortcutsExample />}
+                  code={elementShortcutsCode}
+                />
+
+                <PreviewTabs
+                  title="Interactive Live Demo"
+                  preview={<LiveDemoExample />}
+                  code={liveDemoCode}
+                />
+
+                <PreviewTabs
+                  title="Global Application Shortcuts"
+                  preview={<GlobalShortcutsExample />}
+                  code={globalShortcutsCode}
+                />
+
+                <PreviewTabs
+                  title="Form Navigation Shortcuts"
+                  preview={<FormNavigationExample />}
+                  code={formNavigationCode}
+                />
+
+                <PreviewTabs
+                  title="Modal and Dialog Shortcuts"
+                  preview={<ModalShortcutsExample />}
+                  code={modalShortcutsCode}
+                />
+
+                <PreviewTabs
+                  title="Data Table Navigation"
+                  preview={<TableNavigationExample />}
+                  code={tableNavigationCode}
+                />
+
+                <PreviewTabs
+                  title="Text Editor Shortcuts"
+                  preview={<TextEditorExample />}
+                  code={textEditorCode}
+                />
               </CardContent>
             </Card>
 
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Global Application Shortcuts</h3>
-                  <CodeBlock language="tsx">
-                    {`function App() {
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const router = useRouter()
-
-  // Global search
-  useKeyboardShortcut(
-    {
-      id: 'global-search',
-      keys: 'ctrl+k',
-      description: 'Open global search',
-      category: 'Navigation'
-    },
-    () => setSearchOpen(true)
-  )
-
-  // Toggle sidebar
-  useKeyboardShortcut(
-    {
-      id: 'toggle-sidebar',
-      keys: 'ctrl+b',
-      description: 'Toggle sidebar',
-      category: 'Layout'
-    },
-    () => setSidebarOpen(prev => !prev)
-  )
-
-  // Quick navigation
-  useKeyboardShortcut(
-    {
-      id: 'go-home',
-      keys: 'g h',
-      description: 'Go to home page',
-      category: 'Navigation'
-    },
-    () => router.push('/')
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'go-settings',
-      keys: 'g s',
-      description: 'Go to settings',
-      category: 'Navigation'
-    },
-    () => router.push('/settings')
-  )
-
-  return (
-    <div>
-      <Sidebar open={sidebarOpen} />
-      <MainContent />
-      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
-    </div>
-  )
-}`}
-                  </CodeBlock>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Form Navigation</h3>
-                  <CodeBlock language="tsx">
-                    {`function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
-
-  // Quick field focus shortcuts
-  const nameRef = useKeyboardShortcutElement(
-    {
-      id: 'focus-name',
-      keys: 'alt+n',
-      description: 'Focus name field',
-      category: 'Form'
-    },
-    () => nameRef.current?.focus()
-  )
-
-  const emailRef = useKeyboardShortcutElement(
-    {
-      id: 'focus-email',
-      keys: 'alt+e',
-      description: 'Focus email field',
-      category: 'Form'
-    },
-    () => emailRef.current?.focus()
-  )
-
-  const messageRef = useKeyboardShortcutElement(
-    {
-      id: 'focus-message',
-      keys: 'alt+m',
-      description: 'Focus message field',
-      category: 'Form'
-    },
-    () => messageRef.current?.focus()
-  )
-
-  // Submit form
-  useKeyboardShortcut(
-    {
-      id: 'submit-form',
-      keys: 'ctrl+enter',
-      description: 'Submit form',
-      category: 'Form'
-    },
-    () => handleSubmit()
-  )
-
-  return (
-    <form>
-      <input
-        ref={nameRef}
-        value={formData.name}
-        onChange={(e) => setFormData({...formData, name: e.target.value})}
-        placeholder="Name (Alt+N to focus)"
-      />
-      <input
-        ref={emailRef}
-        type="email"
-        value={formData.email}
-        onChange={(e) => setFormData({...formData, email: e.target.value})}
-        placeholder="Email (Alt+E to focus)"
-      />
-      <textarea
-        ref={messageRef}
-        value={formData.message}
-        onChange={(e) => setFormData({...formData, message: e.target.value})}
-        placeholder="Message (Alt+M to focus)"
-      />
-      <button type="submit">Submit (Ctrl+Enter)</button>
-    </form>
-  )
-}`}
-                  </CodeBlock>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Modal and Dialog Shortcuts</h3>
-                  <CodeBlock language="tsx">
-                    {`function SettingsModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-  // Close modal with Escape
-  useKeyboardShortcut(
-    {
-      id: 'close-modal',
-      keys: 'escape',
-      description: 'Close modal',
-      category: 'Modal'
-    },
-    () => onClose(),
-    { enabled: isOpen }
-  )
-
-  // Save settings
-  useKeyboardShortcut(
-    {
-      id: 'save-settings',
-      keys: 'ctrl+s',
-      description: 'Save settings',
-      category: 'Modal'
-    },
-    () => saveSettings(),
-    { enabled: isOpen }
-  )
-
-  // Tab navigation within modal
-  const cancelRef = useKeyboardShortcutElement(
-    {
-      id: 'cancel-action',
-      keys: 'alt+c',
-      description: 'Cancel action',
-      category: 'Modal'
-    },
-    () => onClose(),
-    { enabled: isOpen }
-  )
-
-  const saveRef = useKeyboardShortcutElement(
-    {
-      id: 'save-action',
-      keys: 'alt+s',
-      description: 'Save action',
-      category: 'Modal'
-    },
-    () => saveSettings(),
-    { enabled: isOpen }
-  )
-
-  if (!isOpen) return null
-
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <h2>Settings</h2>
-        {/* Settings form */}
-        <div className="modal-actions">
-          <button ref={cancelRef} onClick={onClose}>
-            Cancel (Alt+C)
-          </button>
-          <button ref={saveRef} onClick={saveSettings}>
-            Save (Alt+S)
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}`}
-                  </CodeBlock>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Data Table Navigation</h3>
-                  <CodeBlock language="tsx">
-                    {`function DataTable({ data }: { data: any[] }) {
-  const [selectedRow, setSelectedRow] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
-
-  // Row navigation
-  useKeyboardShortcut(
-    {
-      id: 'next-row',
-      keys: 'down',
-      description: 'Select next row',
-      category: 'Table'
-    },
-    () => setSelectedRow(prev => Math.min(prev + 1, data.length - 1))
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'prev-row',
-      keys: 'up',
-      description: 'Select previous row',
-      category: 'Table'
-    },
-    () => setSelectedRow(prev => Math.max(prev - 1, 0))
-  )
-
-  // Page navigation
-  useKeyboardShortcut(
-    {
-      id: 'next-page',
-      keys: 'ctrl+right',
-      description: 'Next page',
-      category: 'Table'
-    },
-    () => setCurrentPage(prev => prev + 1)
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'prev-page',
-      keys: 'ctrl+left',
-      description: 'Previous page',
-      category: 'Table'
-    },
-    () => setCurrentPage(prev => Math.max(prev - 1, 1))
-  )
-
-  // Row actions
-  useKeyboardShortcut(
-    {
-      id: 'edit-row',
-      keys: 'enter',
-      description: 'Edit selected row',
-      category: 'Table'
-    },
-    () => editRow(selectedRow)
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'delete-row',
-      keys: 'delete',
-      description: 'Delete selected row',
-      category: 'Table'
-    },
-    () => deleteRow(selectedRow)
-  )
-
-  return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr 
-              key={item.id}
-              className={index === selectedRow ? 'selected' : ''}
-            >
-              <td>{item.name}</td>
-              <td>{item.email}</td>
-              <td>
-                <button onClick={() => editRow(index)}>Edit</button>
-                <button onClick={() => deleteRow(index)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      
-      <div className="pagination">
-        <span>Page {currentPage}</span>
-      </div>
-    </div>
-  )
-}`}
-                  </CodeBlock>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Text Editor Shortcuts</h3>
-                  <CodeBlock language="tsx">
-                    {`function TextEditor() {
-  const [content, setContent] = useState('')
-  const [isBold, setIsBold] = useState(false)
-  const [isItalic, setIsItalic] = useState(false)
-  const editorRef = useRef<HTMLTextAreaElement>(null)
-
-  // Text formatting
-  useKeyboardShortcut(
-    {
-      id: 'bold-text',
-      keys: 'ctrl+b',
-      description: 'Toggle bold text',
-      category: 'Editor'
-    },
-    () => setIsBold(prev => !prev)
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'italic-text',
-      keys: 'ctrl+i',
-      description: 'Toggle italic text',
-      category: 'Editor'
-    },
-    () => setIsItalic(prev => !prev)
-  )
-
-  // Save document
-  useKeyboardShortcut(
-    {
-      id: 'save-document',
-      keys: 'ctrl+s',
-      description: 'Save document',
-      category: 'Editor'
-    },
-    () => saveDocument(content)
-  )
-
-  // Find and replace
-  useKeyboardShortcut(
-    {
-      id: 'find-text',
-      keys: 'ctrl+f',
-      description: 'Find in document',
-      category: 'Editor'
-    },
-    () => openFindDialog()
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'replace-text',
-      keys: 'ctrl+h',
-      description: 'Find and replace',
-      category: 'Editor'
-    },
-    () => openReplaceDialog()
-  )
-
-  // Undo/Redo
-  useKeyboardShortcut(
-    {
-      id: 'undo',
-      keys: 'ctrl+z',
-      description: 'Undo last action',
-      category: 'Editor'
-    },
-    () => undo()
-  )
-
-  useKeyboardShortcut(
-    {
-      id: 'redo',
-      keys: 'ctrl+y',
-      description: 'Redo last action',
-      category: 'Editor'
-    },
-    () => redo()
-  )
-
-  return (
-    <div className="editor">
-      <div className="toolbar">
-        <button 
-          className={isBold ? 'active' : ''}
-          onClick={() => setIsBold(!isBold)}
-        >
-          Bold (Ctrl+B)
-        </button>
-        <button 
-          className={isItalic ? 'active' : ''}
-          onClick={() => setIsItalic(!isItalic)}
-        >
-          Italic (Ctrl+I)
-        </button>
-        <button onClick={() => saveDocument(content)}>
-          Save (Ctrl+S)
-        </button>
-      </div>
-      
-      <textarea
-        ref={editorRef}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className={cn(
-          'editor-content',
-          isBold && 'font-bold',
-          isItalic && 'italic'
-        )}
-        placeholder="Start typing... Use Ctrl+B for bold, Ctrl+I for italic"
-      />
-    </div>
-  )
-}`}
-                  </CodeBlock>
-                </div>
-              </CardContent>
-            </Card>
 
             <Card className="mb-8">
               <CardHeader>
@@ -788,16 +193,16 @@ function NavigationButton() {
                     </div>
 
                     <h4 className="font-medium mb-2 mt-4">KeyboardShortcut Interface</h4>
-                    <CodeBlock language="typescript">
-                      {`interface KeyboardShortcut {
+                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+                      <code>{`interface KeyboardShortcut {
   id: string                    // Unique identifier
-  keys: string                  // Key combination (e.g., &quot;ctrl+k&quot;, &quot;shift+?&quot;)
+  keys: string                  // Key combination (e.g., "ctrl+k", "shift+?")
   description: string           // Human-readable description
   category?: string             // Group shortcuts by category
   enabled?: boolean             // Whether shortcut is active
   priority?: number             // Priority for conflicting shortcuts
-}`}
-                    </CodeBlock>
+}`}</code>
+                    </pre>
 
                     <h4 className="font-medium mb-2 mt-4">Returns</h4>
                     <div className="text-sm">void</div>

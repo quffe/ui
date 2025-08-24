@@ -1,3 +1,5 @@
+'use client'
+
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"

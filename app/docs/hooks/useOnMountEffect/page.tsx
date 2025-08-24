@@ -1,8 +1,7 @@
-"use client"
+"use server"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -14,39 +13,23 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
 import { CodeBlock } from "@/components/ui/code-block"
-import { useState } from "react"
-import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"
 
-export default function UseOnMountEffectDocs() {
-  const [mountCount, setMountCount] = useState(0)
-  const [strictMountCount, setStrictMountCount] = useState(0)
-  const [rerenderCount, setRerenderCount] = useState(0)
-  const hasMounted = useHasMounted()
+// Example components
+import LiveDemoExample from "@/examples/docs/hooks/useOnMountEffect/live-demo"
+import DataFetchingExample from "@/examples/docs/hooks/useOnMountEffect/data-fetching"
+import SSRSafeExample from "@/examples/docs/hooks/useOnMountEffect/ssr-safe"
+import UsageExamplesExample from "@/examples/docs/hooks/useOnMountEffect/usage-examples"
+import { getExampleCode } from "@/lib/serverUtils"
 
-  // Demonstrate useOnMountEffect
-  useOnMountEffect(() => {
-    console.log("useOnMountEffect: Component mounted!")
-    setMountCount(prev => prev + 1)
+// Raw imports
+const liveDemoCode = getExampleCode("docs/hooks/useOnMountEffect/live-demo.tsx")
+const dataFetchingCode = getExampleCode("docs/hooks/useOnMountEffect/data-fetching.tsx")
+const ssrSafeCode = getExampleCode("docs/hooks/useOnMountEffect/ssr-safe.tsx")
+const usageExamplesCode = getExampleCode("docs/hooks/useOnMountEffect/usage-examples.tsx")
 
-    return () => {
-      console.log("useOnMountEffect: Cleanup on unmount")
-    }
-  })
-
-  // Demonstrate useStrictMountEffect
-  useStrictMountEffect(() => {
-    console.log("useStrictMountEffect: Component mounted!")
-    setStrictMountCount(prev => prev + 1)
-
-    return () => {
-      console.log("useStrictMountEffect: Cleanup on unmount")
-    }
-  })
-
-  const triggerRerender = () => {
-    setRerenderCount(prev => prev + 1)
-  }
+export default async function UseOnMountEffectDocs() {
 
   return (
     <div className="flex flex-col">
@@ -103,42 +86,10 @@ export default function UseOnMountEffectDocs() {
                 </CodeBlock>
               </div>
 
-              <CodeBlock language="tsx">
-                {`// Basic usage - runs once on mount
-function MyComponent() {
-  useOnMountEffect(() => {
-    console.log('Component mounted!')
-    
-    // Optional cleanup
-    return () => {
-      console.log('Component unmounting')
-    }
-  })
-
-  return <div>Component content</div>
-}
-
-// Strict mount effect - ignores all dependencies
-function StrictComponent() {
-  useStrictMountEffect(() => {
-    // This runs exactly once, no matter what
-    initializeApp()
-  })
-
-  return <div>App content</div>
-}
-
-// Check if component has mounted
-function ConditionalComponent() {
-  const hasMounted = useHasMounted()
-  
-  if (!hasMounted) {
-    return <div>Loading...</div>
-  }
-  
-  return <div>Component is mounted!</div>
-}`}
-              </CodeBlock>
+              <PreviewTabs
+                preview={<UsageExamplesExample />}
+                code={usageExamplesCode}
+              />
             </CardContent>
           </Card>
 
@@ -148,182 +99,18 @@ function ConditionalComponent() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium mb-2">Live Demonstration</h3>
-                <div className="border rounded-lg p-4">
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                    <div>
-                      useOnMountEffect runs: <strong>{mountCount} time(s)</strong>
-                    </div>
-                    <div>
-                      useStrictMountEffect runs: <strong>{strictMountCount} time(s)</strong>
-                    </div>
-                    <div>
-                      Component re-renders: <strong>{rerenderCount} time(s)</strong>
-                    </div>
-                    <div>
-                      Has mounted: <strong>{hasMounted ? "Yes" : "No"}</strong>
-                    </div>
-                  </div>
-                  <Button onClick={triggerRerender}>
-                    Trigger Re-render (count: {rerenderCount})
-                  </Button>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    Notice how the mount effects only run once, even when re-rendering.
-                  </div>
-                </div>
+                <h3 className="text-sm font-medium mb-4">Live Demonstration</h3>
+                <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Data Fetching on Mount</h3>
-                <CodeBlock language="tsx">
-                  {`function UserProfile({ userId }: { userId: string }) {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useOnMountEffect(() => {
-    const fetchUser = async () => {
-      try {
-        setLoading(true)
-        const userData = await fetch(\`/api/users/\${userId}\`)
-        const user = await userData.json()
-        setUser(user)
-      } catch (error) {
-        console.error('Failed to fetch user:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchUser()
-  }, [userId]) // userId captured on mount, changes ignored
-
-  if (loading) return <div>Loading user...</div>
-  if (!user) return <div>User not found</div>
-  
-  return <div>Welcome, {user.name}!</div>
-}`}
-                </CodeBlock>
+                <h3 className="text-sm font-medium mb-4">Data Fetching Example</h3>
+                <PreviewTabs preview={<DataFetchingExample />} code={dataFetchingCode} />
               </div>
 
               <div>
-                <h3 className="text-sm font-medium mb-2">Event Listeners Setup</h3>
-                <CodeBlock language="tsx">
-                  {`function KeyboardShortcuts() {
-  useOnMountEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === 's') {
-        event.preventDefault()
-        saveDocument()
-      }
-    }
-
-    document.addEventListener('keydown', handleKeydown)
-    
-    // Cleanup function
-    return () => {
-      document.removeEventListener('keydown', handleKeydown)
-    }
-  })
-
-  return <div>Press Ctrl+S to save</div>
-}
-
-function WindowResize() {
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
-
-  useOnMountEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      })
-    }
-
-    // Set initial size
-    handleResize()
-    
-    window.addEventListener('resize', handleResize)
-    
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  })
-
-  return <div>Window: {windowSize.width} x {windowSize.height}</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Analytics and Tracking</h3>
-                <CodeBlock language="tsx">
-                  {`function AnalyticsTracker({ page }: { page: string }) {
-  useStrictMountEffect(() => {
-    // Track page view once per component mount
-    analytics.track('page_view', {
-      page: page,
-      timestamp: new Date().toISOString(),
-      user_agent: navigator.userAgent
-    })
-  })
-
-  return <div>Page content...</div>
-}
-
-function AdComponent() {
-  useOnMountEffect(() => {
-    // Initialize ad tracking
-    const adTracker = new AdTracker()
-    adTracker.initialize()
-    
-    return () => {
-      // Cleanup ad resources
-      adTracker.cleanup()
-    }
-  })
-
-  return <div id="ad-container">Advertisement</div>
-}`}
-                </CodeBlock>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">SSR-Safe Rendering</h3>
-                <CodeBlock language="tsx">
-                  {`function ClientOnlyComponent() {
-  const hasMounted = useHasMounted()
-  
-  // Avoid hydration mismatch by only rendering client-specific content after mount
-  if (!hasMounted) {
-    return <div>Loading...</div>
-  }
-  
-  return (
-    <div>
-      <div>Current URL: {window.location.href}</div>
-      <div>User Agent: {navigator.userAgent}</div>
-      <div>Screen Size: {screen.width} x {screen.height}</div>
-    </div>
-  )
-}
-
-function ThemeComponent() {
-  const hasMounted = useHasMounted()
-  const [theme, setTheme] = useState<string | null>(null)
-  
-  useOnMountEffect(() => {
-    // Access localStorage only after mount
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    setTheme(savedTheme)
-  })
-  
-  if (!hasMounted || !theme) {
-    return <div>Loading theme...</div>
-  }
-  
-  return <div className={\`theme-\${theme}\`}>Themed content</div>
-}`}
-                </CodeBlock>
+                <h3 className="text-sm font-medium mb-4">SSR-Safe Components</h3>
+                <PreviewTabs preview={<SSRSafeExample />} code={ssrSafeCode} />
               </div>
             </CardContent>
           </Card>

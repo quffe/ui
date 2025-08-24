@@ -1,6 +1,5 @@
-"use client"
+"use server"
 
-import { InputSelect } from "@/components/Navigation/Select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -14,34 +13,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { useState } from "react"
+import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-export default function InputSelectDocs() {
-  const [basicValue, setBasicValue] = useState<string | null>(null)
-  const [numberValue, setNumberValue] = useState<number | null>(null)
-  const [errorValue, setErrorValue] = useState<string | null>(null)
+// Example components
+import { BasicExample } from "@/examples/docs/input-select/basic-example"
+import { NumberSizesExample } from "@/examples/docs/input-select/number-sizes"
+import { ErrorStateExample } from "@/examples/docs/input-select/error-state"
+import { DisabledStateExample } from "@/examples/docs/input-select/disabled-state"
 
-  const stringOptions = [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-    { label: "Disabled Option", value: "disabled", disabled: true },
-  ]
+// Raw imports
+const basicExampleCode = getExampleCode("docs/input-select/basic-example.tsx")
+const numberSizesCode = getExampleCode("docs/input-select/number-sizes.tsx")
+const errorStateCode = getExampleCode("docs/input-select/error-state.tsx")
+const disabledStateCode = getExampleCode("docs/input-select/disabled-state.tsx")
 
-  const numberOptions = [
-    { label: "Small", value: 1 },
-    { label: "Medium", value: 2 },
-    { label: "Large", value: 3 },
-    { label: "Extra Large", value: 4 },
-  ]
-
-  const priorityOptions = [
-    { label: "Low Priority", value: "low" },
-    { label: "Medium Priority", value: "medium" },
-    { label: "High Priority", value: "high" },
-    { label: "Critical", value: "critical" },
-  ]
-
+export default async function InputSelectDocs() {
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -88,22 +75,11 @@ export default function InputSelectDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { InputSelect } from "@/components/Navigation/Select"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`<InputSelect
-  options={options}
-  value={selectedValue}
-  onChange={setSelectedValue}
-  label="Choose option"
-  placeholder="Select an option"
-/>`}
-                </code>
-              </div>
+              <PreviewTabs
+                preview={<BasicExample />}
+                code={basicExampleCode}
+                title="Basic Example"
+              />
             </CardContent>
           </Card>
 
@@ -111,87 +87,24 @@ export default function InputSelectDocs() {
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Basic String Select</h3>
-                <InputSelect
-                  options={stringOptions}
-                  value={basicValue}
-                  onChange={setBasicValue}
-                  label="Choose Option"
-                  placeholder="Select an option"
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {basicValue || "None"}
-                </p>
-              </div>
+            <CardContent className="space-y-8">
+              <PreviewTabs
+                preview={<NumberSizesExample />}
+                code={numberSizesCode}
+                title="Size Variants"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Number Select with Sizes</h3>
-                <div className="space-y-4">
-                  <div>
-                    <InputSelect
-                      options={numberOptions}
-                      value={numberValue}
-                      onChange={setNumberValue}
-                      label="Small Size"
-                      placeholder="Select size"
-                      size="sm"
-                    />
-                  </div>
-                  <div>
-                    <InputSelect
-                      options={numberOptions}
-                      value={numberValue}
-                      onChange={setNumberValue}
-                      label="Default Size"
-                      placeholder="Select size"
-                      size="default"
-                    />
-                  </div>
-                  <div>
-                    <InputSelect
-                      options={numberOptions}
-                      value={numberValue}
-                      onChange={setNumberValue}
-                      label="Large Size"
-                      placeholder="Select size"
-                      size="lg"
-                    />
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {numberValue || "None"}
-                </p>
-              </div>
+              <PreviewTabs
+                preview={<ErrorStateExample />}
+                code={errorStateCode}
+                title="Required with Error State"
+              />
 
-              <div>
-                <h3 className="text-sm font-medium mb-2">Required with Error State</h3>
-                <InputSelect
-                  options={priorityOptions}
-                  value={errorValue}
-                  onChange={setErrorValue}
-                  label="Priority Level"
-                  placeholder="Select priority"
-                  required
-                  error={!errorValue ? "Priority is required" : undefined}
-                />
-                <p className="text-sm text-muted-foreground mt-2">
-                  Selected: {errorValue || "None"}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Disabled State</h3>
-                <InputSelect
-                  options={stringOptions}
-                  value="option2"
-                  onChange={() => {}}
-                  label="Disabled Select"
-                  placeholder="Cannot select"
-                  disabled
-                />
-              </div>
+              <PreviewTabs
+                preview={<DisabledStateExample />}
+                code={disabledStateCode}
+                title="Disabled State"
+              />
             </CardContent>
           </Card>
 
@@ -232,7 +145,7 @@ export default function InputSelectDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">placeholder</td>
                       <td className="p-2">string</td>
-                      <td className="p-2">"Select an option"</td>
+                      <td className="p-2">&quot;Select an option&quot;</td>
                       <td className="p-2">Placeholder text</td>
                     </tr>
                     <tr className="border-b">
@@ -249,8 +162,8 @@ export default function InputSelectDocs() {
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
-                      <td className="p-2">'default' | 'sm' | 'lg'</td>
-                      <td className="p-2">'default'</td>
+                      <td className="p-2">&apos;default&apos; | &apos;sm&apos; | &apos;lg&apos;</td>
+                      <td className="p-2">&apos;default&apos;</td>
                       <td className="p-2">Size variant</td>
                     </tr>
                     <tr className="border-b">
@@ -279,23 +192,6 @@ export default function InputSelectDocs() {
                     </tr>
                   </tbody>
                 </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>SelectOption Interface</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm whitespace-pre-line">
-                  {`interface SelectOption<T> {
-  label: string
-  value: T
-  disabled?: boolean
-}`}
-                </code>
               </div>
             </CardContent>
           </Card>

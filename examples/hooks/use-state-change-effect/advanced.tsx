@@ -1,3 +1,5 @@
+'use client'
+
 import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
 import { useState } from "react"
 

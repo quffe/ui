@@ -195,3 +195,8 @@ npx tsc --noEmit
 
 ### Theme Customization
 Modify CSS variables in the global CSS file for theme changes. The project uses a comprehensive design token system with light/dark mode support.
+- always use pnpm
+- put all previews on example directory and use getExampleCode util to get raw code string.
+- PreviewTabs should always use getExampleCode for code if no preview dont use PreviewTabs only use CodeBlock
+- page layout should be consistent through out the whole project
+- on examples, theme should also be in darkmode
