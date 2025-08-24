@@ -1,5 +1,5 @@
 {
-  "name": "select-dropdown",
+  "name": "-select-dropdown",
   "type": "registry:component",
   "category": "Navigation",
   "description": "Custom dropdown with keyboard navigation",

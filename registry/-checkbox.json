@@ -1,0 +1,15 @@
+{
+  "name": "-checkbox",
+  "type": "registry:component",
+  "category": "Form",
+  "description": "Checkbox component",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "Form/Checkbox.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Check } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  label?: string\n}\n\nconst Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(\n  ({ className, label, id, ...props }, ref) => {\n    return (\n      <div className=\"flex items-center space-x-2\">\n        <div className=\"relative\">\n          <input\n            type=\"checkbox\"\n            className={cn(\n              \"peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground appearance-none\",\n              className\n            )}\n            ref={ref}\n            id={id}\n            {...props}\n          />\n          <Check className=\"absolute left-0 top-0 h-4 w-4 text-primary-foreground opacity-0 peer-checked:opacity-100 pointer-events-none\" />\n        </div>\n        {label && (\n          <label\n            htmlFor={id}\n            className=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\"\n          >\n            {label}\n          </label>\n        )}\n      </div>\n    )\n  }\n)\nCheckbox.displayName = \"Checkbox\"\n\nexport { Checkbox }\n"
+    }
+  ]
+}

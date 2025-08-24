@@ -1,0 +1,14 @@
+{
+  "name": "useRevalidate",
+  "type": "registry:hook",
+  "description": "Hook for SWR data revalidation",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:hook",
+      "path": "hooks/useRevalidate.tsx",
+      "content": "\"use client\"\n\nimport { useSWRConfig } from \"swr\"\n\nconst useRevalidate = () => {\n  const { mutate } = useSWRConfig()\n  const revalidate = (urls: string[]) => {\n    urls.forEach(url => {\n      mutate((key: { url: string }) => key.url === url)\n    })\n  }\n\n  return { revalidate }\n}\n\nexport default useRevalidate\n"
+    }
+  ]
+}

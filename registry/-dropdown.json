@@ -1,5 +1,5 @@
 {
-  "name": "dropdown",
+  "name": "-dropdown",
   "type": "registry:component",
   "category": "Navigation",
   "description": "Searchable dropdown with Command and Popover primitives",

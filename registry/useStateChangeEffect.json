@@ -1,0 +1,14 @@
+{
+  "name": "useStateChangeEffect",
+  "type": "registry:hook",
+  "description": "Hook that runs effect only when state changes",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:hook",
+      "path": "hooks/useStateChangeEffect.ts",
+      "content": "\"use client\"\n\nimport { useRef, useEffect } from \"react\"\n\nexport const useStateChangeEffect = <T>(effect: () => void, states: T[]): void => {\n  const previousStatesRef = useRef<T[]>(states)\n  useEffect(() => {\n    const areStatesEqual = states.every(\n      (state, index) => JSON.stringify(state) === JSON.stringify(previousStatesRef.current[index])\n    )\n    if (!areStatesEqual) {\n      effect()\n      previousStatesRef.current = [...states]\n    }\n  }, [states, effect])\n}\n"
+    }
+  ]
+}

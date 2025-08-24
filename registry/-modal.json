@@ -1,5 +1,5 @@
 {
-  "name": "modal",
+  "name": "-modal",
   "type": "registry:component",
   "category": "Modal",
   "description": "Flexible modal component with customizable sizing",

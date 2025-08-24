@@ -1,0 +1,15 @@
+{
+  "name": "-select",
+  "type": "registry:component",
+  "category": "Navigation",
+  "description": "Select component",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "Navigation/Select.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from \"@/components/ui/select\"\nimport { Label } from \"@/components/ui/label\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface SelectOption<T> {\n  label: string\n  value: T\n  disabled?: boolean\n}\n\ninterface InputSelectProps<T> {\n  options: SelectOption<T>[]\n  value: T | null\n  onChange: (value: T | null) => void\n  placeholder?: string\n  label?: string\n  error?: string\n  className?: string\n  triggerClassName?: string\n  contentClassName?: string\n  labelClassName?: string\n  errorClassName?: string\n  disabled?: boolean\n  required?: boolean\n  name?: string\n  id?: string\n  size?: \"default\" | \"sm\" | \"lg\"\n  onOpenChange?: (open: boolean) => void\n}\n\nexport function InputSelect<T>({\n  options,\n  value,\n  onChange,\n  placeholder = \"Select an option\",\n  label,\n  error,\n  className,\n  triggerClassName,\n  contentClassName,\n  labelClassName,\n  errorClassName,\n  disabled,\n  required,\n  name,\n  id,\n  size = \"default\",\n  onOpenChange,\n}: InputSelectProps<T>) {\n  const selectId = React.useId()\n  const finalId = id || selectId\n\n  // Handle size variants\n  const sizeClasses = {\n    sm: \"h-8 text-xs\",\n    default: \"h-10\",\n    lg: \"h-12 text-base\",\n  }\n\n  return (\n    <div className={cn(\"space-y-2\", className)}>\n      {label && (\n        <Label htmlFor={finalId} className={labelClassName}>\n          {label} {required && <span className=\"text-destructive\">*</span>}\n        </Label>\n      )}\n      <Select\n        value={value ? String(value) : undefined}\n        onValueChange={(newValue: string) => onChange(newValue as T)}\n        disabled={disabled}\n        name={name}\n        onOpenChange={onOpenChange}\n      >\n        <SelectTrigger\n          id={finalId}\n          className={cn(\n            sizeClasses[size],\n            error && \"border-destructive ring-destructive\",\n            triggerClassName\n          )}\n          aria-invalid={!!error}\n          aria-describedby={error ? `${finalId}-error` : undefined}\n        >\n          <SelectValue placeholder={placeholder} />\n        </SelectTrigger>\n        <SelectContent className={contentClassName}>\n          <SelectGroup>\n            {options.map((option, index) => (\n              <SelectItem key={index} value={String(option.value)} disabled={option.disabled}>\n                {option.label}\n              </SelectItem>\n            ))}\n          </SelectGroup>\n        </SelectContent>\n      </Select>\n      {error && (\n        <p id={`${finalId}-error`} className={cn(\"text-xs text-destructive\", errorClassName)}>\n          {error}\n        </p>\n      )}\n    </div>\n  )\n}\n"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "modal-trigger",
+  "name": "-modal-trigger",
   "type": "registry:component",
   "category": "Modal",
   "description": "Modal trigger component with button integration",

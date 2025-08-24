@@ -1,0 +1,20 @@
+{
+  "name": "-file-input",
+  "type": "registry:component",
+  "category": "Form",
+  "description": "File upload input with drag and drop support",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "input",
+    "button"
+  ],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "Form/FileInput.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Upload, X } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\nimport { Button } from \"@/components/ui/button\"\n\nexport interface FileInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, \"type\"> {\n  onFileSelect?: (files: FileList | null) => void\n  showPreview?: boolean\n}\n\nconst FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(\n  ({ className, onFileSelect, showPreview = false, ...props }, ref) => {\n    const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null)\n    const inputRef = React.useRef<HTMLInputElement>(null)\n\n    React.useImperativeHandle(ref, () => inputRef.current!)\n\n    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n      const files = e.target.files\n      setSelectedFiles(files)\n      onFileSelect?.(files)\n    }\n\n    const clearFiles = () => {\n      setSelectedFiles(null)\n      if (inputRef.current) {\n        inputRef.current.value = \"\"\n      }\n      onFileSelect?.(null)\n    }\n\n    return (\n      <div className=\"space-y-2\">\n        <div\n          className={cn(\n            \"flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed border-input bg-background hover:bg-accent hover:text-accent-foreground\",\n            className\n          )}\n          onClick={() => inputRef.current?.click()}\n        >\n          <Upload className=\"h-8 w-8 mb-2 text-muted-foreground\" />\n          <p className=\"text-sm text-muted-foreground\">Click to upload or drag and drop</p>\n          <input\n            type=\"file\"\n            className=\"hidden\"\n            ref={inputRef}\n            onChange={handleFileChange}\n            {...props}\n          />\n        </div>\n\n        {showPreview && selectedFiles && (\n          <div className=\"space-y-2\">\n            {Array.from(selectedFiles).map((file, index) => (\n              <div\n                key={index}\n                className=\"flex items-center justify-between p-2 bg-muted rounded-md\"\n              >\n                <span className=\"text-sm truncate\">{file.name}</span>\n                <Button type=\"button\" variant=\"ghost\" size=\"sm\" onClick={clearFiles}>\n                  <X className=\"h-4 w-4\" />\n                </Button>\n              </div>\n            ))}\n          </div>\n        )}\n      </div>\n    )\n  }\n)\nFileInput.displayName = \"FileInput\"\n\nexport { FileInput }\n"
+    }
+  ]
+}

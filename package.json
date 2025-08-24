@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "registry:update": "node scripts/generate-registry.js"
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^15.4.6",

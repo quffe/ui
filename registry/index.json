@@ -1,58 +1,227 @@
 [
   {
     "name": "data-table",
-    "type": "registry:ui",
+    "type": "registry:component",
+    "category": "Data",
     "description": "A powerful data table with sorting, filtering, and pagination",
-    "dependencies": ["@tanstack/react-table", "lucide-react"],
-    "registryDependencies": ["button", "table"]
+    "dependencies": [
+      "@tanstack/react-table",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button",
+      "table"
+    ]
   },
   {
-    "name": "input-amount",
-    "type": "registry:ui", 
-    "description": "Specialized input for monetary amounts with currency support",
+    "name": "checkbox",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "Checkbox component",
     "dependencies": [],
-    "registryDependencies": ["input", "label"]
+    "registryDependencies": []
   },
   {
-    "name": "otp-input",
-    "type": "registry:ui",
-    "description": "One-time password input with multiple fields",
+    "name": "file-input",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "File upload input with drag and drop support",
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "input",
+      "button"
+    ]
+  },
+  {
+    "name": "input",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "Input component",
     "dependencies": [],
-    "registryDependencies": ["input"]
+    "registryDependencies": []
   },
   {
-    "name": "date-range-picker",
-    "type": "registry:ui",
-    "description": "Date range picker with presets and dual calendar view",
-    "dependencies": ["lucide-react", "react-day-picker", "date-fns"],
-    "registryDependencies": ["button", "calendar", "popover"]
+    "name": "password-input",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "Password input with toggle visibility",
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "input",
+      "button"
+    ]
   },
   {
-    "name": "modal",
-    "type": "registry:ui",
-    "description": "Flexible modal component with customizable sizing",
-    "dependencies": ["lucide-react", "class-variance-authority"],
-    "registryDependencies": ["button"]
+    "name": "radio-group",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "RadioGroup component",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "select",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "Select component",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "textarea",
+    "type": "registry:component",
+    "category": "Form",
+    "description": "Textarea component",
+    "dependencies": [],
+    "registryDependencies": []
   },
   {
     "name": "dropdown",
-    "type": "registry:ui",
+    "type": "registry:component",
+    "category": "Navigation",
     "description": "Searchable dropdown with Command and Popover primitives",
-    "dependencies": ["lucide-react"],
-    "registryDependencies": ["button", "command", "popover"]
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button",
+      "command",
+      "popover"
+    ]
+  },
+  {
+    "name": "select",
+    "type": "registry:component",
+    "category": "Navigation",
+    "description": "Select component",
+    "dependencies": [],
+    "registryDependencies": []
   },
   {
     "name": "select-dropdown",
-    "type": "registry:ui",
+    "type": "registry:component",
+    "category": "Navigation",
     "description": "Custom dropdown with keyboard navigation",
-    "dependencies": ["lucide-react", "class-variance-authority"],
-    "registryDependencies": ["button"]
+    "dependencies": [
+      "lucide-react",
+      "class-variance-authority"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
+    "name": "modal",
+    "type": "registry:component",
+    "category": "Modal",
+    "description": "Flexible modal component with customizable sizing",
+    "dependencies": [
+      "lucide-react",
+      "class-variance-authority"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
   },
   {
     "name": "modal-trigger",
-    "type": "registry:ui",
+    "type": "registry:component",
+    "category": "Modal",
     "description": "Modal trigger component with button integration",
-    "dependencies": ["class-variance-authority"],
-    "registryDependencies": ["button", "modal"]
+    "dependencies": [
+      "class-variance-authority"
+    ],
+    "registryDependencies": [
+      "button",
+      "modal"
+    ]
+  },
+  {
+    "name": "use-mobile",
+    "type": "registry:hook",
+    "description": "Hook to detect mobile viewport and breakpoints",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useCopyToClipboard",
+    "type": "registry:hook",
+    "description": "Hook for copying text to clipboard with feedback",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useCountdown",
+    "type": "registry:hook",
+    "description": "Hook for countdown timers with auto-decrement",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useIsomorphicLayoutEffect",
+    "type": "registry:hook",
+    "description": "Hook that uses layoutEffect on client, effect on server",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useKeyboardShortcut",
+    "type": "registry:hook",
+    "description": "Hook for handling keyboard shortcuts with context",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useLocalStorage",
+    "type": "registry:hook",
+    "description": "Hook for persisting state to localStorage with SSR support",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useOnMountEffect",
+    "type": "registry:hook",
+    "description": "Hook that runs effect only on component mount",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useOnMountLayoutEffect",
+    "type": "registry:hook",
+    "description": "Hook that runs layout effect only on component mount",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useOnUnmountEffect",
+    "type": "registry:hook",
+    "description": "Hook that runs cleanup effect only on component unmount",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useOnWindowResize",
+    "type": "registry:hook",
+    "description": "Hook that responds to window resize events",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useRevalidate",
+    "type": "registry:hook",
+    "description": "Hook for SWR data revalidation",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "useStateChangeEffect",
+    "type": "registry:hook",
+    "description": "Hook that runs effect only when state changes",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]
