@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const DEFAULT_PREFERENCES = { theme: 'light' }
 
@@ -64,7 +64,7 @@ export default function UsageExamplesExample() {
           <Label>Theme Preference (stored as object)</Label>
           <Select 
             value={preferences.theme} 
-            onValueChange={(theme) => setPreferences({ ...preferences, theme })}
+            onValueChange={(theme) => setPreferences(prev => ({ ...prev, theme }))}
           >
             <SelectTrigger>
               <SelectValue />
@@ -87,7 +87,7 @@ export default function UsageExamplesExample() {
         </CardHeader>
         <CardContent className="space-y-2">
           <div className="flex items-center gap-2">
-            <Button onClick={() => setCounter(counter + 1)}>
+            <Button onClick={() => setCounter(prev => prev + 1)}>
               Count: {counter}
             </Button>
             <Button 

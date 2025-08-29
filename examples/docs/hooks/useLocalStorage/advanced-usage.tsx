@@ -36,13 +36,13 @@ export default function AdvancedUsageExample() {
     return <div>Loading...</div>
   }
 
-  const updateSetting = (key: keyof UserSettings, value: any) => {
+  const updateSetting = (key: keyof UserSettings, value: UserSettings[keyof UserSettings]) => {
     setSettings(prev => ({ ...prev, [key]: value }))
   }
 
   const addTodo = () => {
     if (newTodo.trim()) {
-      setTodos(prev => [...prev, newTodo.trim()])
+      setTodos(prev => ([...prev, newTodo.trim()]))
       setNewTodo("")
     }
   }
@@ -67,7 +67,7 @@ export default function AdvancedUsageExample() {
               />
               <Label htmlFor="notifications">Enable Notifications</Label>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="autoSave"
@@ -76,7 +76,7 @@ export default function AdvancedUsageExample() {
               />
               <Label htmlFor="autoSave">Auto Save</Label>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="maxItems">Max Items ({settings.maxItems})</Label>
               <Input
@@ -90,7 +90,7 @@ export default function AdvancedUsageExample() {
                 className="w-full"
               />
             </div>
-            
+
             <div className="text-sm text-muted-foreground">
               Settings: <code>{JSON.stringify(settings)}</code>
             </div>
@@ -115,7 +115,7 @@ export default function AdvancedUsageExample() {
                 Add
               </Button>
             </div>
-            
+
             <div className="space-y-2">
               {todos.length === 0 ? (
                 <div className="text-sm text-muted-foreground">No todos yet. Add one above!</div>
@@ -134,7 +134,7 @@ export default function AdvancedUsageExample() {
                 ))
               )}
             </div>
-            
+
             <div className="text-sm text-muted-foreground">
               Todos count: {todos.length}
             </div>

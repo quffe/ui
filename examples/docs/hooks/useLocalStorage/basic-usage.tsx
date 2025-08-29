@@ -48,9 +48,9 @@ export default function BasicUsageExample() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4">
-            <Button onClick={() => setCounter(counter - 1)}>-</Button>
+            <Button onClick={() => setCounter(prev => prev - 1)}>-</Button>
             <div className="text-lg font-mono">Count: {counter}</div>
-            <Button onClick={() => setCounter(counter + 1)}>+</Button>
+            <Button onClick={() => setCounter(prev => prev + 1)}>+</Button>
             <Button variant="outline" onClick={() => setCounter(0)}>
               Reset
             </Button>

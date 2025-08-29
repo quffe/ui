@@ -38,7 +38,7 @@ export default function ObjectStorageExample() {
               <Label htmlFor="theme">Theme</Label>
               <Select
                 value={preferences.theme}
-                onValueChange={(value) => setPreferences({ ...preferences, theme: value })}
+                onValueChange={(value) => setPreferences(prev => ({ ...prev, theme: value }))}
               >
                 <SelectTrigger id="theme">
                   <SelectValue />
@@ -54,7 +54,7 @@ export default function ObjectStorageExample() {
               <Label htmlFor="language">Language</Label>
               <Select
                 value={preferences.language}
-                onValueChange={(value) => setPreferences({ ...preferences, language: value })}
+                onValueChange={(value) => setPreferences(prev => ({ ...prev, language: value }))}
               >
                 <SelectTrigger id="language">
                   <SelectValue />
