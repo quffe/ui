@@ -1,26 +1,35 @@
-'use client'
+"use client"
 
-import { useLocalStorage } from '@/hooks/useLocalStorage'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useState, useEffect } from 'react'
+import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useState, useEffect } from "react"
 
-const DEFAULT_PREFERENCES = { theme: 'light' }
+const DEFAULT_PREFERENCES = { theme: "light" }
 
 export default function UsageExamplesExample() {
   const [mounted, setMounted] = useState(false)
-  
+
   // String value with default
-  const [name, setName] = useLocalStorage<string>('user-name', 'Guest')
-  
+  const [name, setName] = useLocalStorage<string>("user-name", "Guest")
+
   // Object value with default - use stable reference
-  const [preferences, setPreferences] = useLocalStorage<{theme: string}>('user-prefs', DEFAULT_PREFERENCES)
-  
+  const [preferences, setPreferences] = useLocalStorage<{ theme: string }>(
+    "user-prefs",
+    DEFAULT_PREFERENCES
+  )
+
   // Number value
-  const [counter, setCounter] = useLocalStorage<number>('counter', 0)
+  const [counter, setCounter] = useLocalStorage<number>("counter", 0)
 
   useEffect(() => {
     setMounted(true)
@@ -47,7 +56,7 @@ export default function UsageExamplesExample() {
           <Input
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             placeholder="Enter your name..."
           />
           <p className="text-sm text-muted-foreground">
@@ -62,9 +71,9 @@ export default function UsageExamplesExample() {
         </CardHeader>
         <CardContent className="space-y-2">
           <Label>Theme Preference (stored as object)</Label>
-          <Select 
-            value={preferences.theme} 
-            onValueChange={(theme) => setPreferences(prev => ({ ...prev, theme }))}
+          <Select
+            value={preferences.theme}
+            onValueChange={theme => setPreferences(prev => ({ ...prev, theme }))}
           >
             <SelectTrigger>
               <SelectValue />
@@ -87,13 +96,8 @@ export default function UsageExamplesExample() {
         </CardHeader>
         <CardContent className="space-y-2">
           <div className="flex items-center gap-2">
-            <Button onClick={() => setCounter(prev => prev + 1)}>
-              Count: {counter}
-            </Button>
-            <Button 
-              variant="outline" 
-              onClick={() => setCounter(0)}
-            >
+            <Button onClick={() => setCounter(prev => prev + 1)}>Count: {counter}</Button>
+            <Button variant="outline" onClick={() => setCounter(0)}>
               Reset
             </Button>
           </div>

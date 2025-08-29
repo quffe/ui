@@ -27,7 +27,6 @@ const withCallbacksCode = getExampleCode("docs/use-copy-to-clipboard/with-callba
 const codeCopyCode = getExampleCode("docs/use-copy-to-clipboard/code-copy.tsx")
 
 export default async function UseCopyToClipboardDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

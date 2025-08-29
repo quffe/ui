@@ -9,11 +9,13 @@ import useRevalidate from "@/hooks/useRevalidate"
 export default function BulkDataRevalidationExample() {
   const [revalidateCount, setRevalidateCount] = useState(0)
   const [lastRevalidate, setLastRevalidate] = useState<string>("")
-  const [revalidationHistory, setRevalidationHistory] = useState<Array<{
-    urls: string[],
-    timestamp: string,
-    type: string
-  }>>([])
+  const [revalidationHistory, setRevalidationHistory] = useState<
+    Array<{
+      urls: string[]
+      timestamp: string
+      type: string
+    }>
+  >([])
   const { revalidate } = useRevalidate()
 
   const handleRevalidate = (urls: string[], type: string) => {
@@ -23,7 +25,7 @@ export default function BulkDataRevalidationExample() {
     setLastRevalidate(timestamp)
     setRevalidationHistory(prev => [
       ...prev.slice(-4), // Keep last 4 entries
-      { urls, timestamp, type }
+      { urls, timestamp, type },
     ])
   }
 
@@ -88,7 +90,9 @@ export default function BulkDataRevalidationExample() {
                 Refresh Content
               </Button>
               <Button
-                onClick={() => handleRevalidate(["/api/analytics", "/api/reports"], "Analytics Data")}
+                onClick={() =>
+                  handleRevalidate(["/api/analytics", "/api/reports"], "Analytics Data")
+                }
                 variant="outline"
                 size="sm"
                 className="justify-start"
@@ -106,7 +110,7 @@ export default function BulkDataRevalidationExample() {
                 Refresh Everything
               </Button>
             </div>
-            
+
             <div className="mt-4 flex justify-between items-center">
               <div className="text-xs text-muted-foreground">
                 Click buttons to simulate SWR cache revalidation calls
@@ -125,10 +129,13 @@ export default function BulkDataRevalidationExample() {
                 <div key={url} className="bg-card rounded px-3 py-2">
                   <div className="font-mono text-xs text-secondary">{url}</div>
                   <div className="text-xs text-muted-foreground">
-                    {url.includes('users') ? 'User data' :
-                     url.includes('posts') ? 'Post data' :
-                     url.includes('comments') ? 'Comment data' :
-                     'Analytics data'}
+                    {url.includes("users")
+                      ? "User data"
+                      : url.includes("posts")
+                        ? "Post data"
+                        : url.includes("comments")
+                          ? "Comment data"
+                          : "Analytics data"}
                   </div>
                 </div>
               ))}
@@ -141,16 +148,17 @@ export default function BulkDataRevalidationExample() {
               <h4 className="font-medium mb-3 text-sm">Recent Revalidations</h4>
               <div className="space-y-2">
                 {revalidationHistory.map((entry, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded text-sm">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2 bg-muted/50 rounded text-sm"
+                  >
                     <div>
                       <div className="font-medium">{entry.type}</div>
                       <div className="text-xs text-muted-foreground">
-                        {entry.urls.join(', ')} ({entry.urls.length} endpoints)
+                        {entry.urls.join(", ")} ({entry.urls.length} endpoints)
                       </div>
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {entry.timestamp}
-                    </div>
+                    <div className="text-xs text-muted-foreground">{entry.timestamp}</div>
                   </div>
                 ))}
               </div>

@@ -1,11 +1,17 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { useStateChangeEffect } from '@/hooks/useStateChangeEffect'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useState } from "react"
+import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function LiveDemoExample() {
   const [name, setName] = useState("")
@@ -48,11 +54,14 @@ export default function LiveDemoExample() {
             />
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label>Theme</Label>
-            <Select value={settings.theme} onValueChange={(value) => setSettings({ ...settings, theme: value })}>
+            <Select
+              value={settings.theme}
+              onValueChange={value => setSettings({ ...settings, theme: value })}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -65,7 +74,10 @@ export default function LiveDemoExample() {
           </div>
           <div className="space-y-2">
             <Label>Language</Label>
-            <Select value={settings.lang} onValueChange={(value) => setSettings({ ...settings, lang: value })}>
+            <Select
+              value={settings.lang}
+              onValueChange={value => setSettings({ ...settings, lang: value })}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -77,16 +89,17 @@ export default function LiveDemoExample() {
             </Select>
           </div>
         </div>
-        
+
         <div className="p-4 bg-muted rounded-md space-y-2 text-sm">
           <div>
             Effect trigger count: <strong>{effectCount}</strong>
           </div>
           <div>
-            Last change: <strong>{lastChange || 'Never'}</strong>
+            Last change: <strong>{lastChange || "Never"}</strong>
           </div>
           <div>
-            Current values: <code className="text-xs break-all">{JSON.stringify({ name, age, settings })}</code>
+            Current values:{" "}
+            <code className="text-xs break-all">{JSON.stringify({ name, age, settings })}</code>
           </div>
         </div>
       </CardContent>

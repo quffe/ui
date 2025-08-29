@@ -30,7 +30,6 @@ const ssrSafeCode = getExampleCode("docs/hooks/useOnMountEffect/ssr-safe.tsx")
 const usageExamplesCode = getExampleCode("docs/hooks/useOnMountEffect/usage-examples.tsx")
 
 export default async function UseOnMountEffectDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -86,10 +85,7 @@ export default async function UseOnMountEffectDocs() {
                 </CodeBlock>
               </div>
 
-              <PreviewTabs
-                preview={<UsageExamplesExample />}
-                code={usageExamplesCode}
-              />
+              <PreviewTabs preview={<UsageExamplesExample />} code={usageExamplesCode} />
             </CardContent>
           </Card>
 

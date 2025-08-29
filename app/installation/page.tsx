@@ -244,9 +244,15 @@ export default function InstallationPage() {
                   <div className="text-sm text-muted-foreground space-y-1">
                     <p>Components will be installed to:</p>
                     <ul className="list-disc list-inside ml-4 space-y-1">
-                      <li>UI components: <CodeBlock inline={true}>components/ui/</CodeBlock></li>
-                      <li>Complex components: <CodeBlock inline={true}>components/</CodeBlock></li>
-                      <li>Hooks: <CodeBlock inline={true}>hooks/</CodeBlock></li>
+                      <li>
+                        UI components: <CodeBlock inline={true}>components/ui/</CodeBlock>
+                      </li>
+                      <li>
+                        Complex components: <CodeBlock inline={true}>components/</CodeBlock>
+                      </li>
+                      <li>
+                        Hooks: <CodeBlock inline={true}>hooks/</CodeBlock>
+                      </li>
                     </ul>
                   </div>
                 </div>

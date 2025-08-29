@@ -31,7 +31,6 @@ const errorStateCode = getExampleCode("docs/select-dropdown/error-state.tsx")
 const disabledStateCode = getExampleCode("docs/select-dropdown/disabled-state.tsx")
 
 export default async function SelectDropdownDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

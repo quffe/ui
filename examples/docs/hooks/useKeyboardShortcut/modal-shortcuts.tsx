@@ -9,19 +9,19 @@ import { X } from "lucide-react"
 export function ModalShortcutsExample() {
   const [isOpen, setIsOpen] = useState(false)
   const [settings, setSettings] = useState({
-    theme: 'light',
+    theme: "light",
     notifications: true,
-    autoSave: false
+    autoSave: false,
   })
   const [saved, setSaved] = useState(false)
 
   // Close modal with Escape (only when modal is open)
   useKeyboardShortcut(
     {
-      id: 'close-modal',
-      keys: 'escape',
-      description: 'Close modal',
-      category: 'Modal'
+      id: "close-modal",
+      keys: "escape",
+      description: "Close modal",
+      category: "Modal",
     },
     () => setIsOpen(false),
     { enabled: isOpen }
@@ -30,33 +30,33 @@ export function ModalShortcutsExample() {
   // Save settings
   useKeyboardShortcut(
     {
-      id: 'save-settings',
-      keys: 'ctrl+s',
-      description: 'Save settings',
-      category: 'Modal'
+      id: "save-settings",
+      keys: "ctrl+s",
+      description: "Save settings",
+      category: "Modal",
     },
     () => saveSettings(),
     { enabled: isOpen }
   )
 
   // Tab navigation within modal
-  const cancelRef = useKeyboardShortcutElement(
+  const cancelRef = useKeyboardShortcutElement<HTMLButtonElement>(
     {
-      id: 'cancel-action',
-      keys: 'alt+c',
-      description: 'Cancel action',
-      category: 'Modal'
+      id: "cancel-action",
+      keys: "alt+c",
+      description: "Cancel action",
+      category: "Modal",
     },
     () => setIsOpen(false),
     { enabled: isOpen }
   )
 
-  const saveRef = useKeyboardShortcutElement(
+  const saveRef = useKeyboardShortcutElement<HTMLButtonElement>(
     {
-      id: 'save-action',
-      keys: 'alt+s',
-      description: 'Save action',
-      category: 'Modal'
+      id: "save-action",
+      keys: "alt+s",
+      description: "Save action",
+      category: "Modal",
     },
     () => saveSettings(),
     { enabled: isOpen }
@@ -73,9 +73,7 @@ export function ModalShortcutsExample() {
   return (
     <div className="border rounded-lg p-4 space-y-4">
       <div className="text-center">
-        <Button onClick={() => setIsOpen(true)}>
-          Open Settings Modal
-        </Button>
+        <Button onClick={() => setIsOpen(true)}>Open Settings Modal</Button>
         <div className="text-sm text-muted-foreground mt-2">
           Click to open modal and try keyboard shortcuts
         </div>
@@ -86,12 +84,7 @@ export function ModalShortcutsExample() {
           <div className="bg-background border rounded-lg p-6 w-96 max-w-full mx-4">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Settings</h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsOpen(false)}
-                className="p-1"
-              >
+              <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)} className="p-1">
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -106,12 +99,12 @@ export function ModalShortcutsExample() {
               <div>
                 <label className="block text-sm font-medium mb-2">Theme</label>
                 <div className="flex gap-2">
-                  {['light', 'dark', 'auto'].map((theme) => (
+                  {["light", "dark", "auto"].map(theme => (
                     <Button
                       key={theme}
                       variant={settings.theme === theme ? "default" : "outline"}
                       size="sm"
-                      onClick={() => setSettings({...settings, theme})}
+                      onClick={() => setSettings({ ...settings, theme })}
                     >
                       {theme}
                     </Button>
@@ -124,7 +117,9 @@ export function ModalShortcutsExample() {
                 <Button
                   variant={settings.notifications ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSettings({...settings, notifications: !settings.notifications})}
+                  onClick={() =>
+                    setSettings({ ...settings, notifications: !settings.notifications })
+                  }
                 >
                   {settings.notifications ? "On" : "Off"}
                 </Button>
@@ -135,7 +130,7 @@ export function ModalShortcutsExample() {
                 <Button
                   variant={settings.autoSave ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSettings({...settings, autoSave: !settings.autoSave})}
+                  onClick={() => setSettings({ ...settings, autoSave: !settings.autoSave })}
                 >
                   {settings.autoSave ? "On" : "Off"}
                 </Button>
@@ -177,8 +172,8 @@ export function ModalShortcutsExample() {
         <div className="text-sm font-medium mb-2">Current Settings:</div>
         <div className="flex gap-2 justify-center">
           <Badge variant="secondary">Theme: {settings.theme}</Badge>
-          <Badge variant="secondary">Notifications: {settings.notifications ? 'On' : 'Off'}</Badge>
-          <Badge variant="secondary">Auto Save: {settings.autoSave ? 'On' : 'Off'}</Badge>
+          <Badge variant="secondary">Notifications: {settings.notifications ? "On" : "Off"}</Badge>
+          <Badge variant="secondary">Auto Save: {settings.autoSave ? "On" : "Off"}</Badge>
         </div>
       </div>
     </div>

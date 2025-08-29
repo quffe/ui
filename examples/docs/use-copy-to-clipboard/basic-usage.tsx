@@ -12,11 +12,7 @@ export function BasicUsageExample() {
 
   return (
     <div className="flex items-center gap-2">
-      <Button
-        onClick={() => copy("Hello, World!", "greeting")}
-        disabled={isLoading}
-        size="sm"
-      >
+      <Button onClick={() => copy("Hello, World!", "greeting")} disabled={isLoading} size="sm">
         {isLoading ? (
           "Copying..."
         ) : copied ? (

@@ -23,9 +23,7 @@ export function ErrorStateExample() {
         error={!errorValue ? "Status is required" : undefined}
         required
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {errorValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {errorValue || "None"}</p>
     </div>
   )
 }

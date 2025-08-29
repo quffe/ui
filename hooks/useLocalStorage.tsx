@@ -2,7 +2,10 @@
 
 import { useState, useLayoutEffect, useRef, SetStateAction, Dispatch } from "react"
 
-export const useLocalStorage = <T,>(keyName: string, defaultValue?: T): [T, Dispatch<SetStateAction<T>>] => {
+export const useLocalStorage = <T,>(
+  keyName: string,
+  defaultValue?: T
+): [T, Dispatch<SetStateAction<T>>] => {
   const defaultValueRef = useRef(defaultValue)
   const initializedRef = useRef(false)
 

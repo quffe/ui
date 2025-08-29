@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -46,13 +46,7 @@ export function AdvancedLoopExample() {
         <div>
           Status:{" "}
           <strong>
-            {mounted
-              ? isRunning
-                ? "Running"
-                : isPaused
-                  ? "Paused"
-                  : "Stopped"
-              : "Loading..."}
+            {mounted ? (isRunning ? "Running" : isPaused ? "Paused" : "Stopped") : "Loading..."}
           </strong>
         </div>
       </div>

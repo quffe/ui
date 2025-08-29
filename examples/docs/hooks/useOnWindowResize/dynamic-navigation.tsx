@@ -8,46 +8,50 @@ import { useOnWindowResize } from "@/hooks/useOnWindowResize"
 
 export default function DynamicNavigationExample() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [navLayout, setNavLayout] = useState<'horizontal' | 'vertical' | 'compact'>('horizontal')
+  const [navLayout, setNavLayout] = useState<"horizontal" | "vertical" | "compact">("horizontal")
   const [windowWidth, setWindowWidth] = useState(0)
 
   useOnWindowResize(() => {
     const width = window.innerWidth
     setWindowWidth(width)
-    
+
     if (width < 768) {
-      setNavLayout('vertical')
+      setNavLayout("vertical")
       setShowMobileMenu(false) // Close mobile menu on resize
     } else if (width < 1024) {
-      setNavLayout('compact')
+      setNavLayout("compact")
       setShowMobileMenu(false)
     } else {
-      setNavLayout('horizontal')
+      setNavLayout("horizontal")
       setShowMobileMenu(false)
     }
   })
 
   const navItems = [
-    { icon: Home, label: 'Home', href: '#' },
-    { icon: User, label: 'Profile', href: '#' },
-    { icon: Settings, label: 'Settings', href: '#' },
-    { icon: Mail, label: 'Messages', href: '#' },
-    { icon: Search, label: 'Search', href: '#' }
+    { icon: Home, label: "Home", href: "#" },
+    { icon: User, label: "Profile", href: "#" },
+    { icon: Settings, label: "Settings", href: "#" },
+    { icon: Mail, label: "Messages", href: "#" },
+    { icon: Search, label: "Search", href: "#" },
   ]
 
   const getLayoutDescription = () => {
     switch (navLayout) {
-      case 'horizontal': return 'Full horizontal navigation with labels'
-      case 'compact': return 'Compact horizontal with icons and short labels'
-      case 'vertical': return 'Mobile hamburger menu'
-      default: return 'Unknown layout'
+      case "horizontal":
+        return "Full horizontal navigation with labels"
+      case "compact":
+        return "Compact horizontal with icons and short labels"
+      case "vertical":
+        return "Mobile hamburger menu"
+      default:
+        return "Unknown layout"
     }
   }
 
   const getBreakpointInfo = () => {
-    if (windowWidth >= 1024) return { name: 'Desktop', color: 'text-secondary' }
-    if (windowWidth >= 768) return { name: 'Tablet', color: 'text-foreground' }
-    return { name: 'Mobile', color: 'text-muted-foreground' }
+    if (windowWidth >= 1024) return { name: "Desktop", color: "text-secondary" }
+    if (windowWidth >= 768) return { name: "Tablet", color: "text-foreground" }
+    return { name: "Mobile", color: "text-muted-foreground" }
   }
 
   const breakpoint = getBreakpointInfo()
@@ -63,21 +67,15 @@ export default function DynamicNavigationExample() {
           <div className="bg-gradient-to-r from-muted/30 to-muted/50 rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="bg-card rounded p-3 text-center">
-                <div className={`text-lg font-bold ${breakpoint.color}`}>
-                  {breakpoint.name}
-                </div>
+                <div className={`text-lg font-bold ${breakpoint.color}`}>{breakpoint.name}</div>
                 <div className="text-xs text-muted-foreground">Device Type</div>
               </div>
               <div className="bg-card rounded p-3 text-center">
-                <div className="text-lg font-bold text-secondary capitalize">
-                  {navLayout}
-                </div>
+                <div className="text-lg font-bold text-secondary capitalize">{navLayout}</div>
                 <div className="text-xs text-muted-foreground">Nav Layout</div>
               </div>
               <div className="bg-card rounded p-3 text-center">
-                <div className="text-lg font-bold text-secondary-foreground">
-                  {windowWidth}px
-                </div>
+                <div className="text-lg font-bold text-secondary-foreground">{windowWidth}px</div>
                 <div className="text-xs text-muted-foreground">Window Width</div>
               </div>
             </div>
@@ -91,9 +89,9 @@ export default function DynamicNavigationExample() {
             <div className="bg-gray-800 text-white p-4">
               <div className="flex justify-between items-center">
                 <h3 className="font-semibold">Website Header</h3>
-                
+
                 {/* Navigation based on layout */}
-                {navLayout === 'vertical' ? (
+                {navLayout === "vertical" ? (
                   // Mobile hamburger menu
                   <div className="relative">
                     <Button
@@ -104,10 +102,10 @@ export default function DynamicNavigationExample() {
                     >
                       {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
                     </Button>
-                    
+
                     {showMobileMenu && (
                       <div className="absolute top-full right-0 mt-2 w-48 bg-card border rounded-lg shadow-lg z-10">
-                        {navItems.map((item) => (
+                        {navItems.map(item => (
                           <a
                             key={item.label}
                             href={item.href}
@@ -120,10 +118,10 @@ export default function DynamicNavigationExample() {
                       </div>
                     )}
                   </div>
-                ) : navLayout === 'compact' ? (
+                ) : navLayout === "compact" ? (
                   // Compact horizontal (tablet)
                   <nav className="flex items-center space-x-4">
-                    {navItems.map((item) => (
+                    {navItems.map(item => (
                       <a
                         key={item.label}
                         href={item.href}
@@ -138,7 +136,7 @@ export default function DynamicNavigationExample() {
                 ) : (
                   // Full horizontal (desktop)
                   <nav className="flex items-center space-x-6">
-                    {navItems.map((item) => (
+                    {navItems.map(item => (
                       <a
                         key={item.label}
                         href={item.href}
@@ -157,23 +155,23 @@ export default function DynamicNavigationExample() {
             <div className="p-6">
               <h4 className="font-medium mb-3">Page Content</h4>
               <p className="text-sm text-muted-foreground mb-4">
-                This simulates the main content area of a website. The navigation above automatically 
-                adapts based on screen size using the useOnWindowResize hook.
+                This simulates the main content area of a website. The navigation above
+                automatically adapts based on screen size using the useOnWindowResize hook.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-muted/50 rounded p-4">
                   <h5 className="font-medium mb-2">Content Block 1</h5>
                   <p className="text-sm text-muted-foreground">
-                    Sample content that would be shown on the page. The layout adapts 
-                    to different screen sizes.
+                    Sample content that would be shown on the page. The layout adapts to different
+                    screen sizes.
                   </p>
                 </div>
                 <div className="bg-muted/50 rounded p-4">
                   <h5 className="font-medium mb-2">Content Block 2</h5>
                   <p className="text-sm text-muted-foreground">
-                    More sample content demonstrating responsive behavior alongside 
-                    the dynamic navigation.
+                    More sample content demonstrating responsive behavior alongside the dynamic
+                    navigation.
                   </p>
                 </div>
               </div>
@@ -186,11 +184,15 @@ export default function DynamicNavigationExample() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="font-medium">≥1024px (Desktop):</span>
-                <span className="text-muted-foreground">Full horizontal navigation with icons + labels</span>
+                <span className="text-muted-foreground">
+                  Full horizontal navigation with icons + labels
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="font-medium">768-1023px (Tablet):</span>
-                <span className="text-muted-foreground">Compact horizontal with shortened labels</span>
+                <span className="text-muted-foreground">
+                  Compact horizontal with shortened labels
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="font-medium">&lt;768px (Mobile):</span>

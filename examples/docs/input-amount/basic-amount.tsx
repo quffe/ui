@@ -8,12 +8,7 @@ export function BasicAmountExample() {
 
   return (
     <div className="w-full max-w-sm">
-      <InputAmount
-        value={amount}
-        onChange={setAmount}
-        label="Amount"
-        placeholder="0.00"
-      />
+      <InputAmount value={amount} onChange={setAmount} label="Amount" placeholder="0.00" />
       <p className="text-sm text-muted-foreground mt-2">
         Current value: {amount?.toString() || "null"}
       </p>

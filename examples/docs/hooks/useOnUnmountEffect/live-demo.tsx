@@ -52,7 +52,7 @@ export default function LiveDemoExample() {
                   Component unmount count: <strong>{unmountCount}</strong>
                 </div>
                 <div>
-                  Component mounted: <strong>{componentMounted ? 'Yes' : 'No'}</strong>
+                  Component mounted: <strong>{componentMounted ? "Yes" : "No"}</strong>
                 </div>
               </div>
             </div>

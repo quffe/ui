@@ -1,13 +1,19 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { useStateChangeEffect } from '@/hooks/useStateChangeEffect'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { Loader2 } from 'lucide-react'
+import { useState } from "react"
+import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
+import { Loader2 } from "lucide-react"
 
 interface SearchResult {
   id: number
@@ -17,8 +23,8 @@ interface SearchResult {
 }
 
 export default function SearchDebouncingExample() {
-  const [query, setQuery] = useState('')
-  const [filters, setFilters] = useState({ category: '', priceRange: [0, 100] })
+  const [query, setQuery] = useState("")
+  const [filters, setFilters] = useState({ category: "", priceRange: [0, 100] })
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -35,7 +41,7 @@ export default function SearchDebouncingExample() {
     return () => clearTimeout(timeoutId)
   }, [query, filters])
 
-  const performSearch = async (searchQuery: string, searchFilters: any) => {
+  const performSearch = async (searchQuery: string, searchFilters: typeof filters) => {
     setLoading(true)
     try {
       // Simulate API call
@@ -43,20 +49,21 @@ export default function SearchDebouncingExample() {
 
       // Mock search results
       const mockResults: SearchResult[] = [
-        { id: 1, title: `${searchQuery} - Product A`, category: 'electronics', price: 299 },
-        { id: 2, title: `${searchQuery} - Product B`, category: 'books', price: 25 },
-        { id: 3, title: `${searchQuery} - Product C`, category: 'clothing', price: 79 },
-        { id: 4, title: `${searchQuery} - Product D`, category: 'electronics', price: 450 },
-        { id: 5, title: `${searchQuery} - Product E`, category: 'books', price: 15 }
-      ].filter(item =>
-        !searchFilters.category || item.category === searchFilters.category
-      ).filter(item =>
-        item.price >= searchFilters.priceRange[0] && item.price <= searchFilters.priceRange[1]
-      )
+        { id: 1, title: `${searchQuery} - Product A`, category: "electronics", price: 299 },
+        { id: 2, title: `${searchQuery} - Product B`, category: "books", price: 25 },
+        { id: 3, title: `${searchQuery} - Product C`, category: "clothing", price: 79 },
+        { id: 4, title: `${searchQuery} - Product D`, category: "electronics", price: 450 },
+        { id: 5, title: `${searchQuery} - Product E`, category: "books", price: 15 },
+      ]
+        .filter(item => !searchFilters.category || item.category === searchFilters.category)
+        .filter(
+          item =>
+            item.price >= searchFilters.priceRange[0] && item.price <= searchFilters.priceRange[1]
+        )
 
       setResults(mockResults)
     } catch (error) {
-      console.error('Search failed:', error)
+      console.error("Search failed:", error)
       setResults([])
     } finally {
       setLoading(false)
@@ -86,7 +93,7 @@ export default function SearchDebouncingExample() {
           <Input
             id="search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={e => setQuery(e.target.value)}
             placeholder="Search products..."
           />
         </div>
@@ -96,7 +103,7 @@ export default function SearchDebouncingExample() {
             <Label>Category</Label>
             <Select
               value={filters.category}
-              onValueChange={(value) => setFilters(prev => ({ ...prev, category: value }))}
+              onValueChange={value => setFilters(prev => ({ ...prev, category: value }))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="All categories" />
@@ -111,15 +118,19 @@ export default function SearchDebouncingExample() {
           </div>
 
           <div className="space-y-2">
-            <Label>Price Range: ${filters.priceRange[0]} - ${filters.priceRange[1]}</Label>
+            <Label>
+              Price Range: ${filters.priceRange[0]} - ${filters.priceRange[1]}
+            </Label>
             <div className="flex gap-2">
               <Input
                 type="number"
                 value={filters.priceRange[0]}
-                onChange={(e) => setFilters(prev => ({
-                  ...prev,
-                  priceRange: [Number(e.target.value), prev.priceRange[1]]
-                }))}
+                onChange={e =>
+                  setFilters(prev => ({
+                    ...prev,
+                    priceRange: [Number(e.target.value), prev.priceRange[1]],
+                  }))
+                }
                 placeholder="Min"
                 min="0"
                 max="1000"
@@ -127,10 +138,12 @@ export default function SearchDebouncingExample() {
               <Input
                 type="number"
                 value={filters.priceRange[1]}
-                onChange={(e) => setFilters(prev => ({
-                  ...prev,
-                  priceRange: [prev.priceRange[0], Number(e.target.value)]
-                }))}
+                onChange={e =>
+                  setFilters(prev => ({
+                    ...prev,
+                    priceRange: [prev.priceRange[0], Number(e.target.value)],
+                  }))
+                }
                 placeholder="Max"
                 min="0"
                 max="1000"
@@ -150,9 +163,7 @@ export default function SearchDebouncingExample() {
               <div className="text-sm text-muted-foreground">
                 Found {results.length} results for "{query}"
               </div>
-              <div className="space-y-2">
-                {results.map(renderResult)}
-              </div>
+              <div className="space-y-2">{results.map(renderResult)}</div>
             </div>
           ) : query.trim() ? (
             <div className="text-center text-muted-foreground py-8">

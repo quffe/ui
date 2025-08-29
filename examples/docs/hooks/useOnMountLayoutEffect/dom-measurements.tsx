@@ -13,7 +13,7 @@ export default function DOMMeasurementsExample() {
       const rect = ref.current.getBoundingClientRect()
       setDimensions({
         width: rect.width,
-        height: rect.height
+        height: rect.height,
       })
     }
   })

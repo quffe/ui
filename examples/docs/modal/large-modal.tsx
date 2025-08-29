@@ -10,12 +10,7 @@ export function LargeModalExample() {
   return (
     <div>
       <Button onClick={() => setLargeOpen(true)}>Open Large Modal</Button>
-      <Modal
-        open={largeOpen}
-        onClose={() => setLargeOpen(false)}
-        title="Large Modal"
-        size="2xl"
-      >
+      <Modal open={largeOpen} onClose={() => setLargeOpen(false)} title="Large Modal" size="2xl">
         <div className="space-y-4">
           <p>This is a large modal with more space for content.</p>
           <div className="grid grid-cols-2 gap-4">

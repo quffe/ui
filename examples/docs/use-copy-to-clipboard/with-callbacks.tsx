@@ -6,13 +6,13 @@ import { Copy, Check } from "lucide-react"
 
 export function WithCallbacksExample() {
   const { copy, copied, isLoading } = useCopyToClipboard({
-    onSuccess: (text) => {
+    onSuccess: text => {
       console.log(`Successfully copied: ${text}`)
     },
-    onError: (error) => {
+    onError: error => {
       console.error(`Failed to copy: ${error.message}`)
     },
-    timeout: 5000
+    timeout: 5000,
   })
 
   return (

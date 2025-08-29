@@ -29,7 +29,6 @@ const maskedInputCode = getExampleCode("docs/otp-input/masked-input.tsx")
 const errorStateCode = getExampleCode("docs/otp-input/error-state.tsx")
 
 export default async function OtpInputDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

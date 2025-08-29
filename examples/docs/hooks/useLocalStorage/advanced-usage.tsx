@@ -17,7 +17,7 @@ interface UserSettings {
 const DEFAULT_SETTINGS: UserSettings = {
   notifications: true,
   autoSave: false,
-  maxItems: 10
+  maxItems: 10,
 }
 
 const DEFAULT_TODOS: string[] = []
@@ -42,7 +42,7 @@ export default function AdvancedUsageExample() {
 
   const addTodo = () => {
     if (newTodo.trim()) {
-      setTodos(prev => ([...prev, newTodo.trim()]))
+      setTodos(prev => [...prev, newTodo.trim()])
       setNewTodo("")
     }
   }
@@ -63,7 +63,7 @@ export default function AdvancedUsageExample() {
               <Checkbox
                 id="notifications"
                 checked={settings.notifications}
-                onCheckedChange={(checked) => updateSetting("notifications", !!checked)}
+                onCheckedChange={checked => updateSetting("notifications", !!checked)}
               />
               <Label htmlFor="notifications">Enable Notifications</Label>
             </div>
@@ -72,7 +72,7 @@ export default function AdvancedUsageExample() {
               <Checkbox
                 id="autoSave"
                 checked={settings.autoSave}
-                onCheckedChange={(checked) => updateSetting("autoSave", !!checked)}
+                onCheckedChange={checked => updateSetting("autoSave", !!checked)}
               />
               <Label htmlFor="autoSave">Auto Save</Label>
             </div>
@@ -86,7 +86,7 @@ export default function AdvancedUsageExample() {
                 max="50"
                 step="5"
                 value={settings.maxItems}
-                onChange={(e) => updateSetting("maxItems", parseInt(e.target.value))}
+                onChange={e => updateSetting("maxItems", parseInt(e.target.value))}
                 className="w-full"
               />
             </div>
@@ -107,9 +107,9 @@ export default function AdvancedUsageExample() {
             <div className="flex gap-2">
               <Input
                 value={newTodo}
-                onChange={(e) => setNewTodo(e.target.value)}
+                onChange={e => setNewTodo(e.target.value)}
                 placeholder="Add a new todo..."
-                onKeyPress={(e) => e.key === "Enter" && addTodo()}
+                onKeyPress={e => e.key === "Enter" && addTodo()}
               />
               <Button onClick={addTodo} disabled={!newTodo.trim()}>
                 Add
@@ -121,13 +121,12 @@ export default function AdvancedUsageExample() {
                 <div className="text-sm text-muted-foreground">No todos yet. Add one above!</div>
               ) : (
                 todos.map((todo, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2 bg-muted rounded"
+                  >
                     <span>{todo}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeTodo(index)}
-                    >
+                    <Button variant="outline" size="sm" onClick={() => removeTodo(index)}>
                       Remove
                     </Button>
                   </div>
@@ -135,9 +134,7 @@ export default function AdvancedUsageExample() {
               )}
             </div>
 
-            <div className="text-sm text-muted-foreground">
-              Todos count: {todos.length}
-            </div>
+            <div className="text-sm text-muted-foreground">Todos count: {todos.length}</div>
           </div>
         </CardContent>
       </Card>

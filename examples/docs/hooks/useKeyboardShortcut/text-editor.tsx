@@ -9,34 +9,36 @@ import { cn } from "@/lib/utils"
 import { Bold, Italic, Search, Save, Undo2, Redo2 } from "lucide-react"
 
 export function TextEditorExample() {
-  const [content, setContent] = useState('Start typing here...\n\nTry the keyboard shortcuts:\n- Ctrl+B for bold\n- Ctrl+I for italic\n- Ctrl+S to save\n- Ctrl+F to find\n- Ctrl+Z to undo\n- Ctrl+Y to redo')
+  const [content, setContent] = useState(
+    "Start typing here...\n\nTry the keyboard shortcuts:\n- Ctrl+B for bold\n- Ctrl+I for italic\n- Ctrl+S to save\n- Ctrl+F to find\n- Ctrl+Z to undo\n- Ctrl+Y to redo"
+  )
   const [isBold, setIsBold] = useState(false)
   const [isItalic, setIsItalic] = useState(false)
   const [showFind, setShowFind] = useState(false)
-  const [findText, setFindText] = useState('')
+  const [findText, setFindText] = useState("")
   const [saved, setSaved] = useState(false)
   const [history, setHistory] = useState([content])
   const [historyIndex, setHistoryIndex] = useState(0)
-  
+
   const editorRef = useRef<HTMLTextAreaElement>(null)
 
   // Text formatting
   useKeyboardShortcut(
     {
-      id: 'bold-text',
-      keys: 'ctrl+b',
-      description: 'Toggle bold text',
-      category: 'Editor'
+      id: "bold-text",
+      keys: "ctrl+b",
+      description: "Toggle bold text",
+      category: "Editor",
     },
     () => setIsBold(prev => !prev)
   )
 
   useKeyboardShortcut(
     {
-      id: 'italic-text',
-      keys: 'ctrl+i',
-      description: 'Toggle italic text',
-      category: 'Editor'
+      id: "italic-text",
+      keys: "ctrl+i",
+      description: "Toggle italic text",
+      category: "Editor",
     },
     () => setIsItalic(prev => !prev)
   )
@@ -44,10 +46,10 @@ export function TextEditorExample() {
   // Save document
   useKeyboardShortcut(
     {
-      id: 'save-document',
-      keys: 'ctrl+s',
-      description: 'Save document',
-      category: 'Editor'
+      id: "save-document",
+      keys: "ctrl+s",
+      description: "Save document",
+      category: "Editor",
     },
     () => saveDocument()
   )
@@ -55,10 +57,10 @@ export function TextEditorExample() {
   // Find and replace
   useKeyboardShortcut(
     {
-      id: 'find-text',
-      keys: 'ctrl+f',
-      description: 'Find in document',
-      category: 'Editor'
+      id: "find-text",
+      keys: "ctrl+f",
+      description: "Find in document",
+      category: "Editor",
     },
     () => setShowFind(true)
   )
@@ -66,20 +68,20 @@ export function TextEditorExample() {
   // Undo/Redo
   useKeyboardShortcut(
     {
-      id: 'undo',
-      keys: 'ctrl+z',
-      description: 'Undo last action',
-      category: 'Editor'
+      id: "undo",
+      keys: "ctrl+z",
+      description: "Undo last action",
+      category: "Editor",
     },
     () => undo()
   )
 
   useKeyboardShortcut(
     {
-      id: 'redo',
-      keys: 'ctrl+y',
-      description: 'Redo last action',
-      category: 'Editor'
+      id: "redo",
+      keys: "ctrl+y",
+      description: "Redo last action",
+      category: "Editor",
     },
     () => redo()
   )
@@ -121,12 +123,10 @@ export function TextEditorExample() {
 
   const highlightText = (text: string, search: string) => {
     if (!search) return text
-    const parts = text.split(new RegExp(`(${search})`, 'gi'))
-    return parts.map((part, i) => 
-      part.toLowerCase() === search.toLowerCase() 
-        ? `**${part}**` 
-        : part
-    ).join('')
+    const parts = text.split(new RegExp(`(${search})`, "gi"))
+    return parts
+      .map((part, i) => (part.toLowerCase() === search.toLowerCase() ? `**${part}**` : part))
+      .join("")
   }
 
   return (
@@ -139,7 +139,7 @@ export function TextEditorExample() {
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Button 
+          <Button
             size="sm"
             variant={isBold ? "default" : "outline"}
             onClick={() => setIsBold(!isBold)}
@@ -147,7 +147,7 @@ export function TextEditorExample() {
             <Bold className="h-4 w-4 mr-1" />
             Bold (Ctrl+B)
           </Button>
-          <Button 
+          <Button
             size="sm"
             variant={isItalic ? "default" : "outline"}
             onClick={() => setIsItalic(!isItalic)}
@@ -155,34 +155,21 @@ export function TextEditorExample() {
             <Italic className="h-4 w-4 mr-1" />
             Italic (Ctrl+I)
           </Button>
-          <Button 
-            size="sm"
-            variant="outline"
-            onClick={() => saveDocument()}
-          >
+          <Button size="sm" variant="outline" onClick={() => saveDocument()}>
             <Save className="h-4 w-4 mr-1" />
             Save (Ctrl+S)
           </Button>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button 
-            size="sm"
-            variant="outline"
-            onClick={() => setShowFind(!showFind)}
-          >
+          <Button size="sm" variant="outline" onClick={() => setShowFind(!showFind)}>
             <Search className="h-4 w-4 mr-1" />
             Find (Ctrl+F)
           </Button>
-          <Button 
-            size="sm"
-            variant="outline"
-            onClick={undo}
-            disabled={historyIndex === 0}
-          >
+          <Button size="sm" variant="outline" onClick={undo} disabled={historyIndex === 0}>
             <Undo2 className="h-4 w-4" />
           </Button>
-          <Button 
+          <Button
             size="sm"
             variant="outline"
             onClick={redo}
@@ -200,7 +187,7 @@ export function TextEditorExample() {
               type="text"
               placeholder="Find in document..."
               value={findText}
-              onChange={(e) => setFindText(e.target.value)}
+              onChange={e => setFindText(e.target.value)}
               className="flex-1 px-2 py-1 text-sm border rounded"
             />
             <Button size="sm" onClick={() => setShowFind(false)}>
@@ -217,16 +204,12 @@ export function TextEditorExample() {
           {isItalic && <Badge variant="secondary">Italic</Badge>}
           {!isBold && !isItalic && <Badge variant="outline">Normal</Badge>}
         </div>
-        
+
         <Textarea
           ref={editorRef}
           value={content}
-          onChange={(e) => handleContentChange(e.target.value)}
-          className={cn(
-            'min-h-32 font-mono text-sm',
-            isBold && 'font-bold',
-            isItalic && 'italic'
-          )}
+          onChange={e => handleContentChange(e.target.value)}
+          className={cn("min-h-32 font-mono text-sm", isBold && "font-bold", isItalic && "italic")}
           placeholder="Start typing... Use keyboard shortcuts for formatting"
         />
       </div>
@@ -235,22 +218,28 @@ export function TextEditorExample() {
         <div className="font-medium mb-2">Editor Shortcuts:</div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1">
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">B</kbd> = Bold
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">B</kbd> = Bold
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">I</kbd> = Italic
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">I</kbd> = Italic
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">S</kbd> = Save
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">S</kbd> = Save
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">F</kbd> = Find
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">F</kbd> = Find
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Z</kbd> = Undo
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Z</kbd> = Undo
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Y</kbd> = Redo
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Y</kbd> = Redo
           </div>
         </div>
       </div>

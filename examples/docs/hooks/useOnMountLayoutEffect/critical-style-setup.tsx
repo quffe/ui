@@ -6,27 +6,27 @@ import { useState } from "react"
 import { useStrictMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"
 
 export default function CriticalStyleSetupExample() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [theme, setTheme] = useState<"light" | "dark">("light")
   const [isInitialized, setIsInitialized] = useState(false)
 
   useStrictMountLayoutEffect(() => {
     // Apply theme synchronously before paint to prevent flash
-    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.setAttribute("data-theme", theme)
     document.documentElement.style.colorScheme = theme
     setIsInitialized(true)
-    
+
     return () => {
       // Cleanup theme on unmount
-      document.documentElement.removeAttribute('data-theme')
-      document.documentElement.style.removeProperty('color-scheme')
+      document.documentElement.removeAttribute("data-theme")
+      document.documentElement.style.removeProperty("color-scheme")
     }
   })
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
+    const newTheme = theme === "light" ? "dark" : "light"
     setTheme(newTheme)
     // Apply theme change immediately
-    document.documentElement.setAttribute('data-theme', newTheme)
+    document.documentElement.setAttribute("data-theme", newTheme)
     document.documentElement.style.colorScheme = newTheme
   }
 
@@ -42,18 +42,23 @@ export default function CriticalStyleSetupExample() {
             <p className="text-sm text-muted-foreground mb-4">
               This component applies critical theme styles before paint to prevent visual flash.
             </p>
-            
+
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-sm">Current theme: <strong>{theme}</strong></span>
-              <span className="text-sm">Initialized: <strong>{isInitialized ? 'Yes' : 'No'}</strong></span>
+              <span className="text-sm">
+                Current theme: <strong>{theme}</strong>
+              </span>
+              <span className="text-sm">
+                Initialized: <strong>{isInitialized ? "Yes" : "No"}</strong>
+              </span>
             </div>
-            
+
             <Button onClick={toggleTheme} variant="outline" size="sm">
               Toggle Theme (Current: {theme})
             </Button>
-            
+
             <div className="text-xs text-muted-foreground mt-4">
-              Theme is applied synchronously on mount and when toggled to prevent flash of unstyled content.
+              Theme is applied synchronously on mount and when toggled to prevent flash of unstyled
+              content.
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export function TableNavigationExample() {
   const [data, setData] = useState(mockData)
   const [editingId, setEditingId] = useState<number | null>(null)
   const itemsPerPage = 3
-  
+
   const totalPages = Math.ceil(data.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const visibleData = data.slice(startIndex, startIndex + itemsPerPage)
@@ -28,20 +28,20 @@ export function TableNavigationExample() {
   // Row navigation
   useKeyboardShortcut(
     {
-      id: 'next-row',
-      keys: 'down',
-      description: 'Select next row',
-      category: 'Table'
+      id: "next-row",
+      keys: "down",
+      description: "Select next row",
+      category: "Table",
     },
     () => setSelectedRow(prev => Math.min(prev + 1, visibleData.length - 1))
   )
 
   useKeyboardShortcut(
     {
-      id: 'prev-row',
-      keys: 'up',
-      description: 'Select previous row',
-      category: 'Table'
+      id: "prev-row",
+      keys: "up",
+      description: "Select previous row",
+      category: "Table",
     },
     () => setSelectedRow(prev => Math.max(prev - 1, 0))
   )
@@ -49,10 +49,10 @@ export function TableNavigationExample() {
   // Page navigation
   useKeyboardShortcut(
     {
-      id: 'next-page',
-      keys: 'ctrl+right',
-      description: 'Next page',
-      category: 'Table'
+      id: "next-page",
+      keys: "ctrl+right",
+      description: "Next page",
+      category: "Table",
     },
     () => {
       if (currentPage < totalPages) {
@@ -64,10 +64,10 @@ export function TableNavigationExample() {
 
   useKeyboardShortcut(
     {
-      id: 'prev-page',
-      keys: 'ctrl+left',
-      description: 'Previous page',
-      category: 'Table'
+      id: "prev-page",
+      keys: "ctrl+left",
+      description: "Previous page",
+      category: "Table",
     },
     () => {
       if (currentPage > 1) {
@@ -80,10 +80,10 @@ export function TableNavigationExample() {
   // Row actions
   useKeyboardShortcut(
     {
-      id: 'edit-row',
-      keys: 'enter',
-      description: 'Edit selected row',
-      category: 'Table'
+      id: "edit-row",
+      keys: "enter",
+      description: "Edit selected row",
+      category: "Table",
     },
     () => {
       const item = visibleData[selectedRow]
@@ -96,10 +96,10 @@ export function TableNavigationExample() {
 
   useKeyboardShortcut(
     {
-      id: 'delete-row',
-      keys: 'delete',
-      description: 'Delete selected row',
-      category: 'Table'
+      id: "delete-row",
+      keys: "delete",
+      description: "Delete selected row",
+      category: "Table",
     },
     () => {
       const item = visibleData[selectedRow]
@@ -113,20 +113,20 @@ export function TableNavigationExample() {
   // First and last row
   useKeyboardShortcut(
     {
-      id: 'first-row',
-      keys: 'home',
-      description: 'Select first row',
-      category: 'Table'
+      id: "first-row",
+      keys: "home",
+      description: "Select first row",
+      category: "Table",
     },
     () => setSelectedRow(0)
   )
 
   useKeyboardShortcut(
     {
-      id: 'last-row',
-      keys: 'end',
-      description: 'Select last row',
-      category: 'Table'
+      id: "last-row",
+      keys: "end",
+      description: "Select last row",
+      category: "Table",
     },
     () => setSelectedRow(visibleData.length - 1)
   )
@@ -137,9 +137,7 @@ export function TableNavigationExample() {
         <h3 className="font-semibold">User Management Table</h3>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>Selected Row: {selectedRow + 1}</span>
-          {editingId && (
-            <Badge variant="secondary">Editing ID: {editingId}</Badge>
-          )}
+          {editingId && <Badge variant="secondary">Editing ID: {editingId}</Badge>}
         </div>
       </div>
 
@@ -155,15 +153,11 @@ export function TableNavigationExample() {
           </thead>
           <tbody>
             {visibleData.map((item, index) => (
-              <tr 
+              <tr
                 key={item.id}
                 className={`border-t transition-colors ${
-                  index === selectedRow 
-                    ? 'bg-secondary/10 border-primary' 
-                    : 'hover:bg-muted/50'
-                } ${
-                  editingId === item.id ? 'bg-warn-soft/10 border-warn-soft/30' : ''
-                }`}
+                  index === selectedRow ? "bg-secondary/10 border-primary" : "hover:bg-muted/50"
+                } ${editingId === item.id ? "bg-warn-soft/10 border-warn-soft/30" : ""}`}
               >
                 <td className="p-3 text-sm">{item.name}</td>
                 <td className="p-3 text-sm">{item.email}</td>
@@ -240,10 +234,13 @@ export function TableNavigationExample() {
         <div className="font-medium mb-2">Table Navigation Shortcuts:</div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1">
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">↑</kbd> / <kbd className="bg-muted px-1 py-0.5 rounded text-xs">↓</kbd> = Navigate rows
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">↑</kbd> /{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">↓</kbd> = Navigate rows
           </div>
           <div>
-            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> + <kbd className="bg-muted px-1 py-0.5 rounded text-xs">←</kbd> / <kbd className="bg-muted px-1 py-0.5 rounded text-xs">→</kbd> = Navigate pages
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Ctrl</kbd> +{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">←</kbd> /{" "}
+            <kbd className="bg-muted px-1 py-0.5 rounded text-xs">→</kbd> = Navigate pages
           </div>
           <div>
             <kbd className="bg-muted px-1 py-0.5 rounded text-xs">Enter</kbd> = Edit row

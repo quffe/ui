@@ -27,7 +27,6 @@ const currencyAmountCode = getExampleCode("docs/input-amount/currency-amount.tsx
 const errorStateCode = getExampleCode("docs/input-amount/error-state.tsx")
 
 export default async function InputAmountDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -92,7 +91,7 @@ export default async function InputAmountDocs() {
                 code={currencyAmountCode}
                 title="With Currency Symbol"
               />
-              
+
               <PreviewTabs
                 preview={<ErrorStateExample />}
                 code={errorStateCode}

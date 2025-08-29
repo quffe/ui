@@ -40,7 +40,9 @@ const useKeyboardShortcutCode = getExampleCode("hooks/use-keyboard-shortcut/basi
 const useOnWindowResizeBasicCode = getExampleCode("hooks/use-on-window-resize/basic.tsx")
 const useOnMountLayoutEffectCode = getExampleCode("hooks/use-on-mount-layout-effect/basic.tsx")
 const useStateChangeEffectBasicCode = getExampleCode("hooks/use-state-change-effect/basic.tsx")
-const useStateChangeEffectAdvancedCode = getExampleCode("hooks/use-state-change-effect/advanced.tsx")
+const useStateChangeEffectAdvancedCode = getExampleCode(
+  "hooks/use-state-change-effect/advanced.tsx"
+)
 
 const hooks = [
   // Device & Layout Hooks

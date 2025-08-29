@@ -22,9 +22,7 @@ export function NumberValuesExample() {
         onChange={setNumberValue}
         placeholder="Pick a number"
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {numberValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {numberValue || "None"}</p>
     </div>
   )
 }

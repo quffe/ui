@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useOnWindowResize } from "@/hooks/useOnWindowResize"
 import { useState } from "react"

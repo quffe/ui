@@ -9,11 +9,11 @@ import useRevalidate from "@/hooks/useRevalidate"
 
 // Simulated WebSocket message types
 type WSMessage = {
-  type: 'USER_UPDATED' | 'POST_CREATED' | 'COMMENT_ADDED' | 'BULK_UPDATE'
+  type: "USER_UPDATED" | "POST_CREATED" | "COMMENT_ADDED" | "BULK_UPDATE"
   userId?: string
   postId?: string
   endpoints?: string[]
-  data?: any
+  data?: Record<string, unknown>
   timestamp: string
 }
 
@@ -22,32 +22,47 @@ export default function RealTimeUpdatesExample() {
   const [messages, setMessages] = useState<WSMessage[]>([])
   const [revalidationCount, setRevalidationCount] = useState(0)
   const [autoRevalidate, setAutoRevalidate] = useState(true)
-  const intervalRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const { revalidate } = useRevalidate()
 
   // Simulate WebSocket connection
   useEffect(() => {
     if (isConnected) {
       // Simulate receiving WebSocket messages
-      intervalRef.current = setInterval(() => {
-        const messageTypes: WSMessage['type'][] = ['USER_UPDATED', 'POST_CREATED', 'COMMENT_ADDED', 'BULK_UPDATE']
-        const randomType = messageTypes[Math.floor(Math.random() * messageTypes.length)]
-        
-        const message: WSMessage = {
-          type: randomType,
-          timestamp: new Date().toLocaleTimeString(),
-          userId: randomType === 'USER_UPDATED' ? `user_${Math.floor(Math.random() * 100)}` : undefined,
-          postId: randomType === 'POST_CREATED' || randomType === 'COMMENT_ADDED' ? `post_${Math.floor(Math.random() * 100)}` : undefined,
-          endpoints: randomType === 'BULK_UPDATE' ? ['/api/users', '/api/posts', '/api/analytics'] : undefined,
-          data: randomType === 'POST_CREATED' ? { title: `New Post ${Date.now()}` } : undefined
-        }
+      intervalRef.current = setInterval(
+        () => {
+          const messageTypes: WSMessage["type"][] = [
+            "USER_UPDATED",
+            "POST_CREATED",
+            "COMMENT_ADDED",
+            "BULK_UPDATE",
+          ]
+          const randomType = messageTypes[Math.floor(Math.random() * messageTypes.length)]
 
-        setMessages(prev => [...prev.slice(-9), message]) // Keep last 10 messages
+          const message: WSMessage = {
+            type: randomType,
+            timestamp: new Date().toLocaleTimeString(),
+            userId:
+              randomType === "USER_UPDATED" ? `user_${Math.floor(Math.random() * 100)}` : undefined,
+            postId:
+              randomType === "POST_CREATED" || randomType === "COMMENT_ADDED"
+                ? `post_${Math.floor(Math.random() * 100)}`
+                : undefined,
+            endpoints:
+              randomType === "BULK_UPDATE"
+                ? ["/api/users", "/api/posts", "/api/analytics"]
+                : undefined,
+            data: randomType === "POST_CREATED" ? { title: `New Post ${Date.now()}` } : undefined,
+          }
 
-        if (autoRevalidate) {
-          handleWebSocketMessage(message)
-        }
-      }, 3000 + Math.random() * 4000) // Random interval between 3-7 seconds
+          setMessages(prev => [...prev.slice(-9), message]) // Keep last 10 messages
+
+          if (autoRevalidate) {
+            handleWebSocketMessage(message)
+          }
+        },
+        3000 + Math.random() * 4000
+      ) // Random interval between 3-7 seconds
 
       return () => {
         if (intervalRef.current) {
@@ -61,19 +76,19 @@ export default function RealTimeUpdatesExample() {
     const urlsToRevalidate: string[] = []
 
     switch (message.type) {
-      case 'USER_UPDATED':
-        urlsToRevalidate.push('/api/users', `/api/users/${message.userId}`)
+      case "USER_UPDATED":
+        urlsToRevalidate.push("/api/users", `/api/users/${message.userId}`)
         break
-        
-      case 'POST_CREATED':
-        urlsToRevalidate.push('/api/posts', '/api/posts/recent')
+
+      case "POST_CREATED":
+        urlsToRevalidate.push("/api/posts", "/api/posts/recent")
         break
-        
-      case 'COMMENT_ADDED':
-        urlsToRevalidate.push('/api/comments', `/api/posts/${message.postId}/comments`)
+
+      case "COMMENT_ADDED":
+        urlsToRevalidate.push("/api/comments", `/api/posts/${message.postId}/comments`)
         break
-        
-      case 'BULK_UPDATE':
+
+      case "BULK_UPDATE":
         urlsToRevalidate.push(...(message.endpoints || []))
         break
     }
@@ -101,28 +116,33 @@ export default function RealTimeUpdatesExample() {
     handleWebSocketMessage(message)
   }
 
-  const getMessageColor = (type: WSMessage['type']) => {
+  const getMessageColor = (type: WSMessage["type"]) => {
     switch (type) {
-      case 'USER_UPDATED': return 'bg-secondary/10 dark:bg-blue-950 text-secondary dark:text-secondary300 border-secondary/30 dark:border-blue-800'
-      case 'POST_CREATED': return 'bg-green-900/10 dark:bg-green-950 text-secondary dark:text-green-300 border-green-200 dark:border-green-800'
-      case 'COMMENT_ADDED': return 'bg-warn-soft/10 dark:bg-warn-deep/30 text-warn-soft dark:text-warn-bright border-warn-soft/30 dark:border-warn-deep/30'
-      case 'BULK_UPDATE': return 'bg-purple-900/10 dark:bg-purple-950 text-secondary-foreground dark:text-purple-300 border-purple-200 dark:border-purple-800'
-      default: return 'bg-muted text-muted-foreground border'
+      case "USER_UPDATED":
+        return "bg-secondary/10 dark:bg-blue-950 text-secondary dark:text-secondary300 border-secondary/30 dark:border-blue-800"
+      case "POST_CREATED":
+        return "bg-green-900/10 dark:bg-green-950 text-secondary dark:text-green-300 border-green-200 dark:border-green-800"
+      case "COMMENT_ADDED":
+        return "bg-warn-soft/10 dark:bg-warn-deep/30 text-warn-soft dark:text-warn-bright border-warn-soft/30 dark:border-warn-deep/30"
+      case "BULK_UPDATE":
+        return "bg-purple-900/10 dark:bg-purple-950 text-secondary-foreground dark:text-purple-300 border-purple-200 dark:border-purple-800"
+      default:
+        return "bg-muted text-muted-foreground border"
     }
   }
 
   const getMessageDescription = (message: WSMessage) => {
     switch (message.type) {
-      case 'USER_UPDATED':
+      case "USER_UPDATED":
         return `User ${message.userId} was updated`
-      case 'POST_CREATED':
+      case "POST_CREATED":
         return `New post created: "${message.data?.title}"`
-      case 'COMMENT_ADDED':
+      case "COMMENT_ADDED":
         return `New comment added to post ${message.postId}`
-      case 'BULK_UPDATE':
+      case "BULK_UPDATE":
         return `Bulk update affecting ${message.endpoints?.length} endpoints`
       default:
-        return 'Unknown message type'
+        return "Unknown message type"
     }
   }
 
@@ -152,7 +172,7 @@ export default function RealTimeUpdatesExample() {
               </div>
               <div className="flex gap-2">
                 <Button onClick={toggleConnection} variant="outline" size="sm">
-                  {isConnected ? 'Disconnect' : 'Connect'}
+                  {isConnected ? "Disconnect" : "Connect"}
                 </Button>
                 <Button onClick={clearMessages} variant="outline" size="sm">
                   Clear Messages
@@ -174,7 +194,7 @@ export default function RealTimeUpdatesExample() {
                   <input
                     type="checkbox"
                     checked={autoRevalidate}
-                    onChange={(e) => setAutoRevalidate(e.target.checked)}
+                    onChange={e => setAutoRevalidate(e.target.checked)}
                     className="rounded"
                   />
                   <span className="text-sm">Auto-revalidate</span>
@@ -201,31 +221,35 @@ export default function RealTimeUpdatesExample() {
             <div className="space-y-3 max-h-64 overflow-y-auto">
               {messages.length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
-                  {isConnected 
-                    ? "Waiting for messages... (messages arrive every 3-7 seconds)" 
-                    : "Connect to start receiving real-time messages"
-                  }
+                  {isConnected
+                    ? "Waiting for messages... (messages arrive every 3-7 seconds)"
+                    : "Connect to start receiving real-time messages"}
                 </div>
               ) : (
                 messages.map((message, index) => (
-                  <div key={index} className={`border rounded-lg p-3 ${getMessageColor(message.type)}`}>
+                  <div
+                    key={index}
+                    className={`border rounded-lg p-3 ${getMessageColor(message.type)}`}
+                  >
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="outline" className="text-xs">
-                        {message.type.replace('_', ' ')}
+                        {message.type.replace("_", " ")}
                       </Badge>
                       <span className="text-xs text-muted-foreground">{message.timestamp}</span>
                     </div>
-                    
-                    <div className="text-sm mb-2">
-                      {getMessageDescription(message)}
-                    </div>
-                    
+
+                    <div className="text-sm mb-2">{getMessageDescription(message)}</div>
+
                     <div className="flex items-center justify-between">
                       <div className="text-xs text-muted-foreground">
-                        {message.type === 'USER_UPDATED' && `Will revalidate: /api/users, /api/users/${message.userId}`}
-                        {message.type === 'POST_CREATED' && 'Will revalidate: /api/posts, /api/posts/recent'}
-                        {message.type === 'COMMENT_ADDED' && `Will revalidate: /api/comments, /api/posts/${message.postId}/comments`}
-                        {message.type === 'BULK_UPDATE' && `Will revalidate: ${message.endpoints?.join(', ')}`}
+                        {message.type === "USER_UPDATED" &&
+                          `Will revalidate: /api/users, /api/users/${message.userId}`}
+                        {message.type === "POST_CREATED" &&
+                          "Will revalidate: /api/posts, /api/posts/recent"}
+                        {message.type === "COMMENT_ADDED" &&
+                          `Will revalidate: /api/comments, /api/posts/${message.postId}/comments`}
+                        {message.type === "BULK_UPDATE" &&
+                          `Will revalidate: ${message.endpoints?.join(", ")}`}
                       </div>
                       {!autoRevalidate && (
                         <Button
@@ -250,14 +274,23 @@ export default function RealTimeUpdatesExample() {
             <div className="bg-card rounded p-3 font-mono text-xs overflow-x-auto">
               <div className="text-secondary">// Real WebSocket implementation</div>
               <div className="text-secondary">useEffect</div>
-              <div>(() => {`{`}</div>
-              <div className="ml-2">const ws = new <span className="text-secondary-foreground">WebSocket</span>('ws://localhost:3001')</div>
-              <div className="ml-2">ws.<span className="text-foreground">onmessage</span> = (event) => {`{`}</div>
-              <div className="ml-4">const data = <span className="text-secondary">JSON.parse</span>(event.data)</div>
+              <div>(() =&gt; {`{`}</div>
+              <div className="ml-2">
+                const ws = new <span className="text-secondary-foreground">WebSocket</span>
+                ('ws://localhost:3001')
+              </div>
+              <div className="ml-2">
+                ws.<span className="text-foreground">onmessage</span> = (event) =&gt; {`{`}
+              </div>
+              <div className="ml-4">
+                const data = <span className="text-secondary">JSON.parse</span>(event.data)
+              </div>
               <div className="ml-4">revalidate(getUrlsForMessageType(data.type))</div>
               <div className="ml-2">{`}`}</div>
-              <div className="ml-2">return () => ws.<span className="text-muted-foreground">close</span>()</div>
-              <div>}, [revalidate])</div>
+              <div className="ml-2">
+                return () =&gt; ws.<span className="text-muted-foreground">close</span>()
+              </div>
+              <div>{`}`}, [revalidate])</div>
             </div>
           </div>
 

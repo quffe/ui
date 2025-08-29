@@ -24,9 +24,7 @@ export function ErrorStateExample() {
         required
         error={!errorValue ? "Priority is required" : undefined}
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {errorValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {errorValue || "None"}</p>
     </div>
   )
 }

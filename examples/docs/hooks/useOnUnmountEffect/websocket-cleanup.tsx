@@ -8,7 +8,7 @@ import { useOnUnmountEffect } from "@/hooks/useOnUnmountEffect"
 
 export default function WebSocketCleanupExample() {
   const [isComponentMounted, setIsComponentMounted] = useState(true)
-  
+
   return (
     <Card>
       <CardHeader>
@@ -17,7 +17,7 @@ export default function WebSocketCleanupExample() {
       <CardContent>
         <div className="space-y-4">
           <div className="flex gap-2">
-            <Button 
+            <Button
               onClick={() => setIsComponentMounted(!isComponentMounted)}
               variant={isComponentMounted ? "destructive" : "default"}
               size="sm"
@@ -25,10 +25,8 @@ export default function WebSocketCleanupExample() {
               {isComponentMounted ? "Unmount Component (Close WebSocket)" : "Mount Component"}
             </Button>
           </div>
-          
-          <div className="min-h-96">
-            {isComponentMounted && <WebSocketComponent />}
-          </div>
+
+          <div className="min-h-96">{isComponentMounted && <WebSocketComponent />}</div>
         </div>
       </CardContent>
     </Card>
@@ -37,48 +35,55 @@ export default function WebSocketCleanupExample() {
 
 function WebSocketComponent() {
   const wsRef = useRef<WebSocket | null>(null)
-  const [messages, setMessages] = useState<Array<{id: number, text: string, time: string, type: 'sent' | 'received' | 'system'}>>([])
-  const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('connecting')
-  const [newMessage, setNewMessage] = useState('')
+  const [messages, setMessages] = useState<
+    Array<{ id: number; text: string; time: string; type: "sent" | "received" | "system" }>
+  >([])
+  const [connectionStatus, setConnectionStatus] = useState<
+    "connecting" | "connected" | "disconnected" | "error"
+  >("connecting")
+  const [newMessage, setNewMessage] = useState("")
   const messageIdRef = useRef(0)
 
   // Memoized addMessage function to prevent infinite loops
-  const addMessage = useCallback((text: string, type: 'sent' | 'received' | 'system') => {
-    setMessages(prev => [...prev, {
-      id: messageIdRef.current++,
-      text,
-      time: typeof window !== 'undefined' ? new Date().toLocaleTimeString() : '',
-      type
-    }])
+  const addMessage = useCallback((text: string, type: "sent" | "received" | "system") => {
+    setMessages(prev => [
+      ...prev,
+      {
+        id: messageIdRef.current++,
+        text,
+        time: typeof window !== "undefined" ? new Date().toLocaleTimeString() : "",
+        type,
+      },
+    ])
   }, [])
 
   // Simulate WebSocket connection (using echo.websocket.org as example)
   useEffect(() => {
     try {
       // Note: This is a real WebSocket connection to a test server
-      wsRef.current = new WebSocket('wss://echo.websocket.org/')
-      
+      wsRef.current = new WebSocket("wss://echo.websocket.org/")
+
       wsRef.current.onopen = () => {
-        setConnectionStatus('connected')
-        addMessage('Connected to WebSocket server', 'system')
+        setConnectionStatus("connected")
+        addMessage("Connected to WebSocket server", "system")
       }
-      
-      wsRef.current.onmessage = (event) => {
-        addMessage(`Echo: ${event.data}`, 'received')
+
+      wsRef.current.onmessage = event => {
+        addMessage(`Echo: ${event.data}`, "received")
       }
-      
+
       wsRef.current.onerror = () => {
-        setConnectionStatus('error')
-        addMessage('WebSocket connection error', 'system')
+        setConnectionStatus("error")
+        addMessage("WebSocket connection error", "system")
       }
-      
+
       wsRef.current.onclose = () => {
-        setConnectionStatus('disconnected')
-        addMessage('WebSocket connection closed', 'system')
+        setConnectionStatus("disconnected")
+        addMessage("WebSocket connection closed", "system")
       }
     } catch (error) {
-      setConnectionStatus('error')
-      addMessage('Failed to create WebSocket connection', 'system')
+      setConnectionStatus("error")
+      addMessage("Failed to create WebSocket connection", "system")
     }
 
     return () => {
@@ -89,33 +94,38 @@ function WebSocketComponent() {
 
   // Close WebSocket connection ONLY on unmount
   useOnUnmountEffect(() => {
-    console.log('Closing WebSocket connection on unmount...')
+    console.log("Closing WebSocket connection on unmount...")
     if (wsRef.current) {
-      wsRef.current.close(1000, 'Component unmounting') // 1000 = normal closure
+      wsRef.current.close(1000, "Component unmounting") // 1000 = normal closure
     }
   })
 
   const sendMessage = useCallback(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && newMessage.trim()) {
       wsRef.current.send(newMessage)
-      addMessage(newMessage, 'sent')
-      setNewMessage('')
+      addMessage(newMessage, "sent")
+      setNewMessage("")
     }
   }, [newMessage, addMessage])
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       sendMessage()
     }
   }
 
   const getStatusColor = () => {
     switch (connectionStatus) {
-      case 'connected': return 'bg-green-900/20 text-secondary'
-      case 'connecting': return 'bg-warn-soft/10 text-foreground'
-      case 'disconnected': return 'bg-muted text-muted-foreground'
-      case 'error': return 'bg-red-900/20 text-muted-foreground'
-      default: return 'bg-muted text-muted-foreground'
+      case "connected":
+        return "bg-green-900/20 text-secondary"
+      case "connecting":
+        return "bg-warn-soft/10 text-foreground"
+      case "disconnected":
+        return "bg-muted text-muted-foreground"
+      case "error":
+        return "bg-red-900/20 text-muted-foreground"
+      default:
+        return "bg-muted text-muted-foreground"
     }
   }
 
@@ -130,35 +140,35 @@ function WebSocketComponent() {
       <p className="text-sm text-muted-foreground mb-4">
         This component maintains a WebSocket connection that's properly closed only on unmount.
       </p>
-      
+
       <div className="space-y-3">
         {/* Status */}
         <div className={`p-2 rounded text-sm ${getStatusColor()}`}>
           <strong>Connection Status:</strong> {connectionStatus}
-          {connectionStatus === 'connected' && (
+          {connectionStatus === "connected" && (
             <span className="ml-2">🟢 Ready to send/receive messages</span>
           )}
         </div>
-        
+
         {/* Message input */}
         <div className="flex gap-2">
           <Input
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={e => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type a message (will echo back)..."
-            disabled={connectionStatus !== 'connected'}
+            disabled={connectionStatus !== "connected"}
             className="flex-1"
           />
-          <Button 
+          <Button
             onClick={sendMessage}
-            disabled={connectionStatus !== 'connected' || !newMessage.trim()}
+            disabled={connectionStatus !== "connected" || !newMessage.trim()}
             size="sm"
           >
             Send
           </Button>
         </div>
-        
+
         {/* Messages */}
         <div className="bg-card rounded border h-48 overflow-y-auto p-3">
           <div className="flex justify-between items-center mb-2">
@@ -167,7 +177,7 @@ function WebSocketComponent() {
               Clear
             </Button>
           </div>
-          
+
           <div className="space-y-2">
             {messages.length === 0 ? (
               <div className="text-center text-muted-foreground text-sm">
@@ -175,14 +185,14 @@ function WebSocketComponent() {
               </div>
             ) : (
               messages.map(message => (
-                <div 
-                  key={message.id} 
+                <div
+                  key={message.id}
                   className={`text-sm p-2 rounded ${
-                    message.type === 'sent' 
-                      ? 'bg-secondary/10 text-secondary ml-8'
-                      : message.type === 'received'
-                      ? 'bg-green-900/20 text-secondary mr-8'
-                      : 'bg-muted text-gray-700 text-center'
+                    message.type === "sent"
+                      ? "bg-secondary/10 text-secondary ml-8"
+                      : message.type === "received"
+                        ? "bg-green-900/20 text-secondary mr-8"
+                        : "bg-muted text-gray-700 text-center"
                   }`}
                 >
                   <div>{message.text}</div>
@@ -192,7 +202,7 @@ function WebSocketComponent() {
             )}
           </div>
         </div>
-        
+
         <div className="text-xs text-muted-foreground bg-secondary/10 p-3 rounded">
           <strong>WebSocket Demo:</strong>
           <ul className="list-disc list-inside mt-1 space-y-1">

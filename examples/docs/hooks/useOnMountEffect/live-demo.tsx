@@ -55,9 +55,7 @@ export default function LiveDemoExample() {
             Has mounted: <strong>{hasMounted ? "Yes" : "No"}</strong>
           </div>
         </div>
-        <Button onClick={triggerRerender}>
-          Trigger Re-render (count: {rerenderCount})
-        </Button>
+        <Button onClick={triggerRerender}>Trigger Re-render (count: {rerenderCount})</Button>
         <div className="text-xs text-muted-foreground mt-2">
           Notice how the mount effects only run once, even when re-rendering.
         </div>

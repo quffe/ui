@@ -29,7 +29,6 @@ const restrictedPickerCode = getExampleCode("docs/date-range-picker/restricted-p
 const disabledPickerCode = getExampleCode("docs/date-range-picker/disabled-picker.tsx")
 
 export default async function DateRangePickerDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

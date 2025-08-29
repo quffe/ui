@@ -10,21 +10,24 @@ const analytics = {
   startSession: (sessionId: string) => {
     console.log(`📊 Analytics: Started session ${sessionId}`)
   },
-  
-  endSession: (sessionId: string, data: { duration: number; pageViews: number; interactions: number }) => {
+
+  endSession: (
+    sessionId: string,
+    data: { duration: number; pageViews: number; interactions: number }
+  ) => {
     console.log(`📊 Analytics: Ended session ${sessionId}`, data)
   },
-  
-  trackEvent: (event: string, data?: any) => {
-    console.log(`📊 Analytics: Event "${event}"`, data || '')
-  }
+
+  trackEvent: (event: string, data?: Record<string, unknown>) => {
+    console.log(`📊 Analytics: Event "${event}"`, data || "")
+  },
 }
 
 const generateSessionId = () => Math.random().toString(36).substring(2, 15)
 
 export default function AnalyticsCleanupExample() {
   const [isComponentMounted, setIsComponentMounted] = useState(true)
-  
+
   return (
     <Card>
       <CardHeader>
@@ -33,7 +36,7 @@ export default function AnalyticsCleanupExample() {
       <CardContent>
         <div className="space-y-4">
           <div className="flex gap-2">
-            <Button 
+            <Button
               onClick={() => setIsComponentMounted(!isComponentMounted)}
               variant={isComponentMounted ? "destructive" : "default"}
               size="sm"
@@ -41,10 +44,8 @@ export default function AnalyticsCleanupExample() {
               {isComponentMounted ? "Unmount Component (End Session)" : "Mount Component"}
             </Button>
           </div>
-          
-          <div className="min-h-64">
-            {isComponentMounted && <AnalyticsTracker />}
-          </div>
+
+          <div className="min-h-64">{isComponentMounted && <AnalyticsTracker />}</div>
         </div>
       </CardContent>
     </Card>
@@ -52,21 +53,21 @@ export default function AnalyticsCleanupExample() {
 }
 
 function AnalyticsTracker() {
-  const sessionId = useRef<string>('')
+  const sessionId = useRef<string>("")
   const startTime = useRef<number>(0)
   const [pageViews, setPageViews] = useState(1) // Start with 1 for initial page load
   const [interactions, setInteractions] = useState(0)
   const [sessionData, setSessionData] = useState({
-    sessionId: '',
-    startTime: '',
-    duration: 0
+    sessionId: "",
+    startTime: "",
+    duration: 0,
   })
   const [mounted, setMounted] = useState(false)
-  
+
   // Use refs to store current values for cleanup
   const pageViewsRef = useRef(pageViews)
   const interactionsRef = useRef(interactions)
-  
+
   // Update refs when state changes
   pageViewsRef.current = pageViews
   interactionsRef.current = interactions
@@ -79,13 +80,13 @@ function AnalyticsTracker() {
     setSessionData({
       sessionId: sessionId.current,
       startTime: new Date(startTime.current).toLocaleTimeString(),
-      duration: 0
+      duration: 0,
     })
     setMounted(true)
-    
+
     // Start tracking session
     analytics.startSession(sessionId.current)
-    
+
     const interval = setInterval(() => {
       const duration = Math.floor((Date.now() - startTime.current) / 1000)
       setSessionData(prev => ({ ...prev, duration }))
@@ -96,35 +97,33 @@ function AnalyticsTracker() {
 
   // Track user interactions
   const trackInteraction = (type: string) => {
-    analytics.trackEvent('user_interaction', { type, sessionId: sessionId.current })
+    analytics.trackEvent("user_interaction", { type, sessionId: sessionId.current })
     setInteractions(prev => prev + 1)
   }
 
   const simulatePageView = () => {
-    analytics.trackEvent('page_view', { sessionId: sessionId.current })
+    analytics.trackEvent("page_view", { sessionId: sessionId.current })
     setPageViews(prev => prev + 1)
   }
 
   // End session only on unmount
   useOnUnmountEffect(() => {
     const finalDuration = Math.floor((Date.now() - startTime.current) / 1000)
-    
+
     analytics.endSession(sessionId.current, {
       duration: finalDuration,
       pageViews: pageViewsRef.current,
-      interactions: interactionsRef.current
+      interactions: interactionsRef.current,
     })
-    
-    console.log('📊 Analytics cleanup complete')
+
+    console.log("📊 Analytics cleanup complete")
   })
 
   if (!mounted) {
     return (
       <div className="border rounded-lg p-4 bg-gradient-to-r from-muted/30 to-muted/50">
         <h3 className="font-semibold mb-2">Analytics Session Tracker</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          Initializing analytics session...
-        </p>
+        <p className="text-sm text-muted-foreground mb-4">Initializing analytics session...</p>
       </div>
     )
   }
@@ -135,7 +134,7 @@ function AnalyticsTracker() {
       <p className="text-sm text-muted-foreground mb-4">
         This component tracks user analytics and properly ends the session only on unmount.
       </p>
-      
+
       <div className="space-y-3">
         {/* Session Info */}
         <div className="bg-card rounded p-4">
@@ -153,9 +152,7 @@ function AnalyticsTracker() {
             </div>
             <div>
               <strong>Duration:</strong>
-              <div className="text-lg font-bold text-secondary">
-                {sessionData.duration}s
-              </div>
+              <div className="text-lg font-bold text-secondary">{sessionData.duration}s</div>
             </div>
             <div>
               <strong>Status:</strong>
@@ -163,7 +160,7 @@ function AnalyticsTracker() {
             </div>
           </div>
         </div>
-        
+
         {/* Metrics */}
         <div className="bg-card rounded p-4">
           <h4 className="font-medium text-sm mb-3">Session Metrics</h4>
@@ -178,48 +175,34 @@ function AnalyticsTracker() {
             </div>
             <div>
               <div className="text-2xl font-bold text-secondary">
-                {sessionData.duration > 0 ? Math.round(interactions / (sessionData.duration / 60) * 10) / 10 : 0}
+                {sessionData.duration > 0
+                  ? Math.round((interactions / (sessionData.duration / 60)) * 10) / 10
+                  : 0}
               </div>
               <div className="text-xs text-muted-foreground">Per Minute</div>
             </div>
           </div>
         </div>
-        
+
         {/* Actions */}
         <div className="bg-card rounded p-4">
           <h4 className="font-medium text-sm mb-3">Simulate User Actions</h4>
           <div className="flex flex-wrap gap-2">
-            <Button 
-              onClick={() => trackInteraction('button_click')}
-              size="sm"
-              variant="outline"
-            >
+            <Button onClick={() => trackInteraction("button_click")} size="sm" variant="outline">
               Button Click
             </Button>
-            <Button 
-              onClick={() => trackInteraction('form_submit')}
-              size="sm"
-              variant="outline"
-            >
+            <Button onClick={() => trackInteraction("form_submit")} size="sm" variant="outline">
               Form Submit
             </Button>
-            <Button 
-              onClick={() => trackInteraction('scroll')}
-              size="sm"
-              variant="outline"
-            >
+            <Button onClick={() => trackInteraction("scroll")} size="sm" variant="outline">
               Scroll Event
             </Button>
-            <Button 
-              onClick={simulatePageView}
-              size="sm"
-              variant="outline"
-            >
+            <Button onClick={simulatePageView} size="sm" variant="outline">
               Page View
             </Button>
           </div>
         </div>
-        
+
         <div className="text-xs text-muted-foreground bg-warn-soft/10 p-3 rounded">
           <strong>Analytics Demo:</strong>
           <ul className="list-disc list-inside mt-1 space-y-1">

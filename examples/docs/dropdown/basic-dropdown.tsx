@@ -21,9 +21,7 @@ export function BasicDropdownExample() {
         options={options}
         placeholder="Choose an option"
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {basicValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {basicValue || "None"}</p>
     </div>
   )
 }

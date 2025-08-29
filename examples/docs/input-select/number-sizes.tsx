@@ -45,9 +45,7 @@ export function NumberSizesExample() {
           size="lg"
         />
       </div>
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {numberValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {numberValue || "None"}</p>
     </div>
   )
 }

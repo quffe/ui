@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import { useOnMountEffect, useStrictMountEffect, useHasMounted } from '@/hooks/useOnMountEffect'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { CheckCircle, Loader2 } from 'lucide-react'
+import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { CheckCircle, Loader2 } from "lucide-react"
 
 // Basic usage - runs once on mount
 function BasicMountComponent() {
-  const [mountTime, setMountTime] = useState<string>('')
-  const [cleanupTime, setCleanupTime] = useState<string>('')
+  const [mountTime, setMountTime] = useState<string>("")
+  const [cleanupTime, setCleanupTime] = useState<string>("")
 
   useOnMountEffect(() => {
-    console.log('Component mounted!')
+    console.log("Component mounted!")
     setMountTime(new Date().toLocaleTimeString())
-    
+
     // Optional cleanup
     return () => {
-      console.log('Component unmounting')
+      console.log("Component unmounting")
       setCleanupTime(new Date().toLocaleTimeString())
     }
   })
@@ -49,7 +49,7 @@ function StrictComponent() {
   useStrictMountEffect(() => {
     // This runs exactly once, no matter what
     setTimeout(() => {
-      console.log('App initialized!')
+      console.log("App initialized!")
       setInitialized(true)
     }, 1000)
   })
@@ -70,7 +70,7 @@ function StrictComponent() {
         )}
       </div>
       <Badge variant={initialized ? "default" : "secondary"}>
-        Strict mount effect: {initialized ? 'Complete' : 'Running'}
+        Strict mount effect: {initialized ? "Complete" : "Running"}
       </Badge>
     </div>
   )
@@ -79,7 +79,7 @@ function StrictComponent() {
 // Check if component has mounted
 function ConditionalComponent() {
   const hasMounted = useHasMounted()
-  
+
   if (!hasMounted) {
     return (
       <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ function ConditionalComponent() {
       </div>
     )
   }
-  
+
   return (
     <div className="flex items-center gap-2">
       <CheckCircle className="h-4 w-4 text-green-500" />

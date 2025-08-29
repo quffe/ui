@@ -1,35 +1,41 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { useStateChangeEffect } from '@/hooks/useStateChangeEffect'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { BarChart3, User, Activity, Eye } from 'lucide-react'
+import { useState } from "react"
+import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { BarChart3, User, Activity, Eye } from "lucide-react"
 
 interface AnalyticsEvent {
   id: string
   type: string
-  data: any
+  data: Record<string, unknown>
   timestamp: string
 }
 
 // Mock analytics object
 const analytics = {
-  track: (event: string, properties: any) => {
-    console.log('Analytics tracked:', event, properties)
+  track: (event: string, properties: Record<string, unknown>) => {
+    console.log("Analytics tracked:", event, properties)
   },
-  identify: (userId: string, traits: any) => {
-    console.log('User identified:', userId, traits)
-  }
+  identify: (userId: string, traits: Record<string, unknown>) => {
+    console.log("User identified:", userId, traits)
+  },
 }
 
 export default function AnalyticsTrackingExample() {
   const [user, setUser] = useState<{ id: string; email: string; name: string } | null>(null)
-  const [page, setPage] = useState('/')
-  const [filters, setFilters] = useState({ category: '', sortBy: 'name' })
+  const [page, setPage] = useState("/")
+  const [filters, setFilters] = useState({ category: "", sortBy: "name" })
   const [events, setEvents] = useState<AnalyticsEvent[]>([])
 
   // Track user interactions and state changes
@@ -37,17 +43,17 @@ export default function AnalyticsTrackingExample() {
     if (user) {
       const event = {
         id: Date.now().toString(),
-        type: 'user_interaction',
+        type: "user_interaction",
         data: {
           userId: user.id,
           page: page,
           filters: filters,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         },
-        timestamp: new Date().toLocaleTimeString()
+        timestamp: new Date().toLocaleTimeString(),
       }
 
-      analytics.track('user_interaction', event.data)
+      analytics.track("user_interaction", event.data)
       setEvents(prev => [event, ...prev.slice(0, 4)]) // Keep only last 5 events
     }
   }, [user, page, filters])
@@ -57,13 +63,13 @@ export default function AnalyticsTrackingExample() {
     if (user) {
       const event = {
         id: Date.now().toString(),
-        type: 'user_identified',
+        type: "user_identified",
         data: {
           email: user.email,
           name: user.name,
-          lastSeen: new Date().toISOString()
+          lastSeen: new Date().toISOString(),
         },
-        timestamp: new Date().toLocaleTimeString()
+        timestamp: new Date().toLocaleTimeString(),
       }
 
       analytics.identify(user.id, event.data)
@@ -73,9 +79,9 @@ export default function AnalyticsTrackingExample() {
 
   const simulateLogin = () => {
     setUser({
-      id: 'user_' + Date.now(),
-      email: 'user@example.com',
-      name: 'John Doe'
+      id: "user_" + Date.now(),
+      email: "user@example.com",
+      name: "John Doe",
     })
   }
 
@@ -103,7 +109,9 @@ export default function AnalyticsTrackingExample() {
             {user ? (
               <div className="space-y-2">
                 <div className="text-sm">
-                  <div>ID: <code className="text-xs">{user.id}</code></div>
+                  <div>
+                    ID: <code className="text-xs">{user.id}</code>
+                  </div>
                   <div>Name: {user.name}</div>
                   <div>Email: {user.email}</div>
                 </div>
@@ -139,7 +147,7 @@ export default function AnalyticsTrackingExample() {
                 <Label>Category</Label>
                 <Select
                   value={filters.category}
-                  onValueChange={(value) => setFilters(prev => ({ ...prev, category: value }))}
+                  onValueChange={value => setFilters(prev => ({ ...prev, category: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Any" />
@@ -157,7 +165,7 @@ export default function AnalyticsTrackingExample() {
                 <Label>Sort By</Label>
                 <Select
                   value={filters.sortBy}
-                  onValueChange={(value) => setFilters(prev => ({ ...prev, sortBy: value }))}
+                  onValueChange={value => setFilters(prev => ({ ...prev, sortBy: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -187,16 +195,14 @@ export default function AnalyticsTrackingExample() {
                   No events tracked yet. Try changing filters or navigating pages.
                 </div>
               ) : (
-                events.map((event) => (
+                events.map(event => (
                   <div key={event.id} className="p-3 bg-muted rounded-md space-y-1">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Eye className="h-3 w-3" />
                         <span className="text-sm font-medium">{event.type}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">
-                        {event.timestamp}
-                      </span>
+                      <span className="text-xs text-muted-foreground">{event.timestamp}</span>
                     </div>
                     <code className="text-xs text-muted-foreground block">
                       {JSON.stringify(event.data, null, 2)}

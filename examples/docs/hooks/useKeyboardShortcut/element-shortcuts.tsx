@@ -3,12 +3,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useKeyboardShortcutElement } from "@/hooks/useKeyboardShortcut"
+import { useRef } from "react"
 
 export function ElementShortcutsExample() {
   const [message, setMessage] = useState("")
 
   // Element-based shortcuts with refs
-  const actionRef = useKeyboardShortcutElement(
+  const actionButtonRef = useKeyboardShortcutElement<HTMLButtonElement>(
     {
       id: "primary-action",
       keys: "a",
@@ -18,9 +19,9 @@ export function ElementShortcutsExample() {
     () => setMessage("Primary action triggered!")
   )
 
-  const secondaryRef = useKeyboardShortcutElement(
+  const secondaryButtonRef = useKeyboardShortcutElement<HTMLButtonElement>(
     {
-      id: "secondary-action", 
+      id: "secondary-action",
       keys: "s",
       description: "Trigger secondary action",
       category: "Actions",
@@ -28,7 +29,7 @@ export function ElementShortcutsExample() {
     () => setMessage("Secondary action triggered!")
   )
 
-  const clearRef = useKeyboardShortcutElement(
+  const clearButtonRef = useKeyboardShortcutElement<HTMLButtonElement>(
     {
       id: "clear-message",
       keys: "c",
@@ -50,21 +51,25 @@ export function ElementShortcutsExample() {
         </div>
 
         <div className="flex gap-2 justify-center">
-          <Button ref={actionRef} size="sm" onClick={() => setMessage("Primary action triggered!")}>
+          <Button
+            ref={actionButtonRef}
+            size="sm"
+            onClick={() => setMessage("Primary action triggered!")}
+          >
             Primary Action (A)
           </Button>
-          <Button 
-            ref={secondaryRef} 
-            size="sm" 
-            variant="outline" 
+          <Button
+            ref={secondaryButtonRef}
+            size="sm"
+            variant="outline"
             onClick={() => setMessage("Secondary action triggered!")}
           >
             Secondary Action (S)
           </Button>
-          <Button 
-            ref={clearRef} 
-            size="sm" 
-            variant="destructive" 
+          <Button
+            ref={clearButtonRef}
+            size="sm"
+            variant="destructive"
             onClick={() => setMessage("")}
           >
             Clear (C)

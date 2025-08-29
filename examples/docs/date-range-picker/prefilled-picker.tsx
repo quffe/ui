@@ -12,11 +12,7 @@ export function PrefilledPickerExample() {
 
   return (
     <div className="w-full max-w-sm">
-      <DateRangePicker
-        value={reportRange}
-        onChange={setReportRange}
-        placeholder="Report period"
-      />
+      <DateRangePicker value={reportRange} onChange={setReportRange} placeholder="Report period" />
       <p className="text-sm text-muted-foreground mt-2">
         Selected: {reportRange?.from?.toDateString() || "None"} -{" "}
         {reportRange?.to?.toDateString() || "None"}

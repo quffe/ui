@@ -7,7 +7,7 @@ import { useOnMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"
 
 function ClientOnlyInfo() {
   const hasMounted = useHasMounted()
-  
+
   // Avoid hydration mismatch by only rendering client-specific content after mount
   if (!hasMounted) {
     return (
@@ -20,7 +20,7 @@ function ClientOnlyInfo() {
       </div>
     )
   }
-  
+
   return (
     <div className="p-4 border rounded space-y-2">
       <div className="flex items-center gap-2">
@@ -28,10 +28,21 @@ function ClientOnlyInfo() {
         <span className="text-sm">This content is safe from hydration mismatches</span>
       </div>
       <div className="text-sm space-y-1">
-        <div>Current URL: <code className="text-xs">{window.location.href}</code></div>
-        <div>Screen Size: <code className="text-xs">{screen.width} x {screen.height}</code></div>
-        <div>Online: <code className="text-xs">{navigator.onLine ? "Yes" : "No"}</code></div>
-        <div>Platform: <code className="text-xs">{navigator.platform}</code></div>
+        <div>
+          Current URL: <code className="text-xs">{window.location.href}</code>
+        </div>
+        <div>
+          Screen Size:{" "}
+          <code className="text-xs">
+            {screen.width} x {screen.height}
+          </code>
+        </div>
+        <div>
+          Online: <code className="text-xs">{navigator.onLine ? "Yes" : "No"}</code>
+        </div>
+        <div>
+          Platform: <code className="text-xs">{navigator.platform}</code>
+        </div>
       </div>
     </div>
   )
@@ -40,25 +51,25 @@ function ClientOnlyInfo() {
 function ThemeComponent() {
   const hasMounted = useHasMounted()
   const [theme, setTheme] = useState<string | null>(null)
-  
+
   useOnMountEffect(() => {
     // Access localStorage only after mount to avoid SSR issues
     const savedTheme = localStorage.getItem("demo-theme") || "light"
     setTheme(savedTheme)
-    
+
     // Apply theme to document
     document.documentElement.setAttribute("data-theme", savedTheme)
   })
-  
+
   const toggleTheme = () => {
     if (!theme) return
-    
+
     const newTheme = theme === "light" ? "dark" : "light"
     setTheme(newTheme)
     localStorage.setItem("demo-theme", newTheme)
     document.documentElement.setAttribute("data-theme", newTheme)
   }
-  
+
   if (!hasMounted || !theme) {
     return (
       <div className="p-4 border rounded">
@@ -69,7 +80,7 @@ function ThemeComponent() {
       </div>
     )
   }
-  
+
   return (
     <div className="p-4 border rounded">
       <div className="flex items-center justify-between">
@@ -79,10 +90,7 @@ function ThemeComponent() {
             Current theme: <Badge>{theme}</Badge>
           </div>
         </div>
-        <button
-          onClick={toggleTheme}
-          className="px-3 py-1 text-sm border rounded hover:bg-accent"
-        >
+        <button onClick={toggleTheme} className="px-3 py-1 text-sm border rounded hover:bg-accent">
           Switch to {theme === "light" ? "dark" : "light"}
         </button>
       </div>

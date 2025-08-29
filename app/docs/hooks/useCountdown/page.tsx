@@ -29,7 +29,6 @@ const advancedLoopCode = getExampleCode("docs/hooks/useCountdown/advanced-loop.t
 const pomodoroTimerCode = getExampleCode("docs/hooks/useCountdown/pomodoro-timer.tsx")
 
 export default async function UseCountdownDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -79,10 +78,7 @@ export default async function UseCountdownDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <PreviewTabs
-                preview={<BasicExample />}
-                code={basicExampleCode}
-              />
+              <PreviewTabs preview={<BasicExample />} code={basicExampleCode} />
             </CardContent>
           </Card>
 

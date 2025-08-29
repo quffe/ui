@@ -65,15 +65,13 @@ function LiveDemonstrationExample() {
       <Button onClick={triggerRerender}>Trigger Re-measurement</Button>
 
       <div className="text-xs text-muted-foreground mt-2">
-        The dimensions are measured using SSR-safe layout effects. Mount effect runs
-        only once.
+        The dimensions are measured using SSR-safe layout effects. Mount effect runs only once.
       </div>
     </div>
   )
 }
 
 export default function UseIsomorphicLayoutEffectDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -161,13 +159,14 @@ function SSRSafeSetup() {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-
               <PreviewTabs
                 title="Theme Provider with SSR"
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">🎨 Theme Provider Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the SSR-safe implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the SSR-safe implementation
+                    </div>
                   </div>
                 }
                 code={`function ThemeProvider({ 
@@ -205,7 +204,9 @@ function SSRSafeSetup() {
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">📏 DOM Measurements Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the adaptive layout implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the adaptive layout implementation
+                    </div>
                   </div>
                 }
                 code={`function AdaptiveLayout() {
@@ -251,7 +252,9 @@ function SSRSafeSetup() {
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">🎯 Focus Management Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the modal focus trap implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the modal focus trap implementation
+                    </div>
                   </div>
                 }
                 code={`function AutoFocusModal({ 
@@ -335,7 +338,9 @@ function SSRSafeSetup() {
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">📜 Scroll Restoration Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the scroll position implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the scroll position implementation
+                    </div>
                   </div>
                 }
                 code={`function ScrollRestorer({ 
@@ -388,7 +393,9 @@ function SSRSafeSetup() {
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">✨ Animation Setup Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the animation implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the animation implementation
+                    </div>
                   </div>
                 }
                 code={`function AnimatedEntry({ children }: { children: React.ReactNode }) {
@@ -436,7 +443,9 @@ function SSRSafeSetup() {
                 preview={
                   <div className="text-center p-8 text-muted-foreground">
                     <div className="text-lg">📱 Viewport Detection Example</div>
-                    <div className="text-sm mt-2">Check the code tab to see the viewport tracking implementation</div>
+                    <div className="text-sm mt-2">
+                      Check the code tab to see the viewport tracking implementation
+                    </div>
                   </div>
                 }
                 code={`function ViewportAwareComponent() {

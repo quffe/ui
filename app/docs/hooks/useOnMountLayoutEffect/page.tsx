@@ -25,13 +25,16 @@ import FocusManagementExample from "@/examples/docs/hooks/useOnMountLayoutEffect
 
 const liveDemoCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/live-demo.tsx")
 const domMeasurementsCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/dom-measurements.tsx")
-const criticalStyleSetupCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/critical-style-setup.tsx")
-const scrollPositionRestorationCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/scroll-position-restoration.tsx")
+const criticalStyleSetupCode = getExampleCode(
+  "docs/hooks/useOnMountLayoutEffect/critical-style-setup.tsx"
+)
+const scrollPositionRestorationCode = getExampleCode(
+  "docs/hooks/useOnMountLayoutEffect/scroll-position-restoration.tsx"
+)
 const animationSetupCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/animation-setup.tsx")
 const focusManagementCode = getExampleCode("docs/hooks/useOnMountLayoutEffect/focus-management.tsx")
 
 export default async function UseOnMountLayoutEffectDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -133,7 +136,10 @@ function StrictComponent() {
 
               <PreviewTabs preview={<CriticalStyleSetupExample />} code={criticalStyleSetupCode} />
 
-              <PreviewTabs preview={<ScrollPositionRestorationExample />} code={scrollPositionRestorationCode} />
+              <PreviewTabs
+                preview={<ScrollPositionRestorationExample />}
+                code={scrollPositionRestorationCode}
+              />
 
               <PreviewTabs preview={<AnimationSetupExample />} code={animationSetupCode} />
 

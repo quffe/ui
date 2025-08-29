@@ -30,7 +30,6 @@ const advancedUsageCode = getExampleCode("docs/hooks/useLocalStorage/advanced-us
 const usageExamplesCode = getExampleCode("docs/hooks/useLocalStorage/usage-examples.tsx")
 
 export default async function UseLocalStorageDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -86,10 +85,7 @@ export default async function UseLocalStorageDocs() {
                 </CodeBlock>
               </div>
 
-              <PreviewTabs
-                preview={<UsageExamplesExample />}
-                code={usageExamplesCode}
-              />
+              <PreviewTabs preview={<UsageExamplesExample />} code={usageExamplesCode} />
             </CardContent>
           </Card>
 
@@ -257,9 +253,9 @@ export default async function UseLocalStorageDocs() {
                 </h4>
                 <div className="text-sm text-accent-foreground/70 space-y-2">
                   <p>
-                    In pure CSR applications, localStorage values are displayed immediately on first paint
-                    with <strong>no visual flash</strong>. The hook reads from localStorage before the
-                    browser renders, providing instant access to stored values.
+                    In pure CSR applications, localStorage values are displayed immediately on first
+                    paint with <strong>no visual flash</strong>. The hook reads from localStorage
+                    before the browser renders, providing instant access to stored values.
                   </p>
                   <CodeBlock language="tsx">
                     {`// In CSR - Works perfectly without any workarounds
@@ -279,12 +275,14 @@ function MyComponent() {
                 </h4>
                 <div className="text-sm text-accent-foreground/70 space-y-2">
                   <p>
-                    In SSR applications, localStorage is not available during server rendering, which can
-                    cause hydration mismatches. The component initially shows the default value, then
-                    updates to the localStorage value after hydration.
+                    In SSR applications, localStorage is not available during server rendering,
+                    which can cause hydration mismatches. The component initially shows the default
+                    value, then updates to the localStorage value after hydration.
                   </p>
 
-                  <h5 className="font-medium mt-3 text-accent-foreground mb-2">Recommended SSR Pattern:</h5>
+                  <h5 className="font-medium mt-3 text-accent-foreground mb-2">
+                    Recommended SSR Pattern:
+                  </h5>
                   <CodeBlock language="tsx">
                     {`function MyComponent() {
   const [mounted, setMounted] = useState(false)
@@ -306,10 +304,11 @@ function MyComponent() {
 
                   <div className="bg-warn-amber/20 border rounded p-3 mt-3">
                     <p className="text-xs text-warn-bright">
-                      <strong>Why this pattern is needed:</strong> During SSR, the server renders with
-                      default values (no localStorage access), but the client has localStorage available.
-                      This creates a mismatch that React detects during hydration. The mounting pattern
-                      ensures both server and client render the same content initially.
+                      <strong>Why this pattern is needed:</strong> During SSR, the server renders
+                      with default values (no localStorage access), but the client has localStorage
+                      available. This creates a mismatch that React detects during hydration. The
+                      mounting pattern ensures both server and client render the same content
+                      initially.
                     </p>
                   </div>
                 </div>
@@ -318,7 +317,10 @@ function MyComponent() {
               <div className="border-t pt-4">
                 <h5 className="font-medium mb-2">Performance Considerations</h5>
                 <ul className="text-sm space-y-1 list-disc list-inside">
-                  <li>Uses <code>useLayoutEffect</code> to minimize visual flash by updating before paint</li>
+                  <li>
+                    Uses <code>useLayoutEffect</code> to minimize visual flash by updating before
+                    paint
+                  </li>
                   <li>Lazy state initialization prevents unnecessary re-renders</li>
                   <li>Stable object references prevent infinite re-initialization loops</li>
                   <li>JSON serialization ensures consistent data handling across all data types</li>

@@ -13,10 +13,10 @@ export function GlobalShortcutsExample() {
   // Global search
   useKeyboardShortcut(
     {
-      id: 'global-search',
-      keys: 'ctrl+k',
-      description: 'Open global search',
-      category: 'Navigation'
+      id: "global-search",
+      keys: "ctrl+k",
+      description: "Open global search",
+      category: "Navigation",
     },
     () => setSearchOpen(true)
   )
@@ -24,10 +24,10 @@ export function GlobalShortcutsExample() {
   // Toggle sidebar
   useKeyboardShortcut(
     {
-      id: 'toggle-sidebar',
-      keys: 'ctrl+b',
-      description: 'Toggle sidebar',
-      category: 'Layout'
+      id: "toggle-sidebar",
+      keys: "ctrl+b",
+      description: "Toggle sidebar",
+      category: "Layout",
     },
     () => setSidebarOpen(prev => !prev)
   )
@@ -35,32 +35,32 @@ export function GlobalShortcutsExample() {
   // Quick navigation
   useKeyboardShortcut(
     {
-      id: 'go-home',
-      keys: 'g h',
-      description: 'Go to home page',
-      category: 'Navigation'
+      id: "go-home",
+      keys: "g h",
+      description: "Go to home page",
+      category: "Navigation",
     },
-    () => setCurrentPage('home')
+    () => setCurrentPage("home")
   )
 
   useKeyboardShortcut(
     {
-      id: 'go-settings',
-      keys: 'g s',
-      description: 'Go to settings',
-      category: 'Navigation'
+      id: "go-settings",
+      keys: "g s",
+      description: "Go to settings",
+      category: "Navigation",
     },
-    () => setCurrentPage('settings')
+    () => setCurrentPage("settings")
   )
 
   useKeyboardShortcut(
     {
-      id: 'go-profile',
-      keys: 'g p',
-      description: 'Go to profile',
-      category: 'Navigation'
+      id: "go-profile",
+      keys: "g p",
+      description: "Go to profile",
+      category: "Navigation",
     },
-    () => setCurrentPage('profile')
+    () => setCurrentPage("profile")
   )
 
   return (
@@ -77,9 +77,7 @@ export function GlobalShortcutsExample() {
               <span className="text-lg font-semibold">Current Page:</span>
               <Badge variant="secondary">{currentPage}</Badge>
             </div>
-            <div className="text-sm text-muted-foreground">
-              Use keyboard shortcuts to navigate
-            </div>
+            <div className="text-sm text-muted-foreground">Use keyboard shortcuts to navigate</div>
           </div>
         </div>
       </div>

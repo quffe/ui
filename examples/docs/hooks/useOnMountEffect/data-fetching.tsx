@@ -15,17 +15,17 @@ interface User {
 // Simulate API call
 const fetchUser = async (userId: number): Promise<User> => {
   await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
-  
+
   // Simulate occasional failure
   if (Math.random() < 0.2) {
     throw new Error("Failed to fetch user")
   }
-  
+
   return {
     id: userId,
     name: `User ${userId}`,
     email: `user${userId}@example.com`,
-    avatar: `https://i.pravatar.cc/40?u=${userId}`
+    avatar: `https://i.pravatar.cc/40?u=${userId}`,
   }
 }
 
@@ -60,7 +60,7 @@ function UserProfile({ userId }: { userId: number }) {
       </div>
     )
   }
-  
+
   if (error) {
     return (
       <div className="p-4 text-center text-destructive">
@@ -71,25 +71,19 @@ function UserProfile({ userId }: { userId: number }) {
       </div>
     )
   }
-  
+
   if (!user) {
     return <div className="p-4 text-center">User not found</div>
   }
 
   return (
     <div className="flex items-center space-x-3 p-4 border rounded">
-      <img 
-        src={user.avatar} 
-        alt={`${user.name} avatar`}
-        className="w-10 h-10 rounded-full"
-      />
+      <img src={user.avatar} alt={`${user.name} avatar`} className="w-10 h-10 rounded-full" />
       <div>
         <div className="font-medium">{user.name}</div>
         <div className="text-sm text-muted-foreground">{user.email}</div>
       </div>
-      <div className="text-xs text-muted-foreground">
-        ID: {user.id}
-      </div>
+      <div className="text-xs text-muted-foreground">ID: {user.id}</div>
     </div>
   )
 }
@@ -117,13 +111,11 @@ export default function DataFetchingExample() {
             <Button onClick={changeUserId} variant="outline">
               Change User ID (current: {userId})
             </Button>
-            <Button onClick={remountComponent}>
-              Remount Component
-            </Button>
+            <Button onClick={remountComponent}>Remount Component</Button>
           </div>
-          
+
           <UserProfile key={key} userId={userId} />
-          
+
           <div className="text-xs text-muted-foreground">
             <div>• "Change User ID" only updates the prop - data won't refetch</div>
             <div>• "Remount Component" forces a new mount - data will refetch</div>

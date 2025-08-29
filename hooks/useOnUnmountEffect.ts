@@ -61,7 +61,7 @@ import * as React from "react"
  */
 export function useOnUnmountEffect(cleanup: () => void): void {
   const cleanupRef = React.useRef(cleanup)
-  
+
   // Store the latest cleanup function
   cleanupRef.current = cleanup
 

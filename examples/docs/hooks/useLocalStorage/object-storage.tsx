@@ -2,7 +2,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { useState, useEffect } from "react"
 
@@ -38,7 +44,7 @@ export default function ObjectStorageExample() {
               <Label htmlFor="theme">Theme</Label>
               <Select
                 value={preferences.theme}
-                onValueChange={(value) => setPreferences(prev => ({ ...prev, theme: value }))}
+                onValueChange={value => setPreferences(prev => ({ ...prev, theme: value }))}
               >
                 <SelectTrigger id="theme">
                   <SelectValue />
@@ -54,7 +60,7 @@ export default function ObjectStorageExample() {
               <Label htmlFor="language">Language</Label>
               <Select
                 value={preferences.language}
-                onValueChange={(value) => setPreferences(prev => ({ ...prev, language: value }))}
+                onValueChange={value => setPreferences(prev => ({ ...prev, language: value }))}
               >
                 <SelectTrigger id="language">
                   <SelectValue />

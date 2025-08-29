@@ -25,9 +25,7 @@ export function SearchableDropdownExample() {
         placeholder="Search countries..."
         searchable
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {searchableValue || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {searchableValue || "None"}</p>
     </div>
   )
 }

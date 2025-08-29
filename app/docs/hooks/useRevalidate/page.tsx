@@ -23,12 +23,16 @@ import RealTimeUpdatesExample from "@/examples/docs/hooks/useRevalidate/real-tim
 import ErrorRecoveryExample from "@/examples/docs/hooks/useRevalidate/error-recovery"
 import ConditionalRevalidationExample from "@/examples/docs/hooks/useRevalidate/conditional-revalidation"
 
-const bulkDataRevalidationCode = getExampleCode("docs/hooks/useRevalidate/bulk-data-revalidation.tsx")
+const bulkDataRevalidationCode = getExampleCode(
+  "docs/hooks/useRevalidate/bulk-data-revalidation.tsx"
+)
 const formSubmissionCode = getExampleCode("docs/hooks/useRevalidate/form-submission.tsx")
 const adminDashboardCode = getExampleCode("docs/hooks/useRevalidate/admin-dashboard.tsx")
 const realTimeUpdatesCode = getExampleCode("docs/hooks/useRevalidate/real-time-updates.tsx")
 const errorRecoveryCode = getExampleCode("docs/hooks/useRevalidate/error-recovery.tsx")
-const conditionalRevalidationCode = getExampleCode("docs/hooks/useRevalidate/conditional-revalidation.tsx")
+const conditionalRevalidationCode = getExampleCode(
+  "docs/hooks/useRevalidate/conditional-revalidation.tsx"
+)
 
 export default async function UseRevalidateDocs() {
   return (
@@ -139,7 +143,10 @@ function MyApp({ Component, pageProps }) {
               <CardTitle className="text-2xl font-bold">Examples</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <PreviewTabs preview={<BulkDataRevalidationExample />} code={bulkDataRevalidationCode} />
+              <PreviewTabs
+                preview={<BulkDataRevalidationExample />}
+                code={bulkDataRevalidationCode}
+              />
 
               <PreviewTabs preview={<FormSubmissionExample />} code={formSubmissionCode} />
 
@@ -149,7 +156,10 @@ function MyApp({ Component, pageProps }) {
 
               <PreviewTabs preview={<ErrorRecoveryExample />} code={errorRecoveryCode} />
 
-              <PreviewTabs preview={<ConditionalRevalidationExample />} code={conditionalRevalidationCode} />
+              <PreviewTabs
+                preview={<ConditionalRevalidationExample />}
+                code={conditionalRevalidationCode}
+              />
             </CardContent>
           </Card>
 
@@ -207,7 +217,8 @@ function MyApp({ Component, pageProps }) {
                     <p>This hook works with SWR&apos;s cache key matching system:</p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                       <li>
-                        Matches cache entries where the key&apos;s URL property equals the provided URL
+                        Matches cache entries where the key&apos;s URL property equals the provided
+                        URL
                       </li>
                       <li>Triggers revalidation for all matching cache entries</li>
                       <li>Works with SWR&apos;s global mutate function</li>

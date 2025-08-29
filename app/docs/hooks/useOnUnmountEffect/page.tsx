@@ -24,14 +24,17 @@ import WebSocketCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/we
 import AnalyticsCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/analytics-cleanup"
 
 const liveDemoCode = getExampleCode("docs/hooks/useOnUnmountEffect/live-demo.tsx")
-const eventListenerCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/event-listener-cleanup.tsx")
-const networkRequestCancellationCode = getExampleCode("docs/hooks/useOnUnmountEffect/network-request-cancellation.tsx")
+const eventListenerCleanupCode = getExampleCode(
+  "docs/hooks/useOnUnmountEffect/event-listener-cleanup.tsx"
+)
+const networkRequestCancellationCode = getExampleCode(
+  "docs/hooks/useOnUnmountEffect/network-request-cancellation.tsx"
+)
 const timerCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/timer-cleanup.tsx")
 const webSocketCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/websocket-cleanup.tsx")
 const analyticsCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/analytics-cleanup.tsx")
 
 export default async function UseOnUnmountEffectDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -103,9 +106,15 @@ function MyComponent() {
             <CardContent className="space-y-6">
               <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
 
-              <PreviewTabs preview={<EventListenerCleanupExample />} code={eventListenerCleanupCode} />
+              <PreviewTabs
+                preview={<EventListenerCleanupExample />}
+                code={eventListenerCleanupCode}
+              />
 
-              <PreviewTabs preview={<NetworkRequestCancellationExample />} code={networkRequestCancellationCode} />
+              <PreviewTabs
+                preview={<NetworkRequestCancellationExample />}
+                code={networkRequestCancellationCode}
+              />
 
               <PreviewTabs preview={<TimerCleanupExample />} code={timerCleanupCode} />
 

@@ -10,14 +10,10 @@ export function MaskedInputExample() {
     <div className="space-y-4">
       <div>
         <h3 className="text-sm font-medium mb-2">Masked Input (Security)</h3>
-        <OtpInput
-          length={6}
-          value={maskedOtp}
-          onChange={setMaskedOtp}
-          mask={true}
-          size="md"
-        />
-        <p className="text-sm text-muted-foreground mt-2">Current value: `&quot;`{maskedOtp}`&quot;`</p>
+        <OtpInput length={6} value={maskedOtp} onChange={setMaskedOtp} mask={true} size="md" />
+        <p className="text-sm text-muted-foreground mt-2">
+          Current value: `&quot;`{maskedOtp}`&quot;`
+        </p>
       </div>
     </div>
   )

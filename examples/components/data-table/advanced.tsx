@@ -1,7 +1,17 @@
-'use client'
+"use client"
 
 import { DataTable } from "@/components/Data/DataTable"
 import { useState } from "react"
+import { ColumnDef } from "@tanstack/react-table"
+
+type Data = {
+  id: number
+  name: string
+  email: string
+  role: string
+  status: string
+  lastLogin: string
+}
 
 const data = [
   {
@@ -46,7 +56,7 @@ const data = [
   },
 ]
 
-const columns = [
+const columns: ColumnDef<Data>[] = [
   { accessorKey: "name", header: "Name", enableSorting: true },
   { accessorKey: "email", header: "Email" },
   { accessorKey: "role", header: "Role", enableSorting: true },
@@ -58,7 +68,7 @@ export function AdvancedExample() {
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(3)
 
-  const handleRowClick = (row) => {
+  const handleRowClick = (row: Data) => {
     console.log("Row clicked:", row)
     // Handle row click action
   }

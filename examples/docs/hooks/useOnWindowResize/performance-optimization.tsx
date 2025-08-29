@@ -6,17 +6,20 @@ import { useState, useRef, useCallback } from "react"
 import { useOnWindowResize } from "@/hooks/useOnWindowResize"
 
 // Custom debounce hook for expensive operations
-function useDebounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
-  const timeoutRef = useRef<NodeJS.Timeout>()
-  
-  return useCallback((...args: Parameters<T>) => {
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => fn(...args), delay)
-  }, [fn, delay])
+function useDebounce<T extends (...args: never[]) => void>(fn: T, delay: number) {
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => fn(...args), delay)
+    },
+    [fn, delay]
+  )
 }
 
 export default function PerformanceOptimizationExample() {
-  const [layout, setLayout] = useState('desktop')
+  const [layout, setLayout] = useState("desktop")
   const [immediateCallCount, setImmediateCallCount] = useState(0)
   const [debouncedCallCount, setDebouncedCallCount] = useState(0)
   const [throttledCallCount, setThrottledCallCount] = useState(0)
@@ -26,7 +29,7 @@ export default function PerformanceOptimizationExample() {
   // Simulate expensive layout calculation
   const calculateOptimalLayout = (width: number) => {
     setIsCalculating(true)
-    
+
     // Simulate heavy computation
     const startTime = performance.now()
     let result = 0
@@ -34,19 +37,19 @@ export default function PerformanceOptimizationExample() {
       result += Math.sqrt(i)
     }
     const endTime = performance.now()
-    
+
     console.log(`Layout calculation took ${(endTime - startTime).toFixed(2)}ms`)
-    
+
     let newLayout
-    if (width >= 1200) newLayout = 'desktop-xl'
-    else if (width >= 1024) newLayout = 'desktop'
-    else if (width >= 768) newLayout = 'tablet'
-    else if (width >= 640) newLayout = 'mobile-lg'
-    else newLayout = 'mobile-sm'
-    
+    if (width >= 1200) newLayout = "desktop-xl"
+    else if (width >= 1024) newLayout = "desktop"
+    else if (width >= 768) newLayout = "tablet"
+    else if (width >= 640) newLayout = "mobile-lg"
+    else newLayout = "mobile-sm"
+
     setLayout(newLayout)
     setIsCalculating(false)
-    
+
     return newLayout
   }
 
@@ -62,9 +65,10 @@ export default function PerformanceOptimizationExample() {
   const throttledCalculation = useCallback(() => {
     const now = Date.now()
     const throttleRef = (throttledCalculation as any).lastCall || 0
-    
-    if (now - throttleRef >= 250) { // Throttle to max once per 250ms
-      (throttledCalculation as any).lastCall = now
+
+    if (now - throttleRef >= 250) {
+      // Throttle to max once per 250ms
+      ;(throttledCalculation as any).lastCall = now
       const width = window.innerWidth
       setCurrentWidth(width)
       calculateOptimalLayout(width)
@@ -91,12 +95,18 @@ export default function PerformanceOptimizationExample() {
 
   const getLayoutColor = () => {
     switch (layout) {
-      case 'desktop-xl': return 'text-secondary-foreground'
-      case 'desktop': return 'text-secondary'
-      case 'tablet': return 'text-secondary'
-      case 'mobile-lg': return 'text-foreground'
-      case 'mobile-sm': return 'text-muted-foreground'
-      default: return 'text-gray-600'
+      case "desktop-xl":
+        return "text-secondary-foreground"
+      case "desktop":
+        return "text-secondary"
+      case "tablet":
+        return "text-secondary"
+      case "mobile-lg":
+        return "text-foreground"
+      case "mobile-sm":
+        return "text-muted-foreground"
+      default:
+        return "text-gray-600"
     }
   }
 
@@ -162,15 +172,11 @@ export default function PerformanceOptimizationExample() {
               >
                 Run Throttled (Ok)
               </Button>
-              <Button
-                onClick={reset}
-                variant="outline"
-                size="sm"
-              >
+              <Button onClick={reset} variant="outline" size="sm">
                 Reset Counters
               </Button>
             </div>
-            
+
             {isCalculating && (
               <div className="text-sm text-secondary bg-secondary/10 p-2 rounded">
                 🔄 Calculating optimal layout... (simulating heavy computation)
@@ -181,29 +187,41 @@ export default function PerformanceOptimizationExample() {
           {/* Layout Visualization */}
           <div className="bg-card border rounded-lg p-4">
             <h4 className="font-medium mb-3">Layout Optimization Result</h4>
-            <div className={`p-4 rounded-lg ${
-              layout === 'desktop-xl' ? 'bg-purple-900/10 border-purple-200' :
-              layout === 'desktop' ? 'bg-secondary/10 border-secondary/30' :
-              layout === 'tablet' ? 'bg-green-900/10 border-green-200' :
-              layout === 'mobile-lg' ? 'bg-warn-soft/10 border-warn-soft/30' :
-              'bg-red-soft/10 border-red-soft/30'
-            } border`}>
+            <div
+              className={`p-4 rounded-lg ${
+                layout === "desktop-xl"
+                  ? "bg-purple-900/10"
+                  : layout === "desktop"
+                    ? "bg-secondary/10"
+                    : layout === "tablet"
+                      ? "bg-green-900/10"
+                      : layout === "mobile-lg"
+                        ? "bg-warn-soft/10"
+                        : "bg-red-soft/10 border-red-soft/30"
+              } border`}
+            >
               <div className={`text-lg font-bold ${getLayoutColor()}`}>
                 {layout.toUpperCase()} LAYOUT
               </div>
               <div className="text-sm text-muted-foreground mt-2">
                 Optimized layout calculated based on current window size: {currentWidth}px
               </div>
-              
+
               {/* Mock layout elements */}
-              <div className="mt-4 grid gap-2" style={{
-                gridTemplateColumns: 
-                  layout === 'desktop-xl' ? 'repeat(4, 1fr)' :
-                  layout === 'desktop' ? 'repeat(3, 1fr)' :
-                  layout === 'tablet' ? 'repeat(2, 1fr)' :
-                  'repeat(1, 1fr)'
-              }}>
-                {Array.from({ length: layout === 'mobile-sm' ? 2 : 4 }, (_, i) => (
+              <div
+                className="mt-4 grid gap-2"
+                style={{
+                  gridTemplateColumns:
+                    layout === "desktop-xl"
+                      ? "repeat(4, 1fr)"
+                      : layout === "desktop"
+                        ? "repeat(3, 1fr)"
+                        : layout === "tablet"
+                          ? "repeat(2, 1fr)"
+                          : "repeat(1, 1fr)",
+                }}
+              >
+                {Array.from({ length: layout === "mobile-sm" ? 2 : 4 }, (_, i) => (
                   <div key={i} className="bg-card p-3 rounded border text-center text-sm">
                     Item {i + 1}
                   </div>
@@ -219,24 +237,24 @@ export default function PerformanceOptimizationExample() {
               <div className="border-l-4 border-red-soft pl-3">
                 <strong className="text-muted-foreground">Immediate (No optimization):</strong>
                 <div className="text-muted-foreground">
-                  Runs expensive calculation on every resize event. Can cause performance issues 
+                  Runs expensive calculation on every resize event. Can cause performance issues
                   with rapid window resizing.
                 </div>
               </div>
-              
+
               <div className="border-l-4 border-green-400 pl-3">
                 <strong className="text-secondary">Debounced (Recommended):</strong>
                 <div className="text-muted-foreground">
-                  Waits for resize events to stop for 300ms before calculating. Best for expensive 
+                  Waits for resize events to stop for 300ms before calculating. Best for expensive
                   operations that don't need immediate feedback.
                 </div>
               </div>
-              
+
               <div className="border-l-4 border-orange-400 pl-3">
                 <strong className="text-foreground">Throttled (Good balance):</strong>
                 <div className="text-muted-foreground">
-                  Limits calculation to maximum once every 250ms during continuous resizing. 
-                  Good for operations needing responsive feedback.
+                  Limits calculation to maximum once every 250ms during continuous resizing. Good
+                  for operations needing responsive feedback.
                 </div>
               </div>
             </div>

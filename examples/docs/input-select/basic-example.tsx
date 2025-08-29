@@ -22,9 +22,7 @@ export function BasicExample() {
         label="Choose Option"
         placeholder="Select an option"
       />
-      <p className="text-sm text-muted-foreground mt-2">
-        Selected: {value || "None"}
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">Selected: {value || "None"}</p>
     </div>
   )
 }

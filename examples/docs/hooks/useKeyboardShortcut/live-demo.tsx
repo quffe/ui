@@ -2,13 +2,8 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import {
-  useKeyboardShortcut,
-  useKeyboardShortcutElement,
-} from "@/hooks/useKeyboardShortcut"
-import {
-  KeyboardShortcutHelp,
-} from "@/components/internal/ui/keyboard-shortcut-tooltip"
+import { useKeyboardShortcut, useKeyboardShortcutElement } from "@/hooks/useKeyboardShortcut"
+import { KeyboardShortcutHelp } from "@/components/internal/ui/keyboard-shortcut-tooltip"
 
 export function LiveDemoExample() {
   const [count, setCount] = useState(0)

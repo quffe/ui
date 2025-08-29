@@ -31,12 +31,17 @@ const basicUsageCode = getExampleCode("docs/hooks/useStateChangeEffect/basic-usa
 const liveDemoCode = getExampleCode("docs/hooks/useStateChangeEffect/live-demo.tsx")
 const formValidationCode = getExampleCode("docs/hooks/useStateChangeEffect/form-validation.tsx")
 const searchDebouncingCode = getExampleCode("docs/hooks/useStateChangeEffect/search-debouncing.tsx")
-const localStorageSyncCode = getExampleCode("docs/hooks/useStateChangeEffect/local-storage-sync.tsx")
-const analyticsTrackingCode = getExampleCode("docs/hooks/useStateChangeEffect/analytics-tracking.tsx")
-const dataVisualizationCode = getExampleCode("docs/hooks/useStateChangeEffect/data-visualization.tsx")
+const localStorageSyncCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/local-storage-sync.tsx"
+)
+const analyticsTrackingCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/analytics-tracking.tsx"
+)
+const dataVisualizationCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/data-visualization.tsx"
+)
 
 export default async function UseStateChangeEffectDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -86,10 +91,7 @@ export default async function UseStateChangeEffectDocs() {
               <CardTitle>Basic Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <PreviewTabs
-                preview={<BasicUsageExample />}
-                code={basicUsageCode}
-              />
+              <PreviewTabs preview={<BasicUsageExample />} code={basicUsageCode} />
             </CardContent>
           </Card>
 
@@ -101,10 +103,7 @@ export default async function UseStateChangeEffectDocs() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <PreviewTabs
-                preview={<LiveDemoExample />}
-                code={liveDemoCode}
-              />
+              <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
             </CardContent>
           </Card>
 
@@ -115,42 +114,27 @@ export default async function UseStateChangeEffectDocs() {
             <CardContent className="space-y-8">
               <div>
                 <h3 className="text-lg font-medium mb-4">Form Validation</h3>
-                <PreviewTabs
-                  preview={<FormValidationExample />}
-                  code={formValidationCode}
-                />
+                <PreviewTabs preview={<FormValidationExample />} code={formValidationCode} />
               </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-4">API Request Debouncing</h3>
-                <PreviewTabs
-                  preview={<SearchDebouncingExample />}
-                  code={searchDebouncingCode}
-                />
+                <PreviewTabs preview={<SearchDebouncingExample />} code={searchDebouncingCode} />
               </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-4">Local Storage Sync</h3>
-                <PreviewTabs
-                  preview={<LocalStorageSyncExample />}
-                  code={localStorageSyncCode}
-                />
+                <PreviewTabs preview={<LocalStorageSyncExample />} code={localStorageSyncCode} />
               </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-4">Analytics Tracking</h3>
-                <PreviewTabs
-                  preview={<AnalyticsTrackingExample />}
-                  code={analyticsTrackingCode}
-                />
+                <PreviewTabs preview={<AnalyticsTrackingExample />} code={analyticsTrackingCode} />
               </div>
 
               <div>
                 <h3 className="text-lg font-medium mb-4">Complex State Dependencies</h3>
-                <PreviewTabs
-                  preview={<DataVisualizationExample />}
-                  code={dataVisualizationCode}
-                />
+                <PreviewTabs preview={<DataVisualizationExample />} code={dataVisualizationCode} />
               </div>
             </CardContent>
           </Card>

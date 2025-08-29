@@ -17,7 +17,9 @@ export function PhoneVerificationExample() {
           size="lg"
           onComplete={code => alert(`Phone OTP: ${code}`)}
         />
-        <p className="text-sm text-muted-foreground mt-2">Current value: `&quot;`{phoneOtp}`&quot;`</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Current value: `&quot;`{phoneOtp}`&quot;`
+        </p>
       </div>
     </div>
   )

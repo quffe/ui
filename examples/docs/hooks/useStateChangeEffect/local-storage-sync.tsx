@@ -1,53 +1,62 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { useStateChangeEffect } from '@/hooks/useStateChangeEffect'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { Settings } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { useStateChangeEffect } from "@/hooks/useStateChangeEffect"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
+import { Settings } from "lucide-react"
 
 export default function LocalStorageSyncExample() {
   const [preferences, setPreferences] = useState({
-    theme: 'light',
-    language: 'en',
+    theme: "light",
+    language: "en",
     notifications: true,
-    autoSave: false
+    autoSave: false,
   })
   const [saveCount, setSaveCount] = useState(0)
 
   // Sync preferences to localStorage whenever they change
   useStateChangeEffect(() => {
-    localStorage.setItem('userPreferences', JSON.stringify(preferences))
+    localStorage.setItem("userPreferences", JSON.stringify(preferences))
     setSaveCount(prev => prev + 1)
-    console.log('Preferences saved to localStorage')
+    console.log("Preferences saved to localStorage")
   }, [preferences])
 
   // Load preferences on mount
   useEffect(() => {
-    const saved = localStorage.getItem('userPreferences')
+    const saved = localStorage.getItem("userPreferences")
     if (saved) {
       try {
         const parsedPreferences = JSON.parse(saved)
         setPreferences(parsedPreferences)
       } catch (error) {
-        console.error('Failed to parse saved preferences:', error)
+        console.error("Failed to parse saved preferences:", error)
       }
     }
   }, [])
 
-  const updatePreference = (key: keyof typeof preferences, value: any) => {
+  const updatePreference = <K extends keyof typeof preferences>(
+    key: K,
+    value: (typeof preferences)[K]
+  ) => {
     setPreferences(prev => ({ ...prev, [key]: value }))
   }
 
   const resetPreferences = () => {
     setPreferences({
-      theme: 'light',
-      language: 'en',
+      theme: "light",
+      language: "en",
       notifications: true,
-      autoSave: false
+      autoSave: false,
     })
   }
 
@@ -66,7 +75,7 @@ export default function LocalStorageSyncExample() {
             <Switch
               id="notifications"
               checked={preferences.notifications}
-              onCheckedChange={(checked) => updatePreference('notifications', checked)}
+              onCheckedChange={checked => updatePreference("notifications", checked)}
             />
           </div>
 
@@ -75,15 +84,15 @@ export default function LocalStorageSyncExample() {
             <Switch
               id="autoSave"
               checked={preferences.autoSave}
-              onCheckedChange={(checked) => updatePreference('autoSave', checked)}
+              onCheckedChange={checked => updatePreference("autoSave", checked)}
             />
           </div>
 
           <div className="space-y-2">
             <Label>Theme</Label>
-            <Select 
-              value={preferences.theme} 
-              onValueChange={(value) => updatePreference('theme', value)}
+            <Select
+              value={preferences.theme}
+              onValueChange={value => updatePreference("theme", value)}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -98,9 +107,9 @@ export default function LocalStorageSyncExample() {
 
           <div className="space-y-2">
             <Label>Language</Label>
-            <Select 
-              value={preferences.language} 
-              onValueChange={(value) => updatePreference('language', value)}
+            <Select
+              value={preferences.language}
+              onValueChange={value => updatePreference("language", value)}
             >
               <SelectTrigger>
                 <SelectValue />

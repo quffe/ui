@@ -27,7 +27,6 @@ const confirmationModalCode = getExampleCode("docs/modal/confirmation-modal.tsx"
 const largeModalCode = getExampleCode("docs/modal/large-modal.tsx")
 
 export default async function ModalDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -92,7 +91,7 @@ export default async function ModalDocs() {
                 code={confirmationModalCode}
                 title="Confirmation Modal"
               />
-              
+
               <PreviewTabs
                 preview={<LargeModalExample />}
                 code={largeModalCode}
@@ -144,14 +143,17 @@ export default async function ModalDocs() {
                     <tr className="border-b">
                       <td className="p-2 font-mono">size</td>
                       <td className="p-2">
-                        &apos;sm&apos; | &apos;md&apos; | &apos;lg&apos; | &apos;xl&apos; | &apos;2xl&apos; | &apos;3xl&apos; | &apos;4xl&apos; | &apos;full&apos;
+                        &apos;sm&apos; | &apos;md&apos; | &apos;lg&apos; | &apos;xl&apos; |
+                        &apos;2xl&apos; | &apos;3xl&apos; | &apos;4xl&apos; | &apos;full&apos;
                       </td>
                       <td className="p-2">&apos;md&apos;</td>
                       <td className="p-2">Modal size variant</td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-mono">position</td>
-                      <td className="p-2">&apos;center&apos; | &apos;top&apos; | &apos;bottom&apos;</td>
+                      <td className="p-2">
+                        &apos;center&apos; | &apos;top&apos; | &apos;bottom&apos;
+                      </td>
                       <td className="p-2">&apos;center&apos;</td>
                       <td className="p-2">Modal positioning</td>
                     </tr>

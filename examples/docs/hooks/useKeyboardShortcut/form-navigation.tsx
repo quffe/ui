@@ -8,9 +8,9 @@ import { useKeyboardShortcut, useKeyboardShortcutElement } from "@/hooks/useKeyb
 
 export function FormNavigationExample() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   })
   const [submitted, setSubmitted] = useState(false)
 
@@ -21,30 +21,30 @@ export function FormNavigationExample() {
   // Quick field focus shortcuts
   const nameShortcutRef = useKeyboardShortcutElement(
     {
-      id: 'focus-name',
-      keys: 'alt+n',
-      description: 'Focus name field',
-      category: 'Form'
+      id: "focus-name",
+      keys: "alt+n",
+      description: "Focus name field",
+      category: "Form",
     },
     () => nameRef.current?.focus()
   )
 
   const emailShortcutRef = useKeyboardShortcutElement(
     {
-      id: 'focus-email',
-      keys: 'alt+e',
-      description: 'Focus email field',
-      category: 'Form'
+      id: "focus-email",
+      keys: "alt+e",
+      description: "Focus email field",
+      category: "Form",
     },
     () => emailRef.current?.focus()
   )
 
   const messageShortcutRef = useKeyboardShortcutElement(
     {
-      id: 'focus-message',
-      keys: 'alt+m',
-      description: 'Focus message field',
-      category: 'Form'
+      id: "focus-message",
+      keys: "alt+m",
+      description: "Focus message field",
+      category: "Form",
     },
     () => messageRef.current?.focus()
   )
@@ -52,10 +52,10 @@ export function FormNavigationExample() {
   // Submit form
   useKeyboardShortcut(
     {
-      id: 'submit-form',
-      keys: 'ctrl+enter',
-      description: 'Submit form',
-      category: 'Form'
+      id: "submit-form",
+      keys: "ctrl+enter",
+      description: "Submit form",
+      category: "Form",
     },
     () => handleSubmit()
   )
@@ -63,13 +63,13 @@ export function FormNavigationExample() {
   // Clear form
   useKeyboardShortcut(
     {
-      id: 'clear-form',
-      keys: 'ctrl+shift+c',
-      description: 'Clear form',
-      category: 'Form'
+      id: "clear-form",
+      keys: "ctrl+shift+c",
+      description: "Clear form",
+      category: "Form",
     },
     () => {
-      setFormData({ name: '', email: '', message: '' })
+      setFormData({ name: "", email: "", message: "" })
       setSubmitted(false)
     }
   )
@@ -88,31 +88,33 @@ export function FormNavigationExample() {
           <div className="text-secondary font-medium">Form submitted successfully!</div>
         </div>
       )}
-      
-      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleSubmit() }}>
+
+      <form
+        className="space-y-4"
+        onSubmit={e => {
+          e.preventDefault()
+          handleSubmit()
+        }}
+      >
         <div>
-          <label className="block text-sm font-medium mb-2">
-            Name (Alt+N to focus)
-          </label>
+          <label className="block text-sm font-medium mb-2">Name (Alt+N to focus)</label>
           <Input
-            ref={(el) => {
+            ref={el => {
               nameRef.current = el
               if (nameShortcutRef.current !== el) {
                 nameShortcutRef.current = el
               }
             }}
             value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
             placeholder="Enter your name"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">
-            Email (Alt+E to focus)
-          </label>
+          <label className="block text-sm font-medium mb-2">Email (Alt+E to focus)</label>
           <Input
-            ref={(el) => {
+            ref={el => {
               emailRef.current = el
               if (emailShortcutRef.current !== el) {
                 emailShortcutRef.current = el
@@ -120,24 +122,22 @@ export function FormNavigationExample() {
             }}
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
             placeholder="Enter your email"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">
-            Message (Alt+M to focus)
-          </label>
+          <label className="block text-sm font-medium mb-2">Message (Alt+M to focus)</label>
           <Textarea
-            ref={(el) => {
+            ref={el => {
               messageRef.current = el
               if (messageShortcutRef.current !== el) {
                 messageShortcutRef.current = el
               }
             }}
             value={formData.message}
-            onChange={(e) => setFormData({...formData, message: e.target.value})}
+            onChange={e => setFormData({ ...formData, message: e.target.value })}
             placeholder="Enter your message"
             rows={3}
           />
@@ -147,11 +147,11 @@ export function FormNavigationExample() {
           <Button type="submit" disabled={!formData.name || !formData.email || !formData.message}>
             Submit (Ctrl+Enter)
           </Button>
-          <Button 
-            type="button" 
-            variant="outline" 
+          <Button
+            type="button"
+            variant="outline"
             onClick={() => {
-              setFormData({ name: '', email: '', message: '' })
+              setFormData({ name: "", email: "", message: "" })
               setSubmitted(false)
             }}
           >

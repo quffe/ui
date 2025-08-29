@@ -146,7 +146,6 @@ export default async function UseKeyboardShortcutDocs() {
               </CardContent>
             </Card>
 
-
             <Card className="mb-8">
               <CardHeader>
                 <CardTitle>API Reference</CardTitle>

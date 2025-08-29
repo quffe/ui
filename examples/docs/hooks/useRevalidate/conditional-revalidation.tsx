@@ -3,40 +3,56 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Crown, User, Edit, Trash2, MessageSquare, FileText } from "lucide-react"
 import { useState } from "react"
 import useRevalidate from "@/hooks/useRevalidate"
 
-type UserRole = 'admin' | 'moderator' | 'user'
-type ActionType = 'create-post' | 'update-profile' | 'delete-comment' | 'moderate-content' | 'view-analytics'
+type UserRole = "admin" | "moderator" | "user"
+type ActionType =
+  | "create-post"
+  | "update-profile"
+  | "delete-comment"
+  | "moderate-content"
+  | "view-analytics"
 
 const mockUser = {
-  id: 'user_123',
-  role: 'user' as UserRole,
-  permissions: ['read', 'write']
+  id: "user_123",
+  role: "user" as UserRole,
+  permissions: ["read", "write"],
 }
 
 export default function ConditionalRevalidationExample() {
   const [currentUser, setCurrentUser] = useState(mockUser)
-  const [actionHistory, setActionHistory] = useState<Array<{
-    action: ActionType
-    timestamp: string
-    revalidated: string[]
-    userRole: UserRole
-  }>>([])
+  const [actionHistory, setActionHistory] = useState<
+    Array<{
+      action: ActionType
+      timestamp: string
+      revalidated: string[]
+      userRole: UserRole
+    }>
+  >([])
   const { revalidate } = useRevalidate()
 
-  const simulateApiCall = async (action: ActionType, payload?: any): Promise<boolean> => {
+  const simulateApiCall = async (
+    action: ActionType,
+    payload?: Record<string, unknown>
+  ): Promise<boolean> => {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700))
-    
+
     // Simulate different success rates based on action
-    const successRate = action === 'view-analytics' ? 0.95 : 0.9
+    const successRate = action === "view-analytics" ? 0.95 : 0.9
     return Math.random() < successRate
   }
 
-  const handleUserAction = async (action: ActionType, payload?: any) => {
+  const handleUserAction = async (action: ActionType, payload?: Record<string, unknown>) => {
     try {
       const response = await simulateApiCall(action, payload)
 
@@ -48,67 +64,56 @@ export default function ConditionalRevalidationExample() {
         urlsToRevalidate.push(`/api/users/${currentUser.id}`)
 
         // Role-based revalidations
-        if (currentUser.role === 'admin') {
+        if (currentUser.role === "admin") {
+          urlsToRevalidate.push("/api/users", "/api/analytics", "/api/reports", "/api/system/stats")
+        } else if (currentUser.role === "moderator") {
           urlsToRevalidate.push(
-            '/api/users',
-            '/api/analytics',
-            '/api/reports',
-            '/api/system/stats'
-          )
-        } else if (currentUser.role === 'moderator') {
-          urlsToRevalidate.push(
-            '/api/posts/moderation',
-            '/api/comments/reported',
-            '/api/users/flagged'
+            "/api/posts/moderation",
+            "/api/comments/reported",
+            "/api/users/flagged"
           )
         }
 
         // Action-specific revalidations
         switch (action) {
-          case 'create-post':
+          case "create-post":
             urlsToRevalidate.push(
-              '/api/posts',
-              '/api/posts/recent',
+              "/api/posts",
+              "/api/posts/recent",
               `/api/users/${currentUser.id}/posts`
             )
-            if (currentUser.role === 'admin') {
-              urlsToRevalidate.push('/api/analytics/content')
+            if (currentUser.role === "admin") {
+              urlsToRevalidate.push("/api/analytics/content")
             }
             break
 
-          case 'update-profile':
-            urlsToRevalidate.push('/api/profile')
-            if (currentUser.role !== 'user') {
-              urlsToRevalidate.push('/api/users')
+          case "update-profile":
+            urlsToRevalidate.push("/api/profile")
+            if (currentUser.role !== "user") {
+              urlsToRevalidate.push("/api/users")
             }
             break
 
-          case 'delete-comment':
-            urlsToRevalidate.push(
-              '/api/comments',
-              `/api/posts/${payload?.postId}/comments`
-            )
-            if (currentUser.role === 'admin') {
-              urlsToRevalidate.push('/api/analytics/moderation')
+          case "delete-comment":
+            urlsToRevalidate.push("/api/comments", `/api/posts/${payload?.postId}/comments`)
+            if (currentUser.role === "admin") {
+              urlsToRevalidate.push("/api/analytics/moderation")
             }
             break
 
-          case 'moderate-content':
-            if (currentUser.role === 'admin' || currentUser.role === 'moderator') {
+          case "moderate-content":
+            if (currentUser.role === "admin" || currentUser.role === "moderator") {
               urlsToRevalidate.push(
-                '/api/posts/moderation',
-                '/api/moderation/queue',
-                '/api/analytics/moderation'
+                "/api/posts/moderation",
+                "/api/moderation/queue",
+                "/api/analytics/moderation"
               )
             }
             break
 
-          case 'view-analytics':
-            if (currentUser.role === 'admin') {
-              urlsToRevalidate.push(
-                '/api/analytics/dashboard',
-                '/api/reports/summary'
-              )
+          case "view-analytics":
+            if (currentUser.role === "admin") {
+              urlsToRevalidate.push("/api/analytics/dashboard", "/api/reports/summary")
             }
             break
         }
@@ -124,12 +129,12 @@ export default function ConditionalRevalidationExample() {
             action,
             timestamp: new Date().toLocaleTimeString(),
             revalidated: uniqueUrls,
-            userRole: currentUser.role
-          }
+            userRole: currentUser.role,
+          },
         ])
       }
     } catch (error) {
-      console.error('Action failed:', error)
+      console.error("Action failed:", error)
     }
   }
 
@@ -139,60 +144,66 @@ export default function ConditionalRevalidationExample() {
 
   const actions = [
     {
-      id: 'create-post' as ActionType,
-      label: 'Create Post',
+      id: "create-post" as ActionType,
+      label: "Create Post",
       icon: FileText,
-      description: 'Create a new blog post',
-      availableFor: ['admin', 'moderator', 'user'],
-      color: 'bg-secondary/10 text-secondary border-secondary/30'
+      description: "Create a new blog post",
+      availableFor: ["admin", "moderator", "user"],
+      color: "bg-secondary/10 text-secondary border-secondary/30",
     },
     {
-      id: 'update-profile' as ActionType,
-      label: 'Update Profile',
+      id: "update-profile" as ActionType,
+      label: "Update Profile",
       icon: User,
-      description: 'Update user profile information',
-      availableFor: ['admin', 'moderator', 'user'],
-      color: 'bg-green-900/10 text-secondary border-green-200'
+      description: "Update user profile information",
+      availableFor: ["admin", "moderator", "user"],
+      color: "bg-green-900/10 text-secondary border-green-200",
     },
     {
-      id: 'delete-comment' as ActionType,
-      label: 'Delete Comment',
+      id: "delete-comment" as ActionType,
+      label: "Delete Comment",
       icon: Trash2,
-      description: 'Remove a comment from a post',
-      availableFor: ['admin', 'moderator'],
-      color: 'bg-red-900/10 text-muted-foreground border-red-900/30'
+      description: "Remove a comment from a post",
+      availableFor: ["admin", "moderator"],
+      color: "bg-red-900/10 text-muted-foreground border-red-900/30",
     },
     {
-      id: 'moderate-content' as ActionType,
-      label: 'Moderate Content',
+      id: "moderate-content" as ActionType,
+      label: "Moderate Content",
       icon: Edit,
-      description: 'Review and moderate user content',
-      availableFor: ['admin', 'moderator'],
-      color: 'bg-purple-900/10 text-secondary-foreground border-purple-200'
+      description: "Review and moderate user content",
+      availableFor: ["admin", "moderator"],
+      color: "bg-purple-900/10 text-secondary-foreground border-purple-200",
     },
     {
-      id: 'view-analytics' as ActionType,
-      label: 'View Analytics',
+      id: "view-analytics" as ActionType,
+      label: "View Analytics",
       icon: Crown,
-      description: 'Access detailed analytics dashboard',
-      availableFor: ['admin'],
-      color: 'bg-warn-soft/10 text-warn-soft border-warn-soft/30'
-    }
+      description: "Access detailed analytics dashboard",
+      availableFor: ["admin"],
+      color: "bg-warn-soft/10 text-warn-soft border-warn-soft/30",
+    },
   ]
 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
-      case 'admin': return <Crown className="h-4 w-4" />
-      case 'moderator': return <Edit className="h-4 w-4" />
-      default: return <User className="h-4 w-4" />
+      case "admin":
+        return <Crown className="h-4 w-4" />
+      case "moderator":
+        return <Edit className="h-4 w-4" />
+      default:
+        return <User className="h-4 w-4" />
     }
   }
 
   const getRoleColor = (role: UserRole) => {
     switch (role) {
-      case 'admin': return 'text-foreground bg-warn-soft/10'
-      case 'moderator': return 'text-secondary-foreground bg-purple-900/10'
-      default: return 'text-secondary bg-secondary/10'
+      case "admin":
+        return "text-foreground bg-warn-soft/10"
+      case "moderator":
+        return "text-secondary-foreground bg-purple-900/10"
+      default:
+        return "text-secondary bg-secondary/10"
     }
   }
 
@@ -262,7 +273,7 @@ export default function ConditionalRevalidationExample() {
                   <div
                     key={action.id}
                     className={`border rounded-lg p-3 ${
-                      isAvailable ? action.color : 'bg-muted/50 text-gray-400 border-gray-200'
+                      isAvailable ? action.color : "bg-muted/50 text-gray-400 border-gray-200"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -271,7 +282,7 @@ export default function ConditionalRevalidationExample() {
                         <span className="font-medium text-sm">{action.label}</span>
                       </div>
                       <Button
-                        onClick={() => handleUserAction(action.id, { postId: 'post_123' })}
+                        onClick={() => handleUserAction(action.id, { postId: "post_123" })}
                         disabled={!isAvailable}
                         size="sm"
                         variant="outline"
@@ -280,11 +291,9 @@ export default function ConditionalRevalidationExample() {
                         Execute
                       </Button>
                     </div>
-                    <div className="text-xs text-muted-foreground mb-2">
-                      {action.description}
-                    </div>
+                    <div className="text-xs text-muted-foreground mb-2">{action.description}</div>
                     <div className="text-xs">
-                      <strong>Available to:</strong> {action.availableFor.join(', ')}
+                      <strong>Available to:</strong> {action.availableFor.join(", ")}
                     </div>
                   </div>
                 )
@@ -302,19 +311,17 @@ export default function ConditionalRevalidationExample() {
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-xs">
-                          {entry.action.replace('-', ' ')}
+                          {entry.action.replace("-", " ")}
                         </Badge>
-                        <Badge className={getRoleColor(entry.userRole)}>
-                          {entry.userRole}
-                        </Badge>
+                        <Badge className={getRoleColor(entry.userRole)}>{entry.userRole}</Badge>
                       </div>
                       <span className="text-xs text-muted-foreground">{entry.timestamp}</span>
                     </div>
-                    
+
                     <div className="text-sm">
                       <strong>Revalidated {entry.revalidated.length} endpoints:</strong>
                       <div className="text-xs text-muted-foreground mt-1 font-mono">
-                        {entry.revalidated.join(', ')}
+                        {entry.revalidated.join(", ")}
                       </div>
                     </div>
                   </div>
@@ -333,22 +340,23 @@ export default function ConditionalRevalidationExample() {
                   • Always revalidate user's own data: `/api/users/{currentUser.id}`
                 </div>
               </div>
-              
+
               <div className="bg-card rounded p-3">
                 <strong className="text-secondary-foreground">Role-Based Revalidation:</strong>
                 <div className="text-muted-foreground mt-1">
-                  • <strong>Admin:</strong> All analytics, reports, system stats<br/>
-                  • <strong>Moderator:</strong> Moderation queues, flagged content<br/>
-                  • <strong>User:</strong> Personal data only
+                  • <strong>Admin:</strong> All analytics, reports, system stats
+                  <br />• <strong>Moderator:</strong> Moderation queues, flagged content
+                  <br />• <strong>User:</strong> Personal data only
                 </div>
               </div>
-              
+
               <div className="bg-card rounded p-3">
                 <strong className="text-secondary">Action-Based Revalidation:</strong>
                 <div className="text-muted-foreground mt-1">
-                  • Different actions trigger different endpoint combinations<br/>
-                  • Content creation → posts, recent, user posts<br/>
-                  • Moderation → moderation queues, analytics
+                  • Different actions trigger different endpoint combinations
+                  <br />
+                  • Content creation → posts, recent, user posts
+                  <br />• Moderation → moderation queues, analytics
                 </div>
               </div>
             </div>

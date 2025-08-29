@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { Button } from "@/components/ui/button"

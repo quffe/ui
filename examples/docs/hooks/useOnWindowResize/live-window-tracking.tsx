@@ -8,7 +8,9 @@ export default function LiveWindowTrackingExample() {
   const [mounted, setMounted] = useState(false)
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
   const [resizeCount, setResizeCount] = useState(0)
-  const [resizeHistory, setResizeHistory] = useState<Array<{size: {width: number, height: number}, timestamp: string}>>([])
+  const [resizeHistory, setResizeHistory] = useState<
+    Array<{ size: { width: number; height: number }; timestamp: string }>
+  >([])
 
   // Demonstrate the hook
   useOnWindowResize(() => {
@@ -22,8 +24,8 @@ export default function LiveWindowTrackingExample() {
       ...prev.slice(-4), // Keep last 4 entries
       {
         size: newSize,
-        timestamp: new Date().toLocaleTimeString()
-      }
+        timestamp: new Date().toLocaleTimeString(),
+      },
     ])
   })
 
@@ -32,10 +34,14 @@ export default function LiveWindowTrackingExample() {
   }, [])
 
   const getBreakpoint = () => {
-    if (windowSize.width >= 1200) return { name: "xl", color: "text-secondary-foreground", description: "Extra Large" }
-    if (windowSize.width >= 1024) return { name: "lg", color: "text-secondary", description: "Large" }
-    if (windowSize.width >= 768) return { name: "md", color: "text-secondary", description: "Medium" }
-    if (windowSize.width >= 640) return { name: "sm", color: "text-foreground", description: "Small" }
+    if (windowSize.width >= 1200)
+      return { name: "xl", color: "text-secondary-foreground", description: "Extra Large" }
+    if (windowSize.width >= 1024)
+      return { name: "lg", color: "text-secondary", description: "Large" }
+    if (windowSize.width >= 768)
+      return { name: "md", color: "text-secondary", description: "Medium" }
+    if (windowSize.width >= 640)
+      return { name: "sm", color: "text-foreground", description: "Small" }
     return { name: "xs", color: "text-muted-foreground", description: "Extra Small" }
   }
 
@@ -82,9 +88,7 @@ export default function LiveWindowTrackingExample() {
                 </div>
               </div>
               <div className="bg-card rounded p-3 text-center">
-                <div className="text-2xl font-bold text-secondary-foreground">
-                  {resizeCount}
-                </div>
+                <div className="text-2xl font-bold text-secondary-foreground">{resizeCount}</div>
                 <div className="text-xs text-muted-foreground">Resize Events</div>
               </div>
             </div>
@@ -96,12 +100,18 @@ export default function LiveWindowTrackingExample() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div>
                 <strong>Aspect Ratio:</strong>
-                <div className="text-muted-foreground">{mounted ? getAspectRatio() : "Loading..."}</div>
+                <div className="text-muted-foreground">
+                  {mounted ? getAspectRatio() : "Loading..."}
+                </div>
               </div>
               <div>
                 <strong>Orientation:</strong>
                 <div className="text-muted-foreground">
-                  {mounted ? (windowSize.width > windowSize.height ? "Landscape" : "Portrait") : "Loading..."}
+                  {mounted
+                    ? windowSize.width > windowSize.height
+                      ? "Landscape"
+                      : "Portrait"
+                    : "Loading..."}
                 </div>
               </div>
               <div>

@@ -9,11 +9,7 @@ export function BasicPickerExample() {
 
   return (
     <div className="w-full max-w-sm">
-      <DateRangePicker
-        value={dateRange}
-        onChange={setDateRange}
-        placeholder="Pick a date range"
-      />
+      <DateRangePicker value={dateRange} onChange={setDateRange} placeholder="Pick a date range" />
       <p className="text-sm text-muted-foreground mt-2">
         Selected: {dateRange?.from?.toDateString() || "None"} -{" "}
         {dateRange?.to?.toDateString() || "None"}

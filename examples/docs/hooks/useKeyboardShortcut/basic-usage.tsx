@@ -20,7 +20,7 @@ export function BasicUsageExample() {
 
   useKeyboardShortcut(
     {
-      id: "decrement-counter", 
+      id: "decrement-counter",
       keys: "ctrl+minus",
       description: "Decrement counter",
       category: "Demo",

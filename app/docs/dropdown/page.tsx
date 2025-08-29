@@ -91,7 +91,7 @@ export default async function DropdownDocs() {
                 code={searchableDropdownCode}
                 title="Searchable Dropdown"
               />
-              
+
               <PreviewTabs
                 preview={<DisabledStateExample />}
                 code={disabledStateCode}

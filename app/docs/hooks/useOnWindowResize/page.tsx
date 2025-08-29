@@ -23,15 +23,20 @@ import DynamicNavigationExample from "@/examples/docs/hooks/useOnWindowResize/dy
 import PerformanceOptimizationExample from "@/examples/docs/hooks/useOnWindowResize/performance-optimization"
 import ViewportBasedEffectsExample from "@/examples/docs/hooks/useOnWindowResize/viewport-based-effects"
 
-const liveWindowTrackingCode = getExampleCode("docs/hooks/useOnWindowResize/live-window-tracking.tsx")
+const liveWindowTrackingCode = getExampleCode(
+  "docs/hooks/useOnWindowResize/live-window-tracking.tsx"
+)
 const responsiveLayoutCode = getExampleCode("docs/hooks/useOnWindowResize/responsive-layout.tsx")
 const chartResizingCode = getExampleCode("docs/hooks/useOnWindowResize/chart-resizing.tsx")
 const dynamicNavigationCode = getExampleCode("docs/hooks/useOnWindowResize/dynamic-navigation.tsx")
-const performanceOptimizationCode = getExampleCode("docs/hooks/useOnWindowResize/performance-optimization.tsx")
-const viewportBasedEffectsCode = getExampleCode("docs/hooks/useOnWindowResize/viewport-based-effects.tsx")
+const performanceOptimizationCode = getExampleCode(
+  "docs/hooks/useOnWindowResize/performance-optimization.tsx"
+)
+const viewportBasedEffectsCode = getExampleCode(
+  "docs/hooks/useOnWindowResize/viewport-based-effects.tsx"
+)
 
 export default async function UseOnWindowResizeDocs() {
-
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -122,9 +127,15 @@ export default async function UseOnWindowResizeDocs() {
 
               <PreviewTabs preview={<DynamicNavigationExample />} code={dynamicNavigationCode} />
 
-              <PreviewTabs preview={<PerformanceOptimizationExample />} code={performanceOptimizationCode} />
+              <PreviewTabs
+                preview={<PerformanceOptimizationExample />}
+                code={performanceOptimizationCode}
+              />
 
-              <PreviewTabs preview={<ViewportBasedEffectsExample />} code={viewportBasedEffectsCode} />
+              <PreviewTabs
+                preview={<ViewportBasedEffectsExample />}
+                code={viewportBasedEffectsCode}
+              />
             </CardContent>
           </Card>
 

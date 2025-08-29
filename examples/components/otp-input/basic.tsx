@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { OtpInput } from "@/components/Input/OtpInput"
 import { useState } from "react"
@@ -11,7 +11,7 @@ export function Example() {
       value={value}
       onChange={setValue}
       length={6}
-      onComplete={(value) => console.log(value)}
+      onComplete={value => console.log(value)}
     />
   )
 }
