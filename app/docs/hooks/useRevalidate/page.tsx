@@ -13,8 +13,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CodeBlock } from "@/components/ui/code-block"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { CodeBlock } from "@/components/internal/ui/code-block"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { getExampleCode } from "@/lib/serverUtils"
 import BulkDataRevalidationExample from "@/examples/docs/hooks/useRevalidate/bulk-data-revalidation"
 import FormSubmissionExample from "@/examples/docs/hooks/useRevalidate/form-submission"

@@ -3,7 +3,7 @@
 import { DataTable } from "@/components/Data/DataTable"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {

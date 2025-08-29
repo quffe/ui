@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 
 // Example components
 import { BasicDropdownExample } from "@/examples/docs/dropdown/basic-dropdown"

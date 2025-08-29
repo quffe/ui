@@ -8,7 +8,7 @@ import {
 } from "@/hooks/useKeyboardShortcut"
 import {
   KeyboardShortcutHelp,
-} from "@/components/ui/keyboard-shortcut-tooltip"
+} from "@/components/internal/ui/keyboard-shortcut-tooltip"
 
 export function LiveDemoExample() {
   const [count, setCount] = useState(0)

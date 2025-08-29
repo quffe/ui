@@ -13,35 +13,31 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
 import { Example as UseMobileExample } from "@/examples/hooks/use-mobile/basic"
-import { AdvancedExample as UseMobileAdvancedExample } from "@/examples/hooks/use-mobile/advanced"
 import { Example as UseLocalStorageExample } from "@/examples/hooks/use-local-storage/basic"
 import { Example as UseCopyToClipboardExample } from "@/examples/hooks/use-copy-to-clipboard/basic"
 import { Example as UseCountdownExample } from "@/examples/hooks/use-countdown/basic"
 import { Example as UseOnMountEffectExample } from "@/examples/hooks/use-on-mount-effect/basic"
 import { Example as UseKeyboardShortcutExample } from "@/examples/hooks/use-keyboard-shortcut/basic"
 import { Example as UseOnWindowResizeExample } from "@/examples/hooks/use-on-window-resize/basic"
-import { AdvancedExample as UseOnWindowResizeAdvancedExample } from "@/examples/hooks/use-on-window-resize/advanced"
 import { Example as UseOnMountLayoutEffectExample } from "@/examples/hooks/use-on-mount-layout-effect/basic"
 import { Example as UseStateChangeEffectExample } from "@/examples/hooks/use-state-change-effect/basic"
 import { AdvancedExample as UseStateChangeEffectAdvancedExample } from "@/examples/hooks/use-state-change-effect/advanced"
 
 // Raw imports
 const useMobileBasicCode = getExampleCode("hooks/use-mobile/basic.tsx")
-const useMobileAdvancedCode = getExampleCode("hooks/use-mobile/advanced.tsx")
 const useLocalStorageCode = getExampleCode("hooks/use-local-storage/basic.tsx")
 const useCopyToClipboardCode = getExampleCode("hooks/use-copy-to-clipboard/basic.tsx")
 const useCountdownCode = getExampleCode("hooks/use-countdown/basic.tsx")
 const useOnMountEffectCode = getExampleCode("hooks/use-on-mount-effect/basic.tsx")
 const useKeyboardShortcutCode = getExampleCode("hooks/use-keyboard-shortcut/basic.tsx")
 const useOnWindowResizeBasicCode = getExampleCode("hooks/use-on-window-resize/basic.tsx")
-const useOnWindowResizeAdvancedCode = getExampleCode("hooks/use-on-window-resize/advanced.tsx")
 const useOnMountLayoutEffectCode = getExampleCode("hooks/use-on-mount-layout-effect/basic.tsx")
 const useStateChangeEffectBasicCode = getExampleCode("hooks/use-state-change-effect/basic.tsx")
 const useStateChangeEffectAdvancedCode = getExampleCode("hooks/use-state-change-effect/advanced.tsx")

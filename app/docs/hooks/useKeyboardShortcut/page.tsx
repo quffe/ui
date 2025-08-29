@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -14,9 +13,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { KeyboardShortcutProvider } from "@/hooks/useKeyboardShortcut"
-import { KeyboardShortcutOverlay } from "@/components/ui/keyboard-shortcut-tooltip"
+import { KeyboardShortcutOverlay } from "@/components/internal/ui/keyboard-shortcut-tooltip"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components

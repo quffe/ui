@@ -13,8 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
-import { CodeBlock } from "@/components/ui/code-block"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 
 // Example components
 import { Example as BasicExample } from "@/examples/hooks/use-countdown/basic"

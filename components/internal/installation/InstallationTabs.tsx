@@ -1,6 +1,6 @@
 "use client"
 
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 import { config } from "@/lib/config"
 import { usePackageManager, type PackageManager } from "@/hooks/internal"
 

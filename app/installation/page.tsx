@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Terminal, CheckCircle, AlertCircle, Code, Package, Zap } from "lucide-react"
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 import Link from "next/link"
 
 const steps = [

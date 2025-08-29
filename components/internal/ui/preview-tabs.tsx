@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 interface PreviewTabsProps {
   preview: React.ReactNode

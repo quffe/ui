@@ -13,8 +13,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CodeBlock } from "@/components/ui/code-block"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { CodeBlock } from "@/components/internal/ui/code-block"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { getExampleCode } from "@/lib/serverUtils"
 import LiveDemoExample from "@/examples/docs/hooks/useOnMountLayoutEffect/live-demo"
 import DOMMeasurementsExample from "@/examples/docs/hooks/useOnMountLayoutEffect/dom-measurements"

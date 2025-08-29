@@ -13,7 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PreviewTabs } from "@/components/ui/preview-tabs"
+import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
 
