@@ -29,6 +29,7 @@ yarn.lock
 
 # Registry files (these have specific formatting requirements)
 registry/
+public/registry/
 
 # Generated files
 *.md

@@ -8,7 +8,7 @@ const getRegistryUrl = () => {
   return (
     process.env.NEXT_PUBLIC_REGISTRY_URL ||
     process.env.REGISTRY_URL ||
-    "http://localhost:3001/api/registry"
+    "http://localhost:3000/api/registry"
   )
 }
 
@@ -18,7 +18,7 @@ const getSiteUrl = () => {
     return process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
   }
   // Server side
-  return process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3001"
+  return process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000"
 }
 
 export const config = {

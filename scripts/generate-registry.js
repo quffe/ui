@@ -6,7 +6,8 @@ const path = require("path")
 // Configuration
 const COMPONENTS_DIR = path.join(process.cwd(), "components")
 const HOOKS_DIR = path.join(process.cwd(), "hooks")
-const REGISTRY_DIR = path.join(process.cwd(), "registry")
+// Output directory now serves static files from public/registry
+const REGISTRY_DIR = path.join(process.cwd(), "public", "registry")
 
 // Category mappings
 const CATEGORIES = {
@@ -119,7 +120,7 @@ function findComponentFiles() {
   const components = []
 
   // Scan categorized component directories
-  const categoryDirs = ["Data", "Form", "Navigation", "Modal"]
+  const categoryDirs = ["Data", "Form", "Navigation", "Modal", "Input"]
 
   categoryDirs.forEach(category => {
     const categoryPath = path.join(COMPONENTS_DIR, category)
@@ -131,10 +132,13 @@ function findComponentFiles() {
           const filePath = path.join(categoryPath, file)
           const content = readFileContent(filePath)
 
+          // Derive logical category for Input/* using mapping; otherwise keep folder category
+          const logicalCategory = category === "Input" ? getComponentCategory(componentName) : category
+
           components.push({
             name: kebabCase(componentName),
             displayName: componentName,
-            category,
+            category: logicalCategory,
             filePath: path.join(category, file),
             content,
           })
@@ -226,12 +230,12 @@ function generateHookRegistry(hook) {
 }
 
 function generateIndexRegistry(components, hooks) {
-  const entries = []
+  const items = []
 
   // Add components
   components.forEach(component => {
     const namespace = getNamespaceForCategory(component.category)
-    entries.push({
+    items.push({
       name: component.name,
       type: "registry:component",
       category: component.category,
@@ -244,7 +248,7 @@ function generateIndexRegistry(components, hooks) {
 
   // Add hooks
   hooks.forEach(hook => {
-    entries.push({
+    items.push({
       name: hook.name,
       type: "registry:hook",
       namespace: "@ui-components/hooks",
@@ -254,24 +258,47 @@ function generateIndexRegistry(components, hooks) {
     })
   })
 
-  return entries
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000"
+
+  // Full registry index schema for static hosting
+  return {
+    name: "@ui-components",
+    type: "registry:index",
+    description:
+      "A comprehensive UI components library with TypeScript, Tailwind CSS v4, and shadcn/ui patterns",
+    homepage: siteUrl,
+    author: "UI Components Library",
+    items,
+    namespace: "@ui-components",
+    namespaces: {
+      "@ui-components": "Main UI components registry",
+      "@ui-components/ui": "Base UI primitives (Button, Card, Input, etc.)",
+      "@ui-components/form": "Form-specific components (InputAmount, OtpInput, etc.)",
+      "@ui-components/data": "Data visualization components (DataTable)",
+      "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
+      "@ui-components/modal": "Modal and overlay components",
+      "@ui-components/hooks": "Custom React hooks",
+    },
+  }
 }
 
 function ensureRegistryDir() {
   if (!fs.existsSync(REGISTRY_DIR)) {
     fs.mkdirSync(REGISTRY_DIR, { recursive: true })
-    console.log("📁 Created registry directory")
+    console.log("📁 Created public/registry directory")
   }
 }
 
-function writeRegistryFile(filename, content) {
-  const filePath = path.join(REGISTRY_DIR, filename)
+function writeRegistryFile(relPath, content) {
+  const filePath = path.join(REGISTRY_DIR, relPath)
+  const dir = path.dirname(filePath)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(filePath, JSON.stringify(content, null, 2))
-  console.log(`✅ Generated ${filename}`)
+  console.log(`✅ Generated ${relPath}`)
 }
 
 function main() {
-  console.log("🚀 Generating component registry...\n")
+  console.log("🚀 Generating static component registry to public/registry...\n")
 
   ensureRegistryDir()
 
@@ -284,13 +311,14 @@ function main() {
   // Generate individual registry files for components
   components.forEach(component => {
     const registry = generateComponentRegistry(component)
-    writeRegistryFile(`${component.name}.json`, registry)
+    const ns = getNamespaceForCategory(component.category)
+    writeRegistryFile(path.join(ns, `${component.name}.json`), registry)
   })
 
   // Generate individual registry files for hooks
   hooks.forEach(hook => {
     const registry = generateHookRegistry(hook)
-    writeRegistryFile(`${hook.name}.json`, registry)
+    writeRegistryFile(path.join("hooks", `${hook.name}.json`), registry)
   })
 
   // Generate index registry

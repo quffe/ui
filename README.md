@@ -16,11 +16,15 @@ pnpm format       # Format code
 
 Open [http://localhost:3000](http://localhost:3000) to view the component documentation and examples.
 
-### Registry Management
+### Registry Management (Static)
 
 ```bash
-pnpm registry:update  # Regenerate all registry files from components and hooks
+pnpm registry:update  # Regenerate static registry JSON under public/registry
 ```
+
+The registry is served statically from `public/registry` and exposed via URL rewrites:
+- `GET /api/registry` → `/registry/index.json`
+- `GET /api/registry/{name}` → `/registry/{name}.json` (e.g., `form/checkbox`)
 
 ## 📦 Installation & Usage
 
@@ -57,17 +61,12 @@ npx shadcn@latest add @ui-components/hooks/useLocalStorage @ui-components/hooks/
 
 ### Configuration
 
-Add the registry configuration to your `components.json`:
+Add the registry configuration to your `components.json` (rewritten to static files internally):
 
 ```json
 {
   "registries": {
-    "@ui-components": "http://localhost:3000/api/registry/{name}",
-    "@ui-components/form": "http://localhost:3000/api/registry/form/{name}",
-    "@ui-components/navigation": "http://localhost:3000/api/registry/navigation/{name}",
-    "@ui-components/data": "http://localhost:3000/api/registry/data/{name}",
-    "@ui-components/modal": "http://localhost:3000/api/registry/modal/{name}",
-    "@ui-components/hooks": "http://localhost:3000/api/registry/hooks/{name}"
+    "@ui-components": "http://localhost:3000/api/registry/{name}"
   }
 }
 ```
@@ -91,10 +90,10 @@ Add the registry configuration to your `components.json`:
 
 ### Registry System
 
-- **Auto-generated registry** with namespace support
-- **API endpoints** at `/api/registry/` for CLI integration
-- **Categorized distribution** for targeted installations
-- **Dependency tracking** and proper import path resolution
+- Auto-generated static registry with namespace support
+- Served from `public/registry` and exposed via Next.js rewrites
+- Categorized distribution for targeted installations
+- Dependency tracking and proper import path resolution
 
 ## 🛠️ Technology Stack
 
@@ -137,8 +136,9 @@ pnpm start            # Production server
 pnpm lint             # ESLint
 pnpm format           # Prettier format
 pnpm format:check     # Check formatting
-pnpm registry:update  # Update component registry
-npx tsc --noEmit      # Type checking
+pnpm registry:update  # Update static component registry
+pnpm typecheck        # Type checking
+pnpm check            # Lint + format:check + typecheck
 ```
 
 ## 🎨 Theming

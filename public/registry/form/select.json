@@ -1,0 +1,16 @@
+{
+  "name": "select",
+  "type": "registry:component",
+  "category": "Form",
+  "namespace": "@ui-components/form",
+  "description": "Select component",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "Form/Select.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ChevronDown } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {\n  placeholder?: string\n}\n\nconst Select = React.forwardRef<HTMLSelectElement, SelectProps>(\n  ({ className, children, placeholder, ...props }, ref) => {\n    return (\n      <div className=\"relative\">\n        <select\n          className={cn(\n            \"flex h-10 w-full appearance-none rounded-md border border-input bg-background px-3 py-2 pr-8 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50\",\n            className\n          )}\n          ref={ref}\n          {...props}\n        >\n          {placeholder && (\n            <option value=\"\" disabled>\n              {placeholder}\n            </option>\n          )}\n          {children}\n        </select>\n        <ChevronDown className=\"absolute right-3 top-3 h-4 w-4 opacity-50 pointer-events-none\" />\n      </div>\n    )\n  }\n)\nSelect.displayName = \"Select\"\n\nexport { Select }\n"
+    }
+  ]
+}
