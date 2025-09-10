@@ -2,6 +2,7 @@
   "name": "input",
   "type": "registry:component",
   "category": "Form",
+  "namespace": "@ui-components/form",
   "description": "Input component",
   "dependencies": [],
   "registryDependencies": [],

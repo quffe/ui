@@ -1,6 +1,7 @@
 {
   "name": "useKeyboardShortcut",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook for handling keyboard shortcuts with context",
   "dependencies": [],
   "registryDependencies": [],

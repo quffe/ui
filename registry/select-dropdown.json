@@ -2,6 +2,7 @@
   "name": "select-dropdown",
   "type": "registry:component",
   "category": "Navigation",
+  "namespace": "@ui-components/navigation",
   "description": "Custom dropdown with keyboard navigation",
   "dependencies": [
     "lucide-react",

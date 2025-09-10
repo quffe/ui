@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 // Example components
 import { BasicDropdownExample } from "@/examples/docs/dropdown/basic-dropdown"
@@ -48,12 +50,15 @@ export default async function DropdownDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">Dropdown</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">Dropdown</h1>
+              <Badge variant="secondary">Navigation Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A searchable dropdown component built with Command and Popover primitives, featuring
               keyboard navigation and accessibility support.
             </p>
-            <Badge variant="secondary">Navigation Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("dropdown")} />
           </div>
 
           <Card className="mb-8">

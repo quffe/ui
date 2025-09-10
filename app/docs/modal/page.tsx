@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
@@ -48,12 +50,15 @@ export default async function ModalDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">Modal</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">Modal</h1>
+              <Badge variant="secondary">Modal Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A flexible modal component with customizable positioning, sizing, and behavior.
               Supports multiple sizes, animations, and accessibility features.
             </p>
-            <Badge variant="secondary">Modal Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("modal")} />
           </div>
 
           <Card className="mb-8">

@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 // Example components
 import { BasicExample } from "@/examples/docs/otp-input/basic-example"
@@ -50,12 +52,15 @@ export default async function OtpInputDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">OtpInput</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">OtpInput</h1>
+              <Badge variant="secondary">Form Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A one-time password (OTP) input component with multiple input fields, auto-focus
               navigation, paste support, and keyboard navigation.
             </p>
-            <Badge variant="secondary">Input Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("otp-input")} />
           </div>
 
           <Card className="mb-8">

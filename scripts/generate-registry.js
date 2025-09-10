@@ -172,11 +172,24 @@ function findHookFiles() {
   return hooks
 }
 
+function getNamespaceForCategory(category) {
+  const categoryToNamespace = {
+    'Data': 'data',
+    'Form': 'form', 
+    'Navigation': 'navigation',
+    'Modal': 'modal'
+  }
+  return categoryToNamespace[category] || 'ui'
+}
+
 function generateComponentRegistry(component) {
+  const namespace = getNamespaceForCategory(component.category)
+  
   const registry = {
     name: component.name,
     type: "registry:component",
     category: component.category,
+    namespace: `@ui-components/${namespace}`,
     description: getComponentDescription(component.displayName, component.category),
     dependencies: COMMON_DEPS[component.displayName] || [],
     registryDependencies: REGISTRY_DEPS[component.displayName] || [],
@@ -196,6 +209,7 @@ function generateHookRegistry(hook) {
   const registry = {
     name: hook.name,
     type: "registry:hook",
+    namespace: "@ui-components/hooks",
     description: getHookDescription(hook.name),
     dependencies: [],
     registryDependencies: [],
@@ -216,10 +230,12 @@ function generateIndexRegistry(components, hooks) {
 
   // Add components
   components.forEach(component => {
+    const namespace = getNamespaceForCategory(component.category)
     entries.push({
       name: component.name,
       type: "registry:component",
       category: component.category,
+      namespace: `@ui-components/${namespace}`,
       description: getComponentDescription(component.displayName, component.category),
       dependencies: COMMON_DEPS[component.displayName] || [],
       registryDependencies: REGISTRY_DEPS[component.displayName] || [],
@@ -231,6 +247,7 @@ function generateIndexRegistry(components, hooks) {
     entries.push({
       name: hook.name,
       type: "registry:hook",
+      namespace: "@ui-components/hooks",
       description: getHookDescription(hook.name),
       dependencies: [],
       registryDependencies: [],

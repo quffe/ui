@@ -2,16 +2,21 @@ import { Select } from "@/components/Form/Select"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 export default function SelectDocs() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Select</h1>
+        <div className="flex items-end gap-3 mb-4">
+          <h1 className="text-4xl font-bold">Select</h1>
+          <Badge variant="secondary">Form Component</Badge>
+        </div>
         <p className="text-lg text-muted-foreground mb-4">
           A dropdown select component for choosing from multiple options.
         </p>
-        <Badge variant="secondary">Form Component</Badge>
+        <CopyableCodeBadge text={config.getNamespacePath("select")} />
       </div>
 
       <Card className="mb-8">

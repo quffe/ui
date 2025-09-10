@@ -226,6 +226,59 @@ export default function InstallationPage() {
               </CardContent>
             </Card>
 
+            {/* Step 2.5: Add Namespace Registry */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary">
+                    <Package className="h-5 w-5" />
+                  </div>
+                  Step 2.5: Add Registry Configuration
+                </CardTitle>
+                <CardDescription>Configure the namespace registry for component installation</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-2">
+                    Add the registry configuration to your <CodeBlock inline={true}>components.json</CodeBlock> file:
+                  </p>
+                  <CodeBlock language="json" showCopyButton={true}>
+{`{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  },
+  "registries": {
+    "@ui-components": "http://localhost:3000/api/registry/{name}"
+  }
+}`}
+                  </CodeBlock>
+                </div>
+                <div className="bg-blue-soft/20 border border-border rounded-lg p-4">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium">Namespace Support</p>
+                      <p className="text-sm text-muted-foreground">
+                        This registry supports shadcn/ui 3.0+ namespace features. Components are organized by category:
+                        <CodeBlock inline={true}>form/checkbox</CodeBlock>, <CodeBlock inline={true}>hooks/useLocalStorage</CodeBlock>, etc.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Step 3: Install Components */}
             <Card className="mb-6">
               <CardHeader>
@@ -239,8 +292,31 @@ export default function InstallationPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <p className="text-sm">Install any component from our registry:</p>
-                  <InstallationTabs componentName="data-table" />
+                  <p className="text-sm">Install any component from our registry using namespace syntax:</p>
+                  <InstallationTabs componentName="input-amount" />
+                  
+                  <div className="bg-muted/50 rounded-lg p-4">
+                    <p className="text-sm font-medium mb-2">Available Namespaces:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <p className="font-mono text-primary">@ui-components/form/*</p>
+                        <p className="text-muted-foreground">Form controls & inputs</p>
+                      </div>
+                      <div>
+                        <p className="font-mono text-primary">@ui-components/navigation/*</p>
+                        <p className="text-muted-foreground">Navigation components</p>
+                      </div>
+                      <div>
+                        <p className="font-mono text-primary">@ui-components/data/*</p>
+                        <p className="text-muted-foreground">Data visualization</p>
+                      </div>
+                      <div>
+                        <p className="font-mono text-primary">@ui-components/hooks/*</p>
+                        <p className="text-muted-foreground">Custom React hooks</p>
+                      </div>
+                    </div>
+                  </div>
+                  
                   <div className="text-sm text-muted-foreground space-y-1">
                     <p>Components will be installed to:</p>
                     <ul className="list-disc list-inside ml-4 space-y-1">

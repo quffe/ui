@@ -1,6 +1,7 @@
 {
   "name": "useOnMountLayoutEffect",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook that runs layout effect only on component mount",
   "dependencies": [],
   "registryDependencies": [],

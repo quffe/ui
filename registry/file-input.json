@@ -2,6 +2,7 @@
   "name": "file-input",
   "type": "registry:component",
   "category": "Form",
+  "namespace": "@ui-components/form",
   "description": "File upload input with drag and drop support",
   "dependencies": [
     "lucide-react"

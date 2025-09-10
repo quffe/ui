@@ -2,6 +2,7 @@
   "name": "dropdown",
   "type": "registry:component",
   "category": "Navigation",
+  "namespace": "@ui-components/navigation",
   "description": "Searchable dropdown with Command and Popover primitives",
   "dependencies": [
     "lucide-react"

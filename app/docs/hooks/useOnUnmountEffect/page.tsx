@@ -15,6 +15,8 @@ import {
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 import LiveDemoExample from "@/examples/docs/hooks/useOnUnmountEffect/live-demo"
 import EventListenerCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/event-listener-cleanup"
@@ -56,16 +58,19 @@ export default async function UseOnUnmountEffectDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">useOnUnmountEffect</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">useOnUnmountEffect</h1>
+              <div className="flex gap-2">
+                <Badge variant="secondary">React Hook</Badge>
+                <Badge variant="outline">Lifecycle</Badge>
+                <Badge variant="outline">Cleanup</Badge>
+              </div>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A hook that runs cleanup logic only when the component unmounts, perfect for resource
               cleanup and final operations.
             </p>
-            <div className="flex gap-2">
-              <Badge variant="secondary">React Hook</Badge>
-              <Badge variant="outline">Lifecycle</Badge>
-              <Badge variant="outline">Cleanup</Badge>
-            </div>
+            <CopyableCodeBadge text={config.getNamespacePath("useOnUnmountEffect")} />
           </div>
 
           <Card className="mb-8">

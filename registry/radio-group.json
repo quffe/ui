@@ -2,6 +2,7 @@
   "name": "radio-group",
   "type": "registry:component",
   "category": "Form",
+  "namespace": "@ui-components/form",
   "description": "RadioGroup component",
   "dependencies": [],
   "registryDependencies": [],

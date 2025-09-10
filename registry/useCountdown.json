@@ -1,6 +1,7 @@
 {
   "name": "useCountdown",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook for countdown timers with auto-decrement",
   "dependencies": [],
   "registryDependencies": [],

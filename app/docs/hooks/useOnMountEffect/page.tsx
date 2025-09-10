@@ -15,6 +15,8 @@ import {
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 // Example components
 import LiveDemoExample from "@/examples/docs/hooks/useOnMountEffect/live-demo"
@@ -51,15 +53,18 @@ export default async function UseOnMountEffectDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">useOnMountEffect</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">useOnMountEffect</h1>
+              <div className="flex gap-2">
+                <Badge variant="secondary">React Hook</Badge>
+                <Badge variant="outline">Effect</Badge>
+              </div>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A collection of hooks for running effects only once when components mount, with proper
               cleanup handling.
             </p>
-            <div className="flex gap-2">
-              <Badge variant="secondary">React Hook</Badge>
-              <Badge variant="outline">Effect</Badge>
-            </div>
+            <CopyableCodeBadge text={config.getNamespacePath("useOnMountEffect")} />
           </div>
 
           <Card className="mb-8">

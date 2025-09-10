@@ -2,6 +2,7 @@
   "name": "textarea",
   "type": "registry:component",
   "category": "Form",
+  "namespace": "@ui-components/form",
   "description": "Textarea component",
   "dependencies": [],
   "registryDependencies": [],

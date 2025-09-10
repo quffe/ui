@@ -2,6 +2,8 @@ import { PasswordInput } from "@/components/Form/PasswordInput"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -36,11 +38,14 @@ export default function PasswordInputDocs() {
         <div className="container mx-auto max-w-4xl">
           {/* Keep the rest of the existing content */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">Password Input</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">PasswordInput</h1>
+              <Badge variant="secondary">Form Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A password input field with show/hide password functionality.
             </p>
-            <Badge variant="secondary">Form Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("password-input")} />
           </div>
 
           <Card className="mb-8">

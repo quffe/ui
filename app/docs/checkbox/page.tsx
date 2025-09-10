@@ -1,16 +1,21 @@
 import { Checkbox } from "@/components/Form/Checkbox"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 export default function CheckboxDocs() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Checkbox</h1>
+        <div className="flex items-end gap-3 mb-4">
+          <h1 className="text-4xl font-bold">Checkbox</h1>
+          <Badge variant="secondary">Form Component</Badge>
+        </div>
         <p className="text-lg text-muted-foreground mb-4">
           A checkbox input component with optional label support.
         </p>
-        <Badge variant="secondary">Form Component</Badge>
+        <CopyableCodeBadge text={config.getNamespacePath("checkbox")} />
       </div>
 
       <Card className="mb-8">

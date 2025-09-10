@@ -15,6 +15,8 @@ import {
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 import BulkDataRevalidationExample from "@/examples/docs/hooks/useRevalidate/bulk-data-revalidation"
 import FormSubmissionExample from "@/examples/docs/hooks/useRevalidate/form-submission"
@@ -56,15 +58,18 @@ export default async function UseRevalidateDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">useRevalidate</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">useRevalidate</h1>
+              <div className="flex gap-2">
+                <Badge variant="secondary">React Hook</Badge>
+                <Badge variant="outline">SWR</Badge>
+              </div>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A SWR integration hook for revalidating cached data by matching URL patterns, perfect
               for refreshing multiple API endpoints.
             </p>
-            <div className="flex gap-2">
-              <Badge variant="secondary">React Hook</Badge>
-              <Badge variant="outline">SWR</Badge>
-            </div>
+            <CopyableCodeBadge text={config.getNamespacePath("useRevalidate")} />
           </div>
 
           <Card className="mb-8">

@@ -12,6 +12,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 export default function InputDocs() {
   return (
@@ -35,11 +37,14 @@ export default function InputDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">Input</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">Input</h1>
+              <Badge variant="secondary">Form Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A basic input field component for text, email, and other input types.
             </p>
-            <Badge variant="secondary">Form Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("input")} />
           </div>
 
           <Card className="mb-8">

@@ -1,6 +1,7 @@
 {
   "name": "useStateChangeEffect",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook that runs effect only when state changes",
   "dependencies": [],
   "registryDependencies": [],

@@ -1,6 +1,7 @@
 {
   "name": "useOnWindowResize",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook that responds to window resize events",
   "dependencies": [],
   "registryDependencies": [],

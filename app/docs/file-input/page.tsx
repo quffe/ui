@@ -4,6 +4,8 @@ import { FileInput } from "@/components/Form/FileInput"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { useState } from "react"
 
 export default function FileInputDocs() {
@@ -12,11 +14,14 @@ export default function FileInputDocs() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">File Input</h1>
+        <div className="flex items-end gap-3 mb-4">
+          <h1 className="text-4xl font-bold">FileInput</h1>
+          <Badge variant="secondary">Form Component</Badge>
+        </div>
         <p className="text-lg text-muted-foreground mb-4">
           A file upload component with drag and drop support and file preview.
         </p>
-        <Badge variant="secondary">Form Component</Badge>
+        <CopyableCodeBadge text={config.getNamespacePath("file-input")} />
       </div>
 
       <Card className="mb-8">

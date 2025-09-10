@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { useState, useRef } from "react"
 import {
   useIsomorphicLayoutEffect,
@@ -93,16 +95,19 @@ export default function UseIsomorphicLayoutEffectDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">useIsomorphicLayoutEffect</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">useIsomorphicLayoutEffect</h1>
+              <div className="flex gap-2">
+                <Badge variant="secondary">React Hook</Badge>
+                <Badge variant="outline">SSR Safe</Badge>
+                <Badge variant="outline">Layout Effect</Badge>
+              </div>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               SSR-safe layout effects that use useLayoutEffect on client and useEffect on server,
               preventing hydration mismatches.
             </p>
-            <div className="flex gap-2">
-              <Badge variant="secondary">React Hook</Badge>
-              <Badge variant="outline">SSR Safe</Badge>
-              <Badge variant="outline">Layout Effect</Badge>
-            </div>
+            <CopyableCodeBadge text={config.getNamespacePath("useIsomorphicLayoutEffect")} />
           </div>
 
           <Card className="mb-8">

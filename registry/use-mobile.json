@@ -1,6 +1,7 @@
 {
   "name": "use-mobile",
   "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
   "description": "Hook to detect mobile viewport and breakpoints",
   "dependencies": [],
   "registryDependencies": [],

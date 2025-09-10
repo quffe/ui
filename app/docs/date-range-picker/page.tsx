@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
@@ -50,12 +52,15 @@ export default async function DateRangePickerDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">DateRangePicker</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">DateRangePicker</h1>
+              <Badge variant="secondary">Input Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A comprehensive date range picker with preset options, dual calendar view, and
               flexible selection modes.
             </p>
-            <Badge variant="secondary">Input Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("date-range-picker")} />
           </div>
 
           <Card className="mb-8">

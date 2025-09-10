@@ -12,6 +12,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 
 export default function TextareaDocs() {
   return (
@@ -35,11 +37,14 @@ export default function TextareaDocs() {
       <div className="flex-1 p-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">Textarea</h1>
+            <div className="flex items-end gap-3 mb-4">
+              <h1 className="text-4xl font-bold">Textarea</h1>
+              <Badge variant="secondary">Form Component</Badge>
+            </div>
             <p className="text-lg text-muted-foreground mb-4">
               A multi-line text input field for longer text content.
             </p>
-            <Badge variant="secondary">Form Component</Badge>
+            <CopyableCodeBadge text={config.getNamespacePath("textarea")} />
           </div>
 
           <Card className="mb-8">

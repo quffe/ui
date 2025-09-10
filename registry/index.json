@@ -3,6 +3,7 @@
     "name": "data-table",
     "type": "registry:component",
     "category": "Data",
+    "namespace": "@ui-components/data",
     "description": "A powerful data table with sorting, filtering, and pagination",
     "dependencies": [
       "@tanstack/react-table",
@@ -17,6 +18,7 @@
     "name": "checkbox",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "Checkbox component",
     "dependencies": [],
     "registryDependencies": []
@@ -25,6 +27,7 @@
     "name": "file-input",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "File upload input with drag and drop support",
     "dependencies": [
       "lucide-react"
@@ -38,6 +41,7 @@
     "name": "input",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "Input component",
     "dependencies": [],
     "registryDependencies": []
@@ -46,6 +50,7 @@
     "name": "password-input",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "Password input with toggle visibility",
     "dependencies": [
       "lucide-react"
@@ -59,6 +64,7 @@
     "name": "radio-group",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "RadioGroup component",
     "dependencies": [],
     "registryDependencies": []
@@ -67,6 +73,7 @@
     "name": "select",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "Select component",
     "dependencies": [],
     "registryDependencies": []
@@ -75,6 +82,7 @@
     "name": "textarea",
     "type": "registry:component",
     "category": "Form",
+    "namespace": "@ui-components/form",
     "description": "Textarea component",
     "dependencies": [],
     "registryDependencies": []
@@ -83,6 +91,7 @@
     "name": "dropdown",
     "type": "registry:component",
     "category": "Navigation",
+    "namespace": "@ui-components/navigation",
     "description": "Searchable dropdown with Command and Popover primitives",
     "dependencies": [
       "lucide-react"
@@ -97,6 +106,7 @@
     "name": "select",
     "type": "registry:component",
     "category": "Navigation",
+    "namespace": "@ui-components/navigation",
     "description": "Select component",
     "dependencies": [],
     "registryDependencies": []
@@ -105,6 +115,7 @@
     "name": "select-dropdown",
     "type": "registry:component",
     "category": "Navigation",
+    "namespace": "@ui-components/navigation",
     "description": "Custom dropdown with keyboard navigation",
     "dependencies": [
       "lucide-react",
@@ -118,6 +129,7 @@
     "name": "modal",
     "type": "registry:component",
     "category": "Modal",
+    "namespace": "@ui-components/modal",
     "description": "Flexible modal component with customizable sizing",
     "dependencies": [
       "lucide-react",
@@ -131,6 +143,7 @@
     "name": "modal-trigger",
     "type": "registry:component",
     "category": "Modal",
+    "namespace": "@ui-components/modal",
     "description": "Modal trigger component with button integration",
     "dependencies": [
       "class-variance-authority"
@@ -143,6 +156,7 @@
   {
     "name": "use-mobile",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook to detect mobile viewport and breakpoints",
     "dependencies": [],
     "registryDependencies": []
@@ -150,6 +164,7 @@
   {
     "name": "useCopyToClipboard",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook for copying text to clipboard with feedback",
     "dependencies": [],
     "registryDependencies": []
@@ -157,6 +172,7 @@
   {
     "name": "useCountdown",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook for countdown timers with auto-decrement",
     "dependencies": [],
     "registryDependencies": []
@@ -164,6 +180,7 @@
   {
     "name": "useIsomorphicLayoutEffect",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that uses layoutEffect on client, effect on server",
     "dependencies": [],
     "registryDependencies": []
@@ -171,6 +188,7 @@
   {
     "name": "useKeyboardShortcut",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook for handling keyboard shortcuts with context",
     "dependencies": [],
     "registryDependencies": []
@@ -178,6 +196,7 @@
   {
     "name": "useLocalStorage",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook for persisting state to localStorage with SSR support",
     "dependencies": [],
     "registryDependencies": []
@@ -185,6 +204,7 @@
   {
     "name": "useOnMountEffect",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that runs effect only on component mount",
     "dependencies": [],
     "registryDependencies": []
@@ -192,6 +212,7 @@
   {
     "name": "useOnMountLayoutEffect",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that runs layout effect only on component mount",
     "dependencies": [],
     "registryDependencies": []
@@ -199,6 +220,7 @@
   {
     "name": "useOnUnmountEffect",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that runs cleanup effect only on component unmount",
     "dependencies": [],
     "registryDependencies": []
@@ -206,6 +228,7 @@
   {
     "name": "useOnWindowResize",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that responds to window resize events",
     "dependencies": [],
     "registryDependencies": []
@@ -213,6 +236,7 @@
   {
     "name": "useRevalidate",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook for SWR data revalidation",
     "dependencies": [],
     "registryDependencies": []
@@ -220,6 +244,7 @@
   {
     "name": "useStateChangeEffect",
     "type": "registry:hook",
+    "namespace": "@ui-components/hooks",
     "description": "Hook that runs effect only when state changes",
     "dependencies": [],
     "registryDependencies": []

@@ -16,6 +16,8 @@ import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { KeyboardShortcutProvider } from "@/hooks/useKeyboardShortcut"
 import { KeyboardShortcutOverlay } from "@/components/internal/ui/keyboard-shortcut-tooltip"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
@@ -63,17 +65,20 @@ export default async function UseKeyboardShortcutDocs() {
         <div className="flex-1 p-4">
           <div className="container mx-auto max-w-4xl">
             <div className="mb-8">
-              <h1 className="text-4xl font-bold mb-4">useKeyboardShortcut</h1>
+              <div className="flex items-end gap-3 mb-4">
+                <h1 className="text-4xl font-bold">useKeyboardShortcut</h1>
+                <div className="flex gap-2">
+                  <Badge variant="secondary">React Hook</Badge>
+                  <Badge variant="outline">Accessibility</Badge>
+                  <Badge variant="outline">Navigation</Badge>
+                  <Badge variant="outline">Global State</Badge>
+                </div>
+              </div>
               <p className="text-lg text-muted-foreground mb-4">
                 A comprehensive keyboard shortcut system with global keymap, tooltip overlay, and
                 mouseless navigation for modern web applications.
               </p>
-              <div className="flex gap-2">
-                <Badge variant="secondary">React Hook</Badge>
-                <Badge variant="outline">Accessibility</Badge>
-                <Badge variant="outline">Navigation</Badge>
-                <Badge variant="outline">Global State</Badge>
-              </div>
+              <CopyableCodeBadge text={config.getNamespacePath("useKeyboardShortcut")} />
             </div>
 
             <Card className="mb-8">

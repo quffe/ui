@@ -47,9 +47,49 @@ export const config = {
   isDev: process.env.NODE_ENV === "development",
   isProd: process.env.NODE_ENV === "production",
 
-  // Component installation URLs
+  // Component installation URLs - supports namespace syntax
   getComponentUrl: (componentName: string) => {
-    return `${getRegistryUrl()}/${componentName}`
+    // Map component names to namespace paths
+    const namespaceMap: Record<string, string> = {
+      // Form components
+      'input-amount': 'form/input-amount',
+      'otp-input': 'form/otp-input', 
+      'file-input': 'form/file-input',
+      'password-input': 'form/password-input',
+      'checkbox': 'form/checkbox',
+      'input': 'form/input',
+      'textarea': 'form/textarea',
+      'radio-group': 'form/radio-group',
+      'select': 'form/select',
+      
+      // Navigation components
+      'dropdown': 'navigation/dropdown',
+      'select-dropdown': 'navigation/select-dropdown',
+      
+      // Data components
+      'data-table': 'data/data-table',
+      
+      // Modal components  
+      'modal': 'modal/modal',
+      'modal-trigger': 'modal/modal-trigger',
+      
+      // Hooks
+      'use-mobile': 'hooks/use-mobile',
+      'useCopyToClipboard': 'hooks/useCopyToClipboard',
+      'useCountdown': 'hooks/useCountdown',
+      'useIsomorphicLayoutEffect': 'hooks/useIsomorphicLayoutEffect',
+      'useKeyboardShortcut': 'hooks/useKeyboardShortcut',
+      'useLocalStorage': 'hooks/useLocalStorage',
+      'useOnMountEffect': 'hooks/useOnMountEffect',
+      'useOnMountLayoutEffect': 'hooks/useOnMountLayoutEffect',
+      'useOnUnmountEffect': 'hooks/useOnUnmountEffect',
+      'useOnWindowResize': 'hooks/useOnWindowResize',
+      'useRevalidate': 'hooks/useRevalidate',
+      'useStateChangeEffect': 'hooks/useStateChangeEffect',
+    }
+    
+    const namespacePath = namespaceMap[componentName] || componentName
+    return `@ui-components/${namespacePath}`
   },
 
   // CLI installation command generator
@@ -61,5 +101,12 @@ export const config = {
   // Get all available components from registry
   getRegistryIndexUrl: () => {
     return getRegistryUrl()
+  },
+
+  // Get namespace path for display (e.g., "form/otp-input")
+  getNamespacePath: (componentName: string) => {
+    const componentUrl = config.getComponentUrl(componentName)
+    // Extract the path after the namespace prefix (e.g., "@ui-components/form/input-amount" -> "form/input-amount")
+    return componentUrl.includes('/') ? componentUrl.split('/').slice(1).join('/') : componentUrl
   },
 }

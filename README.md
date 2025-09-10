@@ -1,36 +1,150 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UI Components Library
 
-## Getting Started
+A comprehensive Next.js React UI components library built with TypeScript, Tailwind CSS v4, and shadcn/ui patterns. Features a complete registry system with namespace support for easy distribution and installation.
 
-First, run the development server:
+## 🚀 Getting Started
+
+### Development Server
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dev          # Start development server with Turbopack
+pnpm build        # Production build
+pnpm start        # Start production server
+pnpm lint         # Lint code
+pnpm format       # Format code
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the component documentation and examples.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Registry Management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm registry:update  # Regenerate all registry files from components and hooks
+```
 
-## Learn More
+## 📦 Installation & Usage
 
-To learn more about Next.js, take a look at the following resources:
+This library supports **shadcn/ui CLI 3.0+ namespace features** for organized component installation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Install Components by Namespace
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Install all form components
+npx shadcn@latest add @ui-components/form/input-amount @ui-components/form/password-input
 
-## Deploy on Vercel
+# Install navigation components  
+npx shadcn@latest add @ui-components/navigation/dropdown @ui-components/navigation/select-dropdown
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Install data components
+npx shadcn@latest add @ui-components/data/data-table
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Install modal components
+npx shadcn@latest add @ui-components/modal/modal @ui-components/modal/modal-trigger
+
+# Install custom hooks
+npx shadcn@latest add @ui-components/hooks/useLocalStorage @ui-components/hooks/useKeyboardShortcut
+```
+
+### Available Namespaces
+
+| Namespace | Description | Components |
+|-----------|-------------|------------|
+| `@ui-components/form` | Form-specific components | InputAmount, OtpInput, PasswordInput, FileInput, Input, Textarea, Checkbox, RadioGroup, Select |
+| `@ui-components/navigation` | Navigation components | Dropdown, SelectDropdown |  
+| `@ui-components/data` | Data visualization | DataTable |
+| `@ui-components/modal` | Modal and overlay components | Modal, ModalTrigger |
+| `@ui-components/hooks` | Custom React hooks | useLocalStorage, useKeyboardShortcut, useOnUnmountEffect, etc. |
+
+### Configuration
+
+Add the registry configuration to your `components.json`:
+
+```json
+{
+  "registries": {
+    "@ui-components": "http://localhost:3000/api/registry/{name}",
+    "@ui-components/form": "http://localhost:3000/api/registry/form/{name}",
+    "@ui-components/navigation": "http://localhost:3000/api/registry/navigation/{name}",
+    "@ui-components/data": "http://localhost:3000/api/registry/data/{name}",
+    "@ui-components/modal": "http://localhost:3000/api/registry/modal/{name}",
+    "@ui-components/hooks": "http://localhost:3000/api/registry/hooks/{name}"
+  }
+}
+```
+
+## 🏗️ Architecture
+
+### Component Organization
+
+- **`/components/ui/`** - Base primitive components (shadcn/ui style)
+- **`/components/Form/`** - Form-specific components
+- **`/components/Input/`** - Advanced input components  
+- **`/components/Data/`** - Data visualization components
+- **`/components/Navigation/`** - Navigation components
+- **`/components/Modal/`** - Modal and overlay components
+- **`/components/internal/`** - Internal infrastructure components
+
+### Hooks Organization
+
+- **`/hooks/`** - Custom React hooks
+- **`/hooks/internal/`** - Internal hooks
+
+### Registry System
+
+- **Auto-generated registry** with namespace support
+- **API endpoints** at `/api/registry/` for CLI integration
+- **Categorized distribution** for targeted installations
+- **Dependency tracking** and proper import path resolution
+
+## 🛠️ Technology Stack
+
+- **Next.js 15.2.4** with App Router and React 19
+- **TypeScript 5** with strict mode  
+- **Tailwind CSS v4** (cutting edge)
+- **Radix UI** primitives for accessibility
+- **shadcn/ui** patterns and CLI 3.0+ namespace support
+- **CVA** for variant-based styling
+- **PNPM** for package management
+
+## 📚 Features
+
+### Components
+- **Form Controls**: Advanced inputs with validation and accessibility
+- **Data Tables**: Powerful tables with sorting, filtering, pagination
+- **Navigation**: Searchable dropdowns with keyboard navigation
+- **Modals**: Flexible modal system with size variants
+- **Accessibility**: Full ARIA support and semantic HTML
+
+### Hooks
+- **State Management**: localStorage sync, state change effects
+- **UI Utilities**: Mobile detection, keyboard shortcuts, window resize
+- **Lifecycle**: Mount/unmount effects, cleanup utilities
+- **Data**: SWR integration, revalidation helpers
+
+### Developer Experience
+- **TypeScript**: Full type safety with generic components
+- **Documentation**: Live examples and code previews
+- **Registry CLI**: Install components with single commands
+- **Hot Reload**: Instant feedback with Turbopack
+- **Code Quality**: ESLint, Prettier, automated formatting
+
+## 🚦 Development Commands
+
+```bash
+pnpm dev              # Development server (Turbopack)
+pnpm build            # Production build
+pnpm start            # Production server
+pnpm lint             # ESLint
+pnpm format           # Prettier format
+pnpm format:check     # Check formatting
+pnpm registry:update  # Update component registry
+npx tsc --noEmit      # Type checking
+```
+
+## 🎨 Theming
+
+Uses **Poimandres dark theme** with OKLCH colors and CSS variables. Fully customizable through Tailwind CSS v4 configuration.
+
+## 📄 License
+
+This project is built on top of [shadcn/ui](https://ui.shadcn.com/) patterns and follows similar open-source principles.
