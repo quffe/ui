@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 export default function TextareaDocs() {
   return (
@@ -53,11 +55,7 @@ export default function TextareaDocs() {
               <CardDescription>Install the Textarea component via CLI</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  npx shadcn@latest add https://ui-components.dev/textarea
-                </code>
-              </div>
+              <InstallationTabs componentName="textarea" />
             </CardContent>
           </Card>
 
@@ -66,16 +64,13 @@ export default function TextareaDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { Textarea } from "@/components/Form/Textarea"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  {`<Textarea placeholder="Enter your message..." />`}
-                </code>
-              </div>
+              <CodeBlock language="tsx" filename="components/Form/Textarea.tsx">
+{`import { Textarea } from "@/components/Form/Textarea"`}
+              </CodeBlock>
+              <div className="h-4" />
+              <CodeBlock language="tsx" filename="example.tsx">
+{`<Textarea placeholder="Enter your message..." />`}
+              </CodeBlock>
             </CardContent>
           </Card>
 

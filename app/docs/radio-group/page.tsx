@@ -7,6 +7,18 @@ import { Badge } from "@/components/ui/badge"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { useState } from "react"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Separator } from "@/components/ui/separator"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 export default function RadioGroupDocs() {
   const [selectedValue, setSelectedValue] = useState("")
@@ -28,7 +40,25 @@ export default function RadioGroupDocs() {
   ]
 
   return (
-    <div className="container mx-auto py-8 max-w-4xl">
+    <div className="flex flex-col">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Radio Group</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
+
+      <div className="flex-1 p-4">
+        <div className="container mx-auto max-w-4xl">
       <div className="mb-8">
         <div className="flex items-end gap-3 mb-4">
           <h1 className="text-4xl font-bold">RadioGroup</h1>
@@ -46,11 +76,7 @@ export default function RadioGroupDocs() {
           <CardDescription>Install the Radio Group component via CLI</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">
-              npx shadcn@latest add https://ui-components.dev/radio-group
-            </code>
-          </div>
+          <InstallationTabs componentName="radio-group" />
         </CardContent>
       </Card>
 
@@ -59,14 +85,12 @@ export default function RadioGroupDocs() {
           <CardTitle className="text-2xl font-bold">Usage</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-muted p-4 rounded-md mb-4">
-            <code className="text-sm">
-              {`import { RadioGroup } from "@/components/Form/RadioGroup"`}
-            </code>
-          </div>
-          <div className="bg-muted p-4 rounded-md">
-            <pre className="text-sm">
-              {`const options = [
+          <CodeBlock language="tsx" filename="components/Form/RadioGroup.tsx">
+{`import { RadioGroup } from "@/components/Form/RadioGroup"`}
+          </CodeBlock>
+          <div className="h-4" />
+          <CodeBlock language="tsx" filename="example.tsx">
+{`const options = [
   { value: "option1", label: "Option 1" },
   { value: "option2", label: "Option 2" }
 ]
@@ -77,8 +101,7 @@ export default function RadioGroupDocs() {
   value={selectedValue}
   onChange={setSelectedValue}
 />`}
-            </pre>
-          </div>
+          </CodeBlock>
         </CardContent>
       </Card>
 
@@ -179,6 +202,8 @@ export default function RadioGroupDocs() {
           </div>
         </CardContent>
       </Card>
+        </div>
+      </div>
     </div>
   )
 }

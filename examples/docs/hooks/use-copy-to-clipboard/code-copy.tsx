@@ -7,17 +7,7 @@ import { Copy, Check } from "lucide-react"
 export function CodeCopyExample() {
   const { copy, copied } = useCopyToClipboard()
 
-  const sampleCode = `import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-
-function CopyButton() {
-  const { copy, copied } = useCopyToClipboard()
-  
-  return (
-    <button onClick={() => copy("Hello World!")}>
-      {copied ? "Copied!" : "Copy"}
-    </button>
-  )
-}`
+  const sampleCode = `import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"\n\nfunction CopyButton() {\n  const { copy, copied } = useCopyToClipboard()\n  \n  return (\n    <button onClick={() => copy("Hello World!")}>\n      {copied ? "Copied!" : "Copy"}\n    </button>\n  )\n}`
 
   return (
     <div className="space-y-4">
@@ -40,3 +30,4 @@ function CopyButton() {
     </div>
   )
 }
+

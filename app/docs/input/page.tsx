@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 export default function InputDocs() {
   return (
@@ -53,11 +55,7 @@ export default function InputDocs() {
               <CardDescription>Install the Input component via CLI</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  npx shadcn@latest add https://ui-components.dev/input
-                </code>
-              </div>
+              <InstallationTabs componentName="input" />
             </CardContent>
           </Card>
 
@@ -66,14 +64,13 @@ export default function InputDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">{`import { Input } from "@/components/Form/Input"`}</code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  {`<Input type="email" placeholder="Enter your email" />`}
-                </code>
-              </div>
+              <CodeBlock language="tsx" filename="components/Form/Input.tsx">
+{`import { Input } from "@/components/Form/Input"`}
+              </CodeBlock>
+              <div className="h-4" />
+              <CodeBlock language="tsx" filename="example.tsx">
+{`<Input type="email" placeholder="Enter your email" />`}
+              </CodeBlock>
             </CardContent>
           </Card>
 

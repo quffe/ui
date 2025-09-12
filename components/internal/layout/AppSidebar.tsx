@@ -3,37 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import {
-  FileText,
-  Home,
-  Download,
-  Type,
-  Lock,
-  AlignLeft,
-  ChevronDown,
-  CheckSquare,
-  Circle,
-  Upload,
-  Search,
-  Table,
-  DollarSign,
-  Hash,
-  Calendar,
-  SquareStack,
-  MousePointer,
-  List,
-  Copy,
-  Timer,
-  Database,
-  Play,
-  Monitor,
-  Package,
-  RefreshCw,
-  Zap,
-  Smartphone,
-  BookOpen,
-  Keyboard,
-} from "lucide-react"
+import { FileText, Home, Download, BookOpen, Search, SquareStack } from "lucide-react"
 
 import {
   Sidebar,
@@ -49,210 +19,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { Label } from "@/components/ui/label"
+import { components, hooks } from "@/components/internal/layout/nav-data"
+import { SearchButton } from "@/components/internal/ui/search-button"
 
-const components = [
-  // Data Components
-  {
-    title: "DataTable",
-    url: "/docs/data-table",
-    icon: Table,
-    description: "Powerful data table with sorting and pagination",
-    category: "Data & Display",
-  },
-  // Advanced Input Components
-  {
-    title: "InputAmount",
-    url: "/docs/input-amount",
-    icon: DollarSign,
-    description: "Specialized input for monetary amounts",
-    category: "Advanced Inputs",
-  },
-  {
-    title: "OtpInput",
-    url: "/docs/otp-input",
-    icon: Hash,
-    description: "One-time password input with multiple fields",
-    category: "Advanced Inputs",
-  },
-  {
-    title: "DateRangePicker",
-    url: "/docs/date-range-picker",
-    icon: Calendar,
-    description: "Date range picker with presets",
-    category: "Advanced Inputs",
-  },
-  // Modal Components
-  {
-    title: "Modal",
-    url: "/docs/modal",
-    icon: SquareStack,
-    description: "Flexible modal component with customizable sizing",
-    category: "Overlays & Modals",
-  },
-  // Navigation Components
-  {
-    title: "Dropdown",
-    url: "/docs/dropdown",
-    icon: ChevronDown,
-    description: "Searchable dropdown with Command and Popover",
-    category: "Layout & Navigation",
-  },
-  {
-    title: "InputSelect",
-    url: "/docs/input-select",
-    icon: List,
-    description: "Type-safe select input with labels and validation",
-    category: "Layout & Navigation",
-  },
-  {
-    title: "SelectDropdown",
-    url: "/docs/select-dropdown",
-    icon: MousePointer,
-    description: "Custom dropdown with keyboard navigation",
-    category: "Layout & Navigation",
-  },
-  // Form Components
-  {
-    title: "Input",
-    url: "/docs/input",
-    icon: Type,
-    description: "Basic text input field",
-    category: "Form Controls",
-  },
-  {
-    title: "Password Input",
-    url: "/docs/password-input",
-    icon: Lock,
-    description: "Password input with toggle",
-    category: "Form Controls",
-  },
-  {
-    title: "Textarea",
-    url: "/docs/textarea",
-    icon: AlignLeft,
-    description: "Multi-line text input",
-    category: "Form Controls",
-  },
-  {
-    title: "Select",
-    url: "/docs/select",
-    icon: ChevronDown,
-    description: "Dropdown select component",
-    category: "Form Controls",
-  },
-  {
-    title: "Checkbox",
-    url: "/docs/checkbox",
-    icon: CheckSquare,
-    description: "Checkbox with label",
-    category: "Form Controls",
-  },
-  {
-    title: "Radio Group",
-    url: "/docs/radio-group",
-    icon: Circle,
-    description: "Radio button group",
-    category: "Form Controls",
-  },
-  {
-    title: "File Input",
-    url: "/docs/file-input",
-    icon: Upload,
-    description: "File upload component",
-    category: "Form Controls",
-  },
-]
-
-const hooks = [
-  // Device & Layout Hooks
-  {
-    title: "useMobile",
-    url: "/docs/hooks/use-mobile",
-    icon: Smartphone,
-    description: "Responsive viewport detection with SSR support",
-    category: "Device & Layout",
-  },
-  {
-    title: "useOnWindowResize",
-    url: "/docs/hooks/useOnWindowResize",
-    icon: Monitor,
-    description: "Window resize event handling",
-    category: "Device & Layout",
-  },
-  // Life Cycles Hooks
-  {
-    title: "useOnMountEffect",
-    url: "/docs/hooks/useOnMountEffect",
-    icon: Play,
-    description: "Mount-only effect execution",
-    category: "Life Cycles",
-  },
-  {
-    title: "useOnMountLayoutEffect",
-    url: "/docs/hooks/useOnMountLayoutEffect",
-    icon: Zap,
-    description: "Mount-only layout effect with synchronous execution",
-    category: "Life Cycles",
-  },
-  {
-    title: "useOnUnmountEffect",
-    url: "/docs/hooks/useOnUnmountEffect",
-    icon: Package,
-    description: "Cleanup logic that runs only on unmount",
-    category: "Life Cycles",
-  },
-  {
-    title: "useStateChangeEffect",
-    url: "/docs/hooks/useStateChangeEffect",
-    icon: Zap,
-    description: "Effect triggered by state changes",
-    category: "Life Cycles",
-  },
-  {
-    title: "useIsomorphicLayoutEffect",
-    url: "/docs/hooks/useIsomorphicLayoutEffect",
-    icon: Monitor,
-    description: "SSR-safe layout effects for universal apps",
-    category: "Life Cycles",
-  },
-  // State Management Hooks
-  {
-    title: "useLocalStorage",
-    url: "/docs/hooks/useLocalStorage",
-    icon: Database,
-    description: "Persistent localStorage state management",
-    category: "State Management",
-  },
-  // Utility Hooks
-  {
-    title: "useCopyToClipboard",
-    url: "/docs/hooks/use-copy-to-clipboard",
-    icon: Copy,
-    description: "Advanced clipboard operations",
-    category: "Utilities",
-  },
-  {
-    title: "useCountdown",
-    url: "/docs/hooks/useCountdown",
-    icon: Timer,
-    description: "Countdown timers with loop support",
-    category: "Utilities",
-  },
-  {
-    title: "useRevalidate",
-    url: "/docs/hooks/useRevalidate",
-    icon: RefreshCw,
-    description: "SWR cache revalidation helper",
-    category: "Utilities",
-  },
-  {
-    title: "useKeyboardShortcut",
-    url: "/docs/hooks/useKeyboardShortcut",
-    icon: Keyboard,
-    description: "Global keyboard shortcuts with tooltip system",
-    category: "Utilities",
-  },
-]
+// Data for components and hooks moved to nav-data for reuse (e.g., CommandPalette)
 
 export function AppSidebar() {
   const pathname = usePathname()
@@ -271,6 +41,7 @@ export function AppSidebar() {
   )
 
   // Group components by category
+  type ComponentItem = (typeof components)[number]
   const groupedComponents = filteredComponents.reduce(
     (acc, component) => {
       const category = component.category || "Other"
@@ -280,10 +51,11 @@ export function AppSidebar() {
       acc[category].push(component)
       return acc
     },
-    {} as Record<string, typeof components>
+    {} as Record<string, ComponentItem[]>
   )
 
   // Group hooks by category
+  type HookItem = (typeof hooks)[number]
   const groupedHooks = filteredHooks.reduce(
     (acc, hook) => {
       const category = hook.category || "Other"
@@ -293,7 +65,7 @@ export function AppSidebar() {
       acc[category].push(hook)
       return acc
     },
-    {} as Record<string, typeof hooks>
+    {} as Record<string, HookItem[]>
   )
 
   return (
@@ -326,6 +98,9 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </form>
+        <div className="px-2 pb-2">
+          <SearchButton className="w-full" />
+        </div>
       </SidebarHeader>
 
       <SidebarContent>

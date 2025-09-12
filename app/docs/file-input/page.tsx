@@ -6,13 +6,40 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { useState } from "react"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Separator } from "@/components/ui/separator"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 export default function FileInputDocs() {
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
-
   return (
-    <div className="container mx-auto py-8 max-w-4xl">
+    <div className="flex flex-col">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>File Input</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
+
+      <div className="flex-1 p-4">
+        <div className="container mx-auto max-w-4xl">
       <div className="mb-8">
         <div className="flex items-end gap-3 mb-4">
           <h1 className="text-4xl font-bold">FileInput</h1>
@@ -30,11 +57,7 @@ export default function FileInputDocs() {
           <CardDescription>Install the File Input component via CLI</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">
-              npx shadcn@latest add https://ui-components.dev/file-input
-            </code>
-          </div>
+          <InstallationTabs componentName="file-input" />
         </CardContent>
       </Card>
 
@@ -43,16 +66,13 @@ export default function FileInputDocs() {
           <CardTitle className="text-2xl font-bold">Usage</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-muted p-4 rounded-md mb-4">
-            <code className="text-sm">
-              {`import { FileInput } from "@/components/Form/FileInput"`}
-            </code>
-          </div>
-          <div className="bg-muted p-4 rounded-md">
-            <code className="text-sm">
-              {`<FileInput onFileSelect={(files) => console.log(files)} />`}
-            </code>
-          </div>
+          <CodeBlock language="tsx" filename="components/Form/FileInput.tsx">
+{`import { FileInput } from "@/components/Form/FileInput"`}
+          </CodeBlock>
+          <div className="h-4" />
+          <CodeBlock language="tsx" filename="example.tsx">
+{`<FileInput onFileSelect={(files) => console.log(files)} />`}
+          </CodeBlock>
         </CardContent>
       </Card>
 
@@ -76,12 +96,7 @@ export default function FileInputDocs() {
 
           <div>
             <h3 className="text-lg font-semibold mb-2">With File Preview</h3>
-            <FileInput showPreview onFileSelect={setSelectedFiles} />
-            {selectedFiles && (
-              <p className="text-sm text-muted-foreground mt-2">
-                Selected {selectedFiles.length} file(s)
-              </p>
-            )}
+            <FileInput showPreview />
           </div>
 
           <div>
@@ -147,6 +162,8 @@ export default function FileInputDocs() {
           </div>
         </CardContent>
       </Card>
+        </div>
+      </div>
     </div>
   )
 }

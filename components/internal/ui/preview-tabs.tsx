@@ -3,6 +3,8 @@
 import * as React from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
+import { Button } from "@/components/ui/button"
+import { Check, Copy } from "lucide-react"
 
 interface PreviewTabsProps {
   preview: React.ReactNode
@@ -12,21 +14,51 @@ interface PreviewTabsProps {
 }
 
 export function PreviewTabs({ preview, code, language = "tsx", title }: PreviewTabsProps) {
+  const [value, setValue] = React.useState("preview")
+  const [copied, setCopied] = React.useState(false)
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    } catch {}
+  }
   return (
     <div>
-      <Tabs defaultValue="preview" className="w-full">
+      <Tabs value={value} onValueChange={setValue} className="w-full">
         <div
           className={`flex items-start gap-4 ${title ? "justify-between flex-col sm:flex-row sm:items-center" : "justify-end"}`}
         >
           {title && <h4 className="text-lg font-semibold flex-1">{title}</h4>}
-          <TabsList className="shrink-0">
-            <TabsTrigger className="cursor-pointer" value="preview">
-              Preview
-            </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="code">
-              Code
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="sm:hidden"
+              onClick={() => setValue(v => (v === "code" ? "preview" : "code"))}
+            >
+              {value === "code" ? "Hide code" : "Show code"}
+            </Button>
+            <Button size="sm" variant="ghost" className="hidden sm:inline-flex" onClick={onCopy}>
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 mr-2 text-primary" /> Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 mr-2" /> Copy code
+                </>
+              )}
+            </Button>
+            <TabsList className="shrink-0 hidden sm:inline-flex">
+              <TabsTrigger className="cursor-pointer" value="preview">
+                Preview
+              </TabsTrigger>
+              <TabsTrigger className="cursor-pointer" value="code">
+                Code
+              </TabsTrigger>
+            </TabsList>
+          </div>
         </div>
 
         <TabsContent value="preview" className="mt-4">

@@ -18,15 +18,15 @@ import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 
 // Example components
-import { BasicUsageExample } from "@/examples/docs/use-copy-to-clipboard/basic-usage"
-import { WithCallbacksExample } from "@/examples/docs/use-copy-to-clipboard/with-callbacks"
-import { CodeCopyExample } from "@/examples/docs/use-copy-to-clipboard/code-copy"
+import { BasicUsageExample } from "@/examples/docs/hooks/use-copy-to-clipboard/basic-usage"
+import { WithCallbacksExample } from "@/examples/docs/hooks/use-copy-to-clipboard/with-callbacks"
+import { CodeCopyExample } from "@/examples/docs/hooks/use-copy-to-clipboard/code-copy"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Raw imports
-const basicUsageCode = getExampleCode("docs/use-copy-to-clipboard/basic-usage.tsx")
-const withCallbacksCode = getExampleCode("docs/use-copy-to-clipboard/with-callbacks.tsx")
-const codeCopyCode = getExampleCode("docs/use-copy-to-clipboard/code-copy.tsx")
+const basicUsageCode = getExampleCode("docs/hooks/use-copy-to-clipboard/basic-usage.tsx")
+const withCallbacksCode = getExampleCode("docs/hooks/use-copy-to-clipboard/with-callbacks.tsx")
+const codeCopyCode = getExampleCode("docs/hooks/use-copy-to-clipboard/code-copy.tsx")
 
 export default async function UseCopyToClipboardDocs() {
   return (

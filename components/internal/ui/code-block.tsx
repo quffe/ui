@@ -1,11 +1,15 @@
 "use client"
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Copy, Check } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { poimandresTheme } from "@/lib/poimandres-theme"
+
+const SyntaxHighlighter = dynamic(async () => (await import("react-syntax-highlighter")).Prism, {
+  ssr: false,
+})
 
 interface CodeBlockProps {
   children: string
@@ -13,6 +17,7 @@ interface CodeBlockProps {
   className?: string
   showCopyButton?: boolean
   inline?: boolean
+  filename?: string
 }
 
 export function CodeBlock({
@@ -21,6 +26,7 @@ export function CodeBlock({
   className,
   showCopyButton = true,
   inline = false,
+  filename,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
 
@@ -48,6 +54,14 @@ export function CodeBlock({
   return (
     <div className={cn("relative group", className)}>
       <div className="bg-card rounded-md overflow-hidden border border-border code-scrollbar">
+        {(filename || language) && (
+          <div className="flex items-center justify-between px-3 py-2 border-b border-border text-xs text-muted-foreground">
+            <span className="truncate">{filename}</span>
+            <span className="uppercase tracking-wide bg-muted text-foreground/80 rounded px-1.5 py-0.5 text-[10px]">
+              {language}
+            </span>
+          </div>
+        )}
         <SyntaxHighlighter
           language={language}
           style={poimandresTheme}

@@ -19,12 +19,12 @@ import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Example components
-import { BasicUsageExample } from "@/examples/docs/use-mobile/basic-usage"
-import { CustomBreakpointExample } from "@/examples/docs/use-mobile/custom-breakpoint"
+import { BasicUsageExample } from "@/examples/docs/hooks/use-mobile/basic-usage"
+import { CustomBreakpointExample } from "@/examples/docs/hooks/use-mobile/custom-breakpoint"
 
 // Raw imports
-const basicUsageCode = getExampleCode("docs/use-mobile/basic-usage.tsx")
-const customBreakpointCode = getExampleCode("docs/use-mobile/custom-breakpoint.tsx")
+const basicUsageCode = getExampleCode("docs/hooks/use-mobile/basic-usage.tsx")
+const customBreakpointCode = getExampleCode("docs/hooks/use-mobile/custom-breakpoint.tsx")
 
 export default async function UseMobileDocs() {
   return (

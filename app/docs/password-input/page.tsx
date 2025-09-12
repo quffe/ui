@@ -14,6 +14,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { InstallationTabs } from "@/components/internal/installation"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 export default function PasswordInputDocs() {
   return (
@@ -54,11 +56,7 @@ export default function PasswordInputDocs() {
               <CardDescription>Install the Password Input component via CLI</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  npx shadcn@latest add https://ui-components.dev/password-input
-                </code>
-              </div>
+              <InstallationTabs componentName="password-input" />
             </CardContent>
           </Card>
 
@@ -67,16 +65,13 @@ export default function PasswordInputDocs() {
               <CardTitle className="text-2xl font-bold">Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-md mb-4">
-                <code className="text-sm">
-                  {`import { PasswordInput } from "@/components/Form/PasswordInput"`}
-                </code>
-              </div>
-              <div className="bg-muted p-4 rounded-md">
-                <code className="text-sm">
-                  {`<PasswordInput placeholder="Enter your password" />`}
-                </code>
-              </div>
+              <CodeBlock language="tsx" filename="components/Form/PasswordInput.tsx">
+{`import { PasswordInput } from "@/components/Form/PasswordInput"`}
+              </CodeBlock>
+              <div className="h-4" />
+              <CodeBlock language="tsx" filename="example.tsx">
+{`<PasswordInput placeholder="Enter your password" />`}
+              </CodeBlock>
             </CardContent>
           </Card>
 
