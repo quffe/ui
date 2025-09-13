@@ -72,8 +72,12 @@ export const config = {
       // Modal components  
       'modal': 'modal/modal',
       'modal-trigger': 'modal/modal-trigger',
+
+      // Mentions
+      'github-mention': 'mentions/github-mention',
       
       // Hooks
+      'use-github-mention': 'hooks/use-github-mention',
       'use-mobile': 'hooks/use-mobile',
       'useCopyToClipboard': 'hooks/useCopyToClipboard',
       'useCountdown': 'hooks/useCountdown',

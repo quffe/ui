@@ -200,6 +200,31 @@
       ]
     },
     {
+      "name": "github-mention",
+      "type": "registry:component",
+      "category": "Mentions",
+      "namespace": "@ui-components/mentions",
+      "description": "Compact metadata card for GitHub resources (PRs, Issues, Users, Repos)",
+      "dependencies": [],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "avatar",
+        "tooltip",
+        "separator",
+        "skeleton",
+        "button"
+      ]
+    },
+    {
+      "name": "use-github-mention",
+      "type": "registry:hook",
+      "namespace": "@ui-components/hooks",
+      "description": "use-github-mention hook",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
       "name": "use-mobile",
       "type": "registry:hook",
       "namespace": "@ui-components/hooks",
@@ -304,6 +329,7 @@
     "@ui-components/data": "Data visualization components (DataTable)",
     "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
     "@ui-components/modal": "Modal and overlay components",
+    "@ui-components/mentions": "Mentions and integrations",
     "@ui-components/hooks": "Custom React hooks"
   }
 }

@@ -127,6 +127,23 @@ Add the registry configuration to your `components.json` (rewritten to static fi
 - **Hot Reload**: Instant feedback with Turbopack
 - **Code Quality**: ESLint, Prettier, automated formatting
 
+## 🔗 Mentions: GitHub Mention
+
+Render compact metadata cards for GitHub resources (PRs, issues, users, repos):
+
+```tsx
+import { GithubMention } from "@/components/Mentions/Github/GithubMention"
+
+export function Example() {
+  return (
+    <GithubMention url="https://github.com/vercel/next.js/pull/123" />
+  )
+}
+```
+
+- Works unauthenticated (60 req/hr/IP) or via server proxy: `<GithubMention url={...} useServer />`
+- Supports PR states (Open/Closed/Merged/Draft), Issue comments count, User bio/followers, Repo stars/forks
+
 ## 🚦 Development Commands
 
 ```bash

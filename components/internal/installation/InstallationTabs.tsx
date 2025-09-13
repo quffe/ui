@@ -146,6 +146,7 @@ function getImportPath(componentName: string): string {
     "file-input": "@/components/Form/FileInput",
     "password-input": "@/components/Form/PasswordInput",
     "date-range-picker": "@/components/Form/DateRangePicker",
+    "github-mention": "@/components/Mentions/Github/GithubMention",
   }
 
   if (hooks.includes(componentName) || componentName.startsWith("use")) {

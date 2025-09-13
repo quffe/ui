@@ -27,6 +27,7 @@ const CATEGORIES = {
   ],
   Navigation: ["Dropdown", "SelectDropdown", "Select"],
   Modal: ["Modal", "ModalTrigger"],
+  Mentions: ["GithubMention"],
 }
 
 // Common dependencies for components
@@ -55,6 +56,7 @@ const REGISTRY_DEPS = {
   InputSelect: ["input", "button", "popover"],
   FileInput: ["input", "button"],
   PasswordInput: ["input", "button"],
+  GithubMention: ["card", "badge", "avatar", "tooltip", "separator", "skeleton", "button"],
 }
 
 function kebabCase(str) {
@@ -83,6 +85,7 @@ function getComponentDescription(componentName, category) {
     ModalTrigger: "Modal trigger component with button integration",
     Dropdown: "Searchable dropdown with Command and Popover primitives",
     SelectDropdown: "Custom dropdown with keyboard navigation",
+    GithubMention: "Compact metadata card for GitHub resources (PRs, Issues, Users, Repos)",
   }
 
   return descriptions[componentName] || `${componentName} component`
@@ -120,27 +123,42 @@ function findComponentFiles() {
   const components = []
 
   // Scan categorized component directories
-  const categoryDirs = ["Data", "Form", "Navigation", "Modal", "Input"]
+  const categoryDirs = ["Data", "Form", "Navigation", "Modal", "Input", "Mentions"]
 
   categoryDirs.forEach(category => {
     const categoryPath = path.join(COMPONENTS_DIR, category)
     if (fs.existsSync(categoryPath)) {
-      const files = fs.readdirSync(categoryPath)
-      files.forEach(file => {
-        if (file.endsWith(".tsx")) {
-          const componentName = path.basename(file, ".tsx")
-          const filePath = path.join(categoryPath, file)
+      const entries = fs.readdirSync(categoryPath, { withFileTypes: true })
+      entries.forEach(entry => {
+        if (entry.isFile() && entry.name.endsWith(".tsx")) {
+          const componentName = path.basename(entry.name, ".tsx")
+          const filePath = path.join(categoryPath, entry.name)
           const content = readFileContent(filePath)
-
-          // Derive logical category for Input/* using mapping; otherwise keep folder category
           const logicalCategory = category === "Input" ? getComponentCategory(componentName) : category
-
           components.push({
             name: kebabCase(componentName),
             displayName: componentName,
             category: logicalCategory,
-            filePath: path.join(category, file),
+            filePath: path.join(category, entry.name),
             content,
+          })
+        } else if (entry.isDirectory()) {
+          const subdir = path.join(categoryPath, entry.name)
+          const subfiles = fs.readdirSync(subdir)
+          subfiles.forEach(file => {
+            if (file.endsWith(".tsx")) {
+              const componentName = path.basename(file, ".tsx")
+              const filePath = path.join(subdir, file)
+              const content = readFileContent(filePath)
+              const logicalCategory = category === "Input" ? getComponentCategory(componentName) : category
+              components.push({
+                name: kebabCase(componentName),
+                displayName: componentName,
+                category: logicalCategory,
+                filePath: path.join(category, entry.name, file),
+                content,
+              })
+            }
           })
         }
       })
@@ -181,7 +199,8 @@ function getNamespaceForCategory(category) {
     'Data': 'data',
     'Form': 'form', 
     'Navigation': 'navigation',
-    'Modal': 'modal'
+    'Modal': 'modal',
+    'Mentions': 'mentions'
   }
   return categoryToNamespace[category] || 'ui'
 }
@@ -277,6 +296,7 @@ function generateIndexRegistry(components, hooks) {
       "@ui-components/data": "Data visualization components (DataTable)",
       "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
       "@ui-components/modal": "Modal and overlay components",
+      "@ui-components/mentions": "Mentions and integrations",
       "@ui-components/hooks": "Custom React hooks",
     },
   }
