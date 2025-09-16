@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { GitMerge, GitPullRequest } from "lucide-react"
 
 export function CardExample() {
-  const { data, isLoading, error } = useGithubMention("https://github.com/vercel/next.js/pull/1")
+  const { data, isLoading, error } = useGithubMention("https://github.com/vercel/next.js/pull/1", { useServer: true })
   if (isLoading) return <div className="h-28 w-full bg-muted animate-pulse rounded" />
   if (error || !data || (data.kind !== "pull" && data.kind !== "issue")) return <div className="text-xs text-muted-foreground">Failed to load</div>
 
@@ -64,4 +64,3 @@ function repoFromUrl(htmlUrl: string): string {
     return htmlUrl
   }
 }
-

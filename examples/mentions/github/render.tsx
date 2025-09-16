@@ -7,6 +7,7 @@ export function Example() {
     <div className="space-y-3">
       <GithubMention
         url="https://github.com/vercel/next.js/pull/123"
+        useServer
         render={data => {
           const chip = (
             <span className="rounded bg-muted px-2 py-0.5">{data.kind.toUpperCase()}</span>

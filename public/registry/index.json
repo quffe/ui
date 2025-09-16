@@ -204,8 +204,42 @@
       "type": "registry:component",
       "category": "Mentions",
       "namespace": "@ui-components/mentions",
-      "description": "Compact metadata card for GitHub resources (PRs, Issues, Users, Repos)",
+      "description": "GitHub Mention component (plain, no cache)",
       "dependencies": [],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "avatar",
+        "tooltip",
+        "separator",
+        "skeleton",
+        "button"
+      ]
+    },
+    {
+      "name": "github-mention-swr",
+      "type": "registry:component",
+      "category": "Mentions",
+      "namespace": "@ui-components/mentions",
+      "description": "GitHub Mention component (SWR)",
+      "dependencies": ["swr"],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "avatar",
+        "tooltip",
+        "separator",
+        "skeleton",
+        "button"
+      ]
+    },
+    {
+      "name": "github-mention-react-query",
+      "type": "registry:component",
+      "category": "Mentions",
+      "namespace": "@ui-components/mentions",
+      "description": "GitHub Mention component (React Query)",
+      "dependencies": ["@tanstack/react-query"],
       "registryDependencies": [
         "card",
         "badge",
@@ -220,8 +254,24 @@
       "name": "use-github-mention",
       "type": "registry:hook",
       "namespace": "@ui-components/hooks",
-      "description": "use-github-mention hook",
+      "description": "use-github-mention hook (SWR)",
+      "dependencies": ["swr"],
+      "registryDependencies": []
+    },
+    {
+      "name": "use-github-mention-plain",
+      "type": "registry:hook",
+      "namespace": "@ui-components/hooks",
+      "description": "use-github-mention hook (plain, no cache)",
       "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "use-github-mention-react-query",
+      "type": "registry:hook",
+      "namespace": "@ui-components/hooks",
+      "description": "use-github-mention hook (React Query adapter)",
+      "dependencies": ["@tanstack/react-query"],
       "registryDependencies": []
     },
     {

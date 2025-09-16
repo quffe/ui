@@ -30,7 +30,7 @@ export function GithubMention({ url, useServer, className, linkProps, render, on
 
   if (isLoading) return <GithubMentionSkeleton className={className} />
   if (error || !data)
-    return <GithubMentionError url={url} onRetry={refetch} className={className} errorMessage={error?.message} />
+    return <GithubMentionError url={url} onRetry={refetch} className={className} error={error ?? undefined} />
 
   if (render) return <div className={className}>{render(data)}</div>
   return <div className={className}>{renderContent(data, linkProps)}</div>
@@ -48,15 +48,25 @@ function GithubMentionSkeleton({ className }: { className?: string }) {
   )
 }
 
-function GithubMentionError({ url, onRetry, className, errorMessage }: { url: string; onRetry: () => void; className?: string; errorMessage?: string }) {
+function GithubMentionError({ url, onRetry, className, error }: { url: string; onRetry: () => void; className?: string; error?: Error }) {
   const parsed = parseGithubUrl(url)
+  const anyErr = error as unknown as { statusCode?: number; code?: string; message?: string } | undefined
   return (
     <div className={`inline-flex items-center gap-2 ${className ?? ""}`}> 
       <span className="text-xs text-muted-foreground">Could not load</span>
       <span className="text-xs truncate max-w-[24rem] text-muted-foreground">{parsed.kind !== "unknown" ? url : "Invalid GitHub URL"}</span>
-      <Button size="sm" variant="outline" onClick={onRetry} aria-label="Retry loading GitHub data" title={errorMessage}>
+      <Button size="sm" variant="outline" onClick={onRetry} aria-label="Retry loading GitHub data" title={anyErr?.message}>
         Retry
       </Button>
+      {error ? (
+        <span className="text-[11px] text-muted-foreground">
+          {anyErr?.statusCode ? `HTTP ${anyErr.statusCode}` : null}
+          {anyErr?.code ? ` (${anyErr.code})` : null}
+          {anyErr?.statusCode || anyErr?.code ? ": " : null}
+          {error.message}
+          {anyErr?.code === "RATE_LIMITED" ? " – add GITHUB_TOKEN and/or useServer for higher limits" : null}
+        </span>
+      ) : null}
     </div>
   )
 }

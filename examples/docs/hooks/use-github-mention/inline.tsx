@@ -5,7 +5,7 @@ import { useGithubMention } from "@/hooks/use-github-mention"
 import { GitPullRequest, GitMerge } from "lucide-react"
 
 export function InlineExample() {
-  const { data, isLoading, error } = useGithubMention("https://github.com/vercel/next.js/issues/5367")
+  const { data, isLoading, error } = useGithubMention("https://github.com/vercel/next.js/issues/5367", { useServer: true })
   if (isLoading) return <div className="h-4 w-64 bg-muted animate-pulse rounded" />
   if (error || !data) return <div className="text-xs text-muted-foreground">Failed to load</div>
 
@@ -59,4 +59,3 @@ function repoFromUrl(htmlUrl: string): string {
     return htmlUrl
   }
 }
-

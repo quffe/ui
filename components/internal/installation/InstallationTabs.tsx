@@ -147,9 +147,15 @@ function getImportPath(componentName: string): string {
     "password-input": "@/components/Form/PasswordInput",
     "date-range-picker": "@/components/Form/DateRangePicker",
     "github-mention": "@/components/Mentions/Github/GithubMention",
+    "github-mention-swr": "@/components/Mentions/Github/GithubMention",
+    "github-mention-react-query": "@/components/Mentions/Github/GithubMention",
   }
 
   if (hooks.includes(componentName) || componentName.startsWith("use")) {
+    // Special-case hook variants so imports stay stable
+    if (componentName === "use-github-mention-plain") {
+      return `import { useGithubMention } from "@/hooks/use-github-mention"`
+    }
     const hookName = componentName.startsWith("use-")
       ? componentName.replace("use-", "use").replace(/-([a-z])/g, (_, char) => char.toUpperCase())
       : componentName

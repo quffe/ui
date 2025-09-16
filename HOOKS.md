@@ -21,6 +21,12 @@ A comprehensive collection of reusable React hooks built with TypeScript for enh
 - **[useOnMountEffect](#useonmounteffect)** - Mount-only effect execution
 - **[useRevalidate](#userevalidate)** - SWR cache revalidation helper
 
+### GitHub Mentions
+
+- useGithubMention (SWR) – default hook for fetching GitHub metadata
+- useGithubMentionQuery (React Query) – optional adapter
+- getGithubResource – plain fetch utility for server/client without a cache
+
 ---
 
 ## Hook Documentation
@@ -118,6 +124,35 @@ function useCopyToClipboard(options?: UseCopyToClipboardOptions): UseCopyToClipb
 ```
 
 ---
+
+## GitHub Mentions – Installation Options
+
+Pick one of the following depending on your stack:
+
+- SWR (default)
+  - Install via shadcn CLI: `@ui-components/hooks/use-github-mention`
+  - Adds a dependency on `swr`.
+  - Usage: `import { useGithubMention } from "@/hooks/use-github-mention"`
+
+- React Query (optional)
+  - Install via shadcn CLI: `@ui-components/hooks/use-github-mention-react-query`
+  - Adds a dependency on `@tanstack/react-query`.
+  - Usage: `import { useGithubMentionQuery } from "@/hooks/use-github-mention-react-query"`
+
+- No cache (plain fetch)
+  - Use `getGithubResource` from `@/lib/github/resource` (no extra deps)
+  - Server Components: `await getGithubResource(url, { useServer: true })`
+  - Client Components: call `getGithubResource(url)` inside an effect.
+
+CLI quick refs
+- Plain (default): `@ui-components/hooks/use-github-mention-plain`
+- SWR: `@ui-components/hooks/use-github-mention`
+- React Query: `@ui-components/hooks/use-github-mention-react-query`
+
+Notes
+- Both hooks support invalid URLs and expose `invalidReason` for quick checks.
+- For higher rate limits or CORS avoidance, pass `useServer: true` to fetch via `/api/github/resource`.
+
 
 ### useCountdown
 

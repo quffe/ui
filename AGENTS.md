@@ -1,47 +1,25 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `app/` – Next.js App Router, docs, and API (includes `/api/registry/*`).
-- `components/` – UI components grouped by category: `Data/`, `Form/`, `Navigation/`, `Modal/` (PascalCase files: `DataTable.tsx`). Internal primitives live under `components/internal/` or `components/ui/`.
-- `hooks/` – Custom React hooks (`useX.ts` / `useX.tsx`).
-- `examples/` – Minimal usage examples and demo content.
-- `lib/` – Utilities and shared helpers.
-- `public/` – Static assets.
-- `public/registry/` – Auto‑generated JSON registry files (served statically).
-- `scripts/` – Maintenance scripts (e.g., `generate-registry.js`).
-- Import alias: use `@/*` per `tsconfig.json`.
+Core app lives in `app/` using the Next.js App Router; docs and API handlers (including `/api/registry/*`) sit here too. UI primitives are grouped under `components/` by type (`Data/`, `Form/`, `Navigation/`, `Modal/`), with low-level elements in `components/internal/` or `components/ui/`. Custom hooks reside in `hooks/` as PascalCase exports named `useX`. Utilities and shared helpers stay in `lib/`, demo content in `examples/`, static files in `public/`, and generated registry JSON in `public/registry/`. Scripts such as `generate-registry.js` live in `scripts/`. Use the `@/*` import alias for cross-directory imports.
 
 ## Build, Test, and Development Commands
-- `pnpm dev` – Start local dev server (Turbopack).
-- `pnpm build` – Production build.
-- `pnpm start` – Start built app.
-- `pnpm lint` – ESLint (Next + TS rules).
-- `pnpm format` / `pnpm format:check` – Prettier write/check.
-- `pnpm registry:update` – Regenerate `registry/*.json` from `components/` and `hooks/`.
-- `npx tsc --noEmit` – Type check only.
+- `pnpm dev` launches the Turbopack dev server.
+- `pnpm build` creates the production bundle.
+- `pnpm start` runs the built app locally.
+- `pnpm lint` executes ESLint with Next + TS rules.
+- `pnpm format` and `pnpm format:check` apply or verify Prettier formatting.
+- `npx tsc --noEmit` performs a strict type check.
+- `pnpm registry:update` regenerates `public/registry/*.json` from current components and hooks.
 
 ## Coding Style & Naming Conventions
-- TypeScript + React 19 + Next.js 15 (App Router).
-- Components in PascalCase (`ModalTrigger.tsx`); hooks start with `use` in camelCase (`useKeyboardShortcut.ts`).
-- Prefer colocated styles and variants via CVA; keep props typed and minimal.
-- Prettier (`.prettierrc`): no semicolons, 2‑space tabs, double quotes, width 100, trailing commas `es5`, `arrowParens: "avoid"`.
-- ESLint: `next/core-web-vitals`, `next/typescript`. Fix lint before commit.
+Write TypeScript + React 19 components in PascalCase (e.g., `ModalTrigger.tsx`) and hooks prefixed with `use`. Follow Prettier defaults: 2-space indent, double quotes, no semicolons, width 100, trailing commas `es5`, `arrowParens: "avoid"`. Keep props minimal, prefer CVA for variants, and respect existing file placement.
 
 ## Testing Guidelines
-- No formal test framework configured yet. Validate changes via example pages and the docs in `app/`.
-- If adding tests, prefer React Testing Library; colocate as `*.test.tsx` or use `__tests__/`. Keep tests deterministic and small.
+No formal test runner is bundled; validate manually via docs pages and examples. When adding tests, favor React Testing Library colocated as `Component.test.tsx` or inside `__tests__/`. Keep tests deterministic and small, and ensure they cover accessibility behaviors.
 
 ## Commit & Pull Request Guidelines
-- Commits: short, imperative, scoped when helpful (e.g., `add namespace badge`, `refactor: registry generation`).
-- Run `pnpm lint && pnpm format:check && npx tsc --noEmit` before pushing.
-- PRs: include a clear description, linked issues, and screenshots/GIFs for UI changes. Keep PRs focused and small.
-- Update docs (`COMPONENTS.md`, `HOOKS.md`, `REGISTRY.md`) and run `pnpm registry:update` when components/hooks change.
+Craft short, imperative commits (e.g., `add namespace badge`, `refactor: registry generation`). Before pushing, run `pnpm lint && pnpm format:check && npx tsc --noEmit`. PRs need clear descriptions, linked issues, and media for UI changes. Update docs like `COMPONENTS.md`, `HOOKS.md`, and rerun `pnpm registry:update` whenever components or hooks change.
 
 ## Security & Configuration Tips
-- Copy `.env.example` → `.env.local`; never commit secrets. Prefer server routes for sensitive work.
-- Follow Radix UI/ARIA patterns; ensure keyboard accessibility.
-
-## Agent‑Specific Notes
-- Respect these guidelines; avoid broad refactors or renames without need.
-- Maintain existing file structure and naming; prefer minimal diffs.
-- When touching components/hooks, also update examples and regenerate the registry.
+Duplicate `.env.example` to `.env.local` for local secrets and keep them untracked. Handle sensitive logic in server routes rather than client components, and follow Radix UI/ARIA patterns for keyboard accessibility throughout.

@@ -14,8 +14,6 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { InstallationTabs } from "@/components/internal/installation"
-import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
-import { config } from "@/lib/config"
 import { Badge } from "@/components/ui/badge"
 import { AlertCircle } from "lucide-react"
 import { GithubMention } from "@/components/Mentions/Github/GithubMention"
@@ -85,7 +83,7 @@ export default async function GithubMentionsPage() {
             <CardContent className="space-y-3">
               <div className="flex flex-wrap gap-2">
                 <Badge>Accessible</Badge>
-                <Badge variant="secondary">SWR caching</Badge>
+                <Badge variant="secondary">Cache-ready (SWR/RQ)</Badge>
                 <Badge variant="outline">Shadcn primitives</Badge>
               </div>
               <div className="text-sm text-muted-foreground">
@@ -125,12 +123,32 @@ export default async function GithubMentionsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Install with the shadcn CLI namespace</CardDescription>
+              <CardDescription>Choose your data layer: Plain, SWR, or React Query</CardDescription>
             </CardHeader>
-            <CardContent>
-              <InstallationTabs componentName="github-mention" />
-              <div className="mt-2">
-                <CopyableCodeBadge text={config.getNamespacePath("github-mention")} />
+            <CardContent className="space-y-4">
+              <div className="bg-warn-soft/20 border border-border rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="h-5 w-5 text-warn-amber mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Warning</p>
+                    <p className="text-sm text-muted-foreground">
+                      The default install uses a plain, no-cache hook. If you prefer a caching layer, choose the SWR or React Query variant. Installing those variants will add the corresponding dependency (<code>swr</code> or <code>@tanstack/react-query</code>).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium mb-2">Plain (default, no extra deps)</p>
+                <InstallationTabs componentName="github-mention" />
+              </div>
+              <div>
+                <p className="text-sm font-medium mb-2">SWR variant</p>
+                <InstallationTabs componentName="github-mention-swr" />
+              </div>
+              <div>
+                <p className="text-sm font-medium mb-2">React Query variant</p>
+                <InstallationTabs componentName="github-mention-react-query" />
               </div>
             </CardContent>
           </Card>
@@ -146,6 +164,10 @@ export default async function GithubMentionsPage() {
             preview={<RenderExample />}
             code={renderCode}
           />
+
+          <div className="text-xs text-muted-foreground">
+            Tip: Demos use the server proxy for reliability. Set GITHUB_TOKEN in .env.local to raise rate limits, or remove useServer to call GitHub directly.
+          </div>
 
           <Card>
             <CardHeader>

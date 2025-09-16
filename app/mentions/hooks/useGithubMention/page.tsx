@@ -15,6 +15,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { getExampleCode } from "@/lib/serverUtils"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import Link from "next/link"
 import { AlertCircle } from "lucide-react"
 
@@ -72,10 +73,33 @@ export default async function UseGithubMentionDocs() {
           <Card>
             <CardHeader>
               <CardTitle>Installation</CardTitle>
-              <CardDescription>Install the hook via the shadcn namespace</CardDescription>
+              <CardDescription>Choose your data layer: Plain, SWR, or React Query</CardDescription>
             </CardHeader>
-            <CardContent>
-              <InstallationTabs componentName="use-github-mention" />
+            <CardContent className="space-y-4">
+              <div className="bg-warn-soft/20 border border-border rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="h-5 w-5 text-warn-amber mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">Warning</p>
+                    <p className="text-sm text-muted-foreground">
+                      The default install uses a plain, no-cache version of the hook. If you prefer a caching layer, choose the SWR or React Query variant. Installing those variants will add the corresponding dependency (<code>swr</code> or <code>@tanstack/react-query</code>).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium mb-2">Plain (default, no extra deps)</p>
+                <InstallationTabs componentName="use-github-mention-plain" />
+              </div>
+              <div>
+                <p className="text-sm font-medium mb-2">SWR variant</p>
+                <InstallationTabs componentName="use-github-mention" />
+              </div>
+              <div>
+                <p className="text-sm font-medium mb-2">React Query variant</p>
+                <InstallationTabs componentName="use-github-mention-react-query" />
+              </div>
             </CardContent>
           </Card>
 
@@ -119,6 +143,9 @@ export default async function UseGithubMentionDocs() {
                 Note: Use <code>GithubMention</code> for a ready-made GitHub-like mention. Use this
                 hook if you need to customize the UI.
               </div>
+              <div className="text-xs text-muted-foreground">
+                Tip: Examples use the server proxy (useServer) for reliability. Add GITHUB_TOKEN to .env.local to increase rate limits, or omit useServer to fetch directly from GitHub.
+              </div>
             </CardContent>
           </Card>
 
@@ -149,6 +176,63 @@ export default async function UseGithubMentionDocs() {
   invalidReason?: "EMPTY_URL" | "INVALID_GITHUB_URL"
 }`}
                 </pre>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Integrations</CardTitle>
+              <CardDescription>React Query and plain fetch variants</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-2">
+                <p className="font-medium text-sm">Install variants (CLI)</p>
+                <div className="grid gap-2 sm:grid-cols-3 text-xs">
+                  <div>
+                    <p className="text-muted-foreground mb-1">Plain (default)</p>
+                    <CopyableCodeBadge text="@ui-components/hooks/use-github-mention-plain" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground mb-1">SWR</p>
+                    <CopyableCodeBadge text="@ui-components/hooks/use-github-mention" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground mb-1">React Query</p>
+                    <CopyableCodeBadge text="@ui-components/hooks/use-github-mention-react-query" />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="font-medium text-sm">React Query (optional)</p>
+                <pre className="rounded-md bg-muted p-3 overflow-x-auto text-xs">
+{`import { useGithubMentionQuery } from "@/hooks/use-github-mention-react-query"
+
+function Example() {
+  const { data, isLoading, error } = useGithubMentionQuery(
+    "https://github.com/vercel/next.js/issues/1",
+    { useServer: true }
+  )
+  // ...
+}`}                </pre>
+                <div className="text-xs text-muted-foreground">
+                  Requires <code>@tanstack/react-query</code> in your app. This repo ships a thin adapter; install the peer dependency in your project.
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="font-medium text-sm">Plain fetch utility</p>
+                <pre className="rounded-md bg-muted p-3 overflow-x-auto text-xs">
+{`import { getGithubResource } from "@/lib/github/resource"
+
+// In a Server Component
+const data = await getGithubResource("https://github.com/vercel/next.js/pull/1", { useServer: true })
+
+// In a Client Component
+useEffect(() => {
+  let mounted = true
+  getGithubResource(url).then(res => mounted && setData(res))
+  return () => { mounted = false }
+}, [url])`}                </pre>
               </div>
             </CardContent>
           </Card>
