@@ -76,7 +76,7 @@ export function useCopyToClipboard({
   const [copied, setCopied] = React.useState(false)
   const [error, setError] = React.useState<Error | null>(null)
   const [isLoading, setIsLoading] = React.useState(false)
-  const timeoutRef = React.useRef<NodeJS.Timeout | undefined>(undefined)
+  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   /**
    * Fallback copy method for older browsers

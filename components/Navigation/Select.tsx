@@ -60,6 +60,23 @@ export function InputSelect<T>({
   const selectId = React.useId()
   const finalId = id || selectId
 
+  const keyedOptions = React.useMemo(
+    () =>
+      options.map((option, index) => ({
+        option,
+        key:
+          typeof option.value === "string" || typeof option.value === "number"
+            ? String(option.value)
+            : `option-${index}`,
+      })),
+    [options]
+  )
+
+  const selectedKey = React.useMemo(() => {
+    const match = keyedOptions.find(item => item.option.value === value)
+    return match?.key
+  }, [keyedOptions, value])
+
   // Handle size variants
   const sizeClasses = {
     sm: "h-8 text-xs",
@@ -75,8 +92,11 @@ export function InputSelect<T>({
         </Label>
       )}
       <Select
-        value={value ? String(value) : undefined}
-        onValueChange={(newValue: string) => onChange(newValue as T)}
+        value={selectedKey}
+        onValueChange={(newValue: string) => {
+          const match = keyedOptions.find(item => item.key === newValue)
+          onChange(match ? match.option.value : null)
+        }}
         disabled={disabled}
         name={name}
         onOpenChange={onOpenChange}
@@ -95,8 +115,8 @@ export function InputSelect<T>({
         </SelectTrigger>
         <SelectContent className={contentClassName}>
           <SelectGroup>
-            {options.map((option, index) => (
-              <SelectItem key={index} value={String(option.value)} disabled={option.disabled}>
+            {keyedOptions.map(({ key, option }) => (
+              <SelectItem key={key} value={key} disabled={option.disabled}>
                 {option.label}
               </SelectItem>
             ))}

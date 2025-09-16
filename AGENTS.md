@@ -23,3 +23,6 @@ Craft short, imperative commits (e.g., `add namespace badge`, `refactor: registr
 
 ## Security & Configuration Tips
 Duplicate `.env.example` to `.env.local` for local secrets and keep them untracked. Handle sensitive logic in server routes rather than client components, and follow Radix UI/ARIA patterns for keyboard accessibility throughout.
+
+## Agent-Specific Notes
+Treat everything under `components/ui/` as a vendor drop from shadcn/ui—do not edit those files directly. Prefer wrapping or composing these primitives elsewhere when adjustments are required so upstream syncs stay painless.

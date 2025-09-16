@@ -43,26 +43,26 @@ export function DataTable<TData, TValue>({
   onRowClick,
   singleAction = false,
   pageSize = 25,
-  pageIndex = 0,
+  pageIndex = 1,
   totalCount = 0,
   onPaginationChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: pageIndex - 1,
+    pageIndex: Math.max(pageIndex - 1, 0),
     pageSize,
   })
 
   React.useEffect(() => {
-    setPagination({ pageIndex: pageIndex - 1, pageSize })
+    setPagination({ pageIndex: Math.max(pageIndex - 1, 0), pageSize })
   }, [pageIndex, pageSize])
 
   const renderPageNumbers = () => {
     if (!onPaginationChange) return null
 
     const totalPages = Math.ceil(totalCount / pageSize)
-    const currentPage = pageIndex
+    const currentPage = Math.min(pageIndex, totalPages || 1)
     const pages = []
 
     if (totalPages <= 5) {
@@ -72,8 +72,11 @@ export function DataTable<TData, TValue>({
             key={i}
             variant={currentPage === i ? "default" : "outline"}
             size="sm"
+            type="button"
             onClick={() => onPaginationChange({ pageIndex: i, pageSize })}
             disabled={currentPage === i}
+            aria-label={`Go to page ${i}`}
+            aria-current={currentPage === i ? "page" : undefined}
           >
             {i}
           </Button>
@@ -87,8 +90,11 @@ export function DataTable<TData, TValue>({
         key={1}
         variant={currentPage === 1 ? "default" : "outline"}
         size="sm"
+        type="button"
         onClick={() => onPaginationChange({ pageIndex: 1, pageSize })}
         disabled={currentPage === 1}
+        aria-label="Go to page 1"
+        aria-current={currentPage === 1 ? "page" : undefined}
       >
         1
       </Button>
@@ -107,9 +113,9 @@ export function DataTable<TData, TValue>({
 
     if (start > 2) {
       pages.push(
-        <Button key="ellipsis-start" variant="ghost" size="sm" disabled>
+        <span key="ellipsis-start" aria-hidden className="flex h-8 w-8 items-center justify-center">
           <MoreHorizontal className="h-4 w-4" />
-        </Button>
+        </span>
       )
     }
 
@@ -119,8 +125,11 @@ export function DataTable<TData, TValue>({
           key={i}
           variant={currentPage === i ? "default" : "outline"}
           size="sm"
+          type="button"
           onClick={() => onPaginationChange({ pageIndex: i, pageSize })}
           disabled={currentPage === i}
+          aria-label={`Go to page ${i}`}
+          aria-current={currentPage === i ? "page" : undefined}
         >
           {i}
         </Button>
@@ -129,9 +138,9 @@ export function DataTable<TData, TValue>({
 
     if (end < totalPages - 1) {
       pages.push(
-        <Button key="ellipsis-end" variant="ghost" size="sm" disabled>
+        <span key="ellipsis-end" aria-hidden className="flex h-8 w-8 items-center justify-center">
           <MoreHorizontal className="h-4 w-4" />
-        </Button>
+        </span>
       )
     }
 
@@ -141,8 +150,11 @@ export function DataTable<TData, TValue>({
           key={totalPages}
           variant={currentPage === totalPages ? "default" : "outline"}
           size="sm"
+          type="button"
           onClick={() => onPaginationChange({ pageIndex: totalPages, pageSize })}
           disabled={currentPage === totalPages}
+          aria-label={`Go to page ${totalPages}`}
+          aria-current={currentPage === totalPages ? "page" : undefined}
         >
           {totalPages}
         </Button>
@@ -181,8 +193,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border w-full">
-      <div className="w-full overflow-x-auto">
-        <Table className="min-w-full">
+      <Table className="min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
@@ -207,29 +218,46 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className={cn(
-                    singleAction && onRowClick ? "cursor-pointer hover:bg-muted/50" : ""
-                  )}
-                  onClick={singleAction && onRowClick ? () => onRowClick(row.original) : undefined}
-                >
-                  {row.getVisibleCells().map(cell => (
-                    <TableCell
-                      key={cell.id}
-                      className={
-                        cell.column.id.includes("actions")
+              table.getRowModel().rows.map(row => {
+                const isSelectable = singleAction && onRowClick
+
+                const handleRowKeyDown = isSelectable
+                  ? (event: React.KeyboardEvent<HTMLTableRowElement>) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        onRowClick?.(row.original)
+                      }
+                    }
+                  : undefined
+
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    data-clickable={isSelectable ? "true" : undefined}
+                    className={cn(isSelectable ? "cursor-pointer hover:bg-muted/50" : "")}
+                    onClick={isSelectable ? () => onRowClick?.(row.original) : undefined}
+                    tabIndex={isSelectable ? 0 : undefined}
+                    onKeyDown={handleRowKeyDown}
+                    aria-label={
+                      isSelectable ? `Select row ${row.index + 1}` : undefined
+                    }
+                  >
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          cell.column.id.includes("actions")
                           ? "sticky right-0 bg-background shadow-sm"
                           : ""
                       }
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )
+              })
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
@@ -239,21 +267,22 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
       <div className="flex items-center justify-between space-x-2 p-4 border-t">
         <div className="text-sm text-muted-foreground">
           {onPaginationChange && totalCount > 0 && (
-            <>
+            <span aria-live="polite">
               Showing {pagination.pageIndex * pagination.pageSize + 1} to{" "}
               {Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalCount)} of{" "}
               {totalCount} results
-            </>
+            </span>
           )}
         </div>
         <div className="flex items-center space-x-1">
           <Button
             variant="outline"
             size="sm"
+            type="button"
+            aria-label="Go to previous page"
             onClick={() => table.previousPage()}
             disabled={onPaginationChange ? pageIndex === 1 : !table.getCanPreviousPage()}
           >
@@ -263,6 +292,8 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
+            type="button"
+            aria-label="Go to next page"
             onClick={() => table.nextPage()}
             disabled={
               onPaginationChange ? pageIndex * pageSize >= totalCount : !table.getCanNextPage()

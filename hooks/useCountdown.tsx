@@ -110,7 +110,7 @@ export function useCountdownLoopTimer({
   const [isPaused, setIsPaused] = React.useState(false)
   const [loopCount, setLoopCount] = React.useState(0)
 
-  const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
   const savedCallback = React.useRef(onTick)
   const startTimeRef = React.useRef<number>(0)
   const pausedTimeRef = React.useRef<number>(0)

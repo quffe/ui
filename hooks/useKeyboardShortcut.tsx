@@ -20,15 +20,22 @@ export interface KeyboardShortcut {
   priority?: number
 }
 
+type KeyboardShortcutListenerEntry = {
+  id: string
+  callback: (event: KeyboardEvent) => void
+  order: number
+}
+
 /**
  * Global keyboard shortcut registry
  */
 class KeyboardShortcutRegistry {
   private shortcuts = new Map<string, KeyboardShortcut>()
-  private listeners = new Map<string, Set<(event: KeyboardEvent) => void>>()
+  private listeners = new Map<string, KeyboardShortcutListenerEntry[]>()
   private elementShortcuts = new Map<HTMLElement, KeyboardShortcut>()
   private showTooltips = false
   private tooltipListeners = new Set<() => void>()
+  private registrationCounter = 0
 
   /**
    * Register a keyboard shortcut
@@ -39,11 +46,19 @@ class KeyboardShortcutRegistry {
     // Store shortcut config
     this.shortcuts.set(shortcut.id, { ...shortcut, keys: key })
 
-    // Add callback listener
-    if (!this.listeners.has(key)) {
-      this.listeners.set(key, new Set())
+    const listeners = this.listeners.get(key) ?? []
+    const alreadyRegistered = listeners.some(
+      entry => entry.id === shortcut.id && entry.callback === callback
+    )
+    if (!alreadyRegistered) {
+      const listenerEntry: KeyboardShortcutListenerEntry = {
+        id: shortcut.id,
+        callback,
+        order: this.registrationCounter++,
+      }
+      listeners.push(listenerEntry)
+      this.listeners.set(key, listeners)
     }
-    this.listeners.get(key)!.add(callback)
 
     return () => this.unregister(shortcut.id, callback)
   }
@@ -57,8 +72,10 @@ class KeyboardShortcutRegistry {
 
     const listeners = this.listeners.get(shortcut.keys)
     if (listeners) {
-      listeners.delete(callback)
-      if (listeners.size === 0) {
+      const nextListeners = listeners.filter(entry => entry.callback !== callback)
+      if (nextListeners.length > 0) {
+        this.listeners.set(shortcut.keys, nextListeners)
+      } else {
         this.listeners.delete(shortcut.keys)
       }
     }
@@ -87,14 +104,26 @@ class KeyboardShortcutRegistry {
     const key = this.getEventKey(event)
     const listeners = this.listeners.get(key)
 
-    if (listeners && listeners.size > 0) {
-      // Sort by priority if multiple listeners
-      const sortedCallbacks = Array.from(listeners)
+    if (listeners && listeners.length > 0) {
+      const prioritizedListeners = listeners
+        .map(entry => {
+          const shortcut = this.shortcuts.get(entry.id)
+          return shortcut ? { entry, shortcut } : null
+        })
+        .filter(
+          (item): item is { entry: KeyboardShortcutListenerEntry; shortcut: KeyboardShortcut } => {
+            return Boolean(item?.shortcut) && item!.shortcut.enabled !== false
+          }
+        )
+        .sort((a, b) => {
+          const priorityDiff = (b.shortcut.priority ?? 0) - (a.shortcut.priority ?? 0)
+          if (priorityDiff !== 0) return priorityDiff
+          return a.entry.order - b.entry.order
+        })
 
-      // Execute callbacks (first one that doesn't call preventDefault wins)
-      for (const callback of sortedCallbacks) {
+      for (const { entry } of prioritizedListeners) {
         try {
-          callback(event)
+          entry.callback(event)
           if (event.defaultPrevented) {
             break
           }

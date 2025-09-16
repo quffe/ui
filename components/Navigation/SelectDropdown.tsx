@@ -45,6 +45,9 @@ interface DropdownProps<T> extends VariantProps<typeof dropdownVariants> {
   name?: string
   required?: boolean
   id?: string
+  ariaLabel?: string
+  ariaLabelledBy?: string
+  description?: string
   "aria-label"?: string
 }
 
@@ -60,15 +63,55 @@ export function SelectDropdown<T>({
   error,
   name,
   required,
-  "aria-label": ariaLabel,
+  id,
+  ariaLabel,
+  ariaLabelledBy,
+  description,
+  "aria-label": ariaLabelDeprecated,
 }: DropdownProps<T>) {
   const [isOpen, setIsOpen] = React.useState(false)
   const dropdownRef = React.useRef<HTMLDivElement>(null)
   const buttonRef = React.useRef<HTMLButtonElement>(null)
-  const listboxId = React.useId()
+  const generatedId = React.useId()
+  const buttonId = id ?? generatedId
+  const listboxId = `${buttonId}-listbox`
+  const descriptionId = description ? `${buttonId}-description` : undefined
+  const liveRegionId = `${buttonId}-status`
+  const finalAriaLabel = ariaLabel ?? ariaLabelDeprecated
 
   // Find the selected option
-  const selectedOption = options.find(option => option.value === value)
+  const selectedOption = options.find(option => option.value === value) ?? null
+
+  const normalizedOptions = React.useMemo(
+    () =>
+      options.map((option, index) => ({
+        option,
+        index,
+        id: `${listboxId}-option-${index}`,
+      })),
+    [options, listboxId]
+  )
+
+  const enabledOptionIndices = React.useMemo(
+    () =>
+      normalizedOptions
+        .filter(({ option }) => !option.disabled)
+        .map(({ index }) => index),
+    [normalizedOptions]
+  )
+
+  const selectedIndex = React.useMemo(
+    () => normalizedOptions.find(({ option }) => option.value === value)?.index ?? -1,
+    [normalizedOptions, value]
+  )
+
+  const [activeIndex, setActiveIndex] = React.useState(() =>
+    selectedIndex >= 0 ? selectedIndex : enabledOptionIndices[0] ?? -1
+  )
+
+  React.useEffect(() => {
+    setActiveIndex(selectedIndex >= 0 ? selectedIndex : enabledOptionIndices[0] ?? -1)
+  }, [selectedIndex, enabledOptionIndices])
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
@@ -90,6 +133,12 @@ export function SelectDropdown<T>({
 
     if (event.key === "Escape") {
       setIsOpen(false)
+      buttonRef.current?.focus()
+      return
+    }
+
+    if (event.key === "Tab") {
+      setIsOpen(false)
       return
     }
 
@@ -101,32 +150,44 @@ export function SelectDropdown<T>({
         return
       }
 
-      const currentIndex = value !== null ? options.findIndex(option => option.value === value) : -1
-      const availableOptions = options.filter(option => !option.disabled)
+      if (enabledOptionIndices.length === 0) return
 
-      if (availableOptions.length === 0) return
+      const currentEnabledPosition = enabledOptionIndices.indexOf(activeIndex)
 
-      let nextIndex: number
+      let nextEnabledIndex: number
 
-      if (currentIndex === -1) {
-        nextIndex = event.key === "ArrowDown" ? 0 : availableOptions.length - 1
+      if (currentEnabledPosition === -1) {
+        nextEnabledIndex = event.key === "ArrowDown" ? 0 : enabledOptionIndices.length - 1
+      } else if (event.key === "ArrowDown") {
+        nextEnabledIndex = (currentEnabledPosition + 1) % enabledOptionIndices.length
       } else {
-        const currentAvailableIndex = availableOptions.findIndex(option => option.value === value)
-
-        if (event.key === "ArrowDown") {
-          nextIndex = (currentAvailableIndex + 1) % availableOptions.length
-        } else {
-          nextIndex =
-            (currentAvailableIndex - 1 + availableOptions.length) % availableOptions.length
-        }
+        nextEnabledIndex =
+          (currentEnabledPosition - 1 + enabledOptionIndices.length) % enabledOptionIndices.length
       }
 
-      onChange(availableOptions[nextIndex].value)
+      const nextIndex = enabledOptionIndices[nextEnabledIndex]
+      const nextOption = normalizedOptions[nextIndex]
+      if (!nextOption) return
+
+      setActiveIndex(nextIndex)
+      onChange(nextOption.option.value)
     }
 
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault()
-      setIsOpen(prev => !prev)
+      if (!isOpen) {
+        setIsOpen(true)
+        return
+      }
+
+      if (activeIndex >= 0) {
+        const nextOption = normalizedOptions[activeIndex]
+        if (nextOption && !nextOption.option.disabled) {
+          onChange(nextOption.option.value)
+        }
+      }
+      setIsOpen(false)
+      buttonRef.current?.focus()
     }
   }
 
@@ -147,13 +208,19 @@ export function SelectDropdown<T>({
           )}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
+          id={buttonId}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          aria-labelledby={ariaLabel}
           aria-controls={isOpen ? listboxId : undefined}
+          aria-label={finalAriaLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={descriptionId}
+          data-state={isOpen ? "open" : "closed"}
         >
           <span className="truncate">{selectedOption ? selectedOption.label : placeholder}</span>
           <ChevronDown
+            aria-hidden="true"
+            focusable="false"
             className={cn("ml-2 h-4 w-4 shrink-0 opacity-50", isOpen && "rotate-180 transform")}
           />
         </Button>
@@ -164,15 +231,19 @@ export function SelectDropdown<T>({
               className="py-1"
               role="listbox"
               id={listboxId}
-              aria-labelledby={ariaLabel}
+              aria-labelledby={ariaLabelledBy}
+              aria-label={finalAriaLabel}
+              aria-describedby={descriptionId}
+              aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
               tabIndex={-1}
             >
-              {options.map((option, index) => (
+              {normalizedOptions.map(({ option, index, id: optionId }) => (
                 <li
-                  key={index}
+                  key={optionId}
                   role="option"
                   aria-selected={value === option.value}
                   aria-disabled={option.disabled}
+                  id={optionId}
                   className={cn(
                     "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none",
                     value === option.value && "bg-accent text-accent-foreground",
@@ -183,13 +254,16 @@ export function SelectDropdown<T>({
                   onClick={() => {
                     if (!option.disabled) {
                       onChange(option.value)
+                      setActiveIndex(index)
                       setIsOpen(false)
                       buttonRef.current?.focus()
                     }
                   }}
                 >
                   <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                    {value === option.value && <Check className="h-4 w-4" />}
+                    {value === option.value && (
+                      <Check aria-hidden="true" focusable="false" className="h-4 w-4" />
+                    )}
                   </span>
                   <span className="truncate">{option.label}</span>
                 </li>
@@ -199,6 +273,14 @@ export function SelectDropdown<T>({
         )}
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}
+      {description && !error && (
+        <p id={descriptionId} className="text-xs text-muted-foreground">
+          {description}
+        </p>
+      )}
+      <span id={liveRegionId} className="sr-only" aria-live="polite">
+        {selectedOption ? `Selected ${selectedOption.label}` : "No option selected"}
+      </span>
       {name && (
         <input
           type="hidden"
