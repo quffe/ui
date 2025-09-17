@@ -16,12 +16,13 @@ import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
-import ExampleOne from "@/examples/docs/hooks/HOOK_ID/example-one"
-import ExampleTwo from "@/examples/docs/hooks/HOOK_ID/example-two"
 import { getExampleCode } from "@/lib/serverUtils"
 
 const exampleOneCode = getExampleCode("docs/hooks/HOOK_ID/example-one.tsx")
 const exampleTwoCode = getExampleCode("docs/hooks/HOOK_ID/example-two.tsx")
+
+const ExampleOne = () => null
+const ExampleTwo = () => null
 
 interface HookDocConfig {
   header: {
@@ -46,7 +47,7 @@ export function renderHookDoc({ header, toc, parameters, returns }: HookDocConfi
       parameters={parameters}
       returns={returns}
     >
-      {/* sections go here */}
+      {null /* sections go here */}
     </HookDocsPage>
   )
 }

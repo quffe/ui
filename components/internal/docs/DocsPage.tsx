@@ -3,6 +3,8 @@ import type { ReactNode } from "react"
 import { DocsLayout, type TocItem } from "./DocsLayout"
 import type { DocsPageHeaderProps } from "./DocsPageHeader"
 
+export type { TocItem } from "./DocsLayout"
+
 interface DocsPageProps {
   header: DocsPageHeaderProps
   toc?: TocItem[]

@@ -20,6 +20,7 @@ import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 import { getExampleCode } from "@/lib/serverUtils"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { InlineExample } from "@/examples/docs/hooks/use-github-mention/inline"
 import { CardExample } from "@/examples/docs/hooks/use-github-mention/card"
@@ -64,9 +65,14 @@ const returnRows: PropsTableRow[] = [
 ]
 
 const optionRows: PropsTableRow[] = [
-  { prop: "useServer", type: "boolean", defaultValue: "false", description: "Proxy requests through the server route to raise rate limits." },
+  {
+    prop: "useServer",
+    type: "boolean",
+    defaultValue: "false",
+    description: "Route through /api/github/resource so the request runs on your server with optional auth.",
+  },
   { prop: "refreshInterval", type: "number", description: "Auto-refresh interval (ms) when using SWR/React Query variants." },
-  { prop: "revalidateOnFocus", type: "boolean", defaultValue: "true", description: "SWR option to refresh when the window regains focus." },
+  { prop: "revalidateOnFocus", type: "boolean", defaultValue: "false", description: "SWR option to refresh when the window regains focus." },
   { prop: "suspense", type: "boolean", description: "Enable Suspense mode for SWR/React Query variants." },
 ]
 
@@ -74,6 +80,7 @@ const toc: TocItem[] = [
   { id: "overview", title: "Overview" },
   { id: "installation", title: "Installation" },
   { id: "usage", title: "Usage" },
+  { id: "server", title: "Server proxy" },
   { id: "examples", title: "Examples" },
   { id: "options", title: "Options" },
   { id: "api-returns", title: "Returns" },
@@ -99,7 +106,7 @@ export default async function UseGithubMentionDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-5xl">
+        <div className="container mx-auto max-w-5xl space-y-10">
           <HookDocsPage
             toc={toc}
             header={{
@@ -112,7 +119,7 @@ export default async function UseGithubMentionDocs() {
             returns={returnRows}
           >
             <section id="overview" className="scroll-mt-24 space-y-4">
-              <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm">
+              <div className="rounded-lg border border-border bg-muted/40 p-5 text-sm">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-5 w-5 text-warn-amber mt-0.5" />
                   <div>
@@ -132,33 +139,39 @@ export default async function UseGithubMentionDocs() {
                   Pick the variant that matches your data layer—plain fetch, SWR, or React Query.
                 </p>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm font-medium">Plain</p>
+              <Tabs defaultValue="plain" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="plain">Plain</TabsTrigger>
+                  <TabsTrigger value="swr">SWR</TabsTrigger>
+                  <TabsTrigger value="rq">React Query</TabsTrigger>
+                </TabsList>
+                <TabsContent value="plain" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
+                  <p className="text-sm font-medium">Plain (no cache)</p>
                   <InstallationTabs componentName="use-github-mention-plain" />
-                </div>
-                <div>
+                </TabsContent>
+                <TabsContent value="swr" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
                   <p className="text-sm font-medium">SWR variant</p>
                   <InstallationTabs componentName="use-github-mention" />
-                </div>
-                <div>
+                </TabsContent>
+                <TabsContent value="rq" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
                   <p className="text-sm font-medium">React Query variant</p>
                   <InstallationTabs componentName="use-github-mention-react-query" />
-                </div>
-              </div>
+                </TabsContent>
+              </Tabs>
             </section>
 
             <section id="usage" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Call the hook with a GitHub URL and render the returned metadata however you like.
+                  Call the hook with a GitHub URL and render the returned metadata however you like. Use the{' '}
+                  <code className="font-mono text-xs">useServer</code> flag when you want the request to originate from
+                  your backend instead of the browser.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`const { data, isLoading, error } = useGithubMention({
-  url,
-  useServer: true,
+{`const { data, isLoading, error } = useGithubMention(url, {
+  useServer: process.env.NODE_ENV !== 'development',
 })
 
 if (isLoading) return <Skeleton />
@@ -166,6 +179,48 @@ if (error || !data) return <ErrorState reason={error?.message} />
 
 return <GithubCard resource={data} />`}
               </CodeBlock>
+            </section>
+
+            <section id="server" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Server proxy</h2>
+                <p className="text-muted-foreground">
+                  Enable <code className="font-mono text-xs">useServer</code> to call the hook through your Next.js API
+                  route at <code className="font-mono text-xs">/api/github/resource</code>. This keeps tokens on the server,
+                  lets you ship higher rate limits, and plays nicely with incremental cache revalidation.
+                </p>
+              </div>
+              <div className="grid gap-4 rounded-lg border border-border bg-muted/40 p-4 text-sm">
+                <div>
+                  <p className="font-medium">1. Provide a GitHub token (optional but recommended)</p>
+                  <p className="text-muted-foreground">
+                    Add <code className="font-mono text-xs">GITHUB_TOKEN</code> or <code className="font-mono text-xs">GH_TOKEN</code> to your
+                    <code className="font-mono text-xs">.env.local</code>. The API route attaches it as a bearer token as long as it doesn&apos;t
+                    start with <code className="font-mono text-xs">public_</code>.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-medium">2. Deploy the API route</p>
+                  <p className="text-muted-foreground">
+                    When you deploy this app, Next.js hosts <code className="font-mono text-xs">/api/github/resource</code> for you. Consumers of
+                    your deployment can only call it from the same origin; cross-origin requests require you to add CORS headers.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-medium">3. Opt in from the hook</p>
+                  <p className="text-muted-foreground">
+                    Pass <code className="font-mono text-xs">useServer: true</code> (or toggle it per environment) so the hook swaps GitHub&apos;s public
+                    endpoint for your proxy. The returned payload stays the same because the proxy normalizes the data before sending it back.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-medium">Fallback</p>
+                  <p className="text-muted-foreground">
+                    Leave <code className="font-mono text-xs">useServer</code> undefined to fall back to GitHub&apos;s REST API directly from the client.
+                    That path works in purely client-side React apps, but shares the browser&apos;s rate limits and exposes the request origin.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section id="examples" className="scroll-mt-24 space-y-8">

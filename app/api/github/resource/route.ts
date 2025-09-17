@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { parseGithubUrl } from "@/lib/github/parse-url"
-import { normalizeGithubResource } from "@/lib/github/resource"
+import { normalizeGithubResource } from "@/lib/github/normalize"
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || process.env.NEXT_PUBLIC_GITHUB_TOKEN /* avoid using public */
 

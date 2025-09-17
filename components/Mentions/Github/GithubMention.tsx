@@ -17,11 +17,10 @@ type GithubMentionProps = {
   useServer?: boolean
   className?: string
   linkProps?: React.ComponentProps<"a">
-  render?: (data: GithubResource) => React.ReactNode
   onError?: (error: Error) => void
 }
 
-export function GithubMention({ url, useServer, className, linkProps, render, onError }: GithubMentionProps) {
+export function GithubMention({ url, useServer, className, linkProps, onError }: GithubMentionProps) {
   const { data, isLoading, error, refetch } = useGithubMention(url, { useServer })
 
   useEffect(() => {
@@ -32,7 +31,6 @@ export function GithubMention({ url, useServer, className, linkProps, render, on
   if (error || !data)
     return <GithubMentionError url={url} onRetry={refetch} className={className} error={error ?? undefined} />
 
-  if (render) return <div className={className}>{render(data)}</div>
   return <div className={className}>{renderContent(data, linkProps)}</div>
 }
 

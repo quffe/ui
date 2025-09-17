@@ -4,7 +4,8 @@ import useSWR from "swr"
 
 import { parseGithubUrl } from "@/lib/github/parse-url"
 import type { GithubResource, ResourceKind } from "@/lib/github/types"
-import { clientEndpointFor, normalizeGithubResource, GithubApiError } from "@/lib/github/resource"
+import { clientEndpointFor, GithubApiError } from "@/lib/github/resource"
+import { normalizeGithubResource } from "@/lib/github/normalize"
 
 type UseGithubMentionOptions = {
   useServer?: boolean

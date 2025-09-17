@@ -12,7 +12,7 @@ export function Example() {
       <GithubMention url="https://github.com/vercel/next.js" useServer />
 
       {/* PR */}
-      <GithubMention url="https://github.com/vercel/next.js/pull/123" useServer />
+      <GithubMention url="https://github.com/vercel/next.js/pull/1" useServer />
 
       {/* Issue */}
       <GithubMention url="https://github.com/vercel/next.js/issues/1" useServer />

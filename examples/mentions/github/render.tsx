@@ -1,58 +1,83 @@
 "use client"
 
-import { GithubMention } from "@/components/Mentions/Github/GithubMention"
+import Link from "next/link"
+
+import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useGithubMention } from "@/hooks/use-github-mention"
+
+function CustomMention({ url }: { url: string }) {
+  const { data, isLoading, error } = useGithubMention(url, { useServer: true })
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-3 text-sm">
+        <Skeleton className="h-5 w-14" />
+        <Skeleton className="h-4 w-48" />
+      </div>
+    )
+  }
+
+  if (error || !data) {
+    return (
+      <div className="text-sm text-muted-foreground">
+        Could not load GitHub metadata ({error?.message ?? "unknown error"})
+      </div>
+    )
+  }
+
+  const chip = <Badge variant="outline">{data.kind.toUpperCase()}</Badge>
+
+  switch (data.kind) {
+    case "pull":
+      return (
+        <div className="flex items-center gap-3 text-sm">
+          {chip}
+          <Link href={data.html_url} className="underline">
+            #{data.number} {data.title}
+          </Link>
+        </div>
+      )
+    case "issue":
+      return (
+        <div className="flex items-center gap-3 text-sm">
+          {chip}
+          <Link href={data.html_url} className="underline">
+            #{data.number} {data.title}
+          </Link>
+        </div>
+      )
+    case "repo":
+      return (
+        <div className="flex items-center gap-3 text-sm">
+          {chip}
+          <Link href={data.html_url} className="underline">
+            {data.full_name}
+          </Link>
+        </div>
+      )
+    case "user":
+      return (
+        <div className="flex items-center gap-3 text-sm">
+          {chip}
+          <Link href={data.html_url} className="underline">
+            {data.name ?? data.login}
+          </Link>
+        </div>
+      )
+    default:
+      return (
+        <div className="text-sm text-muted-foreground">
+          Unsupported GitHub resource
+        </div>
+      )
+  }
+}
 
 export function Example() {
   return (
     <div className="space-y-3">
-      <GithubMention
-        url="https://github.com/vercel/next.js/pull/123"
-        useServer
-        render={data => {
-          const chip = (
-            <span className="rounded bg-muted px-2 py-0.5">{data.kind.toUpperCase()}</span>
-          )
-          switch (data.kind) {
-            case "pull":
-              return (
-                <span className="inline-flex items-center gap-2 text-sm">
-                  {chip}
-                  <a href={data.html_url} className="underline">
-                    {data.title}
-                  </a>
-                </span>
-              )
-            case "issue":
-              return (
-                <span className="inline-flex items-center gap-2 text-sm">
-                  {chip}
-                  <a href={data.html_url} className="underline">
-                    {data.title}
-                  </a>
-                </span>
-              )
-            case "repo":
-              return (
-                <span className="inline-flex items-center gap-2 text-sm">
-                  {chip}
-                  <a href={data.html_url} className="underline">
-                    {data.full_name}
-                  </a>
-                </span>
-              )
-            case "user":
-              return (
-                <span className="inline-flex items-center gap-2 text-sm">
-                  {chip}
-                  <a href={data.html_url} className="underline">
-                    {data.name ?? data.login}
-                  </a>
-                </span>
-              )
-          }
-        }}
-        linkProps={{ target: "_blank", rel: "noopener noreferrer" }}
-      />
+      <CustomMention url="https://github.com/vercel/next.js/pull/123" />
     </div>
   )
 }
