@@ -114,7 +114,6 @@ export default async function UseGithubMentionDocs() {
               description: "Fetch GitHub metadata for issues, PRs, repos, and users—build the UI you need.",
               category: "Mentions · Hook",
               status: "Stable",
-              actions: <CopyableCodeBadge text={config.getNamespacePath("useGithubMention")} />,
             }}
             returns={returnRows}
           >

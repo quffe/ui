@@ -99,7 +99,6 @@ export default async function GithubMentionsPage() {
               description: "Compact metadata card for GitHub issues, pull requests, repositories, and users.",
               category: "Mentions · Component",
               status: "Stable",
-              actions: <Link className="text-sm text-primary" href="https://github.com">GitHub</Link>,
             }}
           >
             <section id="overview" className="scroll-mt-24 space-y-4">

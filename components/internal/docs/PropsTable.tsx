@@ -35,7 +35,10 @@ export function PropsTable({ rows, labels }: PropsTableProps) {
           <div className="flex items-center gap-2">
             <code className="font-mono text-sm text-foreground">{row.original.prop}</code>
             {row.original.required ? (
-              <Badge variant="secondary" className="text-xs uppercase">
+              <Badge
+                variant="outline"
+                className="text-xs uppercase border-destructive/40 bg-destructive/10 text-destructive"
+              >
                 Required
               </Badge>
             ) : null}

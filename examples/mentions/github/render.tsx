@@ -77,7 +77,7 @@ function CustomMention({ url }: { url: string }) {
 export function Example() {
   return (
     <div className="space-y-3">
-      <CustomMention url="https://github.com/vercel/next.js/pull/123" />
+      <CustomMention url="https://github.com/shadcn-ui/ui/issues/1" />
     </div>
   )
 }
