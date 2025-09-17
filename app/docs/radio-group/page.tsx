@@ -1,12 +1,9 @@
 "use client"
 
+import { useState } from "react"
+
 import { RadioGroup } from "@/components/Form/RadioGroup"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
-import { config } from "@/lib/config"
-import { useState } from "react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -18,25 +15,72 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
+import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
+import { config } from "@/lib/config"
 import { CodeBlock } from "@/components/internal/ui/code-block"
+import { DocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+
+const paymentOptions = [
+  { value: "credit", label: "Credit Card" },
+  { value: "debit", label: "Debit Card" },
+  { value: "paypal", label: "PayPal" },
+  { value: "bank", label: "Bank Transfer" },
+]
+
+const sizeOptions = [
+  { value: "xs", label: "Extra Small" },
+  { value: "s", label: "Small" },
+  { value: "m", label: "Medium" },
+  { value: "l", label: "Large" },
+  { value: "xl", label: "Extra Large", disabled: true },
+]
 
 export default function RadioGroupDocs() {
-  const [selectedValue, setSelectedValue] = useState("")
-  const [selectedSize, setSelectedSize] = useState("")
+  const [selectedValue, setSelectedValue] = useState("credit")
+  const [selectedSize, setSelectedSize] = useState("m")
 
-  const paymentOptions = [
-    { value: "credit", label: "Credit Card" },
-    { value: "debit", label: "Debit Card" },
-    { value: "paypal", label: "PayPal" },
-    { value: "bank", label: "Bank Transfer" },
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "examples", title: "Examples" },
+    { id: "props", title: "Props" },
+    { id: "accessibility", title: "Accessibility" },
   ]
 
-  const sizeOptions = [
-    { value: "xs", label: "Extra Small" },
-    { value: "s", label: "Small" },
-    { value: "m", label: "Medium" },
-    { value: "l", label: "Large" },
-    { value: "xl", label: "Extra Large", disabled: true },
+  const propsRows: PropsTableRow[] = [
+    {
+      prop: "name",
+      type: "string",
+      description: "Shared name attribute used to group the radios.",
+      required: true,
+    },
+    {
+      prop: "options",
+      type: "RadioOption[]",
+      description: "Array of options with labels, values, and optional disabled state.",
+      required: true,
+    },
+    {
+      prop: "value",
+      type: "string",
+      description: "Controlled value representing the selected option.",
+    },
+    {
+      prop: "onChange",
+      type: "(value: string) => void",
+      description: "Called when the user picks a different option.",
+    },
+    {
+      prop: "disabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Disables the entire group of radios.",
+    },
+    {
+      prop: "className",
+      type: "string",
+      description: "Additional styling applied to the root container.",
+    },
   ]
 
   return (
@@ -58,150 +102,114 @@ export default function RadioGroupDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-      <div className="mb-8">
-        <div className="flex items-end gap-3 mb-4">
-          <h1 className="text-4xl font-bold">RadioGroup</h1>
-          <Badge variant="secondary">Form Component</Badge>
-        </div>
-        <p className="text-lg text-muted-foreground mb-4">
-          A group of radio button options for single selection.
-        </p>
-        <CopyableCodeBadge text={config.getNamespacePath("radio-group")} />
-      </div>
+        <div className="container mx-auto max-w-5xl">
+          <DocsPage
+            toc={toc}
+            header={{
+              title: "RadioGroup",
+              description: "A stacked radio control for choosing a single option from a small list.",
+              category: "Form · Component",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("radio-group")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Install via CLI to scaffold the radio options helper and styling tokens.
+                </p>
+              </div>
+              <InstallationTabs componentName="radio-group" />
+            </section>
 
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-          <CardDescription>Install the Radio Group component via CLI</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <InstallationTabs componentName="radio-group" />
-        </CardContent>
-      </Card>
-
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CodeBlock language="tsx" filename="components/Form/RadioGroup.tsx">
-{`import { RadioGroup } from "@/components/Form/RadioGroup"`}
-          </CodeBlock>
-          <div className="h-4" />
-          <CodeBlock language="tsx" filename="example.tsx">
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Map your options array to the component and control the value via state.
+                </p>
+              </div>
+              <CodeBlock language="tsx" filename="example.tsx">
 {`const options = [
   { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" }
+  { value: "option2", label: "Option 2" },
 ]
 
-<RadioGroup 
-  name="example" 
+<RadioGroup
+  name="example"
   options={options}
   value={selectedValue}
   onChange={setSelectedValue}
 />`}
-          </CodeBlock>
-        </CardContent>
-      </Card>
+              </CodeBlock>
+            </section>
 
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Payment Method</h3>
-            <RadioGroup
-              name="payment"
-              options={paymentOptions}
-              value={selectedValue}
-              onChange={setSelectedValue}
-            />
-            {selectedValue && (
-              <p className="text-sm text-muted-foreground mt-2">
-                Selected: {paymentOptions.find(opt => opt.value === selectedValue)?.label}
-              </p>
-            )}
-          </div>
+            <section id="examples" className="scroll-mt-24 space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Demonstrate grouped selections, disabled items, and labelled usage.
+                </p>
+              </div>
+              <div className="space-y-6">
+                <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">Payment method</h3>
+                  <RadioGroup
+                    name="payment"
+                    options={paymentOptions}
+                    value={selectedValue}
+                    onChange={setSelectedValue}
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    Selected: {paymentOptions.find(opt => opt.value === selectedValue)?.label}
+                  </p>
+                </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-2">With Label</h3>
-            <div className="space-y-2">
-              <Label>Size</Label>
-              <RadioGroup
-                name="size"
-                options={sizeOptions}
-                value={selectedSize}
-                onChange={setSelectedSize}
-              />
-            </div>
-          </div>
+                <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">With label</h3>
+                  <div className="space-y-2">
+                    <Label>Choose a size</Label>
+                    <RadioGroup
+                      name="size"
+                      options={sizeOptions}
+                      value={selectedSize}
+                      onChange={setSelectedSize}
+                    />
+                  </div>
+                </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Disabled Group</h3>
-            <RadioGroup name="disabled" options={paymentOptions} disabled />
-          </div>
-        </CardContent>
-      </Card>
+                <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">Disabled group</h3>
+                  <RadioGroup name="shipping" options={paymentOptions} disabled />
+                </div>
+              </div>
+            </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Props</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse border border-border">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left p-2 font-semibold">Prop</th>
-                  <th className="text-left p-2 font-semibold">Type</th>
-                  <th className="text-left p-2 font-semibold">Default</th>
-                  <th className="text-left p-2 font-semibold">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-border">
-                  <td className="p-2 font-mono text-sm">name</td>
-                  <td className="p-2">string</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Name attribute for the radio group</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-2 font-mono text-sm">options</td>
-                  <td className="p-2">RadioOption[]</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Array of radio options</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-2 font-mono text-sm">value</td>
-                  <td className="p-2">string</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Currently selected value</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-2 font-mono text-sm">onChange</td>
-                  <td className="p-2">function</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Callback when selection changes</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-2 font-mono text-sm">disabled</td>
-                  <td className="p-2">boolean</td>
-                  <td className="p-2">false</td>
-                  <td className="p-2">Whether the entire group is disabled</td>
-                </tr>
-                <tr>
-                  <td className="p-2 font-mono text-sm">className</td>
-                  <td className="p-2">string</td>
-                  <td className="p-2">-</td>
-                  <td className="p-2">Additional CSS classes</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+            <section id="props" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
+                <p className="text-muted-foreground">
+                  Configure the group with these props; any additional radio attributes can be passed through options.
+                </p>
+              </div>
+              <PropsTable rows={propsRows} />
+            </section>
+
+            <section id="accessibility" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Accessibility</h2>
+                <p className="text-muted-foreground">
+                  Radios need clear group labelling and focus management.
+                </p>
+              </div>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>Wrap radios in a fieldset with legend when the context benefits from a title.</li>
+                <li>Keep option labels short so they’re read fully during keyboard navigation.</li>
+                <li>Include helper text for disabled options to explain availability.</li>
+              </ul>
+            </section>
+          </DocsPage>
         </div>
       </div>
     </div>

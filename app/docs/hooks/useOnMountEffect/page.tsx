@@ -1,7 +1,5 @@
 "use server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -17,21 +15,62 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
+import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
-// Example components
 import LiveDemoExample from "@/examples/docs/hooks/useOnMountEffect/live-demo"
 import DataFetchingExample from "@/examples/docs/hooks/useOnMountEffect/data-fetching"
 import SSRSafeExample from "@/examples/docs/hooks/useOnMountEffect/ssr-safe"
 import UsageExamplesExample from "@/examples/docs/hooks/useOnMountEffect/usage-examples"
 import { getExampleCode } from "@/lib/serverUtils"
 
-// Raw imports
 const liveDemoCode = getExampleCode("docs/hooks/useOnMountEffect/live-demo.tsx")
 const dataFetchingCode = getExampleCode("docs/hooks/useOnMountEffect/data-fetching.tsx")
 const ssrSafeCode = getExampleCode("docs/hooks/useOnMountEffect/ssr-safe.tsx")
 const usageExamplesCode = getExampleCode("docs/hooks/useOnMountEffect/usage-examples.tsx")
 
+const mountParameters: PropsTableRow[] = [
+  {
+    prop: "effect",
+    type: "React.EffectCallback",
+    description: "Effect callback executed once when the component mounts.",
+    required: true,
+  },
+  {
+    prop: "dependencies",
+    type: "React.DependencyList",
+    description: "Optional dependencies captured at mount time; subsequent changes are ignored.",
+  },
+]
+
+const strictParameters: PropsTableRow[] = [
+  {
+    prop: "effect",
+    type: "React.EffectCallback",
+    description: "Effect callback executed a single time on initial render.",
+    required: true,
+  },
+]
+
+const hasMountedReturns: PropsTableRow[] = [
+  {
+    prop: "boolean",
+    type: "boolean",
+    description: "Indicates whether the component has completed its first mount.",
+    required: true,
+  },
+]
+
 export default async function UseOnMountEffectDocs() {
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "examples", title: "Examples" },
+    { id: "api-parameters", title: "useOnMountEffect" },
+    { id: "use-strict-mount-effect", title: "useStrictMountEffect" },
+    { id: "use-has-mounted", title: "useHasMounted" },
+    { id: "accessibility", title: "Accessibility" },
+  ]
+
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -51,241 +90,87 @@ export default async function UseOnMountEffectDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">useOnMountEffect</h1>
-              <div className="flex gap-2">
-                <Badge variant="secondary">React Hook</Badge>
-                <Badge variant="outline">Effect</Badge>
+        <div className="container mx-auto max-w-5xl">
+          <HookDocsPage
+            toc={toc}
+            header={{
+              title: "useOnMountEffect",
+              description: "Utilities for running effects a single time on mount with SSR-safe fallbacks.",
+              category: "React · Hook",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("useOnMountEffect")} />,
+            }}
+            parameters={mountParameters}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Install via CLI to copy the full hook bundle, including strict and SSR-safe variants.
+                </p>
               </div>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A collection of hooks for running effects only once when components mount, with proper
-              cleanup handling.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("useOnMountEffect")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>
-                Install the hook using your preferred package manager
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
               <InstallationTabs componentName="useOnMountEffect" />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"`}
-                </CodeBlock>
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Import the desired hook and run it inside your component. Dependencies are captured only once at mount time.
+                </p>
               </div>
-
+              <CodeBlock language="tsx" filename="usage.tsx">
+{`import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"`}
+              </CodeBlock>
               <PreviewTabs preview={<UsageExamplesExample />} code={usageExamplesCode} />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium mb-4">Live Demonstration</h3>
-                <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} />
+            <section id="examples" className="scroll-mt-24 space-y-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Different scenarios including live demos, data fetching, and SSR-safe patterns.
+                </p>
               </div>
+              <PreviewTabs title="Live demonstration" preview={<LiveDemoExample />} code={liveDemoCode} />
+              <PreviewTabs title="Data fetching" preview={<DataFetchingExample />} code={dataFetchingCode} />
+              <PreviewTabs title="SSR-safe components" preview={<SSRSafeExample />} code={ssrSafeCode} />
+            </section>
 
-              <div>
-                <h3 className="text-sm font-medium mb-4">Data Fetching Example</h3>
-                <PreviewTabs preview={<DataFetchingExample />} code={dataFetchingCode} />
+            <section id="use-strict-mount-effect" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">useStrictMountEffect</h2>
+                <p className="text-muted-foreground">
+                  Forces the effect to run exactly once, ignoring dependency changes triggered by Strict Mode double-invocation.
+                </p>
               </div>
+              <PropsTable rows={strictParameters} labels={{ prop: "Parameter" }} />
+            </section>
 
-              <div>
-                <h3 className="text-sm font-medium mb-4">SSR-Safe Components</h3>
-                <PreviewTabs preview={<SSRSafeExample />} code={ssrSafeCode} />
+            <section id="use-has-mounted" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">useHasMounted</h2>
+                <p className="text-muted-foreground">
+                  Lightweight helper that tells you whether the component has finished mounting.
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <PropsTable rows={hasMountedReturns} labels={{ prop: "Return" }} />
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>API Reference</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold mb-3">useOnMountEffect</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Runs an effect only once when the component mounts, even if dependencies change.
-                  </p>
-
-                  <h4 className="font-medium mb-2">Parameters</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Parameter</th>
-                          <th className="text-left p-2">Type</th>
-                          <th className="text-left p-2">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">effect</td>
-                          <td className="p-2">React.EffectCallback</td>
-                          <td className="p-2">The effect function to run on mount</td>
-                        </tr>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">dependencies</td>
-                          <td className="p-2">React.DependencyList</td>
-                          <td className="p-2">
-                            Optional dependencies array (captured on first render only)
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <h4 className="font-medium mb-2 mt-4">Returns</h4>
-                  <div className="text-sm">void</div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">useStrictMountEffect</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Runs an effect exactly once on first render, completely ignoring all
-                    dependencies.
-                  </p>
-
-                  <h4 className="font-medium mb-2">Parameters</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Parameter</th>
-                          <th className="text-left p-2">Type</th>
-                          <th className="text-left p-2">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">effect</td>
-                          <td className="p-2">React.EffectCallback</td>
-                          <td className="p-2">The effect function to run on mount</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <h4 className="font-medium mb-2 mt-4">Returns</h4>
-                  <div className="text-sm">void</div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">useHasMounted</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Returns a boolean indicating whether the component has completed its initial
-                    mount.
-                  </p>
-
-                  <h4 className="font-medium mb-2">Parameters</h4>
-                  <div className="text-sm">None</div>
-
-                  <h4 className="font-medium mb-2 mt-4">Returns</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Type</th>
-                          <th className="text-left p-2">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">boolean</td>
-                          <td className="p-2">
-                            True if component has mounted, false during initial render
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <section id="accessibility" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Accessibility</h2>
+                <p className="text-muted-foreground">
+                  Mount effects often trigger asynchronous work—communicate any UI changes clearly.
+                </p>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Features</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li>Runs effects exactly once per component mount</li>
-                <li>Proper cleanup handling with return functions</li>
-                <li>Ignores dependency changes after first run</li>
-                <li>TypeScript support with full type safety</li>
-                <li>Three hook variants for different use cases</li>
-                <li>SSR-safe with proper hydration handling</li>
-                <li>Memory efficient with ref-based tracking</li>
-                <li>Compatible with React Strict Mode</li>
-                <li>Prevents common effect re-run issues</li>
-                <li>Automatic cleanup on component unmount</li>
-                <li>No unnecessary re-renders or effect executions</li>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>Announce post-mount changes via <code className="font-mono text-xs">aria-live</code> regions when relevant.</li>
+                <li>Prefer lazy rendering for expensive components to avoid blocking initial paint.</li>
+                <li>Gate client-only features (like animations) until <code className="font-mono text-xs">useHasMounted</code> returns true.</li>
               </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Use Cases</CardTitle>
-              <CardDescription>Common scenarios where these hooks are useful</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <h4 className="font-semibold mb-2">useOnMountEffect</h4>
-                  <div className="space-y-1 text-sm">
-                    <div>• Initial data fetching</div>
-                    <div>• Setting up event listeners</div>
-                    <div>• Initializing third-party libraries</div>
-                    <div>• Analytics/tracking setup</div>
-                    <div>• WebSocket connections</div>
-                    <div>• Timers and intervals</div>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">useStrictMountEffect</h4>
-                  <div className="space-y-1 text-sm">
-                    <div>• One-time app initialization</div>
-                    <div>• Global event listeners</div>
-                    <div>• Performance monitoring setup</div>
-                    <div>• Feature flag initialization</div>
-                    <div>• Theme system setup</div>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">useHasMounted</h4>
-                  <div className="space-y-1 text-sm">
-                    <div>• SSR hydration safety</div>
-                    <div>• Client-only rendering</div>
-                    <div>• Browser API access</div>
-                    <div>• Conditional rendering</div>
-                    <div>• Loading states</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </section>
+          </HookDocsPage>
         </div>
       </div>
     </div>

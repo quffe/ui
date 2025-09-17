@@ -1,8 +1,6 @@
 "use client"
 
 import { DataTable } from "@/components/Data/DataTable"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -17,7 +15,7 @@ import {
 import { InstallationTabs } from "@/components/internal/installation"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { useState } from "react"
+import { DocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
 // Sample data for demonstration
 const sampleData = [
@@ -43,7 +41,69 @@ const sampleColumns = [
 ]
 
 export default function DataTableDocs() {
-  const [data] = useState(sampleData)
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "example", title: "Example" },
+    { id: "props", title: "Props" },
+  ]
+
+  const propsRows: PropsTableRow[] = [
+    {
+      prop: "columns",
+      type: "ColumnDef<TData, TValue>[]",
+      description: "Column definitions passed to @tanstack/react-table.",
+      required: true,
+    },
+    {
+      prop: "data",
+      type: "TData[]",
+      description: "Array of records rendered in each row.",
+      required: true,
+    },
+    {
+      prop: "onRowClick",
+      type: "(row: TData) => void",
+      description: "Optional callback fired when a row is clicked.",
+    },
+    {
+      prop: "singleAction",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Enables focus/keyboard handling for selectable rows.",
+    },
+    {
+      prop: "pageSize",
+      type: "number",
+      defaultValue: "25",
+      description: "Rows to render per page when pagination is enabled.",
+    },
+    {
+      prop: "pageIndex",
+      type: "number",
+      defaultValue: "1",
+      description: "Current page index (1-based) when controlling pagination.",
+    },
+    {
+      prop: "totalCount",
+      type: "number",
+      defaultValue: "0",
+      description: "Total records used to calculate page counts.",
+    },
+    {
+      prop: "onPaginationChange",
+      type: "(pagination: PaginationArg) => void",
+      description: "Callback invoked when the user changes pages.",
+    },
+    {
+      prop: "hidePagination",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Hides the footer controls for compact tables such as docs.",
+    },
+  ]
+
+  const data = sampleData
 
   return (
     <div className="flex flex-col">
@@ -64,125 +124,77 @@ export default function DataTableDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">DataTable</h1>
-              <Badge variant="secondary">Data Component</Badge>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A powerful, flexible data table component with sorting, filtering, and pagination
-              support.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("data-table")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>
-                Install the DataTable component using your preferred package manager
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <InstallationTabs componentName="data-table" />
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-4">
-                <CodeBlock language="typescript">
-                  {`import { DataTable } from "@/components/Data/DataTable"`}
-                </CodeBlock>
+        <div className="container mx-auto max-w-5xl">
+          <DocsPage
+            toc={toc}
+            header={{
+              title: "DataTable",
+              description:
+                "A flexible data grid with sorting, filtering, and pagination built on @tanstack/react-table.",
+              category: "Data · Component",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("data-table")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Generate the table via CLI to include the required column helpers and styling tokens.
+                </p>
               </div>
+              <InstallationTabs componentName="data-table" />
+            </section>
 
-              <CodeBlock language="tsx">
-                {`<DataTable
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Define your column schema first, then pass both columns and data into the component.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <CodeBlock language="tsx" filename="components/Data/DataTable.tsx">
+{`import { DataTable } from "@/components/Data/DataTable"`}
+                </CodeBlock>
+                <CodeBlock language="tsx" filename="example.tsx">
+{`<DataTable
   columns={columns}
   data={data}
   pageSize={10}
-  onRowClick={(row) => console.log(row)}
+  onRowClick={row => console.log(row)}
 />`}
-              </CodeBlock>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Example</CardTitle>
-              <CardDescription>Basic data table with sample data</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                columns={sampleColumns}
-                data={data}
-                pageSize={5}
-                onRowClick={row => alert(`Clicked on ${row.name}`)}
-              />
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Props</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2">Prop</th>
-                      <th className="text-left p-2">Type</th>
-                      <th className="text-left p-2">Default</th>
-                      <th className="text-left p-2">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">columns</td>
-                      <td className="p-2">ColumnDef[]</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Table column definitions</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">data</td>
-                      <td className="p-2">TData[]</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Table data array</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">onRowClick</td>
-                      <td className="p-2">(row: TData) =&gt; void</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Callback when row is clicked</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">pageSize</td>
-                      <td className="p-2">number</td>
-                      <td className="p-2">25</td>
-                      <td className="p-2">Number of rows per page</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">totalCount</td>
-                      <td className="p-2">number</td>
-                      <td className="p-2">0</td>
-                      <td className="p-2">Total number of records</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">onPaginationChange</td>
-                      <td className="p-2">(pagination) =&gt; void</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Pagination change callback</td>
-                    </tr>
-                  </tbody>
-                </table>
+                </CodeBlock>
               </div>
-            </CardContent>
-          </Card>
+            </section>
+
+            <section id="example" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Example</h2>
+                <p className="text-muted-foreground">
+                  This live example demonstrates interactive sorting, pagination, and row selection hooks.
+                </p>
+              </div>
+              <div className="rounded-lg border bg-card p-6 shadow-sm">
+                <DataTable
+                  columns={sampleColumns}
+                  data={data}
+                  pageSize={5}
+                  onRowClick={row => alert(`Clicked on ${row.name}`)}
+                />
+              </div>
+            </section>
+
+            <section id="props" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
+                <p className="text-muted-foreground">
+                  The table exposes a thin wrapper around TanStack Table so you can adopt advanced patterns gradually.
+                </p>
+              </div>
+              <PropsTable rows={propsRows} />
+            </section>
+          </DocsPage>
         </div>
       </div>
     </div>

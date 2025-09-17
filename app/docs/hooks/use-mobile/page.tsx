@@ -1,7 +1,5 @@
 "use server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -17,6 +15,7 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
+import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
 // Example components
 import { BasicUsageExample } from "@/examples/docs/hooks/use-mobile/basic-usage"
@@ -27,6 +26,58 @@ const basicUsageCode = getExampleCode("docs/hooks/use-mobile/basic-usage.tsx")
 const customBreakpointCode = getExampleCode("docs/hooks/use-mobile/custom-breakpoint.tsx")
 
 export default async function UseMobileDocs() {
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "examples", title: "Examples" },
+    { id: "api", title: "API" },
+    { id: "features", title: "Features" },
+    { id: "presets", title: "Responsive presets" },
+    { id: "best-practices", title: "Best practices" },
+  ]
+
+  const parameterRows: PropsTableRow[] = [
+    {
+      prop: "options",
+      type: "UseMobileOptions",
+      defaultValue: "{}",
+      description: <>Configuration object that customises the breakpoint behaviour.</>,
+    },
+    {
+      prop: "options.breakpoint",
+      type: "number",
+      defaultValue: "768",
+      description: <>Pixel width that defines when the hook reports a mobile layout.</>,
+    },
+    {
+      prop: "options.defaultValue",
+      type: "boolean",
+      defaultValue: "false",
+      description: <>Initial value used during SSR to avoid hydration mismatches.</>,
+    },
+    {
+      prop: "options.ssrSafe",
+      type: "boolean",
+      defaultValue: "true",
+      description: (
+        <>
+          Enables a guard for environments without <code className="font-mono text-xs">window</code>.
+        </>
+      ),
+    },
+  ]
+
+  const returnRows: PropsTableRow[] = [
+    {
+      prop: "isMobile",
+      type: <code className="font-mono text-xs">boolean</code>,
+      description: (
+        <>
+          Returns <code className="font-mono text-xs">true</code> when the viewport is below the breakpoint; otherwise <code className="font-mono text-xs">false</code>.
+        </>
+      ),
+    },
+  ]
+
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -46,179 +97,139 @@ export default async function UseMobileDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">useMobile</h1>
-              <Badge variant="secondary">React Hook</Badge>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A hook that detects whether the current viewport is mobile-sized with SSR-safe
-              responsive breakpoint detection.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("use-mobile")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>
-                Install the hook using your preferred package manager
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+        <div className="container mx-auto max-w-5xl">
+          <DocsLayout
+            toc={toc}
+            header={{
+              title: "useMobile",
+              description: "A viewport matcher that reports mobile breakpoints without hydration flicker.",
+              category: "React · Hook",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("use-mobile")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Install the hook via CLI so dependencies for SSR safety are copied into your project.
+                </p>
+              </div>
               <InstallationTabs componentName="use-mobile" />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
-              <PreviewTabs
-                title="Live Device Detection"
-                preview={<BasicUsageExample />}
-                code={basicUsageCode}
-              />
+            <section id="examples" className="scroll-mt-24 space-y-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Use the hook to branch UI or reduce motion when users land on smaller screens.
+                </p>
+              </div>
+              <div className="space-y-8">
+                <PreviewTabs
+                  title="Live device detection"
+                  preview={<BasicUsageExample />}
+                  code={basicUsageCode}
+                />
+                <PreviewTabs
+                  title="Custom breakpoints"
+                  preview={<CustomBreakpointExample />}
+                  code={customBreakpointCode}
+                />
+              </div>
+            </section>
 
-              <PreviewTabs
-                title="Custom Breakpoints"
-                preview={<CustomBreakpointExample />}
-                code={customBreakpointCode}
-              />
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>API Reference</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <section id="api" className="scroll-mt-24 space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">API</h2>
+                <p className="text-muted-foreground">
+                  The hook accepts a single options object and returns a boolean that tracks the current viewport.
+                </p>
+              </div>
               <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold mb-3">Parameters</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Parameter</th>
-                          <th className="text-left p-2">Type</th>
-                          <th className="text-left p-2">Default</th>
-                          <th className="text-left p-2">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">options</td>
-                          <td className="p-2">UseMobileOptions</td>
-                          <td className="p-2">{`{}`}</td>
-                          <td className="p-2">Configuration options</td>
-                        </tr>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">options.breakpoint</td>
-                          <td className="p-2">number</td>
-                          <td className="p-2">768</td>
-                          <td className="p-2">Custom breakpoint in pixels</td>
-                        </tr>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">options.defaultValue</td>
-                          <td className="p-2">boolean</td>
-                          <td className="p-2">false</td>
-                          <td className="p-2">Initial value before hydration</td>
-                        </tr>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">options.ssrSafe</td>
-                          <td className="p-2">boolean</td>
-                          <td className="p-2">true</td>
-                          <td className="p-2">Whether to use SSR-safe mode</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold">Parameters</h3>
+                  <PropsTable
+                    rows={parameterRows}
+                    labels={{ prop: "Parameter", defaultValue: "Default" }}
+                  />
                 </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">Returns</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-2">Type</th>
-                          <th className="text-left p-2">Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="p-2 font-mono">boolean</td>
-                          <td className="p-2">
-                            True if viewport is below breakpoint (mobile), false otherwise
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold">Returns</h3>
+                  <PropsTable rows={returnRows} labels={{ prop: "Return" }} />
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Features</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li>SSR-safe with proper hydration handling</li>
-                <li>Uses modern matchMedia API for performance</li>
-                <li>Customizable breakpoint values</li>
-                <li>Automatic cleanup on unmount</li>
-                <li>Fallback support for older browsers</li>
-                <li>TypeScript support with full type safety</li>
-                <li>No layout shift during hydration</li>
-                <li>Memory efficient with proper event cleanup</li>
+            <section id="features" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
+                <p className="text-muted-foreground">
+                  Why this hook is production ready out of the box.
+                </p>
+              </div>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>SSR-safe matching with hydration guards to prevent initial flicker.</li>
+                <li>Lightweight <code className="font-mono text-xs">matchMedia</code> listener with automatic cleanup.</li>
+                <li>Customisable breakpoints for tablet, desktop, or watch experiences.</li>
+                <li>Optional default value for deterministic server rendering.</li>
               </ul>
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Common Breakpoints</CardTitle>
-              <CardDescription>Standard breakpoints for different device types</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <h4 className="font-semibold mb-2">Mobile First</h4>
-                  <div className="space-y-1 text-sm">
-                    <div>
-                      <code>320px</code> - Small mobile
-                    </div>
-                    <div>
-                      <code>480px</code> - Large mobile
-                    </div>
-                    <div>
-                      <code>768px</code> - Tablet (default)
-                    </div>
-                  </div>
+            <section id="presets" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Responsive presets</h2>
+                <p className="text-muted-foreground">
+                  Reference breakpoints to align with the design system.
+                </p>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-sm font-semibold uppercase text-muted-foreground">Mobile first</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li><code>320px</code> – Small mobile</li>
+                    <li><code>480px</code> – Large mobile</li>
+                    <li><code>768px</code> – Tablet (default)</li>
+                  </ul>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Desktop</h4>
-                  <div className="space-y-1 text-sm">
-                    <div>
-                      <code>1024px</code> - Small desktop
-                    </div>
-                    <div>
-                      <code>1200px</code> - Medium desktop
-                    </div>
-                    <div>
-                      <code>1440px</code> - Large desktop
-                    </div>
-                  </div>
+                <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-sm font-semibold uppercase text-muted-foreground">Desktop</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li><code>1024px</code> – Small desktop</li>
+                    <li><code>1200px</code> – Medium desktop</li>
+                    <li><code>1440px</code> – Large desktop</li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </section>
+
+            <section id="best-practices" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Best practices</h2>
+                <p className="text-muted-foreground">
+                  Keep conditional rendering predictable and accessible.
+                </p>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="rounded-lg border border-l-4 border-l-emerald-500 bg-emerald-500/5 p-5">
+                  <h3 className="text-sm font-semibold uppercase text-emerald-700">Do</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                    <li>Fallback to server defaults so markup is consistent pre-hydration.</li>
+                    <li>Pair the hook with CSS container queries when possible.</li>
+                    <li>Memoize expensive render branches that only mount on desktop.</li>
+                  </ul>
+                </div>
+                <div className="rounded-lg border border-l-4 border-l-rose-500 bg-rose-500/5 p-5">
+                  <h3 className="text-sm font-semibold uppercase text-rose-700">Don’t</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                    <li>Gate critical navigation or authentication behind viewport checks.</li>
+                    <li>Trigger heavy animations solely because the hook reports desktop.</li>
+                    <li>Assume device type—always design for responsive breakpoints.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </DocsLayout>
         </div>
       </div>
     </div>

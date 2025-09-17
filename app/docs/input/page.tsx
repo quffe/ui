@@ -1,7 +1,5 @@
 import { Input } from "@/components/Form/Input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -16,8 +14,43 @@ import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/internal/ui/code-block"
+import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
 export default function InputDocs() {
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "examples", title: "Examples" },
+    { id: "props", title: "Props" },
+    { id: "accessibility", title: "Accessibility" },
+    { id: "guidelines", title: "Design guidelines" },
+  ]
+
+  const propsRows: PropsTableRow[] = [
+    {
+      prop: "type",
+      type: "React.InputHTMLAttributes<HTMLInputElement>[\"type\"]",
+      defaultValue: "text",
+      description: "Determines the HTML input type and keyboard behaviour.",
+    },
+    {
+      prop: "placeholder",
+      type: "string",
+      description: "Helper copy rendered when the input has no value.",
+    },
+    {
+      prop: "disabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Visually and functionally disables the input.",
+    },
+    {
+      prop: "className",
+      type: "string",
+      description: "Optional utility classes merged with the base styles.",
+    },
+  ]
+
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -37,125 +70,133 @@ export default function InputDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">Input</h1>
-              <Badge variant="secondary">Form Component</Badge>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A basic input field component for text, email, and other input types.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("input")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>Install the Input component via CLI</CardDescription>
-            </CardHeader>
-            <CardContent>
+        <div className="container mx-auto max-w-5xl">
+          <DocsLayout
+            toc={toc}
+            header={{
+              title: "Input",
+              description:
+                "A basic input field for capturing single-line text, email, numbers, and more with consistent styling.",
+              category: "Form · Component",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("input")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Install the Input component with the CLI to ensure styles and dependencies match the design system.
+                </p>
+              </div>
               <InstallationTabs componentName="input" />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CodeBlock language="tsx" filename="components/Form/Input.tsx">
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Import the component and compose it with labels or helper text depending on the validation rules of your form.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <CodeBlock language="tsx" filename="components/Form/Input.tsx">
 {`import { Input } from "@/components/Form/Input"`}
-              </CodeBlock>
-              <div className="h-4" />
-              <CodeBlock language="tsx" filename="example.tsx">
+                </CodeBlock>
+                <CodeBlock language="tsx" filename="example.tsx">
 {`<Input type="email" placeholder="Enter your email" />`}
-              </CodeBlock>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Default</h3>
-                <Input type="text" placeholder="Enter text..." />
+                </CodeBlock>
               </div>
+            </section>
 
-              <div>
-                <h3 className="text-lg font-semibold mb-2">With Label</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Enter your email" />
+            <section id="examples" className="scroll-mt-24 space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Combine the input with labels, helper text, or different HTML types to cover common collection patterns.
+                </p>
+              </div>
+              <div className="grid gap-6 lg:grid-cols-2">
+                <div className="space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">Default</h3>
+                  <Input type="text" placeholder="Enter text..." />
+                </div>
+                <div className="space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">With label</h3>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" placeholder="Enter your email" />
+                  </div>
+                </div>
+                <div className="space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">Disabled</h3>
+                  <Input type="text" placeholder="Disabled input" disabled />
+                </div>
+                <div className="space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold">Different types</h3>
+                  <div className="grid gap-3">
+                    <Input type="text" placeholder="Text input" />
+                    <Input type="email" placeholder="Email input" />
+                    <Input type="password" placeholder="Password input" />
+                    <Input type="number" placeholder="Number input" />
+                    <Input type="tel" placeholder="Phone input" />
+                    <Input type="url" placeholder="URL input" />
+                  </div>
                 </div>
               </div>
+            </section>
 
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Disabled</h3>
-                <Input type="text" placeholder="Disabled input" disabled />
+            <section id="props" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
+                <p className="text-muted-foreground">
+                  The Input forwards all native <code className="font-mono text-xs">input</code> attributes, so only the custom props are documented below.
+                </p>
               </div>
+              <PropsTable rows={propsRows} />
+            </section>
 
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Different Types</h3>
-                <div className="space-y-4">
-                  <Input type="text" placeholder="Text input" />
-                  <Input type="email" placeholder="Email input" />
-                  <Input type="password" placeholder="Password input" />
-                  <Input type="number" placeholder="Number input" />
-                  <Input type="tel" placeholder="Phone input" />
-                  <Input type="url" placeholder="URL input" />
+            <section id="accessibility" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Accessibility</h2>
+                <p className="text-muted-foreground">
+                  Inputs rely on semantic HTML to communicate context to assistive tech.
+                </p>
+              </div>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>Pair every input with a <code className="font-mono text-xs">Label</code> component using the same <code className="font-mono text-xs">id</code>.</li>
+                <li>Use the <code className="font-mono text-xs">aria-invalid</code> attribute to announce error states.</li>
+                <li>Expose helper or error text with <code className="font-mono text-xs">aria-describedby</code> for additional guidance.</li>
+              </ul>
+            </section>
+
+            <section id="guidelines" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Design guidelines</h2>
+                <p className="text-muted-foreground">
+                  Keep interactions consistent across forms and states.
+                </p>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="rounded-lg border border-l-4 border-l-emerald-500 bg-emerald-500/5 p-5">
+                  <h3 className="text-sm font-semibold uppercase text-emerald-700">Do</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                    <li>Group related inputs vertically with consistent 8px spacing.</li>
+                    <li>Show inline validation states immediately after blur.</li>
+                    <li>Use helpful placeholder copy that clarifies formatting.</li>
+                  </ul>
+                </div>
+                <div className="rounded-lg border border-l-4 border-l-rose-500 bg-rose-500/5 p-5">
+                  <h3 className="text-sm font-semibold uppercase text-rose-700">Don’t</h3>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                    <li>Rely on placeholder text as the only form of labelling.</li>
+                    <li>Disable the input to show validation errors.</li>
+                    <li>Mix multiple text alignments inside a single form.</li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Props</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-border">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left p-2 font-semibold">Prop</th>
-                      <th className="text-left p-2 font-semibold">Type</th>
-                      <th className="text-left p-2 font-semibold">Default</th>
-                      <th className="text-left p-2 font-semibold">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-border">
-                      <td className="p-2 font-mono text-sm">type</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">text</td>
-                      <td className="p-2">The input type</td>
-                    </tr>
-                    <tr className="border-b border-border">
-                      <td className="p-2 font-mono text-sm">placeholder</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Placeholder text</td>
-                    </tr>
-                    <tr className="border-b border-border">
-                      <td className="p-2 font-mono text-sm">disabled</td>
-                      <td className="p-2">boolean</td>
-                      <td className="p-2">false</td>
-                      <td className="p-2">Whether the input is disabled</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 font-mono text-sm">className</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Additional CSS classes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+            </section>
+          </DocsLayout>
         </div>
       </div>
     </div>

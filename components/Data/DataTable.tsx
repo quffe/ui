@@ -35,6 +35,7 @@ interface DataTableProps<TData, TValue> {
   pageIndex?: number
   totalCount?: number
   onPaginationChange?: (pagination: PaginationArg) => void
+  hidePagination?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -46,6 +47,7 @@ export function DataTable<TData, TValue>({
   pageIndex = 1,
   totalCount = 0,
   onPaginationChange,
+  hidePagination = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -192,7 +194,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border w-full">
+    <div className="w-full rounded-md border">
       <Table className="min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
@@ -267,42 +269,46 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      <div className="flex items-center justify-between space-x-2 p-4 border-t">
-        <div className="text-sm text-muted-foreground">
-          {onPaginationChange && totalCount > 0 && (
-            <span aria-live="polite">
-              Showing {pagination.pageIndex * pagination.pageSize + 1} to{" "}
-              {Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalCount)} of{" "}
-              {totalCount} results
-            </span>
-          )}
+      {hidePagination ? null : (
+        <div className="flex items-center justify-between space-x-2 border-t p-4">
+          <div className="text-sm text-muted-foreground">
+            {onPaginationChange && totalCount > 0 && (
+              <span aria-live="polite">
+                Showing {pagination.pageIndex * pagination.pageSize + 1} to{" "}
+                {Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalCount)} of{" "}
+                {totalCount} results
+              </span>
+            )}
+          </div>
+          <div className="flex items-center space-x-1">
+            <Button
+              variant="outline"
+              size="sm"
+              type="button"
+              aria-label="Go to previous page"
+              onClick={() => table.previousPage()}
+              disabled={onPaginationChange ? pageIndex === 1 : !table.getCanPreviousPage()}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            {onPaginationChange && renderPageNumbers()}
+            <Button
+              variant="outline"
+              size="sm"
+              type="button"
+              aria-label="Go to next page"
+              onClick={() => table.nextPage()}
+              disabled={
+                onPaginationChange
+                  ? pageIndex * pageSize >= totalCount
+                  : !table.getCanNextPage()
+              }
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center space-x-1">
-          <Button
-            variant="outline"
-            size="sm"
-            type="button"
-            aria-label="Go to previous page"
-            onClick={() => table.previousPage()}
-            disabled={onPaginationChange ? pageIndex === 1 : !table.getCanPreviousPage()}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          {onPaginationChange && renderPageNumbers()}
-          <Button
-            variant="outline"
-            size="sm"
-            type="button"
-            aria-label="Go to next page"
-            onClick={() => table.nextPage()}
-            disabled={
-              onPaginationChange ? pageIndex * pageSize >= totalCount : !table.getCanNextPage()
-            }
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

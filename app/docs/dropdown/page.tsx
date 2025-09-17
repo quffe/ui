@@ -1,7 +1,5 @@
 "use server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -16,19 +14,68 @@ import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
+import { DocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import { getExampleCode } from "@/lib/serverUtils"
 
-// Example components
 import { BasicDropdownExample } from "@/examples/docs/dropdown/basic-dropdown"
 import { SearchableDropdownExample } from "@/examples/docs/dropdown/searchable-dropdown"
 import { DisabledStateExample } from "@/examples/docs/dropdown/disabled-state"
-import { getExampleCode } from "@/lib/serverUtils"
 
-// Raw imports
 const basicDropdownCode = getExampleCode("docs/dropdown/basic-dropdown.tsx")
 const searchableDropdownCode = getExampleCode("docs/dropdown/searchable-dropdown.tsx")
 const disabledStateCode = getExampleCode("docs/dropdown/disabled-state.tsx")
 
 export default async function DropdownDocs() {
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "examples", title: "Examples" },
+    { id: "props", title: "Props" },
+    { id: "features", title: "Features" },
+  ]
+
+  const propsRows: PropsTableRow[] = [
+    {
+      prop: "value",
+      type: "string",
+      description: "Controlled value for the currently selected option.",
+    },
+    {
+      prop: "options",
+      type: "DropdownOption[]",
+      description: "Collection of items rendered inside the list.",
+      required: true,
+    },
+    {
+      prop: "onChange",
+      type: "(value: string) => void",
+      description: "Invoked when the user confirms a new selection.",
+    },
+    {
+      prop: "placeholder",
+      type: "string",
+      defaultValue: "Select an option...",
+      description: "Helper copy when no option is selected.",
+    },
+    {
+      prop: "searchable",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Enables the inline filter input for large datasets.",
+    },
+    {
+      prop: "className",
+      type: "string",
+      description: "Utility classes merged onto the trigger element.",
+    },
+    {
+      prop: "disabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Prevents interaction and dims the trigger.",
+    },
+  ]
+
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -48,144 +95,87 @@ export default async function DropdownDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">Dropdown</h1>
-              <Badge variant="secondary">Navigation Component</Badge>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A searchable dropdown component built with Command and Popover primitives, featuring
-              keyboard navigation and accessibility support.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("dropdown")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>
-                Install the component using your preferred package manager
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+        <div className="container mx-auto max-w-5xl">
+          <DocsPage
+            toc={toc}
+            header={{
+              title: "Dropdown",
+              description:
+                "A searchable dropdown built from Command and Popover primitives with full keyboard support.",
+              category: "Navigation · Component",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("dropdown")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Scaffold the dropdown via CLI to copy the Command + Popover wiring.
+                </p>
+              </div>
               <InstallationTabs componentName="dropdown" />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Pair the dropdown trigger with your data model and optional search input.
+                </p>
+              </div>
               <PreviewTabs
                 preview={<BasicDropdownExample />}
                 code={basicDropdownCode}
                 title="Basic Dropdown"
               />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
+            <section id="examples" className="scroll-mt-24 space-y-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Showcase advanced filtering and disabled list states.
+                </p>
+              </div>
               <PreviewTabs
                 preview={<SearchableDropdownExample />}
                 code={searchableDropdownCode}
                 title="Searchable Dropdown"
               />
-
               <PreviewTabs
                 preview={<DisabledStateExample />}
                 code={disabledStateCode}
                 title="Disabled State"
               />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Props</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2">Prop</th>
-                      <th className="text-left p-2">Type</th>
-                      <th className="text-left p-2">Default</th>
-                      <th className="text-left p-2">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">value</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Currently selected value</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">options</td>
-                      <td className="p-2">DropdownOption[]</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Array of dropdown options</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(value: string) =&gt; void</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Callback when selection changes</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">placeholder</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">&quot;Select an option...&quot;</td>
-                      <td className="p-2">Placeholder text</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">searchable</td>
-                      <td className="p-2">boolean</td>
-                      <td className="p-2">false</td>
-                      <td className="p-2">Enable search functionality</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">className</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Additional CSS classes</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">disabled</td>
-                      <td className="p-2">boolean</td>
-                      <td className="p-2">false</td>
-                      <td className="p-2">Whether dropdown is disabled</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <section id="props" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
+                <p className="text-muted-foreground">
+                  Compose the dropdown using these core props; additional trigger props are forwarded.
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <PropsTable rows={propsRows} />
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Features</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li>Built with Command and Popover primitives</li>
-                <li>Optional search functionality</li>
-                <li>Keyboard navigation support</li>
-                <li>Disabled options support</li>
-                <li>Accessible with proper ARIA attributes</li>
-                <li>Visual selection indicators</li>
-                <li>Responsive popover positioning</li>
-                <li>Empty state handling</li>
+            <section id="features" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
+                <p className="text-muted-foreground">
+                  Built for discoverability with strong accessibility defaults.
+                </p>
+              </div>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>Command palette filtering with fuzzy matching.</li>
+                <li>Popover positioning that adapts to viewport edges.</li>
+                <li>Optional keyboard shortcuts for opening and navigation.</li>
+                <li>Disabled options and empty state messaging out of the box.</li>
+                <li>ARIA-compliant roles so screen readers announce context.</li>
               </ul>
-            </CardContent>
-          </Card>
+            </section>
+          </DocsPage>
         </div>
       </div>
     </div>

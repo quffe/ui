@@ -1,9 +1,8 @@
 "use client"
 
-import * as React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { FileText, Home, Download, BookOpen, Search, SquareStack } from "lucide-react"
+import { FileText, Home, Download, BookOpen, SquareStack } from "lucide-react"
 
 import {
   Sidebar,
@@ -12,13 +11,11 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarInput,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { Label } from "@/components/ui/label"
 import { components, hooks } from "@/components/internal/layout/nav-data"
 import { SearchButton } from "@/components/internal/ui/search-button"
 
@@ -26,24 +23,11 @@ import { SearchButton } from "@/components/internal/ui/search-button"
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const [searchQuery, setSearchQuery] = React.useState("")
   const isMentions = pathname?.startsWith("/mentions")
-
-  const filteredComponents = components.filter(
-    component =>
-      component.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      component.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const filteredHooks = hooks.filter(
-    hook =>
-      hook.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hook.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
 
   // Group components by category
   type ComponentItem = (typeof components)[number]
-  const groupedComponents = filteredComponents.reduce(
+  const groupedComponents = components.reduce(
     (acc, component) => {
       const category = component.category || "Other"
       if (!acc[category]) {
@@ -57,7 +41,7 @@ export function AppSidebar() {
 
   // Group hooks by category
   type HookItem = (typeof hooks)[number]
-  const groupedHooks = filteredHooks.reduce(
+  const groupedHooks = hooks.reduce(
     (acc, hook) => {
       const category = hook.category || "Other"
       if (!acc[category]) {
@@ -94,23 +78,6 @@ export function AppSidebar() {
           </div>
         </div>
 
-        <form className="px-2">
-          <SidebarGroup className="py-0">
-            <SidebarGroupContent className="relative">
-              <Label htmlFor="search" className="sr-only">
-                Search components
-              </Label>
-              <SidebarInput
-                id="search"
-                placeholder="Search components & hooks..."
-                className="pl-8"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-              />
-              <Search className="pointer-events-none absolute left-2 top-1/2 size-4 -translate-y-1/2 select-none opacity-50" />
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </form>
         <div className="px-2 pb-2">
           <SearchButton className="w-full" />
         </div>
@@ -196,16 +163,6 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
-
-        {searchQuery && filteredComponents.length === 0 && filteredHooks.length === 0 && (
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <div className="px-2 py-4 text-sm text-muted-foreground">
-                No components or hooks found for &quot;{searchQuery}&quot;
-              </div>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

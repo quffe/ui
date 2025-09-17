@@ -1,7 +1,5 @@
 "use server"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -17,6 +15,7 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
+import { DocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
 
 // Example components
 import { BasicPickerExample } from "@/examples/docs/date-range-picker/basic-picker"
@@ -31,6 +30,55 @@ const restrictedPickerCode = getExampleCode("docs/date-range-picker/restricted-p
 const disabledPickerCode = getExampleCode("docs/date-range-picker/disabled-picker.tsx")
 
 export default async function DateRangePickerDocs() {
+  const toc: TocItem[] = [
+    { id: "installation", title: "Installation" },
+    { id: "usage", title: "Usage" },
+    { id: "examples", title: "Examples" },
+    { id: "props", title: "Props" },
+    { id: "features", title: "Features" },
+  ]
+
+  const propsRows: PropsTableRow[] = [
+    {
+      prop: "value",
+      type: "DateRange | undefined",
+      defaultValue: "undefined",
+      description: "Controlled value representing the current start and end date.",
+    },
+    {
+      prop: "onChange",
+      type: "(range: DateRange | undefined) => void",
+      description: "Fires whenever the user updates the range selection.",
+    },
+    {
+      prop: "placeholder",
+      type: "string",
+      defaultValue: "Pick a date range",
+      description: "Helper text displayed when no range is selected.",
+    },
+    {
+      prop: "minDate",
+      type: "Date",
+      description: "Disables dates that fall before the provided boundary.",
+    },
+    {
+      prop: "maxDate",
+      type: "Date",
+      description: "Disables dates that fall after the provided boundary.",
+    },
+    {
+      prop: "disabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Toggles the component into a non-interactive state.",
+    },
+    {
+      prop: "className",
+      type: "string",
+      description: "Additional utility classes applied to the container.",
+    },
+  ]
+
   return (
     <div className="flex flex-col">
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -50,149 +98,93 @@ export default async function DateRangePickerDocs() {
       </header>
 
       <div className="flex-1 p-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="mb-8">
-            <div className="flex items-end gap-3 mb-4">
-              <h1 className="text-4xl font-bold">DateRangePicker</h1>
-              <Badge variant="secondary">Input Component</Badge>
-            </div>
-            <p className="text-lg text-muted-foreground mb-4">
-              A comprehensive date range picker with preset options, dual calendar view, and
-              flexible selection modes.
-            </p>
-            <CopyableCodeBadge text={config.getNamespacePath("date-range-picker")} />
-          </div>
-
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Installation</CardTitle>
-              <CardDescription>
-                Install the component using your preferred package manager
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+        <div className="container mx-auto max-w-5xl">
+          <DocsPage
+            toc={toc}
+            header={{
+              title: "DateRangePicker",
+              description:
+                "A comprehensive date range picker with presets, dual calendars, and flexible selection modes.",
+              category: "Form · Component",
+              status: "Stable",
+              actions: <CopyableCodeBadge text={config.getNamespacePath("date-range-picker")} />,
+            }}
+          >
+            <section id="installation" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
+                <p className="text-muted-foreground">
+                  Generate the picker via CLI to ensure date-fns helpers and styles are copied over.
+                </p>
+              </div>
               <InstallationTabs componentName="date-range-picker" />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Usage</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <section id="usage" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
+                <p className="text-muted-foreground">
+                  Start from the basic picker then layer presets, restrictions, or custom footers.
+                </p>
+              </div>
               <PreviewTabs
                 preview={<BasicPickerExample />}
                 code={basicPickerCode}
                 title="Basic Date Range Picker"
               />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Examples</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
+            <section id="examples" className="scroll-mt-24 space-y-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
+                <p className="text-muted-foreground">
+                  Explore preset ranges, min/max restrictions, and fully disabled states.
+                </p>
+              </div>
               <PreviewTabs
                 preview={<PrefilledPickerExample />}
                 code={prefilledPickerCode}
                 title="Pre-filled Date Range"
               />
-
               <PreviewTabs
                 preview={<RestrictedPickerExample />}
                 code={restrictedPickerCode}
                 title="With Date Restrictions"
               />
-
               <PreviewTabs
                 preview={<DisabledPickerExample />}
                 code={disabledPickerCode}
                 title="Disabled State"
               />
-            </CardContent>
-          </Card>
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Props</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-2">Prop</th>
-                      <th className="text-left p-2">Type</th>
-                      <th className="text-left p-2">Default</th>
-                      <th className="text-left p-2">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">value</td>
-                      <td className="p-2">DateRange | undefined</td>
-                      <td className="p-2">undefined</td>
-                      <td className="p-2">Selected date range</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">onChange</td>
-                      <td className="p-2">(range: DateRange | undefined) =&gt; void</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Date range change callback</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">placeholder</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">&quot;Pick a date range&quot;</td>
-                      <td className="p-2">Placeholder text</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">minDate</td>
-                      <td className="p-2">Date</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Minimum selectable date</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">maxDate</td>
-                      <td className="p-2">Date</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Maximum selectable date</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">disabled</td>
-                      <td className="p-2">boolean</td>
-                      <td className="p-2">false</td>
-                      <td className="p-2">Whether picker is disabled</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 font-mono">className</td>
-                      <td className="p-2">string</td>
-                      <td className="p-2">-</td>
-                      <td className="p-2">Additional CSS classes</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <section id="props" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
+                <p className="text-muted-foreground">
+                  These props cover the most common configuration points; additional calendar props can be passed through.
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <PropsTable rows={propsRows} />
+            </section>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold">Features</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li>Preset date ranges (Today, Yesterday, Last Week, This Month, etc.)</li>
-                <li>Dual calendar view for easy range selection</li>
-                <li>Keyboard navigation support</li>
-                <li>Date restrictions with min/max dates</li>
-                <li>Two-step selection process (from date, then to date)</li>
-                <li>Automatic range validation</li>
-                <li>Responsive design</li>
+            <section id="features" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
+                <p className="text-muted-foreground">
+                  Built for product workflows that need clarity around ranges and availability.
+                </p>
+              </div>
+              <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <li>Preset date ranges (Today, Yesterday, Last Week, This Month, etc.).</li>
+                <li>Dual calendar layout for fast start/end selection.</li>
+                <li>Keyboard navigation across inputs and calendar grid.</li>
+                <li>Guardrails via <code className="font-mono text-xs">minDate</code> and <code className="font-mono text-xs">maxDate</code>.</li>
+                <li>Guided two-step selection with instant range validation.</li>
+                <li>Responsive design that adapts to narrow viewports.</li>
               </ul>
-            </CardContent>
-          </Card>
+            </section>
+          </DocsPage>
         </div>
       </div>
     </div>
