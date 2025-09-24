@@ -27,15 +27,25 @@ export type PullMeta = {
   merged: boolean
   draft: boolean
   title: string
+  body?: string | null
   user: {
+    id?: number
     login: string
     avatar_url?: string | null
     html_url: string
   }
   created_at: string
+  updated_at?: string | null
   html_url: string
   labels?: LabelMeta[]
-  base?: { repo?: { full_name?: string } }
+  base?: {
+    ref?: string | null
+    repo?: { full_name?: string | null }
+  }
+  head?: {
+    ref?: string | null
+    repo?: { full_name?: string | null }
+  }
 }
 
 export type IssueMeta = {
@@ -45,6 +55,7 @@ export type IssueMeta = {
   state: "open" | "closed"
   title: string
   user: {
+    id?: number
     login: string
     avatar_url?: string | null
     html_url: string
@@ -65,7 +76,18 @@ export type RepoMeta = {
   stargazers_count?: number
   forks_count?: number
   open_issues_count?: number
+  visibility?: string | null
+  private?: boolean
+  language?: string | null
+  languageColor?: string | null
+  pushed_at?: string | null
+  updated_at?: string | null
+  owner: {
+    id?: number
+    login: string
+    avatar_url?: string | null
+    html_url: string
+  }
 }
 
 export type GithubResource = PullMeta | IssueMeta | UserMeta | RepoMeta
-

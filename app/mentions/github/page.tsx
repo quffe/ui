@@ -40,7 +40,8 @@ const componentPropsRows: PropsTableRow[] = [
     prop: "useServer",
     type: "boolean",
     defaultValue: "false",
-    description: "Route through /api/github/resource so the request runs on your server with optional auth.",
+    description:
+      "Route through /api/github/resource so the request runs on your server with optional auth.",
   },
   {
     prop: "className",
@@ -96,7 +97,8 @@ export default async function GithubMentionsPage() {
             toc={toc}
             header={{
               title: "GitHub Mention",
-              description: "Compact metadata card for GitHub issues, pull requests, repositories, and users.",
+              description:
+                "Compact metadata card for GitHub issues, pull requests, repositories, and users.",
               category: "Mentions · Component",
               status: "Stable",
             }}
@@ -108,7 +110,15 @@ export default async function GithubMentionsPage() {
                 <Badge variant="outline">Shadcn primitives</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                The ready-made <Link className="underline" href="/mentions/github">GithubMention</Link> component mirrors GitHub’s UI. Need something more custom? Start from the <Link className="underline" href="/mentions/hooks/useGithubMention">useGithubMention</Link> hook instead.
+                The ready-made{" "}
+                <Link className="underline" href="/mentions/github">
+                  GithubMention
+                </Link>{" "}
+                component mirrors GitHub’s UI. Need something more custom? Start from the{" "}
+                <Link className="underline" href="/mentions/hooks/useGithubMention">
+                  useGithubMention
+                </Link>{" "}
+                hook instead.
               </p>
             </section>
 
@@ -118,7 +128,8 @@ export default async function GithubMentionsPage() {
                 <div>
                   <p className="font-medium">Note</p>
                   <p className="text-muted-foreground">
-                    This component ships with smart defaults—URL detection, loading states, and a tooltip overlay. Use the hook for bespoke layouts.
+                    This component ships with smart defaults—URL detection, loading states, and
+                    hover tooltips that surface extra metadata. Use the hook for bespoke layouts.
                   </p>
                 </div>
               </div>
@@ -137,15 +148,24 @@ export default async function GithubMentionsPage() {
                   <TabsTrigger value="swr">SWR</TabsTrigger>
                   <TabsTrigger value="rq">React Query</TabsTrigger>
                 </TabsList>
-                <TabsContent value="plain" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
+                <TabsContent
+                  value="plain"
+                  className="space-y-3 rounded-lg border border-border bg-muted/40 p-4"
+                >
                   <p className="text-sm font-medium">Plain (no cache)</p>
                   <InstallationTabs componentName="github-mention" />
                 </TabsContent>
-                <TabsContent value="swr" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
+                <TabsContent
+                  value="swr"
+                  className="space-y-3 rounded-lg border border-border bg-muted/40 p-4"
+                >
                   <p className="text-sm font-medium">SWR variant</p>
                   <InstallationTabs componentName="github-mention-swr" />
                 </TabsContent>
-                <TabsContent value="rq" className="space-y-3 rounded-lg border border-border bg-muted/40 p-4">
+                <TabsContent
+                  value="rq"
+                  className="space-y-3 rounded-lg border border-border bg-muted/40 p-4"
+                >
                   <p className="text-sm font-medium">React Query variant</p>
                   <InstallationTabs componentName="github-mention-react-query" />
                 </TabsContent>
@@ -156,40 +176,52 @@ export default async function GithubMentionsPage() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Server proxy (optional)</h2>
                 <p className="text-muted-foreground">
-                  Enable <code className="font-mono text-xs">useServer</code> to call the component through your Next.js API route at{' '}
-                  <code className="font-mono text-xs">/api/github/resource</code>. This keeps access tokens on the server, raises rate limits, and
-                  serves cached responses via incremental revalidation.
+                  Enable <code className="font-mono text-xs">useServer</code> to call the component
+                  through your Next.js API route at{" "}
+                  <code className="font-mono text-xs">/api/github/resource</code>. This keeps access
+                  tokens on the server, raises rate limits, and serves cached responses via
+                  incremental revalidation.
                 </p>
               </div>
               <GithubMention url="https://github.com/vercel/next.js" useServer />
               <div className="grid gap-4 rounded-lg border border-border bg-muted/40 p-4 text-sm">
                 <div>
-                  <p className="font-medium">1. Provide a GitHub token (optional but recommended)</p>
+                  <p className="font-medium">
+                    1. Provide a GitHub token (optional but recommended)
+                  </p>
                   <p className="text-muted-foreground">
-                    Add <code className="font-mono text-xs">GITHUB_TOKEN</code> or <code className="font-mono text-xs">GH_TOKEN</code> to your
-                    <code className="font-mono text-xs">.env.local</code>. The proxy attaches it as a bearer token when the value doesn&apos;t start with
+                    Add <code className="font-mono text-xs">GITHUB_TOKEN</code> or{" "}
+                    <code className="font-mono text-xs">GH_TOKEN</code> to your
+                    <code className="font-mono text-xs">.env.local</code>. The proxy attaches it as
+                    a bearer token when the value doesn&apos;t start with
                     <code className="font-mono text-xs">public_</code>.
                   </p>
                 </div>
                 <div>
                   <p className="font-medium">2. Deploy the API route</p>
                   <p className="text-muted-foreground">
-                    Deploying this app hosts <code className="font-mono text-xs">/api/github/resource</code> alongside your UI. Browsers can call it
-                    from the same origin only unless you add custom CORS headers for other domains.
+                    Deploying this app hosts{" "}
+                    <code className="font-mono text-xs">/api/github/resource</code> alongside your
+                    UI. Browsers can call it from the same origin only unless you add custom CORS
+                    headers for other domains.
                   </p>
                 </div>
                 <div>
                   <p className="font-medium">3. Opt in per environment</p>
                   <p className="text-muted-foreground">
-                    Pass <code className="font-mono text-xs">useServer: true</code> (or conditionally toggle it) so the component forwards requests to
-                    the proxy. The component still receives normalized data from the hook powering it and renders the same UI.
+                    Pass <code className="font-mono text-xs">useServer: true</code> (or
+                    conditionally toggle it) so the component forwards requests to the proxy. The
+                    component still receives normalized data from the hook powering it and renders
+                    the same UI.
                   </p>
                 </div>
                 <div>
                   <p className="font-medium">Fallback</p>
                   <p className="text-muted-foreground">
-                    Omit <code className="font-mono text-xs">useServer</code> to fall back to GitHub&apos;s REST API directly from the client. This works in
-                    static hosting or pure React setups, but rate limits match the viewer&apos;s IP and the requests run in their browser.
+                    Omit <code className="font-mono text-xs">useServer</code> to fall back to
+                    GitHub&apos;s REST API directly from the client. This works in static hosting or
+                    pure React setups, but rate limits match the viewer&apos;s IP and the requests
+                    run in their browser.
                   </p>
                 </div>
               </div>
@@ -199,27 +231,38 @@ export default async function GithubMentionsPage() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Demos</h2>
                 <p className="text-muted-foreground">
-                  Live previews covering default styling, loading/error states, and how to hand off to the hook for full control.
+                  Live previews covering default styling, loading/error states, and how to hand off
+                  to the hook for full control.
                 </p>
               </div>
               <PreviewTabs title="Basic demo" preview={<BasicExample />} code={basicCode} />
-              <PreviewTabs title="States &amp; error handling" preview={<StatesExample />} code={statesCode} />
-              <PreviewTabs title="Hook-based custom layout" preview={<HookLayoutExample />} code={hookLayoutCode} />
+              <PreviewTabs
+                title="States &amp; error handling"
+                preview={<StatesExample />}
+                code={statesCode}
+              />
+              <PreviewTabs
+                title="Hook-based custom layout"
+                preview={<HookLayoutExample />}
+                code={hookLayoutCode}
+              />
             </section>
 
             <section id="props" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  Configure the card using these props; any additional anchor props pass through via <code className="font-mono text-xs">linkProps</code>.
+                  Configure the card using these props; any additional anchor props pass through via{" "}
+                  <code className="font-mono text-xs">linkProps</code>.
                 </p>
               </div>
               <PropsTable rows={componentPropsRows} />
               <p className="text-xs text-muted-foreground">
-                Tip: Open links in a new tab with <code>{"{ target: '_blank', rel: 'noopener noreferrer' }"}</code> via <code className="font-mono text-xs">linkProps</code>.
+                Tip: Open links in a new tab with{" "}
+                <code>{"{ target: '_blank', rel: 'noopener noreferrer' }"}</code> via{" "}
+                <code className="font-mono text-xs">linkProps</code>.
               </p>
             </section>
-
           </DocsPage>
         </div>
       </div>

@@ -12,10 +12,7 @@ export function parseGithubUrl(input: string): ParsedGithubUrl {
     const url = new URL(input)
     if (url.hostname !== "github.com") return { kind: "unknown" }
 
-    const parts = url.pathname
-      .replace(/\/+$/, "")
-      .split("/")
-      .filter(Boolean)
+    const parts = url.pathname.replace(/\/+$/, "").split("/").filter(Boolean)
 
     // /owner -> user profile
     if (parts.length === 1) {

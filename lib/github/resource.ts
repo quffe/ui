@@ -36,7 +36,10 @@ export function clientEndpointFor(url: string, useServer?: boolean): string | nu
   }
 }
 
-export async function getGithubResource(url: string, opts: { useServer?: boolean; signal?: AbortSignal } = {}): Promise<GithubResource> {
+export async function getGithubResource(
+  url: string,
+  opts: { useServer?: boolean; signal?: AbortSignal } = {}
+): Promise<GithubResource> {
   const endpoint = clientEndpointFor(url, opts.useServer)
   if (!endpoint) throw new Error("Invalid GitHub URL")
   const res = await fetch(endpoint, {
@@ -50,7 +53,7 @@ export async function getGithubResource(url: string, opts: { useServer?: boolean
     throw new GithubApiError(
       `GitHub request failed: ${res.status}`,
       res.status,
-      isRateLimited ? "RATE_LIMITED" : "HTTP_ERROR",
+      isRateLimited ? "RATE_LIMITED" : "HTTP_ERROR"
     )
   }
   const json = (await res.json()) as unknown

@@ -66,11 +66,7 @@ function CustomMention({ url }: { url: string }) {
         </div>
       )
     default:
-      return (
-        <div className="text-sm text-muted-foreground">
-          Unsupported GitHub resource
-        </div>
-      )
+      return <div className="text-sm text-muted-foreground">Unsupported GitHub resource</div>
   }
 }
 

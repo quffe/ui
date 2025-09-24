@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { parseGithubUrl } from "@/lib/github/parse-url"
 import { normalizeGithubResource } from "@/lib/github/normalize"
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || process.env.NEXT_PUBLIC_GITHUB_TOKEN /* avoid using public */
+const GITHUB_TOKEN =
+  process.env.GITHUB_TOKEN ||
+  process.env.GH_TOKEN ||
+  process.env.NEXT_PUBLIC_GITHUB_TOKEN /* avoid using public */
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -10,7 +13,8 @@ export async function GET(req: NextRequest) {
   if (!url) return NextResponse.json({ error: "Missing url" }, { status: 400 })
 
   const parsed = parseGithubUrl(url)
-  if (parsed.kind === "unknown") return NextResponse.json({ error: "Invalid GitHub URL" }, { status: 400 })
+  if (parsed.kind === "unknown")
+    return NextResponse.json({ error: "Invalid GitHub URL" }, { status: 400 })
 
   let endpoint: string
   switch (parsed.kind) {

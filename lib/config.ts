@@ -52,50 +52,50 @@ export const config = {
     // Map component names to namespace paths
     const namespaceMap: Record<string, string> = {
       // Form components
-      'input-amount': 'form/input-amount',
-      'otp-input': 'form/otp-input', 
-      'file-input': 'form/file-input',
-      'password-input': 'form/password-input',
-      'checkbox': 'form/checkbox',
-      'input': 'form/input',
-      'textarea': 'form/textarea',
-      'radio-group': 'form/radio-group',
-      'select': 'form/select',
-      
+      "input-amount": "form/input-amount",
+      "otp-input": "form/otp-input",
+      "file-input": "form/file-input",
+      "password-input": "form/password-input",
+      checkbox: "form/checkbox",
+      input: "form/input",
+      textarea: "form/textarea",
+      "radio-group": "form/radio-group",
+      select: "form/select",
+
       // Navigation components
-      'dropdown': 'navigation/dropdown',
-      'select-dropdown': 'navigation/select-dropdown',
-      
+      dropdown: "navigation/dropdown",
+      "select-dropdown": "navigation/select-dropdown",
+
       // Data components
-      'data-table': 'data/data-table',
-      
-      // Modal components  
-      'modal': 'modal/modal',
-      'modal-trigger': 'modal/modal-trigger',
+      "data-table": "data/data-table",
+
+      // Modal components
+      modal: "modal/modal",
+      "modal-trigger": "modal/modal-trigger",
 
       // Mentions
-      'github-mention': 'mentions/github-mention',
-      'github-mention-swr': 'mentions/github-mention-swr',
-      'github-mention-react-query': 'mentions/github-mention-react-query',
-      
+      "github-mention": "mentions/github-mention",
+      "github-mention-swr": "mentions/github-mention-swr",
+      "github-mention-react-query": "mentions/github-mention-react-query",
+
       // Hooks
-      'use-github-mention': 'hooks/use-github-mention',
-      'use-github-mention-plain': 'hooks/use-github-mention-plain',
-      'use-github-mention-react-query': 'hooks/use-github-mention-react-query',
-      'use-mobile': 'hooks/use-mobile',
-      'useCopyToClipboard': 'hooks/useCopyToClipboard',
-      'useCountdown': 'hooks/useCountdown',
-      'useIsomorphicLayoutEffect': 'hooks/useIsomorphicLayoutEffect',
-      'useKeyboardShortcut': 'hooks/useKeyboardShortcut',
-      'useLocalStorage': 'hooks/useLocalStorage',
-      'useOnMountEffect': 'hooks/useOnMountEffect',
-      'useOnMountLayoutEffect': 'hooks/useOnMountLayoutEffect',
-      'useOnUnmountEffect': 'hooks/useOnUnmountEffect',
-      'useOnWindowResize': 'hooks/useOnWindowResize',
-      'useRevalidate': 'hooks/useRevalidate',
-      'useStateChangeEffect': 'hooks/useStateChangeEffect',
+      "use-github-mention": "hooks/use-github-mention",
+      "use-github-mention-plain": "hooks/use-github-mention-plain",
+      "use-github-mention-react-query": "hooks/use-github-mention-react-query",
+      "use-mobile": "hooks/use-mobile",
+      useCopyToClipboard: "hooks/useCopyToClipboard",
+      useCountdown: "hooks/useCountdown",
+      useIsomorphicLayoutEffect: "hooks/useIsomorphicLayoutEffect",
+      useKeyboardShortcut: "hooks/useKeyboardShortcut",
+      useLocalStorage: "hooks/useLocalStorage",
+      useOnMountEffect: "hooks/useOnMountEffect",
+      useOnMountLayoutEffect: "hooks/useOnMountLayoutEffect",
+      useOnUnmountEffect: "hooks/useOnUnmountEffect",
+      useOnWindowResize: "hooks/useOnWindowResize",
+      useRevalidate: "hooks/useRevalidate",
+      useStateChangeEffect: "hooks/useStateChangeEffect",
     }
-    
+
     const namespacePath = namespaceMap[componentName] || componentName
     return `@ui-components/${namespacePath}`
   },
@@ -115,6 +115,6 @@ export const config = {
   getNamespacePath: (componentName: string) => {
     const componentUrl = config.getComponentUrl(componentName)
     // Extract the path after the namespace prefix (e.g., "@ui-components/form/input-amount" -> "form/input-amount")
-    return componentUrl.includes('/') ? componentUrl.split('/').slice(1).join('/') : componentUrl
+    return componentUrl.includes("/") ? componentUrl.split("/").slice(1).join("/") : componentUrl
   },
 }
