@@ -390,7 +390,17 @@ function PullTooltip({ data }: { data: Extract<GithubResource, { kind: "pull" }>
   const baseLabel = formatRepoBranchLabel(baseRepo, data.base?.ref ?? null)
   const headLabel = formatRepoBranchLabel(headRepo, data.head?.ref ?? null)
   const status = data.merged ? "merged" : data.draft ? "draft" : data.state
-  const statusAppearance = getPullStatusAppearance(status)
+  const statusMeta = getStatusMeta("pull", status)
+  const originalStatusClass =
+    typeof statusMeta.icon.props?.className === "string" ? statusMeta.icon.props.className : ""
+  const cleanedStatusClass = originalStatusClass
+    .split(" ")
+    .filter(cls => cls && !/^size-/.test(cls))
+    .join(" ")
+  const statusIcon = React.cloneElement(statusMeta.icon, {
+    className: cn("mt-0.5 size-5 shrink-0", cleanedStatusClass),
+    "aria-hidden": true,
+  })
   const [baseOwner, ...baseBranchParts] = baseLabel?.split(":") ?? []
   const baseBranch = baseBranchParts.length ? baseBranchParts.join(":") : null
   const [headOwner, ...headBranchParts] = headLabel?.split(":") ?? []
@@ -409,11 +419,7 @@ function PullTooltip({ data }: { data: Extract<GithubResource, { kind: "pull" }>
       </div>
 
       <div className="flex items-start gap-2">
-        <GitPullRequest
-          className="mt-0.5 size-5 shrink-0"
-          style={{ color: statusAppearance.color }}
-          aria-hidden
-        />
+        {statusIcon}
         <div className="flex flex-col gap-3">
           <div className="min-w-0 space-y-1">
             <Link
@@ -459,19 +465,6 @@ function PullTooltip({ data }: { data: Extract<GithubResource, { kind: "pull" }>
       </div>
     </div>
   )
-}
-
-function getPullStatusAppearance(status: "open" | "closed" | "merged" | "draft") {
-  switch (status) {
-    case "merged":
-      return { color: "#8250df", label: "Merged" }
-    case "draft":
-      return { color: "#6e7781", label: "Draft" }
-    case "open":
-      return { color: "#1f883d", label: "Open" }
-    default:
-      return { color: "#cf222e", label: "Closed" }
-  }
 }
 
 function formatOnDate(input?: string | null) {
