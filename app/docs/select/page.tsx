@@ -70,7 +70,8 @@ export default function SelectDocs() {
             toc={toc}
             header={{
               title: "Select",
-              description: "A native select element with design-system styling and disabled state support.",
+              description:
+                "A native select element with design-system styling and disabled state support.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("select")} />,
@@ -80,7 +81,8 @@ export default function SelectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Install the component via CLI or copy the styles if you only need the base element.
+                  Install the component via CLI or copy the styles if you only need the base
+                  element.
                 </p>
               </div>
               <InstallationTabs componentName="select" />
@@ -90,15 +92,16 @@ export default function SelectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the styled <code className="font-mono text-xs">Select</code> and pass native <code className="font-mono text-xs">option</code> elements.
+                  Import the styled <code className="font-mono text-xs">Select</code> and pass
+                  native <code className="font-mono text-xs">option</code> elements.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/Select.tsx">
-{`import { Select } from "@/components/Form/Select"`}
+                  {`import { Select } from "@/components/Form/Select"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<Select placeholder="Choose an option">
+                  {`<Select placeholder="Choose an option">
   <option value="option1">Option 1</option>
   <option value="option2">Option 2</option>
   <option value="option3">Option 3</option>
@@ -149,7 +152,8 @@ export default function SelectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  In addition to these props, the component forwards all native <code className="font-mono text-xs">select</code> attributes.
+                  In addition to these props, the component forwards all native{" "}
+                  <code className="font-mono text-xs">select</code> attributes.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -163,7 +167,10 @@ export default function SelectDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Always associate the select with a visible <code className="font-mono text-xs">Label</code>.</li>
+                <li>
+                  Always associate the select with a visible{" "}
+                  <code className="font-mono text-xs">Label</code>.
+                </li>
                 <li>Provide helper text for grouped options or country lists.</li>
                 <li>Keep option labels concise so screen readers announce them cleanly.</li>
               </ul>

@@ -154,7 +154,8 @@ export default async function DropdownDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  Compose the dropdown using these core props; additional trigger props are forwarded.
+                  Compose the dropdown using these core props; additional trigger props are
+                  forwarded.
                 </p>
               </div>
               <PropsTable rows={propsRows} />

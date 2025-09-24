@@ -15,7 +15,12 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
-import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  DocsLayout,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 // Example components
 import { BasicUsageExample } from "@/examples/docs/hooks/use-mobile/basic-usage"
@@ -60,7 +65,8 @@ export default async function UseMobileDocs() {
       defaultValue: "true",
       description: (
         <>
-          Enables a guard for environments without <code className="font-mono text-xs">window</code>.
+          Enables a guard for environments without <code className="font-mono text-xs">window</code>
+          .
         </>
       ),
     },
@@ -72,7 +78,8 @@ export default async function UseMobileDocs() {
       type: <code className="font-mono text-xs">boolean</code>,
       description: (
         <>
-          Returns <code className="font-mono text-xs">true</code> when the viewport is below the breakpoint; otherwise <code className="font-mono text-xs">false</code>.
+          Returns <code className="font-mono text-xs">true</code> when the viewport is below the
+          breakpoint; otherwise <code className="font-mono text-xs">false</code>.
         </>
       ),
     },
@@ -102,7 +109,8 @@ export default async function UseMobileDocs() {
             toc={toc}
             header={{
               title: "useMobile",
-              description: "A viewport matcher that reports mobile breakpoints without hydration flicker.",
+              description:
+                "A viewport matcher that reports mobile breakpoints without hydration flicker.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("use-mobile")} />,
@@ -112,7 +120,8 @@ export default async function UseMobileDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Install the hook via CLI so dependencies for SSR safety are copied into your project.
+                  Install the hook via CLI so dependencies for SSR safety are copied into your
+                  project.
                 </p>
               </div>
               <InstallationTabs componentName="use-mobile" />
@@ -143,7 +152,8 @@ export default async function UseMobileDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">API</h2>
                 <p className="text-muted-foreground">
-                  The hook accepts a single options object and returns a boolean that tracks the current viewport.
+                  The hook accepts a single options object and returns a boolean that tracks the
+                  current viewport.
                 </p>
               </div>
               <div className="space-y-6">
@@ -170,7 +180,10 @@ export default async function UseMobileDocs() {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>SSR-safe matching with hydration guards to prevent initial flicker.</li>
-                <li>Lightweight <code className="font-mono text-xs">matchMedia</code> listener with automatic cleanup.</li>
+                <li>
+                  Lightweight <code className="font-mono text-xs">matchMedia</code> listener with
+                  automatic cleanup.
+                </li>
                 <li>Customisable breakpoints for tablet, desktop, or watch experiences.</li>
                 <li>Optional default value for deterministic server rendering.</li>
               </ul>
@@ -185,19 +198,33 @@ export default async function UseMobileDocs() {
               </div>
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
-                  <h3 className="text-sm font-semibold uppercase text-muted-foreground">Mobile first</h3>
+                  <h3 className="text-sm font-semibold uppercase text-muted-foreground">
+                    Mobile first
+                  </h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li><code>320px</code> – Small mobile</li>
-                    <li><code>480px</code> – Large mobile</li>
-                    <li><code>768px</code> – Tablet (default)</li>
+                    <li>
+                      <code>320px</code> – Small mobile
+                    </li>
+                    <li>
+                      <code>480px</code> – Large mobile
+                    </li>
+                    <li>
+                      <code>768px</code> – Tablet (default)
+                    </li>
                   </ul>
                 </div>
                 <div className="space-y-3 rounded-lg border bg-card p-6 shadow-sm">
                   <h3 className="text-sm font-semibold uppercase text-muted-foreground">Desktop</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li><code>1024px</code> – Small desktop</li>
-                    <li><code>1200px</code> – Medium desktop</li>
-                    <li><code>1440px</code> – Large desktop</li>
+                    <li>
+                      <code>1024px</code> – Small desktop
+                    </li>
+                    <li>
+                      <code>1200px</code> – Medium desktop
+                    </li>
+                    <li>
+                      <code>1440px</code> – Large desktop
+                    </li>
                   </ul>
                 </div>
               </div>

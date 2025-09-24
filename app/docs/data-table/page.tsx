@@ -140,7 +140,8 @@ export default function DataTableDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Generate the table via CLI to include the required column helpers and styling tokens.
+                  Generate the table via CLI to include the required column helpers and styling
+                  tokens.
                 </p>
               </div>
               <InstallationTabs componentName="data-table" />
@@ -150,15 +151,16 @@ export default function DataTableDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Define your column schema first, then pass both columns and data into the component.
+                  Define your column schema first, then pass both columns and data into the
+                  component.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Data/DataTable.tsx">
-{`import { DataTable } from "@/components/Data/DataTable"`}
+                  {`import { DataTable } from "@/components/Data/DataTable"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<DataTable
+                  {`<DataTable
   columns={columns}
   data={data}
   pageSize={10}
@@ -172,7 +174,8 @@ export default function DataTableDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Example</h2>
                 <p className="text-muted-foreground">
-                  This live example demonstrates interactive sorting, pagination, and row selection hooks.
+                  This live example demonstrates interactive sorting, pagination, and row selection
+                  hooks.
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-6 shadow-sm">
@@ -189,7 +192,8 @@ export default function DataTableDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  The table exposes a thin wrapper around TanStack Table so you can adopt advanced patterns gradually.
+                  The table exposes a thin wrapper around TanStack Table so you can adopt advanced
+                  patterns gradually.
                 </p>
               </div>
               <PropsTable rows={propsRows} />

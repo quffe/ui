@@ -15,7 +15,12 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { getExampleCode } from "@/lib/serverUtils"
-import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  DocsLayout,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 // Example components
 import { BasicModalExample } from "@/examples/docs/modal/basic-modal"
@@ -128,7 +133,8 @@ export default async function ModalDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Generate the modal via CLI to wire up the required portal, overlay, and animations.
+                  Generate the modal via CLI to wire up the required portal, overlay, and
+                  animations.
                 </p>
               </div>
               <InstallationTabs componentName="modal" />
@@ -138,10 +144,15 @@ export default async function ModalDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Start with the basic modal and customise its trigger, size, and actions for your product flow.
+                  Start with the basic modal and customise its trigger, size, and actions for your
+                  product flow.
                 </p>
               </div>
-              <PreviewTabs preview={<BasicModalExample />} code={basicModalCode} title="Basic modal" />
+              <PreviewTabs
+                preview={<BasicModalExample />}
+                code={basicModalCode}
+                title="Basic modal"
+              />
             </section>
 
             <section id="examples" className="scroll-mt-24 space-y-8">
@@ -169,7 +180,8 @@ export default async function ModalDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  These props configure the modal shell; pass additional content through <code className="font-mono text-xs">children</code>.
+                  These props configure the modal shell; pass additional content through{" "}
+                  <code className="font-mono text-xs">children</code>.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -183,11 +195,18 @@ export default async function ModalDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Multiple width presets spanning <code className="font-mono text-xs">sm</code> through <code className="font-mono text-xs">full</code>.</li>
+                <li>
+                  Multiple width presets spanning <code className="font-mono text-xs">sm</code>{" "}
+                  through <code className="font-mono text-xs">full</code>.
+                </li>
                 <li>Optional top and bottom anchored layouts for toast-style dialogs.</li>
                 <li>Focus trap with initial focus management and ESC dismissal.</li>
                 <li>Body scroll lock and inert background while open.</li>
-                <li>Accessible labelling via <code className="font-mono text-xs">aria-labelledby</code> and <code className="font-mono text-xs">aria-describedby</code>.</li>
+                <li>
+                  Accessible labelling via{" "}
+                  <code className="font-mono text-xs">aria-labelledby</code> and{" "}
+                  <code className="font-mono text-xs">aria-describedby</code>.
+                </li>
               </ul>
             </section>
 
@@ -199,9 +218,18 @@ export default async function ModalDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Provide focusable controls inside the modal, starting with the primary action.</li>
-                <li>Map the modal title to <code className="font-mono text-xs">aria-labelledby</code> and the description to <code className="font-mono text-xs">aria-describedby</code>.</li>
-                <li>Avoid triggering the modal automatically—always let the user initiate the interaction.</li>
+                <li>
+                  Provide focusable controls inside the modal, starting with the primary action.
+                </li>
+                <li>
+                  Map the modal title to <code className="font-mono text-xs">aria-labelledby</code>{" "}
+                  and the description to <code className="font-mono text-xs">aria-describedby</code>
+                  .
+                </li>
+                <li>
+                  Avoid triggering the modal automatically—always let the user initiate the
+                  interaction.
+                </li>
               </ul>
             </section>
 
@@ -217,8 +245,13 @@ export default async function ModalDocs() {
                   <h3 className="text-sm font-semibold uppercase text-emerald-700">Do</h3>
                   <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
                     <li>Write concise headlines that describe the action being taken.</li>
-                    <li>Place primary actions on the right and destructive actions in a danger variant.</li>
-                    <li>Autosize content vertically to avoid scrollable inner regions when possible.</li>
+                    <li>
+                      Place primary actions on the right and destructive actions in a danger
+                      variant.
+                    </li>
+                    <li>
+                      Autosize content vertically to avoid scrollable inner regions when possible.
+                    </li>
                   </ul>
                 </div>
                 <div className="rounded-lg border border-l-4 border-l-rose-500 bg-rose-500/5 p-5">

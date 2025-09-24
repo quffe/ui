@@ -15,7 +15,12 @@ import { CodeBlock } from "@/components/internal/ui/code-block"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  HookDocsPage,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 import { getExampleCode } from "@/lib/serverUtils"
 
 import LiveDemoExample from "@/examples/docs/hooks/useOnMountLayoutEffect/live-demo"
@@ -93,10 +98,13 @@ export default async function UseOnMountLayoutEffectDocs() {
             toc={toc}
             header={{
               title: "useOnMountLayoutEffect",
-              description: "Synchronous mount-only layout effects for measuring or mutating DOM before paint.",
+              description:
+                "Synchronous mount-only layout effects for measuring or mutating DOM before paint.",
               category: "React · Hook",
               status: "Stable",
-              actions: <CopyableCodeBadge text={config.getNamespacePath("useOnMountLayoutEffect")} />,
+              actions: (
+                <CopyableCodeBadge text={config.getNamespacePath("useOnMountLayoutEffect")} />
+              ),
             }}
             parameters={layoutParameters}
           >
@@ -114,11 +122,12 @@ export default async function UseOnMountLayoutEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Use the standard hook for one-time measurements or DOM mutations; opt into the strict variant to bypass dependency checks completely.
+                  Use the standard hook for one-time measurements or DOM mutations; opt into the
+                  strict variant to bypass dependency checks completely.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`import { useOnMountLayoutEffect, useStrictMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"`}
+                {`import { useOnMountLayoutEffect, useStrictMountLayoutEffect } from "@/hooks/useOnMountLayoutEffect"`}
               </CodeBlock>
             </section>
 
@@ -126,7 +135,8 @@ export default async function UseOnMountLayoutEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
                 <p className="text-muted-foreground">
-                  Measure layout, restore scroll position, or kick off critical animations before paint.
+                  Measure layout, restore scroll position, or kick off critical animations before
+                  paint.
                 </p>
               </div>
               <PreviewTabs preview={<LiveDemoExample />} code={liveDemoCode} title="Live demo" />
@@ -159,9 +169,12 @@ export default async function UseOnMountLayoutEffectDocs() {
 
             <section id="use-strict-mount-layout-effect" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight">useStrictMountLayoutEffect</h2>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  useStrictMountLayoutEffect
+                </h2>
                 <p className="text-muted-foreground">
-                  Guarantees a single synchronous invocation even under Strict Mode double rendering.
+                  Guarantees a single synchronous invocation even under Strict Mode double
+                  rendering.
                 </p>
               </div>
               <PropsTable rows={strictLayoutParameters} labels={{ prop: "Parameter" }} />

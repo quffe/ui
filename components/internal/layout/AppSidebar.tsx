@@ -69,10 +69,16 @@ export function AppSidebar() {
         {/* Section switcher */}
         <div className="px-2 pb-2">
           <div className="grid grid-cols-2 gap-2">
-            <Link href="/components" className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-background" : "bg-sidebar-primary text-sidebar-primary-foreground"}`}>
+            <Link
+              href="/components"
+              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-background" : "bg-sidebar-primary text-sidebar-primary-foreground"}`}
+            >
               Components
             </Link>
-            <Link href="/mentions" className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-sidebar-primary text-sidebar-primary-foreground" : "bg-background"}`}>
+            <Link
+              href="/mentions"
+              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-sidebar-primary text-sidebar-primary-foreground" : "bg-background"}`}
+            >
               Mentions
             </Link>
           </div>

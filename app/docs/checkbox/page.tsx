@@ -15,7 +15,12 @@ import {
 } from "@/components/ui/breadcrumb"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/internal/ui/code-block"
-import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  DocsLayout,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 export default function CheckboxDocs() {
   const toc: TocItem[] = [
@@ -93,7 +98,8 @@ export default function CheckboxDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Scaffold the Checkbox from the CLI to copy the necessary primitive wiring and styles.
+                  Scaffold the Checkbox from the CLI to copy the necessary primitive wiring and
+                  styles.
                 </p>
               </div>
               <InstallationTabs componentName="checkbox" />
@@ -103,15 +109,16 @@ export default function CheckboxDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the Checkbox and pair it with contextual copy to explain what the user is opting into.
+                  Import the Checkbox and pair it with contextual copy to explain what the user is
+                  opting into.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/Checkbox.tsx">
-{`import { Checkbox } from "@/components/Form/Checkbox"`}
+                  {`import { Checkbox } from "@/components/Form/Checkbox"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<Checkbox id="terms" label="Accept terms and conditions" />`}
+                  {`<Checkbox id="terms" label="Accept terms and conditions" />`}
                 </CodeBlock>
               </div>
             </section>
@@ -154,7 +161,8 @@ export default function CheckboxDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  In addition to these props, the Checkbox forwards any native <code className="font-mono text-xs">input</code> attributes.
+                  In addition to these props, the Checkbox forwards any native{" "}
+                  <code className="font-mono text-xs">input</code> attributes.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -168,8 +176,14 @@ export default function CheckboxDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Always pass an <code className="font-mono text-xs">id</code> and pair it with a visible label.</li>
-                <li>Prefer <code className="font-mono text-xs">aria-describedby</code> to link supporting guidance or error copy.</li>
+                <li>
+                  Always pass an <code className="font-mono text-xs">id</code> and pair it with a
+                  visible label.
+                </li>
+                <li>
+                  Prefer <code className="font-mono text-xs">aria-describedby</code> to link
+                  supporting guidance or error copy.
+                </li>
                 <li>Use fieldsets when presenting multiple checkboxes within the same question.</li>
               </ul>
             </section>
@@ -177,9 +191,7 @@ export default function CheckboxDocs() {
             <section id="guidelines" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Design guidelines</h2>
-                <p className="text-muted-foreground">
-                  Keep option groups predictable and legible.
-                </p>
+                <p className="text-muted-foreground">Keep option groups predictable and legible.</p>
               </div>
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-lg border border-l-4 border-l-emerald-500 bg-emerald-500/5 p-5">

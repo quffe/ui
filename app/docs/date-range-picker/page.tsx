@@ -162,7 +162,8 @@ export default async function DateRangePickerDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  These props cover the most common configuration points; additional calendar props can be passed through.
+                  These props cover the most common configuration points; additional calendar props
+                  can be passed through.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -179,7 +180,10 @@ export default async function DateRangePickerDocs() {
                 <li>Preset date ranges (Today, Yesterday, Last Week, This Month, etc.).</li>
                 <li>Dual calendar layout for fast start/end selection.</li>
                 <li>Keyboard navigation across inputs and calendar grid.</li>
-                <li>Guardrails via <code className="font-mono text-xs">minDate</code> and <code className="font-mono text-xs">maxDate</code>.</li>
+                <li>
+                  Guardrails via <code className="font-mono text-xs">minDate</code> and{" "}
+                  <code className="font-mono text-xs">maxDate</code>.
+                </li>
                 <li>Guided two-step selection with instant range validation.</li>
                 <li>Responsive design that adapts to narrow viewports.</li>
               </ul>

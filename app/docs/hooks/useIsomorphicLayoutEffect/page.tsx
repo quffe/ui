@@ -17,14 +17,23 @@ import { config } from "@/lib/config"
 import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
-import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
-import { useIsomorphicLayoutEffect, useIsomorphicMountEffect } from "@/hooks/useIsomorphicLayoutEffect"
+import {
+  HookDocsPage,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
+import {
+  useIsomorphicLayoutEffect,
+  useIsomorphicMountEffect,
+} from "@/hooks/useIsomorphicLayoutEffect"
 
 const layoutParameters: PropsTableRow[] = [
   {
     prop: "effect",
     type: "React.EffectCallback",
-    description: "Effect that runs synchronously on the client and safely falls back to useEffect during SSR.",
+    description:
+      "Effect that runs synchronously on the client and safely falls back to useEffect during SSR.",
     required: true,
   },
   {
@@ -63,10 +72,18 @@ function LiveDemo() {
   return (
     <div className="rounded-lg border bg-card p-6 shadow-sm" ref={ref}>
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div>Measured width: <strong>{dimensions.width}px</strong></div>
-        <div>Measured height: <strong>{dimensions.height}px</strong></div>
-        <div>Mount effect runs: <strong>{mountRuns}</strong></div>
-        <div>Re-renders: <strong>{rerenders}</strong></div>
+        <div>
+          Measured width: <strong>{dimensions.width}px</strong>
+        </div>
+        <div>
+          Measured height: <strong>{dimensions.height}px</strong>
+        </div>
+        <div>
+          Mount effect runs: <strong>{mountRuns}</strong>
+        </div>
+        <div>
+          Re-renders: <strong>{rerenders}</strong>
+        </div>
       </div>
       <button
         type="button"
@@ -116,10 +133,13 @@ export default function UseIsomorphicLayoutEffectDocs() {
             toc={toc}
             header={{
               title: "useIsomorphicLayoutEffect",
-              description: "SSR-safe layout effects that avoid hydration warnings while still running before paint on the client.",
+              description:
+                "SSR-safe layout effects that avoid hydration warnings while still running before paint on the client.",
               category: "React · Hook",
               status: "Stable",
-              actions: <CopyableCodeBadge text={config.getNamespacePath("useIsomorphicLayoutEffect")} />,
+              actions: (
+                <CopyableCodeBadge text={config.getNamespacePath("useIsomorphicLayoutEffect")} />
+              ),
             }}
             parameters={layoutParameters}
           >
@@ -127,7 +147,8 @@ export default function UseIsomorphicLayoutEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Install via CLI to copy both the layout and mount variants along with TypeScript helpers.
+                  Install via CLI to copy both the layout and mount variants along with TypeScript
+                  helpers.
                 </p>
               </div>
               <InstallationTabs componentName="useIsomorphicLayoutEffect" />
@@ -137,11 +158,12 @@ export default function UseIsomorphicLayoutEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Use the layout variant for synchronous measurements and the mount variant for SSR-safe initialisation tasks.
+                  Use the layout variant for synchronous measurements and the mount variant for
+                  SSR-safe initialisation tasks.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`useIsomorphicLayoutEffect(() => {
+                {`useIsomorphicLayoutEffect(() => {
   if (typeof window !== 'undefined') {
     const rect = elementRef.current?.getBoundingClientRect()
     setDimensions(rect)
@@ -158,17 +180,24 @@ useIsomorphicMountEffect(() => {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
                 <p className="text-muted-foreground">
-                  Measure layout, synchronise theme data, or restore focus without risking hydration mismatches.
+                  Measure layout, synchronise theme data, or restore focus without risking hydration
+                  mismatches.
                 </p>
               </div>
-              <PreviewTabs preview={<LiveDemo />} code={"<!-- see usage example -->"} title="Live demonstration" />
+              <PreviewTabs
+                preview={<LiveDemo />}
+                code={"<!-- see usage example -->"}
+                title="Live demonstration"
+              />
             </section>
 
             <section id="use-isomorphic-mount-effect" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">useIsomorphicMountEffect</h2>
                 <p className="text-muted-foreground">
-                  Mount-only variant that mirrors <code className="font-mono text-xs">useLayoutEffect</code> in the browser and <code className="font-mono text-xs">useEffect</code> on the server.
+                  Mount-only variant that mirrors{" "}
+                  <code className="font-mono text-xs">useLayoutEffect</code> in the browser and{" "}
+                  <code className="font-mono text-xs">useEffect</code> on the server.
                 </p>
               </div>
               <PropsTable rows={mountParameters} labels={{ prop: "Parameter" }} />
@@ -178,13 +207,21 @@ useIsomorphicMountEffect(() => {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
                 <p className="text-muted-foreground">
-                  Designed for Next.js and other SSR environments where layout effects would normally warn.
+                  Designed for Next.js and other SSR environments where layout effects would
+                  normally warn.
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Seamlessly swaps between <code className="font-mono text-xs">useLayoutEffect</code> and <code className="font-mono text-xs">useEffect</code> depending on environment.</li>
+                <li>
+                  Seamlessly swaps between{" "}
+                  <code className="font-mono text-xs">useLayoutEffect</code> and{" "}
+                  <code className="font-mono text-xs">useEffect</code> depending on environment.
+                </li>
                 <li>Companion mount hook for one-time initialisation.</li>
-                <li>Useful for measuring elements, applying themes, or restoring scroll positions without runtime checks.</li>
+                <li>
+                  Useful for measuring elements, applying themes, or restoring scroll positions
+                  without runtime checks.
+                </li>
               </ul>
             </section>
           </HookDocsPage>

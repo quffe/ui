@@ -31,18 +31,14 @@ export function CopyableCodeBadge({ text, className }: CopyableCodeBadgeProps) {
       onClick={copyToClipboard}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => {
+      onKeyDown={e => {
         if (e.key === "Enter" || e.key === " ") {
           copyToClipboard()
         }
       }}
     >
       <code className="text-xs">{text}</code>
-      {copied ? (
-        <Check className="h-3 w-3 text-green-600" />
-      ) : (
-        <Copy className="h-3 w-3" />
-      )}
+      {copied ? <Check className="h-3 w-3 text-green-600" /> : <Copy className="h-3 w-3" />}
     </div>
   )
 }

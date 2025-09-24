@@ -80,10 +80,19 @@ export function Dropdown({
           disabled={disabled}
         >
           {selectedOption ? selectedOption.label : placeholder}
-          <ChevronDown aria-hidden="true" focusable="false" className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronDown
+            aria-hidden="true"
+            focusable="false"
+            className="ml-2 h-4 w-4 shrink-0 opacity-50"
+          />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start" aria-labelledby={ariaLabelledBy} aria-describedby={descriptionId}>
+      <PopoverContent
+        className="w-full p-0"
+        align="start"
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={descriptionId}
+      >
         <Command>
           {searchable && (
             <CommandInput
@@ -93,7 +102,11 @@ export function Dropdown({
               aria-describedby={descriptionId}
             />
           )}
-          <CommandList id={listboxId} aria-labelledby={ariaLabelledBy} aria-describedby={descriptionId}>
+          <CommandList
+            id={listboxId}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={descriptionId}
+          >
             <CommandEmpty>{emptyMessage}</CommandEmpty>
             <CommandGroup>
               {options.map(option => (

@@ -75,7 +75,8 @@ export default function TextareaDocs() {
             toc={toc}
             header={{
               title: "Textarea",
-              description: "A multi-line text input with consistent styling and disabled state support.",
+              description:
+                "A multi-line text input with consistent styling and disabled state support.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("textarea")} />,
@@ -95,15 +96,16 @@ export default function TextareaDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the component and use it like a native <code className="font-mono text-xs">textarea</code> element.
+                  Import the component and use it like a native{" "}
+                  <code className="font-mono text-xs">textarea</code> element.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/Textarea.tsx">
-{`import { Textarea } from "@/components/Form/Textarea"`}
+                  {`import { Textarea } from "@/components/Form/Textarea"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<Textarea placeholder="Enter your message..." />`}
+                  {`<Textarea placeholder="Enter your message..." />`}
                 </CodeBlock>
               </div>
             </section>
@@ -142,7 +144,8 @@ export default function TextareaDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  The component forwards all native <code className="font-mono text-xs">textarea</code> props.
+                  The component forwards all native{" "}
+                  <code className="font-mono text-xs">textarea</code> props.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -156,9 +159,17 @@ export default function TextareaDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Pair the textarea with a descriptive <code className="font-mono text-xs">Label</code>.</li>
-                <li>Include character or word limits using <code className="font-mono text-xs">aria-describedby</code>.</li>
-                <li>Keep placeholder text supplemental; never rely on it as the only instruction.</li>
+                <li>
+                  Pair the textarea with a descriptive{" "}
+                  <code className="font-mono text-xs">Label</code>.
+                </li>
+                <li>
+                  Include character or word limits using{" "}
+                  <code className="font-mono text-xs">aria-describedby</code>.
+                </li>
+                <li>
+                  Keep placeholder text supplemental; never rely on it as the only instruction.
+                </li>
               </ul>
             </section>
           </DocsPage>

@@ -34,7 +34,7 @@ async function fetcher(endpoint: string): Promise<GithubResource> {
     throw new GithubApiError(
       `GitHub request failed: ${res.status}`,
       res.status,
-      isRateLimited ? "RATE_LIMITED" : "HTTP_ERROR",
+      isRateLimited ? "RATE_LIMITED" : "HTTP_ERROR"
     )
   }
   const json = (await res.json()) as unknown
@@ -45,20 +45,27 @@ async function fetcher(endpoint: string): Promise<GithubResource> {
   return normalizeGithubResource(json)
 }
 
-export function useGithubMention(url: string, opts: UseGithubMentionOptions = {}): UseGithubMentionResult {
+export function useGithubMention(
+  url: string,
+  opts: UseGithubMentionOptions = {}
+): UseGithubMentionResult {
   const trimmed = (url ?? "").trim()
   const invalidReason = !trimmed
     ? ("EMPTY_URL" as const)
     : parseGithubUrl(trimmed).kind === "unknown"
-    ? ("INVALID_GITHUB_URL" as const)
-    : undefined
+      ? ("INVALID_GITHUB_URL" as const)
+      : undefined
 
   const endpoint = invalidReason ? null : clientEndpointFor(trimmed, opts.useServer)
-  const { data, error, isLoading, mutate } = useSWR<GithubResource>(endpoint, endpoint ? fetcher : null, {
-    revalidateOnFocus: opts.revalidateOnFocus ?? false,
-    refreshInterval: opts.refreshInterval ?? 7 * 60 * 1000,
-    suspense: opts.suspense,
-  })
+  const { data, error, isLoading, mutate } = useSWR<GithubResource>(
+    endpoint,
+    endpoint ? fetcher : null,
+    {
+      revalidateOnFocus: opts.revalidateOnFocus ?? false,
+      refreshInterval: opts.refreshInterval ?? 7 * 60 * 1000,
+      suspense: opts.suspense,
+    }
+  )
 
   const parsed = parseGithubUrl(trimmed)
   const kind: ResourceKind = parsed.kind

@@ -14,7 +14,12 @@ import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  HookDocsPage,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 import { getExampleCode } from "@/lib/serverUtils"
 

@@ -125,7 +125,8 @@ export default async function InputSelectDocs() {
             toc={toc}
             header={{
               title: "InputSelect",
-              description: "A type-safe select input supporting labels, validation states, and size variants.",
+              description:
+                "A type-safe select input supporting labels, validation states, and size variants.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("input-select")} />,
@@ -135,7 +136,8 @@ export default async function InputSelectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Use the CLI to scaffold the select, ensuring the option types and styles are in sync.
+                  Use the CLI to scaffold the select, ensuring the option types and styles are in
+                  sync.
                 </p>
               </div>
               <InstallationTabs componentName="input-select" />
@@ -148,7 +150,11 @@ export default async function InputSelectDocs() {
                   Start with the basic example to wire up value and change handlers.
                 </p>
               </div>
-              <PreviewTabs preview={<BasicExample />} code={basicExampleCode} title="Basic example" />
+              <PreviewTabs
+                preview={<BasicExample />}
+                code={basicExampleCode}
+                title="Basic example"
+              />
             </section>
 
             <section id="examples" className="scroll-mt-24 space-y-8">
@@ -179,7 +185,8 @@ export default async function InputSelectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  All native select props are forwarded to the trigger while these configure the wrapper.
+                  All native select props are forwarded to the trigger while these configure the
+                  wrapper.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -193,7 +200,10 @@ export default async function InputSelectDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Link helper or error text via <code className="font-mono text-xs">aria-describedby</code>.</li>
+                <li>
+                  Link helper or error text via{" "}
+                  <code className="font-mono text-xs">aria-describedby</code>.
+                </li>
                 <li>Indicate required fields in the label rather than relying on color alone.</li>
                 <li>Keep option labels concise so they are announced clearly when navigating.</li>
               </ul>

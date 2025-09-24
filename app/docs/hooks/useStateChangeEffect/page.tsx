@@ -30,9 +30,15 @@ const basicUsageCode = getExampleCode("docs/hooks/useStateChangeEffect/basic-usa
 const liveDemoCode = getExampleCode("docs/hooks/useStateChangeEffect/live-demo.tsx")
 const formValidationCode = getExampleCode("docs/hooks/useStateChangeEffect/form-validation.tsx")
 const searchDebouncingCode = getExampleCode("docs/hooks/useStateChangeEffect/search-debouncing.tsx")
-const localStorageSyncCode = getExampleCode("docs/hooks/useStateChangeEffect/local-storage-sync.tsx")
-const analyticsTrackingCode = getExampleCode("docs/hooks/useStateChangeEffect/analytics-tracking.tsx")
-const dataVisualizationCode = getExampleCode("docs/hooks/useStateChangeEffect/data-visualization.tsx")
+const localStorageSyncCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/local-storage-sync.tsx"
+)
+const analyticsTrackingCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/analytics-tracking.tsx"
+)
+const dataVisualizationCode = getExampleCode(
+  "docs/hooks/useStateChangeEffect/data-visualization.tsx"
+)
 
 const parameters: PropsTableRow[] = [
   {
@@ -83,7 +89,8 @@ export default async function UseStateChangeEffectDocs() {
             toc={toc}
             header={{
               title: "useStateChangeEffect",
-              description: "Run effects when specific states change, with deep comparison out of the box.",
+              description:
+                "Run effects when specific states change, with deep comparison out of the box.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useStateChangeEffect")} />,
@@ -104,12 +111,13 @@ export default async function UseStateChangeEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Pass the states you want to monitor; the hook handles serialization and change detection for you.
+                  Pass the states you want to monitor; the hook handles serialization and change
+                  detection for you.
                 </p>
               </div>
               <PreviewTabs preview={<BasicUsageExample />} code={basicUsageCode} />
               <CodeBlock language="tsx" filename="signature.tsx">
-{`useStateChangeEffect<T>(effect: () => void, states: T[]): void`}
+                {`useStateChangeEffect<T>(effect: () => void, states: T[]): void`}
               </CodeBlock>
             </section>
 
@@ -121,11 +129,31 @@ export default async function UseStateChangeEffectDocs() {
                 </p>
               </div>
               <PreviewTabs title="Live demo" preview={<LiveDemoExample />} code={liveDemoCode} />
-              <PreviewTabs title="Form validation" preview={<FormValidationExample />} code={formValidationCode} />
-              <PreviewTabs title="API request debouncing" preview={<SearchDebouncingExample />} code={searchDebouncingCode} />
-              <PreviewTabs title="Local storage sync" preview={<LocalStorageSyncExample />} code={localStorageSyncCode} />
-              <PreviewTabs title="Analytics tracking" preview={<AnalyticsTrackingExample />} code={analyticsTrackingCode} />
-              <PreviewTabs title="Complex data visualization" preview={<DataVisualizationExample />} code={dataVisualizationCode} />
+              <PreviewTabs
+                title="Form validation"
+                preview={<FormValidationExample />}
+                code={formValidationCode}
+              />
+              <PreviewTabs
+                title="API request debouncing"
+                preview={<SearchDebouncingExample />}
+                code={searchDebouncingCode}
+              />
+              <PreviewTabs
+                title="Local storage sync"
+                preview={<LocalStorageSyncExample />}
+                code={localStorageSyncCode}
+              />
+              <PreviewTabs
+                title="Analytics tracking"
+                preview={<AnalyticsTrackingExample />}
+                code={analyticsTrackingCode}
+              />
+              <PreviewTabs
+                title="Complex data visualization"
+                preview={<DataVisualizationExample />}
+                code={dataVisualizationCode}
+              />
             </section>
 
             <section id="features" className="scroll-mt-24 space-y-4">
@@ -146,14 +174,16 @@ export default async function UseStateChangeEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Comparison method</h2>
                 <p className="text-muted-foreground">
-                  Under the hood, the hook serializes state using <code className="font-mono text-xs">JSON.stringify</code> to detect changes.
+                  Under the hood, the hook serializes state using{" "}
+                  <code className="font-mono text-xs">JSON.stringify</code> to detect changes.
                 </p>
               </div>
               <CodeBlock language="typescript" filename="comparison.ts">
-{`const hasChanged = JSON.stringify(previousStates) !== JSON.stringify(currentStates)`}
+                {`const hasChanged = JSON.stringify(previousStates) !== JSON.stringify(currentStates)`}
               </CodeBlock>
               <p className="text-sm text-muted-foreground">
-                For extremely large objects, consider passing derived values to keep serialization fast.
+                For extremely large objects, consider passing derived values to keep serialization
+                fast.
               </p>
             </section>
           </HookDocsPage>

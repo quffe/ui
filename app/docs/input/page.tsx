@@ -14,7 +14,12 @@ import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
 import { InstallationTabs } from "@/components/internal/installation"
 import { CodeBlock } from "@/components/internal/ui/code-block"
-import { DocsLayout, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  DocsLayout,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 export default function InputDocs() {
   const toc: TocItem[] = [
@@ -29,7 +34,7 @@ export default function InputDocs() {
   const propsRows: PropsTableRow[] = [
     {
       prop: "type",
-      type: "React.InputHTMLAttributes<HTMLInputElement>[\"type\"]",
+      type: 'React.InputHTMLAttributes<HTMLInputElement>["type"]',
       defaultValue: "text",
       description: "Determines the HTML input type and keyboard behaviour.",
     },
@@ -86,7 +91,8 @@ export default function InputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Install the Input component with the CLI to ensure styles and dependencies match the design system.
+                  Install the Input component with the CLI to ensure styles and dependencies match
+                  the design system.
                 </p>
               </div>
               <InstallationTabs componentName="input" />
@@ -96,15 +102,16 @@ export default function InputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the component and compose it with labels or helper text depending on the validation rules of your form.
+                  Import the component and compose it with labels or helper text depending on the
+                  validation rules of your form.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/Input.tsx">
-{`import { Input } from "@/components/Form/Input"`}
+                  {`import { Input } from "@/components/Form/Input"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<Input type="email" placeholder="Enter your email" />`}
+                  {`<Input type="email" placeholder="Enter your email" />`}
                 </CodeBlock>
               </div>
             </section>
@@ -113,7 +120,8 @@ export default function InputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
                 <p className="text-muted-foreground">
-                  Combine the input with labels, helper text, or different HTML types to cover common collection patterns.
+                  Combine the input with labels, helper text, or different HTML types to cover
+                  common collection patterns.
                 </p>
               </div>
               <div className="grid gap-6 lg:grid-cols-2">
@@ -150,7 +158,8 @@ export default function InputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  The Input forwards all native <code className="font-mono text-xs">input</code> attributes, so only the custom props are documented below.
+                  The Input forwards all native <code className="font-mono text-xs">input</code>{" "}
+                  attributes, so only the custom props are documented below.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -164,9 +173,19 @@ export default function InputDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Pair every input with a <code className="font-mono text-xs">Label</code> component using the same <code className="font-mono text-xs">id</code>.</li>
-                <li>Use the <code className="font-mono text-xs">aria-invalid</code> attribute to announce error states.</li>
-                <li>Expose helper or error text with <code className="font-mono text-xs">aria-describedby</code> for additional guidance.</li>
+                <li>
+                  Pair every input with a <code className="font-mono text-xs">Label</code> component
+                  using the same <code className="font-mono text-xs">id</code>.
+                </li>
+                <li>
+                  Use the <code className="font-mono text-xs">aria-invalid</code> attribute to
+                  announce error states.
+                </li>
+                <li>
+                  Expose helper or error text with{" "}
+                  <code className="font-mono text-xs">aria-describedby</code> for additional
+                  guidance.
+                </li>
               </ul>
             </section>
 

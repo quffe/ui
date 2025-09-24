@@ -73,7 +73,7 @@ export default async function InputAmountDocs() {
     {
       prop: "currency",
       type: "string",
-      defaultValue: "\"$\"",
+      defaultValue: '"$"',
       description: "Overrides the currency symbol displayed when enabled.",
     },
     {
@@ -113,7 +113,8 @@ export default async function InputAmountDocs() {
             toc={toc}
             header={{
               title: "InputAmount",
-              description: "A formatted currency input with validation, prefix support, and configurable precision.",
+              description:
+                "A formatted currency input with validation, prefix support, and configurable precision.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("input-amount")} />,
@@ -181,8 +182,13 @@ export default async function InputAmountDocs() {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Announce currency context in the label (e.g. “Amount (USD)”).</li>
-                <li>Use <code className="font-mono text-xs">aria-describedby</code> to link fee or limit guidelines.</li>
-                <li>Show validation errors immediately after blur so assistive tech relays feedback.</li>
+                <li>
+                  Use <code className="font-mono text-xs">aria-describedby</code> to link fee or
+                  limit guidelines.
+                </li>
+                <li>
+                  Show validation errors immediately after blur so assistive tech relays feedback.
+                </li>
               </ul>
             </section>
           </DocsPage>

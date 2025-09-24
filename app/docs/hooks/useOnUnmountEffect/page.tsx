@@ -26,7 +26,9 @@ import WebSocketCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/we
 import AnalyticsCleanupExample from "@/examples/docs/hooks/useOnUnmountEffect/analytics-cleanup"
 
 const liveDemoCode = getExampleCode("docs/hooks/useOnUnmountEffect/live-demo.tsx")
-const eventListenerCleanupCode = getExampleCode("docs/hooks/useOnUnmountEffect/event-listener-cleanup.tsx")
+const eventListenerCleanupCode = getExampleCode(
+  "docs/hooks/useOnUnmountEffect/event-listener-cleanup.tsx"
+)
 const networkRequestCancellationCode = getExampleCode(
   "docs/hooks/useOnUnmountEffect/network-request-cancellation.tsx"
 )
@@ -76,7 +78,8 @@ export default async function UseOnUnmountEffectDocs() {
             toc={toc}
             header={{
               title: "useOnUnmountEffect",
-              description: "Run cleanup logic only when a component unmounts—ideal for aborting requests and tearing down listeners.",
+              description:
+                "Run cleanup logic only when a component unmounts—ideal for aborting requests and tearing down listeners.",
               category: "Lifecycle · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useOnUnmountEffect")} />,
@@ -97,11 +100,12 @@ export default async function UseOnUnmountEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Pass a cleanup callback; it executes exactly once when the component is about to unmount.
+                  Pass a cleanup callback; it executes exactly once when the component is about to
+                  unmount.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`useOnUnmountEffect(() => {
+                {`useOnUnmountEffect(() => {
   console.log('Component is unmounting')
   abortController.abort()
 })`}
@@ -116,11 +120,31 @@ export default async function UseOnUnmountEffectDocs() {
                 </p>
               </div>
               <PreviewTabs title="Live demo" preview={<LiveDemoExample />} code={liveDemoCode} />
-              <PreviewTabs title="Event listener cleanup" preview={<EventListenerCleanupExample />} code={eventListenerCleanupCode} />
-              <PreviewTabs title="Network request cancellation" preview={<NetworkRequestCancellationExample />} code={networkRequestCancellationCode} />
-              <PreviewTabs title="Timer cleanup" preview={<TimerCleanupExample />} code={timerCleanupCode} />
-              <PreviewTabs title="WebSocket cleanup" preview={<WebSocketCleanupExample />} code={webSocketCleanupCode} />
-              <PreviewTabs title="Analytics cleanup" preview={<AnalyticsCleanupExample />} code={analyticsCleanupCode} />
+              <PreviewTabs
+                title="Event listener cleanup"
+                preview={<EventListenerCleanupExample />}
+                code={eventListenerCleanupCode}
+              />
+              <PreviewTabs
+                title="Network request cancellation"
+                preview={<NetworkRequestCancellationExample />}
+                code={networkRequestCancellationCode}
+              />
+              <PreviewTabs
+                title="Timer cleanup"
+                preview={<TimerCleanupExample />}
+                code={timerCleanupCode}
+              />
+              <PreviewTabs
+                title="WebSocket cleanup"
+                preview={<WebSocketCleanupExample />}
+                code={webSocketCleanupCode}
+              />
+              <PreviewTabs
+                title="Analytics cleanup"
+                preview={<AnalyticsCleanupExample />}
+                code={analyticsCleanupCode}
+              />
             </section>
 
             <section id="characteristics" className="scroll-mt-24 space-y-4">
@@ -134,17 +158,32 @@ export default async function UseOnUnmountEffectDocs() {
                 <div className="rounded-lg border p-4">
                   <h3 className="font-semibold mb-2">Lifecycle timing</h3>
                   <ul className="list-disc space-y-1 pl-5 text-muted-foreground text-sm">
-                    <li><strong>Mount:</strong> no callback execution.</li>
-                    <li><strong>Updates:</strong> no callback execution.</li>
-                    <li><strong>Unmount:</strong> cleanup runs once.</li>
+                    <li>
+                      <strong>Mount:</strong> no callback execution.
+                    </li>
+                    <li>
+                      <strong>Updates:</strong> no callback execution.
+                    </li>
+                    <li>
+                      <strong>Unmount:</strong> cleanup runs once.
+                    </li>
                   </ul>
                 </div>
                 <div className="rounded-lg border p-4">
                   <h3 className="font-semibold mb-2">Compared to useEffect</h3>
                   <ul className="list-disc space-y-1 pl-5 text-muted-foreground text-sm">
-                    <li><code className="font-mono text-xs">useOnUnmountEffect</code> fires only on unmount.</li>
-                    <li><code className="font-mono text-xs">useEffect</code> with <code>[]</code> runs on mount and cleans up on unmount.</li>
-                    <li><code className="font-mono text-xs">useEffect</code> with deps runs + cleans up on every dependency change.</li>
+                    <li>
+                      <code className="font-mono text-xs">useOnUnmountEffect</code> fires only on
+                      unmount.
+                    </li>
+                    <li>
+                      <code className="font-mono text-xs">useEffect</code> with <code>[]</code> runs
+                      on mount and cleans up on unmount.
+                    </li>
+                    <li>
+                      <code className="font-mono text-xs">useEffect</code> with deps runs + cleans
+                      up on every dependency change.
+                    </li>
                   </ul>
                 </div>
               </div>

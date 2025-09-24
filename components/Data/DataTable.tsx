@@ -196,79 +196,75 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full rounded-md border">
       <Table className="min-w-full">
-          <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <TableHead
-                      key={header.id}
+        <TableHeader>
+          {table.getHeaderGroups().map(headerGroup => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <TableHead
+                    key={header.id}
+                    className={
+                      header.id.includes("actions") ? "sticky right-0 bg-background shadow-sm" : ""
+                    }
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map(row => {
+              const isSelectable = singleAction && onRowClick
+
+              const handleRowKeyDown = isSelectable
+                ? (event: React.KeyboardEvent<HTMLTableRowElement>) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault()
+                      onRowClick?.(row.original)
+                    }
+                  }
+                : undefined
+
+              return (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  data-clickable={isSelectable ? "true" : undefined}
+                  className={cn(isSelectable ? "cursor-pointer hover:bg-muted/50" : "")}
+                  onClick={isSelectable ? () => onRowClick?.(row.original) : undefined}
+                  tabIndex={isSelectable ? 0 : undefined}
+                  onKeyDown={handleRowKeyDown}
+                  aria-label={isSelectable ? `Select row ${row.index + 1}` : undefined}
+                >
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell
+                      key={cell.id}
                       className={
-                        header.id.includes("actions")
+                        cell.column.id.includes("actions")
                           ? "sticky right-0 bg-background shadow-sm"
                           : ""
                       }
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => {
-                const isSelectable = singleAction && onRowClick
-
-                const handleRowKeyDown = isSelectable
-                  ? (event: React.KeyboardEvent<HTMLTableRowElement>) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault()
-                        onRowClick?.(row.original)
-                      }
-                    }
-                  : undefined
-
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    data-clickable={isSelectable ? "true" : undefined}
-                    className={cn(isSelectable ? "cursor-pointer hover:bg-muted/50" : "")}
-                    onClick={isSelectable ? () => onRowClick?.(row.original) : undefined}
-                    tabIndex={isSelectable ? 0 : undefined}
-                    onKeyDown={handleRowKeyDown}
-                    aria-label={
-                      isSelectable ? `Select row ${row.index + 1}` : undefined
-                    }
-                  >
-                    {row.getVisibleCells().map(cell => (
-                      <TableCell
-                        key={cell.id}
-                        className={
-                          cell.column.id.includes("actions")
-                          ? "sticky right-0 bg-background shadow-sm"
-                          : ""
-                      }
-                      >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                )
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              )
+            })
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
       {hidePagination ? null : (
         <div className="flex items-center justify-between space-x-2 border-t p-4">
           <div className="text-sm text-muted-foreground">
@@ -299,9 +295,7 @@ export function DataTable<TData, TValue>({
               aria-label="Go to next page"
               onClick={() => table.nextPage()}
               disabled={
-                onPaginationChange
-                  ? pageIndex * pageSize >= totalCount
-                  : !table.getCanNextPage()
+                onPaginationChange ? pageIndex * pageSize >= totalCount : !table.getCanNextPage()
               }
             >
               <ChevronRight className="h-4 w-4" />

@@ -93,10 +93,7 @@ export function SelectDropdown<T>({
   )
 
   const enabledOptionIndices = React.useMemo(
-    () =>
-      normalizedOptions
-        .filter(({ option }) => !option.disabled)
-        .map(({ index }) => index),
+    () => normalizedOptions.filter(({ option }) => !option.disabled).map(({ index }) => index),
     [normalizedOptions]
   )
 
@@ -106,11 +103,11 @@ export function SelectDropdown<T>({
   )
 
   const [activeIndex, setActiveIndex] = React.useState(() =>
-    selectedIndex >= 0 ? selectedIndex : enabledOptionIndices[0] ?? -1
+    selectedIndex >= 0 ? selectedIndex : (enabledOptionIndices[0] ?? -1)
   )
 
   React.useEffect(() => {
-    setActiveIndex(selectedIndex >= 0 ? selectedIndex : enabledOptionIndices[0] ?? -1)
+    setActiveIndex(selectedIndex >= 0 ? selectedIndex : (enabledOptionIndices[0] ?? -1))
   }, [selectedIndex, enabledOptionIndices])
 
   // Close dropdown when clicking outside
@@ -234,7 +231,9 @@ export function SelectDropdown<T>({
               aria-labelledby={ariaLabelledBy}
               aria-label={finalAriaLabel}
               aria-describedby={descriptionId}
-              aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
+              aria-activedescendant={
+                activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined
+              }
               tabIndex={-1}
             >
               {normalizedOptions.map(({ option, index, id: optionId }) => (

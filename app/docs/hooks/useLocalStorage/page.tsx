@@ -92,7 +92,8 @@ export default async function UseLocalStorageDocs() {
             toc={toc}
             header={{
               title: "useLocalStorage",
-              description: "Synchronise React state with localStorage, with JSON parsing, error handling, and SSR guards.",
+              description:
+                "Synchronise React state with localStorage, with JSON parsing, error handling, and SSR guards.",
               category: "State · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useLocalStorage")} />,
@@ -114,11 +115,12 @@ export default async function UseLocalStorageDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the hook and treat the returned pair like <code className="font-mono text-xs">useState</code>, but persisted.
+                  Import the hook and treat the returned pair like{" "}
+                  <code className="font-mono text-xs">useState</code>, but persisted.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`const [value, setValue] = useLocalStorage<string>("preferredTheme", "light")`}
+                {`const [value, setValue] = useLocalStorage<string>("preferredTheme", "light")`}
               </CodeBlock>
               <PreviewTabs preview={<UsageExamplesExample />} code={usageExamplesCode} />
             </section>
@@ -151,13 +153,16 @@ export default async function UseLocalStorageDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Features</h2>
                 <p className="text-muted-foreground">
-                  Why this hook is safer than accessing <code className="font-mono text-xs">localStorage</code> manually.
+                  Why this hook is safer than accessing{" "}
+                  <code className="font-mono text-xs">localStorage</code> manually.
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>JSON serialization/deserialization baked in.</li>
                 <li>Guards against SSR and private browsing constraints.</li>
-                <li>Lightweight API similar to <code className="font-mono text-xs">useState</code>.</li>
+                <li>
+                  Lightweight API similar to <code className="font-mono text-xs">useState</code>.
+                </li>
                 <li>Type inference with explicit generic overrides available.</li>
               </ul>
             </section>
@@ -170,9 +175,15 @@ export default async function UseLocalStorageDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Namespace keys (e.g. <code className="font-mono text-xs">app.theme</code>) to avoid collisions.</li>
+                <li>
+                  Namespace keys (e.g. <code className="font-mono text-xs">app.theme</code>) to
+                  avoid collisions.
+                </li>
                 <li>Wrap calls in try/catch if storing large payloads that may exceed quotas.</li>
-                <li>Reset state when <code className="font-mono text-xs">window</code> is unavailable to avoid hydration mismatches.</li>
+                <li>
+                  Reset state when <code className="font-mono text-xs">window</code> is unavailable
+                  to avoid hydration mismatches.
+                </li>
               </ul>
             </section>
           </HookDocsPage>

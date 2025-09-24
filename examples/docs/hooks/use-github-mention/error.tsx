@@ -23,4 +23,3 @@ export function ErrorExample() {
 
   return <div className="text-sm">Loaded: {data?.kind}</div>
 }
-

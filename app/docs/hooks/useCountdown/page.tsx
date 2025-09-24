@@ -97,7 +97,8 @@ export default async function UseCountdownDocs() {
             toc={toc}
             header={{
               title: "useCountdown",
-              description: "Countdown timers with optional looping, progress tracking, and granular controls.",
+              description:
+                "Countdown timers with optional looping, progress tracking, and granular controls.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useCountdown")} />,
@@ -119,7 +120,8 @@ export default async function UseCountdownDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the hook and start the timer with <code className="font-mono text-xs">start()</code>; pause or reset as needed.
+                  Import the hook and start the timer with{" "}
+                  <code className="font-mono text-xs">start()</code>; pause or reset as needed.
                 </p>
               </div>
               <PreviewTabs preview={<BasicExample />} code={basicExampleCode} />
@@ -172,7 +174,10 @@ export default async function UseCountdownDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Expose remaining time via <code className="font-mono text-xs">aria-live</code> regions.</li>
+                <li>
+                  Expose remaining time via <code className="font-mono text-xs">aria-live</code>{" "}
+                  regions.
+                </li>
                 <li>Allow users to pause timers to reduce time pressure.</li>
                 <li>Combine visual progress with textual updates for clarity.</li>
               </ul>

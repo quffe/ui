@@ -134,7 +134,8 @@ function findComponentFiles() {
           const componentName = path.basename(entry.name, ".tsx")
           const filePath = path.join(categoryPath, entry.name)
           const content = readFileContent(filePath)
-          const logicalCategory = category === "Input" ? getComponentCategory(componentName) : category
+          const logicalCategory =
+            category === "Input" ? getComponentCategory(componentName) : category
           components.push({
             name: kebabCase(componentName),
             displayName: componentName,
@@ -150,7 +151,8 @@ function findComponentFiles() {
               const componentName = path.basename(file, ".tsx")
               const filePath = path.join(subdir, file)
               const content = readFileContent(filePath)
-              const logicalCategory = category === "Input" ? getComponentCategory(componentName) : category
+              const logicalCategory =
+                category === "Input" ? getComponentCategory(componentName) : category
               components.push({
                 name: kebabCase(componentName),
                 displayName: componentName,
@@ -196,18 +198,18 @@ function findHookFiles() {
 
 function getNamespaceForCategory(category) {
   const categoryToNamespace = {
-    'Data': 'data',
-    'Form': 'form', 
-    'Navigation': 'navigation',
-    'Modal': 'modal',
-    'Mentions': 'mentions'
+    Data: "data",
+    Form: "form",
+    Navigation: "navigation",
+    Modal: "modal",
+    Mentions: "mentions",
   }
-  return categoryToNamespace[category] || 'ui'
+  return categoryToNamespace[category] || "ui"
 }
 
 function generateComponentRegistry(component) {
   const namespace = getNamespaceForCategory(component.category)
-  
+
   const registry = {
     name: component.name,
     type: "registry:component",
@@ -277,7 +279,8 @@ function generateIndexRegistry(components, hooks) {
     })
   })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000"
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000"
 
   // Full registry index schema for static hosting
   return {

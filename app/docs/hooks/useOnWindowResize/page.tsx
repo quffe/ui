@@ -25,7 +25,9 @@ import DynamicNavigationExample from "@/examples/docs/hooks/useOnWindowResize/dy
 import PerformanceOptimizationExample from "@/examples/docs/hooks/useOnWindowResize/performance-optimization"
 import ViewportBasedEffectsExample from "@/examples/docs/hooks/useOnWindowResize/viewport-based-effects"
 
-const liveWindowTrackingCode = getExampleCode("docs/hooks/useOnWindowResize/live-window-tracking.tsx")
+const liveWindowTrackingCode = getExampleCode(
+  "docs/hooks/useOnWindowResize/live-window-tracking.tsx"
+)
 const responsiveLayoutCode = getExampleCode("docs/hooks/useOnWindowResize/responsive-layout.tsx")
 const chartResizingCode = getExampleCode("docs/hooks/useOnWindowResize/chart-resizing.tsx")
 const dynamicNavigationCode = getExampleCode("docs/hooks/useOnWindowResize/dynamic-navigation.tsx")
@@ -79,7 +81,8 @@ export default async function UseOnWindowResizeDocs() {
             toc={toc}
             header={{
               title: "useOnWindowResize",
-              description: "Listen to window resize events with automatic cleanup and immediate execution.",
+              description:
+                "Listen to window resize events with automatic cleanup and immediate execution.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useOnWindowResize")} />,
@@ -100,11 +103,12 @@ export default async function UseOnWindowResizeDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Provide a handler that reacts to window size changes. The hook runs it immediately on mount and on every resize event.
+                  Provide a handler that reacts to window size changes. The hook runs it immediately
+                  on mount and on every resize event.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`function ResponsiveComponent() {
+                {`function ResponsiveComponent() {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
 
   useOnWindowResize(() => {
@@ -131,12 +135,36 @@ export default async function UseOnWindowResizeDocs() {
                   Common resize scenarios from responsive layouts to data visualizations.
                 </p>
               </div>
-              <PreviewTabs preview={<LiveWindowTrackingExample />} code={liveWindowTrackingCode} title="Live tracking" />
-              <PreviewTabs preview={<ResponsiveLayoutExample />} code={responsiveLayoutCode} title="Responsive layout" />
-              <PreviewTabs preview={<ChartResizingExample />} code={chartResizingCode} title="Chart resizing" />
-              <PreviewTabs preview={<DynamicNavigationExample />} code={dynamicNavigationCode} title="Dynamic navigation" />
-              <PreviewTabs preview={<PerformanceOptimizationExample />} code={performanceOptimizationCode} title="Performance optimization" />
-              <PreviewTabs preview={<ViewportBasedEffectsExample />} code={viewportBasedEffectsCode} title="Viewport effects" />
+              <PreviewTabs
+                preview={<LiveWindowTrackingExample />}
+                code={liveWindowTrackingCode}
+                title="Live tracking"
+              />
+              <PreviewTabs
+                preview={<ResponsiveLayoutExample />}
+                code={responsiveLayoutCode}
+                title="Responsive layout"
+              />
+              <PreviewTabs
+                preview={<ChartResizingExample />}
+                code={chartResizingCode}
+                title="Chart resizing"
+              />
+              <PreviewTabs
+                preview={<DynamicNavigationExample />}
+                code={dynamicNavigationCode}
+                title="Dynamic navigation"
+              />
+              <PreviewTabs
+                preview={<PerformanceOptimizationExample />}
+                code={performanceOptimizationCode}
+                title="Performance optimization"
+              />
+              <PreviewTabs
+                preview={<ViewportBasedEffectsExample />}
+                code={viewportBasedEffectsCode}
+                title="Viewport effects"
+              />
             </section>
 
             <section id="behavior" className="scroll-mt-24 space-y-4">
@@ -148,7 +176,10 @@ export default async function UseOnWindowResizeDocs() {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Runs the handler immediately during effect execution.</li>
-                <li>Registers <code className="font-mono text-xs">window.resize</code> and cleans up on unmount.</li>
+                <li>
+                  Registers <code className="font-mono text-xs">window.resize</code> and cleans up
+                  on unmount.
+                </li>
                 <li>Re-subscribes automatically if the handler reference changes.</li>
               </ul>
             </section>

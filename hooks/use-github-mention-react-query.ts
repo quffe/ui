@@ -20,13 +20,16 @@ export type UseGithubMentionQueryResult = {
   invalidReason?: "EMPTY_URL" | "INVALID_GITHUB_URL"
 }
 
-export function useGithubMentionQuery(url: string, opts: UseGithubMentionQueryOptions = {}): UseGithubMentionQueryResult {
+export function useGithubMentionQuery(
+  url: string,
+  opts: UseGithubMentionQueryOptions = {}
+): UseGithubMentionQueryResult {
   const trimmed = (url ?? "").trim()
   const invalidReason = !trimmed
     ? ("EMPTY_URL" as const)
     : parseGithubUrl(trimmed).kind === "unknown"
-    ? ("INVALID_GITHUB_URL" as const)
-    : undefined
+      ? ("INVALID_GITHUB_URL" as const)
+      : undefined
 
   const endpoint = invalidReason ? null : clientEndpointFor(trimmed, opts.useServer)
 
@@ -50,4 +53,3 @@ export function useGithubMentionQuery(url: string, opts: UseGithubMentionQueryOp
     invalidReason,
   }
 }
-

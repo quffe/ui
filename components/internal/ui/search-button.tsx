@@ -17,4 +17,3 @@ export function SearchButton({ className }: { className?: string }) {
     </Button>
   )
 }
-

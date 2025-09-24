@@ -128,7 +128,8 @@ export default async function SelectDropdownDocs() {
             toc={toc}
             header={{
               title: "SelectDropdown",
-              description: "A custom dropdown built on headless components with keyboard navigation and type-safe options.",
+              description:
+                "A custom dropdown built on headless components with keyboard navigation and type-safe options.",
               category: "Navigation · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("select-dropdown")} />,
@@ -191,7 +192,8 @@ export default async function SelectDropdownDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  Besides these props, any trigger attributes are forwarded to the underlying button.
+                  Besides these props, any trigger attributes are forwarded to the underlying
+                  button.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -206,7 +208,10 @@ export default async function SelectDropdownDocs() {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Keep the trigger labelled and reflect the current selection in its text.</li>
-                <li>Announce errors via <code className="font-mono text-xs">aria-describedby</code> when using the error variant.</li>
+                <li>
+                  Announce errors via <code className="font-mono text-xs">aria-describedby</code>{" "}
+                  when using the error variant.
+                </li>
                 <li>Ensure keyboard navigation covers opening, moving, and closing via ESC.</li>
               </ul>
             </section>

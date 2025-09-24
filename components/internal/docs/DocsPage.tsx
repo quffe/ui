@@ -13,5 +13,9 @@ interface DocsPageProps {
 }
 
 export function DocsPage({ header, toc, children, className }: DocsPageProps) {
-  return <DocsLayout header={header} toc={toc} className={className}>{children}</DocsLayout>
+  return (
+    <DocsLayout header={header} toc={toc} className={className}>
+      {children}
+    </DocsLayout>
+  )
 }

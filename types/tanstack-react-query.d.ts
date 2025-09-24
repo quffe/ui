@@ -14,4 +14,3 @@ declare module "@tanstack/react-query" {
     suspense?: boolean
   }): UseQueryResult<TData, TError>
 }
-

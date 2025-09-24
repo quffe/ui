@@ -68,7 +68,11 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             onDrop={handleDrop}
             className="flex h-32 w-full cursor-pointer flex-col items-center justify-center gap-2 text-center"
           >
-            <Upload aria-hidden="true" focusable="false" className="h-8 w-8 text-muted-foreground" />
+            <Upload
+              aria-hidden="true"
+              focusable="false"
+              className="h-8 w-8 text-muted-foreground"
+            />
             <p id={`${inputId}-instructions`} className="text-sm text-muted-foreground">
               Click to upload or drag and drop
             </p>

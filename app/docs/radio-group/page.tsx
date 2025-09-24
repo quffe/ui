@@ -107,7 +107,8 @@ export default function RadioGroupDocs() {
             toc={toc}
             header={{
               title: "RadioGroup",
-              description: "A stacked radio control for choosing a single option from a small list.",
+              description:
+                "A stacked radio control for choosing a single option from a small list.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("radio-group")} />,
@@ -131,7 +132,7 @@ export default function RadioGroupDocs() {
                 </p>
               </div>
               <CodeBlock language="tsx" filename="example.tsx">
-{`const options = [
+                {`const options = [
   { value: "option1", label: "Option 1" },
   { value: "option2", label: "Option 2" },
 ]
@@ -190,7 +191,8 @@ export default function RadioGroupDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  Configure the group with these props; any additional radio attributes can be passed through options.
+                  Configure the group with these props; any additional radio attributes can be
+                  passed through options.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -204,7 +206,9 @@ export default function RadioGroupDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Wrap radios in a fieldset with legend when the context benefits from a title.</li>
+                <li>
+                  Wrap radios in a fieldset with legend when the context benefits from a title.
+                </li>
                 <li>Keep option labels short so they’re read fully during keyboard navigation.</li>
                 <li>Include helper text for disabled options to explain availability.</li>
               </ul>

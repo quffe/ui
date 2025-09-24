@@ -112,7 +112,8 @@ export default async function UseCopyToClipboardDocs() {
             toc={toc}
             header={{
               title: "useCopyToClipboard",
-              description: "A feature-rich clipboard hook with fallbacks, success state management, and optional toasts.",
+              description:
+                "A feature-rich clipboard hook with fallbacks, success state management, and optional toasts.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useCopyToClipboard")} />,
@@ -178,7 +179,10 @@ export default async function UseCopyToClipboardDocs() {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Native clipboard API support with permission checks.</li>
-                <li>Graceful fallback to <code className="font-mono text-xs">document.execCommand</code>.</li>
+                <li>
+                  Graceful fallback to{" "}
+                  <code className="font-mono text-xs">document.execCommand</code>.
+                </li>
                 <li>Success and error callbacks for custom UX.</li>
                 <li>Optional toast notifications with configurable timeout.</li>
                 <li>Supports copying from multiple text sources.</li>

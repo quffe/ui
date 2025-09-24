@@ -70,7 +70,8 @@ export default function PasswordInputDocs() {
             toc={toc}
             header={{
               title: "PasswordInput",
-              description: "A secure password field with built-in visibility toggle and disabled state support.",
+              description:
+                "A secure password field with built-in visibility toggle and disabled state support.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("password-input")} />,
@@ -95,10 +96,10 @@ export default function PasswordInputDocs() {
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/PasswordInput.tsx">
-{`import { PasswordInput } from "@/components/Form/PasswordInput"`}
+                  {`import { PasswordInput } from "@/components/Form/PasswordInput"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<PasswordInput placeholder="Enter your password" />`}
+                  {`<PasswordInput placeholder="Enter your password" />`}
                 </CodeBlock>
               </div>
             </section>
@@ -133,7 +134,8 @@ export default function PasswordInputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  The component forwards all native input props, so only the custom additions are listed below.
+                  The component forwards all native input props, so only the custom additions are
+                  listed below.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -147,8 +149,13 @@ export default function PasswordInputDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Ensure the visibility toggle has an accessible name (handled by the component).</li>
-                <li>Communicate password requirements via <code className="font-mono text-xs">aria-describedby</code>.</li>
+                <li>
+                  Ensure the visibility toggle has an accessible name (handled by the component).
+                </li>
+                <li>
+                  Communicate password requirements via{" "}
+                  <code className="font-mono text-xs">aria-describedby</code>.
+                </li>
                 <li>Avoid auto-focusing the field unexpectedly to respect screen reader flow.</li>
               </ul>
             </section>

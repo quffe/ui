@@ -82,7 +82,8 @@ export default function FileInputDocs() {
             toc={toc}
             header={{
               title: "FileInput",
-              description: "A drag-and-drop friendly file uploader with previews and multiple selection support.",
+              description:
+                "A drag-and-drop friendly file uploader with previews and multiple selection support.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("file-input")} />,
@@ -102,15 +103,17 @@ export default function FileInputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the component and wire up the <code className="font-mono text-xs">onFileSelect</code> callback to handle uploaded files.
+                  Import the component and wire up the{" "}
+                  <code className="font-mono text-xs">onFileSelect</code> callback to handle
+                  uploaded files.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <CodeBlock language="tsx" filename="components/Form/FileInput.tsx">
-{`import { FileInput } from "@/components/Form/FileInput"`}
+                  {`import { FileInput } from "@/components/Form/FileInput"`}
                 </CodeBlock>
                 <CodeBlock language="tsx" filename="example.tsx">
-{`<FileInput onFileSelect={files => console.log(files)} />`}
+                  {`<FileInput onFileSelect={files => console.log(files)} />`}
                 </CodeBlock>
               </div>
             </section>
@@ -153,7 +156,8 @@ export default function FileInputDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Props</h2>
                 <p className="text-muted-foreground">
-                  Extend the uploader with the following props; all native input attributes are forwarded.
+                  Extend the uploader with the following props; all native input attributes are
+                  forwarded.
                 </p>
               </div>
               <PropsTable rows={propsRows} />
@@ -167,9 +171,14 @@ export default function FileInputDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Always pair the input with a visible <code className="font-mono text-xs">Label</code>.</li>
+                <li>
+                  Always pair the input with a visible{" "}
+                  <code className="font-mono text-xs">Label</code>.
+                </li>
                 <li>Describe accepted file types in helper text or aria-describedby copy.</li>
-                <li>Expose upload progress and errors using live regions when handling async uploads.</li>
+                <li>
+                  Expose upload progress and errors using live regions when handling async uploads.
+                </li>
               </ul>
             </section>
           </DocsPage>

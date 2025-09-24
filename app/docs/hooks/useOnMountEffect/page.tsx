@@ -15,7 +15,12 @@ import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  HookDocsPage,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 
 import LiveDemoExample from "@/examples/docs/hooks/useOnMountEffect/live-demo"
 import DataFetchingExample from "@/examples/docs/hooks/useOnMountEffect/data-fetching"
@@ -95,7 +100,8 @@ export default async function UseOnMountEffectDocs() {
             toc={toc}
             header={{
               title: "useOnMountEffect",
-              description: "Utilities for running effects a single time on mount with SSR-safe fallbacks.",
+              description:
+                "Utilities for running effects a single time on mount with SSR-safe fallbacks.",
               category: "React · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useOnMountEffect")} />,
@@ -106,7 +112,8 @@ export default async function UseOnMountEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Installation</h2>
                 <p className="text-muted-foreground">
-                  Install via CLI to copy the full hook bundle, including strict and SSR-safe variants.
+                  Install via CLI to copy the full hook bundle, including strict and SSR-safe
+                  variants.
                 </p>
               </div>
               <InstallationTabs componentName="useOnMountEffect" />
@@ -116,11 +123,12 @@ export default async function UseOnMountEffectDocs() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Import the desired hook and run it inside your component. Dependencies are captured only once at mount time.
+                  Import the desired hook and run it inside your component. Dependencies are
+                  captured only once at mount time.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"`}
+                {`import { useOnMountEffect, useStrictMountEffect, useHasMounted } from "@/hooks/useOnMountEffect"`}
               </CodeBlock>
               <PreviewTabs preview={<UsageExamplesExample />} code={usageExamplesCode} />
             </section>
@@ -132,16 +140,29 @@ export default async function UseOnMountEffectDocs() {
                   Different scenarios including live demos, data fetching, and SSR-safe patterns.
                 </p>
               </div>
-              <PreviewTabs title="Live demonstration" preview={<LiveDemoExample />} code={liveDemoCode} />
-              <PreviewTabs title="Data fetching" preview={<DataFetchingExample />} code={dataFetchingCode} />
-              <PreviewTabs title="SSR-safe components" preview={<SSRSafeExample />} code={ssrSafeCode} />
+              <PreviewTabs
+                title="Live demonstration"
+                preview={<LiveDemoExample />}
+                code={liveDemoCode}
+              />
+              <PreviewTabs
+                title="Data fetching"
+                preview={<DataFetchingExample />}
+                code={dataFetchingCode}
+              />
+              <PreviewTabs
+                title="SSR-safe components"
+                preview={<SSRSafeExample />}
+                code={ssrSafeCode}
+              />
             </section>
 
             <section id="use-strict-mount-effect" className="scroll-mt-24 space-y-4">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">useStrictMountEffect</h2>
                 <p className="text-muted-foreground">
-                  Forces the effect to run exactly once, ignoring dependency changes triggered by Strict Mode double-invocation.
+                  Forces the effect to run exactly once, ignoring dependency changes triggered by
+                  Strict Mode double-invocation.
                 </p>
               </div>
               <PropsTable rows={strictParameters} labels={{ prop: "Parameter" }} />
@@ -165,9 +186,17 @@ export default async function UseOnMountEffectDocs() {
                 </p>
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                <li>Announce post-mount changes via <code className="font-mono text-xs">aria-live</code> regions when relevant.</li>
-                <li>Prefer lazy rendering for expensive components to avoid blocking initial paint.</li>
-                <li>Gate client-only features (like animations) until <code className="font-mono text-xs">useHasMounted</code> returns true.</li>
+                <li>
+                  Announce post-mount changes via{" "}
+                  <code className="font-mono text-xs">aria-live</code> regions when relevant.
+                </li>
+                <li>
+                  Prefer lazy rendering for expensive components to avoid blocking initial paint.
+                </li>
+                <li>
+                  Gate client-only features (like animations) until{" "}
+                  <code className="font-mono text-xs">useHasMounted</code> returns true.
+                </li>
               </ul>
             </section>
           </HookDocsPage>

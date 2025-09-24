@@ -114,7 +114,8 @@ export default async function OtpInputDocs() {
             toc={toc}
             header={{
               title: "OtpInput",
-              description: "A multi-field OTP component with paste support, masking, and intelligent focus management.",
+              description:
+                "A multi-field OTP component with paste support, masking, and intelligent focus management.",
               category: "Form · Component",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("otp-input")} />,
@@ -179,7 +180,10 @@ export default async function OtpInputDocs() {
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Announce the expected OTP length in the label or helper text.</li>
                 <li>Ensure paste support for users receiving codes via other devices.</li>
-                <li>Keep error messaging concise and announce it with <code className="font-mono text-xs">role=&quot;alert&quot;</code>.</li>
+                <li>
+                  Keep error messaging concise and announce it with{" "}
+                  <code className="font-mono text-xs">role=&quot;alert&quot;</code>.
+                </li>
               </ul>
             </section>
           </DocsPage>

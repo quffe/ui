@@ -25,12 +25,16 @@ import RealTimeUpdatesExample from "@/examples/docs/hooks/useRevalidate/real-tim
 import ErrorRecoveryExample from "@/examples/docs/hooks/useRevalidate/error-recovery"
 import ConditionalRevalidationExample from "@/examples/docs/hooks/useRevalidate/conditional-revalidation"
 
-const bulkDataRevalidationCode = getExampleCode("docs/hooks/useRevalidate/bulk-data-revalidation.tsx")
+const bulkDataRevalidationCode = getExampleCode(
+  "docs/hooks/useRevalidate/bulk-data-revalidation.tsx"
+)
 const formSubmissionCode = getExampleCode("docs/hooks/useRevalidate/form-submission.tsx")
 const adminDashboardCode = getExampleCode("docs/hooks/useRevalidate/admin-dashboard.tsx")
 const realTimeUpdatesCode = getExampleCode("docs/hooks/useRevalidate/real-time-updates.tsx")
 const errorRecoveryCode = getExampleCode("docs/hooks/useRevalidate/error-recovery.tsx")
-const conditionalRevalidationCode = getExampleCode("docs/hooks/useRevalidate/conditional-revalidation.tsx")
+const conditionalRevalidationCode = getExampleCode(
+  "docs/hooks/useRevalidate/conditional-revalidation.tsx"
+)
 
 const returnRows: PropsTableRow[] = [
   {
@@ -75,7 +79,8 @@ export default async function UseRevalidateDocs() {
             toc={toc}
             header={{
               title: "useRevalidate",
-              description: "Revalidate SWR cache entries by URL pattern—ideal after mutations or bulk updates.",
+              description:
+                "Revalidate SWR cache entries by URL pattern—ideal after mutations or bulk updates.",
               category: "Data · Hook",
               status: "Stable",
               actions: <CopyableCodeBadge text={config.getNamespacePath("useRevalidate")} />,
@@ -101,7 +106,7 @@ export default async function UseRevalidateDocs() {
               </div>
               <CodeBlock language="bash">{`npm install swr`}</CodeBlock>
               <CodeBlock language="tsx" filename="_app.tsx">
-{`import { SWRConfig } from 'swr'
+                {`import { SWRConfig } from 'swr'
 
 function App({ Component, pageProps }) {
   return (
@@ -122,11 +127,12 @@ function App({ Component, pageProps }) {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                 <p className="text-muted-foreground">
-                  Call <code className="font-mono text-xs">revalidate</code> with URLs or patterns whenever you need to refresh cached data.
+                  Call <code className="font-mono text-xs">revalidate</code> with URLs or patterns
+                  whenever you need to refresh cached data.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="usage.tsx">
-{`const { revalidate } = useRevalidate()
+                {`const { revalidate } = useRevalidate()
 
 const handleRefresh = () => {
   revalidate(['/api/users', '/api/posts', '/api/comments'])
@@ -138,15 +144,40 @@ const handleRefresh = () => {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
                 <p className="text-muted-foreground">
-                  Typical revalidation scenarios across dashboards, real-time updates, and error recovery.
+                  Typical revalidation scenarios across dashboards, real-time updates, and error
+                  recovery.
                 </p>
               </div>
-              <PreviewTabs title="Bulk data revalidation" preview={<BulkDataRevalidationExample />} code={bulkDataRevalidationCode} />
-              <PreviewTabs title="Form submission" preview={<FormSubmissionExample />} code={formSubmissionCode} />
-              <PreviewTabs title="Admin dashboard" preview={<AdminDashboardExample />} code={adminDashboardCode} />
-              <PreviewTabs title="Real-time updates" preview={<RealTimeUpdatesExample />} code={realTimeUpdatesCode} />
-              <PreviewTabs title="Error recovery" preview={<ErrorRecoveryExample />} code={errorRecoveryCode} />
-              <PreviewTabs title="Conditional revalidation" preview={<ConditionalRevalidationExample />} code={conditionalRevalidationCode} />
+              <PreviewTabs
+                title="Bulk data revalidation"
+                preview={<BulkDataRevalidationExample />}
+                code={bulkDataRevalidationCode}
+              />
+              <PreviewTabs
+                title="Form submission"
+                preview={<FormSubmissionExample />}
+                code={formSubmissionCode}
+              />
+              <PreviewTabs
+                title="Admin dashboard"
+                preview={<AdminDashboardExample />}
+                code={adminDashboardCode}
+              />
+              <PreviewTabs
+                title="Real-time updates"
+                preview={<RealTimeUpdatesExample />}
+                code={realTimeUpdatesCode}
+              />
+              <PreviewTabs
+                title="Error recovery"
+                preview={<ErrorRecoveryExample />}
+                code={errorRecoveryCode}
+              />
+              <PreviewTabs
+                title="Conditional revalidation"
+                preview={<ConditionalRevalidationExample />}
+                code={conditionalRevalidationCode}
+              />
             </section>
 
             <section id="features" className="scroll-mt-24 space-y-4">
@@ -158,7 +189,10 @@ const handleRefresh = () => {
               </div>
               <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>Batch revalidation for multiple endpoints in one call.</li>
-                <li>Works with custom fetchers defined in <code className="font-mono text-xs">SWRConfig</code>.</li>
+                <li>
+                  Works with custom fetchers defined in{" "}
+                  <code className="font-mono text-xs">SWRConfig</code>.
+                </li>
                 <li>Great for admin panels, form workflows, or optimistic updates.</li>
               </ul>
             </section>

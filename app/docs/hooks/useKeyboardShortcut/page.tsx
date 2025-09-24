@@ -14,7 +14,12 @@ import { InstallationTabs } from "@/components/internal/installation"
 import { PreviewTabs } from "@/components/internal/ui/preview-tabs"
 import { CopyableCodeBadge } from "@/components/internal/ui/copyable-code-badge"
 import { config } from "@/lib/config"
-import { HookDocsPage, PropsTable, type TocItem, type PropsTableRow } from "@/components/internal/docs"
+import {
+  HookDocsPage,
+  PropsTable,
+  type TocItem,
+  type PropsTableRow,
+} from "@/components/internal/docs"
 import { CodeBlock } from "@/components/internal/ui/code-block"
 import { KeyboardShortcutProvider } from "@/hooks/useKeyboardShortcut"
 import { KeyboardShortcutOverlay } from "@/components/internal/ui/keyboard-shortcut-tooltip"
@@ -60,16 +65,40 @@ const parameters: PropsTableRow[] = [
 
 const shortcutInterfaceRows: PropsTableRow[] = [
   { prop: "id", type: "string", description: "Unique identifier for the shortcut." },
-  { prop: "keys", type: "string", description: "Key combination in human readable format (e.g. 'cmd+k').", required: true },
+  {
+    prop: "keys",
+    type: "string",
+    description: "Key combination in human readable format (e.g. 'cmd+k').",
+    required: true,
+  },
   { prop: "description", type: "string", description: "Text shown in the overlay tooltip." },
   { prop: "group", type: "string", description: "Optional group label for overlay sections." },
 ]
 
 const optionsRows: PropsTableRow[] = [
-  { prop: "enabled", type: "boolean", defaultValue: "true", description: "Toggle the shortcut without un-registering it." },
-  { prop: "preventDefault", type: "boolean", defaultValue: "true", description: "Whether to call event.preventDefault when triggered." },
-  { prop: "element", type: "HTMLElement | null", description: "Restrict listening to a specific DOM element instead of window." },
-  { prop: "showInOverlay", type: "boolean", defaultValue: "true", description: "Include shortcut in the keyboard overlay." },
+  {
+    prop: "enabled",
+    type: "boolean",
+    defaultValue: "true",
+    description: "Toggle the shortcut without un-registering it.",
+  },
+  {
+    prop: "preventDefault",
+    type: "boolean",
+    defaultValue: "true",
+    description: "Whether to call event.preventDefault when triggered.",
+  },
+  {
+    prop: "element",
+    type: "HTMLElement | null",
+    description: "Restrict listening to a specific DOM element instead of window.",
+  },
+  {
+    prop: "showInOverlay",
+    type: "boolean",
+    defaultValue: "true",
+    description: "Include shortcut in the keyboard overlay.",
+  },
 ]
 
 export default async function UseKeyboardShortcutDocs() {
@@ -109,10 +138,13 @@ export default async function UseKeyboardShortcutDocs() {
               toc={toc}
               header={{
                 title: "useKeyboardShortcut",
-                description: "Register global or scoped keyboard shortcuts with tooltip overlays and accessibility in mind.",
+                description:
+                  "Register global or scoped keyboard shortcuts with tooltip overlays and accessibility in mind.",
                 category: "Navigation · Hook",
                 status: "Stable",
-                actions: <CopyableCodeBadge text={config.getNamespacePath("useKeyboardShortcut")} />,
+                actions: (
+                  <CopyableCodeBadge text={config.getNamespacePath("useKeyboardShortcut")} />
+                ),
               }}
               parameters={parameters}
             >
@@ -130,11 +162,13 @@ export default async function UseKeyboardShortcutDocs() {
                 <div className="space-y-2">
                   <h2 className="text-2xl font-semibold tracking-tight">Usage</h2>
                   <p className="text-muted-foreground">
-                    Wrap your app in <code className="font-mono text-xs">KeyboardShortcutProvider</code> once, then register shortcuts inside components.
+                    Wrap your app in{" "}
+                    <code className="font-mono text-xs">KeyboardShortcutProvider</code> once, then
+                    register shortcuts inside components.
                   </p>
                 </div>
                 <CodeBlock language="tsx" filename="usage.tsx">
-{`useKeyboardShortcut(
+                  {`useKeyboardShortcut(
   { id: "focus-search", keys: "cmd+k", description: "Focus search" },
   event => {
     event.preventDefault()
@@ -151,14 +185,46 @@ export default async function UseKeyboardShortcutDocs() {
                     Global shortcuts, scoped elements, and productivity patterns.
                   </p>
                 </div>
-                <PreviewTabs title="Basic global shortcuts" preview={<BasicUsageExample />} code={basicUsageCode} />
-                <PreviewTabs title="Element-based shortcuts" preview={<ElementShortcutsExample />} code={elementShortcutsCode} />
-                <PreviewTabs title="Interactive live demo" preview={<LiveDemoExample />} code={liveDemoCode} />
-                <PreviewTabs title="Application shortcuts" preview={<GlobalShortcutsExample />} code={globalShortcutsCode} />
-                <PreviewTabs title="Form navigation" preview={<FormNavigationExample />} code={formNavigationCode} />
-                <PreviewTabs title="Modal controls" preview={<ModalShortcutsExample />} code={modalShortcutsCode} />
-                <PreviewTabs title="Table navigation" preview={<TableNavigationExample />} code={tableNavigationCode} />
-                <PreviewTabs title="Text editor commands" preview={<TextEditorExample />} code={textEditorCode} />
+                <PreviewTabs
+                  title="Basic global shortcuts"
+                  preview={<BasicUsageExample />}
+                  code={basicUsageCode}
+                />
+                <PreviewTabs
+                  title="Element-based shortcuts"
+                  preview={<ElementShortcutsExample />}
+                  code={elementShortcutsCode}
+                />
+                <PreviewTabs
+                  title="Interactive live demo"
+                  preview={<LiveDemoExample />}
+                  code={liveDemoCode}
+                />
+                <PreviewTabs
+                  title="Application shortcuts"
+                  preview={<GlobalShortcutsExample />}
+                  code={globalShortcutsCode}
+                />
+                <PreviewTabs
+                  title="Form navigation"
+                  preview={<FormNavigationExample />}
+                  code={formNavigationCode}
+                />
+                <PreviewTabs
+                  title="Modal controls"
+                  preview={<ModalShortcutsExample />}
+                  code={modalShortcutsCode}
+                />
+                <PreviewTabs
+                  title="Table navigation"
+                  preview={<TableNavigationExample />}
+                  code={tableNavigationCode}
+                />
+                <PreviewTabs
+                  title="Text editor commands"
+                  preview={<TextEditorExample />}
+                  code={textEditorCode}
+                />
               </section>
 
               <section id="keyboard-shortcut" className="scroll-mt-24 space-y-4">
@@ -200,5 +266,5 @@ export default async function UseKeyboardShortcutDocs() {
         </div>
       </div>
     </KeyboardShortcutProvider>
-)
+  )
 }
