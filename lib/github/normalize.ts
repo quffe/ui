@@ -91,6 +91,8 @@ export function normalizeGithubResource(data: unknown): GithubResource {
       number: obj.number as number,
       state: (obj.state as string) === "open" ? "open" : "closed",
       title: obj.title as string,
+      body:
+        typeof obj.body === "string" ? (obj.body as string) : obj.body === null ? null : undefined,
       user: {
         id: typeof user?.id === "number" ? (user.id as number) : undefined,
         login: user?.login as string,

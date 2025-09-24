@@ -339,11 +339,11 @@ function RepoContent({
   const aria = `Open repository ${data.full_name}`
   const ownerUser = data.owner
     ? {
-      id: data.owner.id,
-      login: data.owner.login,
-      html_url: data.owner.html_url,
-      avatar_url: data.owner.avatar_url,
-    }
+        id: data.owner.id,
+        login: data.owner.login,
+        html_url: data.owner.html_url,
+        avatar_url: data.owner.avatar_url,
+      }
     : null
 
   return (
@@ -378,7 +378,7 @@ function RepoContent({
 function PullTooltip({ data }: { data: Extract<GithubResource, { kind: "pull" }> }) {
   const repo = data.base?.repo?.full_name ?? repoFromUrl(data.html_url)
   const createdLabel = formatOnDate(data.updated_at ?? data.created_at)
-  const description = renderPullDescriptionSnippet(data.body ?? null, repo)
+  const description = renderBodySnippet(data.body ?? null, repo)
   const baseRepo = data.base?.repo?.full_name ?? repo
   const repoNameSegment = repo?.split("/")?.[1]
   const headRepo =
@@ -429,7 +429,7 @@ function PullTooltip({ data }: { data: Extract<GithubResource, { kind: "pull" }>
               {data.title}
               <span className="font-normal text-muted-foreground group-hover:text-blue-500">
                 {" "}
-                # {data.number}
+                #{data.number}
               </span>
             </Link>
           </div>
@@ -477,29 +477,27 @@ function formatOnDate(input?: string | null) {
   return `on ${date.toLocaleDateString(undefined, options)}`
 }
 
-function renderPullDescriptionSnippet(body: string | null, repo: string | null): React.ReactNode {
+function renderBodySnippet(body: string | null, repo: string | null): React.ReactNode {
   if (!body) return null
-  const firstParagraph = body
-    .split(/\r?\n\s*\r?\n/)
-    .map(block => block.replace(/\r?\n/g, " ").trim())
-    .find(Boolean)
-  if (!firstParagraph) return null
-  const stripped = stripMarkdown(firstParagraph)
+  const stripped = stripMarkdown(body)
   if (!stripped) return null
   const snippet = truncateSnippet(stripped, 180)
   const parts = linkifyIssueReferences(snippet, repo)
-  return <p className="text-sm leading-snug text-[#8b949e]">{parts}</p>
+  return <p className="whitespace-pre-wrap text-sm leading-snug text-[#8b949e]">{parts}</p>
 }
 
 function stripMarkdown(input: string) {
   return input
+    .replace(/\r\n/g, "\n")
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/`([^`]+)`/g, "$1")
     .replace(/!\[[^\]]*\]\([^\)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
     .replace(/[*_~]{1,3}([^*_~]+)[*_~]{1,3}/g, "$1")
     .replace(/<[^>]+>/g, "")
-    .replace(/\s+/g, " ")
+    .replace(/[ \t\f\v]+/g, " ")
+    .replace(/^[ \t]+|[ \t]+$/gm, "")
+    .replace(/\n{3,}/g, "\n\n")
     .trim()
 }
 
@@ -564,7 +562,7 @@ function BranchLabelBadge({
         <span
           role="tooltip"
           aria-hidden
-          className="pointer-events-none absolute left-0 top-full z-50 mt-1 hidden whitespace-nowrap rounded-md  bg-muted px-2 py-1 text-xs font-mono text-white shadow-lg group-hover/branch-label:block group-focus-visible/branch-label:block"
+          className="pointer-events-none absolute left-0 top-full z-50 mt-1 hidden whitespace-nowrap rounded-md border border-border bg-popover px-2 py-1 text-xs font-mono text-popover-foreground shadow-lg group-hover/branch-label:block group-focus-visible/branch-label:block"
         >
           {fullLabel}
         </span>
@@ -591,76 +589,53 @@ function formatRepoBranchLabel(repoFullName?: string | null, ref?: string | null
 function IssueTooltip({ data }: { data: Extract<GithubResource, { kind: "issue" }> }) {
   const repo = repoFromUrl(data.html_url)
   const statusMeta = getStatusMeta("issue", data.state)
-  const created = formatDate(data.created_at)
   const labels = (data.labels ?? []).slice(0, 3)
   const extraLabels = (data.labels?.length ?? 0) - labels.length
+  const createdLabel = formatOnDate(data.created_at)
+  const description = renderBodySnippet(data.body ?? null, repo)
+  const originalStatusClass =
+    typeof statusMeta.icon.props?.className === "string" ? statusMeta.icon.props.className : ""
+  const cleanedStatusClass = originalStatusClass
+    .split(" ")
+    .filter(cls => cls && !/^size-/.test(cls))
+    .join(" ")
+  const statusIcon = React.cloneElement(statusMeta.icon, {
+    className: cn("mt-0.5 size-5 shrink-0", cleanedStatusClass),
+    "aria-hidden": true,
+  })
 
   return (
-    <div className="flex min-w-[240px] max-w-sm flex-col gap-1.5 text-sm">
-      <div className="space-y-0.5">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Issue
-        </p>
+    <div className="flex min-w-sm max-w-lg flex-col gap-1.5 text-sm">
+      <div className="flex items-baseline gap-1 text-muted-foreground">
         <Link
-          href={data.html_url}
-          className="font-semibold text-foreground leading-snug hover:underline"
+          href={`https://github.com/${repo}`}
+          className="truncate text-xs font-medium hover:text-blue-500 underline"
         >
-          {data.title}
+          {repo}
         </Link>
-        <p className="text-xs text-muted-foreground">
-          {repo} · #{data.number}
-        </p>
+        {createdLabel ? <span className="whitespace-nowrap text-xs">{createdLabel}</span> : null}
       </div>
-      <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-        <span className="inline-flex items-center gap-1 font-medium text-foreground">
-          <span aria-hidden>{statusMeta.icon}</span>
-          {statusMeta.label}
-        </span>
-        <span>Opened {created}</span>
-        <span className="inline-flex items-center gap-0.5">
-          <span>by</span>
-          <UserHoverLink
-            user={{
-              id: data.user.id,
-              login: data.user.login,
-              html_url: data.user.html_url,
-              avatar_url: data.user.avatar_url,
-            }}
-            className="font-medium text-foreground hover:underline"
-            disableTooltip
-          />
-        </span>
-        <span>{data.comments ?? 0} comments</span>
-      </div>
-      {labels.length > 0 ? (
-        <div className="flex flex-wrap gap-1.5">
-          {labels.map(label => (
-            <Badge
-              key={label.id}
-              variant="outline"
-              style={
-                label.color
-                  ? { borderColor: `#${label.color}`, color: `#${label.color}` }
-                  : undefined
-              }
-              className={cn(
-                "border-muted-foreground/30 bg-transparent text-[10px]",
-                label.color ? "" : "text-muted-foreground"
-              )}
-            >
-              {label.name}
-            </Badge>
-          ))}
-          {extraLabels > 0 ? (
-            <Badge
-              variant="outline"
-              className="border-muted-foreground/30 bg-transparent text-[10px] text-muted-foreground"
-            >
-              +{extraLabels} more
-            </Badge>
-          ) : null}
+      <div className="flex gap-2 space-y-0.5">
+        <div className="flex items-start gap-2">
+          {statusIcon}
+          <div className="flex flex-col gap-3">
+            <div className="min-w-0 space-y-1">
+              <Link
+                href={data.html_url}
+                className="block font-semibold group leading-snug text-white hover:text-blue-500"
+              >
+                {data.title}
+                <span className="font-normal text-muted-foreground group-hover:text-blue-500">
+                  {" "}
+                  #{data.number}
+                </span>
+              </Link>
+            </div>
+
+            {description}
+          </div>
         </div>
-      ) : null}
+      </div>
     </div>
   )
 }

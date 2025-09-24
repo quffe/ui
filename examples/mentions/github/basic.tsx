@@ -21,7 +21,7 @@ export function Example() {
       <GithubMention url="https://github.com/mathialo/bython/issues/38" useServer />
 
       {/* Issue Close */}
-      <GithubMention url="https://github.com/shadcn-ui/ui/issues/384" useServer />
+      <GithubMention url="https://github.com/denoland/deno/issues/30824" useServer />
     </div>
   )
 }

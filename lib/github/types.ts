@@ -54,6 +54,7 @@ export type IssueMeta = {
   number: number
   state: "open" | "closed"
   title: string
+  body?: string | null
   user: {
     id?: number
     login: string
