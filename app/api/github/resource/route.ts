@@ -5,11 +5,7 @@ import { normalizeGithubResource } from "@/lib/github/normalize"
 const RETRYABLE_STATUS_CODES = new Set([401, 403, 429])
 
 function resolveGithubTokens(): string[] {
-  const candidates = [
-    process.env.GITHUB_TOKEN,
-    process.env.GITHUB_TOKEN_ORG,
-    process.env.GH_TOKEN,
-  ]
+  const candidates = [process.env.GITHUB_TOKEN, process.env.GITHUB_TOKEN_ORG, process.env.GH_TOKEN]
   const publicToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN
   if (publicToken) candidates.push(publicToken) /* avoid using public tokens unless necessary */
 
@@ -85,16 +81,21 @@ export async function GET(req: NextRequest) {
     }
 
     if (RETRYABLE_STATUS_CODES.has(res.status)) {
-      errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+      errorPayload = (await res
+        .clone()
+        .json()
+        .catch(() => null)) as { message?: string } | null
       continue
     }
 
-    errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+    errorPayload = (await res
+      .clone()
+      .json()
+      .catch(() => null)) as { message?: string } | null
     break
   }
 
-  const shouldAttemptAnonymous =
-    !ghRes || (!ghRes.ok && RETRYABLE_STATUS_CODES.has(ghRes.status))
+  const shouldAttemptAnonymous = !ghRes || (!ghRes.ok && RETRYABLE_STATUS_CODES.has(ghRes.status))
 
   if (shouldAttemptAnonymous) {
     const res = await fetch(endpoint, {
@@ -108,7 +109,10 @@ export async function GET(req: NextRequest) {
     }
 
     if (!res.ok) {
-      errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+      errorPayload = (await res
+        .clone()
+        .json()
+        .catch(() => null)) as { message?: string } | null
     } else {
       errorPayload = null
     }

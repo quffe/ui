@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FileText, Home, LayoutList } from "lucide-react"
+import { FileText, Home, LayoutList, Wand2 } from "lucide-react"
 
 import {
   Sidebar,
@@ -66,6 +66,14 @@ export function MentionsSidebar() {
                   <Link href="/mentions">
                     <Home className="size-4" />
                     <span>Introduction</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/mentions/generator"}>
+                  <Link href="/mentions/generator">
+                    <Wand2 className="size-4" />
+                    <span>Generator</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

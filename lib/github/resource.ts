@@ -36,13 +36,31 @@ export function clientEndpointFor(url: string, useServer?: boolean): string | nu
   }
 }
 
+type GetGithubResourceOptions = {
+  useServer?: boolean
+  signal?: AbortSignal
+  baseUrl?: string
+}
+
 export async function getGithubResource(
   url: string,
-  opts: { useServer?: boolean; signal?: AbortSignal } = {}
+  opts: GetGithubResourceOptions = {}
 ): Promise<GithubResource> {
   const endpoint = clientEndpointFor(url, opts.useServer)
   if (!endpoint) throw new Error("Invalid GitHub URL")
-  const res = await fetch(endpoint, {
+
+  let target = endpoint
+  if (endpoint.startsWith("/") && typeof window === "undefined") {
+    const resolvedBase = resolveBaseUrl(opts.baseUrl)
+    if (!resolvedBase) {
+      throw new Error(
+        "getGithubResource: pass opts.baseUrl when calling with useServer=true on the server."
+      )
+    }
+    target = new URL(endpoint, resolvedBase).toString()
+  }
+
+  const res = await fetch(target, {
     headers: { Accept: "application/vnd.github+json" },
     cache: "force-cache",
     signal: opts.signal,
@@ -58,4 +76,31 @@ export async function getGithubResource(
   }
   const json = (await res.json()) as unknown
   return normalizeGithubResource(json)
+}
+
+function resolveBaseUrl(explicit?: string | null) {
+  const candidates = [
+    explicit,
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.APP_URL,
+    process.env.NEXT_PUBLIC_VERCEL_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ]
+
+  for (const candidate of candidates) {
+    if (!candidate) continue
+    const normalized =
+      candidate.startsWith("http://") || candidate.startsWith("https://")
+        ? candidate
+        : `https://${candidate}`
+    try {
+      const url = new URL(normalized)
+      return url.origin
+    } catch {
+      continue
+    }
+  }
+
+  return null
 }
