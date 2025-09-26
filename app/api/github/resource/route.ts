@@ -2,10 +2,31 @@ import { NextRequest, NextResponse } from "next/server"
 import { parseGithubUrl } from "@/lib/github/parse-url"
 import { normalizeGithubResource } from "@/lib/github/normalize"
 
-const GITHUB_TOKEN =
-  process.env.GITHUB_TOKEN ||
-  process.env.GH_TOKEN ||
-  process.env.NEXT_PUBLIC_GITHUB_TOKEN /* avoid using public */
+const RETRYABLE_STATUS_CODES = new Set([401, 403, 429])
+
+function resolveGithubTokens(): string[] {
+  const candidates = [
+    process.env.GITHUB_TOKEN,
+    process.env.GITHUB_TOKEN_ORG,
+    process.env.GH_TOKEN,
+  ]
+  const publicToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN
+  if (publicToken) candidates.push(publicToken) /* avoid using public tokens unless necessary */
+
+  const tokens: string[] = []
+  const seen = new Set<string>()
+
+  for (const candidate of candidates) {
+    if (!candidate) continue
+    const token = candidate.trim()
+    if (!token || token.startsWith("public_")) continue
+    if (seen.has(token)) continue
+    seen.add(token)
+    tokens.push(token)
+  }
+
+  return tokens
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -34,28 +55,79 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unsupported kind" }, { status: 400 })
   }
 
-  const headers: Record<string, string> = {
+  const ifNoneMatch = req.headers.get("if-none-match")
+
+  const baseHeaders: Record<string, string> = {
     Accept: "application/vnd.github+json",
     "User-Agent": "ui-components/gh-resource",
   }
-  if (GITHUB_TOKEN && !String(GITHUB_TOKEN).startsWith("public_")) {
-    headers.Authorization = `Bearer ${GITHUB_TOKEN}`
+
+  if (ifNoneMatch) baseHeaders["If-None-Match"] = ifNoneMatch
+
+  const tokens = resolveGithubTokens()
+  let ghRes: Response | null = null
+  let errorPayload: { message?: string } | null = null
+
+  for (const token of tokens) {
+    const res = await fetch(endpoint, {
+      headers: { ...baseHeaders, Authorization: `Bearer ${token}` },
+      next: { revalidate: 300 },
+    })
+    ghRes = res
+
+    if (res.status === 304) {
+      return new NextResponse(null, { status: 304 })
+    }
+
+    if (res.ok) {
+      errorPayload = null
+      break
+    }
+
+    if (RETRYABLE_STATUS_CODES.has(res.status)) {
+      errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+      continue
+    }
+
+    errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+    break
   }
 
-  const ifNoneMatch = req.headers.get("if-none-match")
-  if (ifNoneMatch) headers["If-None-Match"] = ifNoneMatch
+  const shouldAttemptAnonymous =
+    !ghRes || (!ghRes.ok && RETRYABLE_STATUS_CODES.has(ghRes.status))
 
-  const ghRes = await fetch(endpoint, {
-    headers,
-    next: { revalidate: 300 },
-  })
+  if (shouldAttemptAnonymous) {
+    const res = await fetch(endpoint, {
+      headers: baseHeaders,
+      next: { revalidate: 300 },
+    })
+    ghRes = res
+
+    if (res.status === 304) {
+      return new NextResponse(null, { status: 304 })
+    }
+
+    if (!res.ok) {
+      errorPayload = (await res.clone().json().catch(() => null)) as { message?: string } | null
+    } else {
+      errorPayload = null
+    }
+  }
+
+  if (!ghRes) {
+    return NextResponse.json({ error: "GitHub request failed" }, { status: 500 })
+  }
 
   if (ghRes.status === 304) {
     return new NextResponse(null, { status: 304 })
   }
 
   if (!ghRes.ok) {
-    return NextResponse.json({ error: `GitHub error ${ghRes.status}` }, { status: ghRes.status })
+    const message =
+      errorPayload?.message && errorPayload.message.trim().length
+        ? errorPayload.message
+        : `GitHub error ${ghRes.status}`
+    return NextResponse.json({ error: message }, { status: ghRes.status })
   }
 
   const data = (await ghRes.json()) as unknown
