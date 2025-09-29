@@ -1,10 +1,10 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- Application code lives under `app/` using the Next.js App Router; documentation pages, API routes, and mentions live here.
+- Application code lives under `app/` using the Next.js App Router; documentation pages, API routes, and Replica experiences live here.
 - UI primitives are grouped in `components/`, with vendor-sourced shadcn/ui elements under `components/ui/` (do not edit directly).
 - Hooks sit in `hooks/` as PascalCase files (for example, `useKeyboardShortcut`). Shared helpers live in `lib/`, while static assets and registries are under `public/`.
-- Generated mention and docs examples are in `examples/`; scripts and templates are under `scripts/`.
+- Generated Replica and docs examples are in `examples/`; scripts and templates are under `scripts/`.
 
 ## Build, Test, and Development Commands
 - `pnpm dev` — run the Turbopack development server.
@@ -28,7 +28,7 @@
 
 ## Security & Configuration Tips
 - Duplicate `.env.example` to `.env.local`; never commit secrets. Handle sensitive logic in server routes (`app/api/`).
-- Follow GitHub API rate-limit guidance: set `GITHUB_TOKEN` in `.env.local` when working with mention components.
+- Follow GitHub API rate-limit guidance: set `GITHUB_TOKEN` in `.env.local` when working with Replica components.
 
 ## Agent-Specific Instructions
 - Confirm the worktree state with `git status -sb` before editing and avoid touching `components/ui/` vendor files. Use `HookDocsPage`/`DocsPage` for documentation changes and reuse `PropsTable` for API references.

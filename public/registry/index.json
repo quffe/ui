@@ -200,10 +200,10 @@
       ]
     },
     {
-      "name": "github-mention",
+      "name": "github-replica",
       "type": "registry:component",
-      "category": "Mentions",
-      "namespace": "@ui-components/mentions",
+      "category": "Replica",
+      "namespace": "@ui-components/replica",
       "description": "Compact metadata card for GitHub resources (PRs, Issues, Users, Repos)",
       "dependencies": [],
       "registryDependencies": [
@@ -217,18 +217,18 @@
       ]
     },
     {
-      "name": "use-github-mention-react-query",
+      "name": "use-github-replica-react-query",
       "type": "registry:hook",
       "namespace": "@ui-components/hooks",
-      "description": "use-github-mention-react-query hook",
+      "description": "use-github-replica-react-query hook",
       "dependencies": [],
       "registryDependencies": []
     },
     {
-      "name": "use-github-mention",
+      "name": "use-github-replica",
       "type": "registry:hook",
       "namespace": "@ui-components/hooks",
-      "description": "use-github-mention hook",
+      "description": "use-github-replica hook",
       "dependencies": [],
       "registryDependencies": []
     },
@@ -337,7 +337,7 @@
     "@ui-components/data": "Data visualization components (DataTable)",
     "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
     "@ui-components/modal": "Modal and overlay components",
-    "@ui-components/mentions": "Mentions and integrations",
+    "@ui-components/replica": "Replica and integrations",
     "@ui-components/hooks": "Custom React hooks"
   }
 }

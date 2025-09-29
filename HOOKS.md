@@ -21,10 +21,10 @@ A comprehensive collection of reusable React hooks built with TypeScript for enh
 - **[useOnMountEffect](#useonmounteffect)** - Mount-only effect execution
 - **[useRevalidate](#userevalidate)** - SWR cache revalidation helper
 
-### GitHub Mentions
+### GitHub Replica
 
-- useGithubMention (SWR) – default hook for fetching GitHub metadata
-- useGithubMentionQuery (React Query) – optional adapter
+- useGithubReplica (SWR) – default hook for fetching GitHub metadata
+- useGithubReplicaQuery (React Query) – optional adapter
 - getGithubResource – plain fetch utility for server/client without a cache
 
 ---
@@ -125,19 +125,19 @@ function useCopyToClipboard(options?: UseCopyToClipboardOptions): UseCopyToClipb
 
 ---
 
-## GitHub Mentions – Installation Options
+## GitHub Replica – Installation Options
 
 Pick one of the following depending on your stack:
 
 - SWR (default)
-  - Install via shadcn CLI: `@ui-components/hooks/use-github-mention`
+  - Install via shadcn CLI: `@ui-components/hooks/use-github-replica`
   - Adds a dependency on `swr`.
-  - Usage: `import { useGithubMention } from "@/hooks/use-github-mention"`
+  - Usage: `import { useGithubReplica } from "@/hooks/use-github-replica"`
 
 - React Query (optional)
-  - Install via shadcn CLI: `@ui-components/hooks/use-github-mention-react-query`
+  - Install via shadcn CLI: `@ui-components/hooks/use-github-replica-react-query`
   - Adds a dependency on `@tanstack/react-query`.
-  - Usage: `import { useGithubMentionQuery } from "@/hooks/use-github-mention-react-query"`
+  - Usage: `import { useGithubReplicaQuery } from "@/hooks/use-github-replica-react-query"`
 
 - No cache (plain fetch)
   - Use `getGithubResource` from `@/lib/github/resource` (no extra deps)
@@ -145,9 +145,9 @@ Pick one of the following depending on your stack:
   - Client Components: call `getGithubResource(url)` inside an effect.
 
 CLI quick refs
-- Plain (default): `@ui-components/hooks/use-github-mention-plain`
-- SWR: `@ui-components/hooks/use-github-mention`
-- React Query: `@ui-components/hooks/use-github-mention-react-query`
+- Plain (default): `@ui-components/hooks/use-github-replica-plain`
+- SWR: `@ui-components/hooks/use-github-replica`
+- React Query: `@ui-components/hooks/use-github-replica-react-query`
 
 Notes
 - Both hooks support invalid URLs and expose `invalidReason` for quick checks.

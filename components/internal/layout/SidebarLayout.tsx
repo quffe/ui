@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "./AppSidebar"
 import { CommandPalette } from "@/components/internal/ui/command-palette"
 import { usePathname } from "next/navigation"
-import { MentionsSidebar } from "./MentionsSidebar"
+import { ReplicaSidebar } from "./ReplicaSidebar"
 
 interface SidebarLayoutProps {
   children: React.ReactNode
@@ -12,10 +12,10 @@ interface SidebarLayoutProps {
 
 export function SidebarLayout({ children }: SidebarLayoutProps) {
   const pathname = usePathname()
-  const isMentions = pathname?.startsWith("/mentions")
+  const isReplica = pathname?.startsWith("/replica")
   return (
     <SidebarProvider>
-      {isMentions ? <MentionsSidebar /> : <AppSidebar />}
+      {isReplica ? <ReplicaSidebar /> : <AppSidebar />}
       <main id="content" className="flex-1 focus:outline-none" tabIndex={-1}>
         {children}
       </main>

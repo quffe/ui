@@ -11,13 +11,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/docs/hooks/useGithubMention",
-        destination: "/mentions/hooks/useGithubMention",
-        permanent: true,
-      },
-      {
-        source: "/mention/hooks/useGithubMention",
-        destination: "/mentions/hooks/useGithubMention",
+        source: "/docs/hooks/useGithubReplica",
+        destination: "/replica/hooks/useGithubReplica",
         permanent: true,
       },
     ]

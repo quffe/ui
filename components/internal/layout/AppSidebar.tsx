@@ -23,7 +23,7 @@ import { SearchButton } from "@/components/internal/ui/search-button"
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const isMentions = pathname?.startsWith("/mentions")
+  const isReplica = pathname?.startsWith("/replica")
 
   // Group components by category
   type ComponentItem = (typeof components)[number]
@@ -71,15 +71,15 @@ export function AppSidebar() {
           <div className="grid grid-cols-2 gap-2">
             <Link
               href="/components"
-              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-background" : "bg-sidebar-primary text-sidebar-primary-foreground"}`}
+              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isReplica ? "bg-background" : "bg-sidebar-primary text-sidebar-primary-foreground"}`}
             >
               Components
             </Link>
             <Link
-              href="/mentions"
-              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isMentions ? "bg-sidebar-primary text-sidebar-primary-foreground" : "bg-background"}`}
+              href="/replica"
+              className={`inline-flex items-center justify-center rounded-md border px-2 py-1 text-sm ${isReplica ? "bg-sidebar-primary text-sidebar-primary-foreground" : "bg-background"}`}
             >
-              Mentions
+              Replica
             </Link>
           </div>
         </div>

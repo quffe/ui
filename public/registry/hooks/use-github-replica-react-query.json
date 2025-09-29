@@ -1,0 +1,15 @@
+{
+  "name": "use-github-replica-react-query",
+  "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
+  "description": "use-github-replica-react-query hook",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:hook",
+      "path": "hooks/use-github-replica-react-query.ts",
+      "content": "\"use client\"\n\nimport { parseGithubUrl } from \"@/lib/github/parse-url\"\nimport type { GithubResource, ResourceKind } from \"@/lib/github/types\"\nimport { clientEndpointFor, getGithubResource } from \"@/lib/github/resource\"\nimport { useQuery } from \"@tanstack/react-query\"\n\ntype UseGithubReplicaQueryOptions = {\n  useServer?: boolean\n  staleTime?: number\n  suspense?: boolean\n}\n\nexport type UseGithubReplicaQueryResult = {\n  kind: ResourceKind\n  data: GithubResource | null\n  isLoading: boolean\n  error: Error | null\n  refetch: () => void\n  invalidReason?: \"EMPTY_URL\" | \"INVALID_GITHUB_URL\"\n}\n\nexport function useGithubReplicaQuery(url: string, opts: UseGithubReplicaQueryOptions = {}): UseGithubReplicaQueryResult {\n  const trimmed = (url ?? \"\").trim()\n  const invalidReason = !trimmed\n    ? (\"EMPTY_URL\" as const)\n    : parseGithubUrl(trimmed).kind === \"unknown\"\n    ? (\"INVALID_GITHUB_URL\" as const)\n    : undefined\n\n  const endpoint = invalidReason ? null : clientEndpointFor(trimmed, opts.useServer)\n\n  const query = useQuery<GithubResource>({\n    queryKey: [\"github-resource\", endpoint],\n    queryFn: () => getGithubResource(trimmed, { useServer: opts.useServer }),\n    enabled: Boolean(endpoint),\n    staleTime: opts.staleTime ?? 5 * 60 * 1000,\n    suspense: opts.suspense,\n  })\n\n  const parsed = parseGithubUrl(trimmed)\n  const kind: ResourceKind = parsed.kind\n\n  return {\n    kind,\n    data: query.data ?? null,\n    isLoading: query.isLoading,\n    error: (query.error as Error | null) ?? null,\n    refetch: () => query.refetch(),\n    invalidReason,\n  }\n}\n\n"
+    }
+  ]
+}

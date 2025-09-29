@@ -1,0 +1,15 @@
+{
+  "name": "use-github-replica",
+  "type": "registry:hook",
+  "namespace": "@ui-components/hooks",
+  "description": "use-github-replica hook",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:hook",
+      "path": "hooks/use-github-replica.ts",
+      "content": "\"use client\"\n\nimport useSWR from \"swr\"\n\nimport { parseGithubUrl } from \"@/lib/github/parse-url\"\nimport type { GithubResource, ResourceKind } from \"@/lib/github/types\"\nimport { clientEndpointFor, GithubApiError } from \"@/lib/github/resource\"\nimport { normalizeGithubResource } from \"@/lib/github/normalize\"\n\ntype UseGithubReplicaOptions = {\n  useServer?: boolean\n  refreshInterval?: number\n  revalidateOnFocus?: boolean\n  suspense?: boolean\n}\n\nexport type UseGithubReplicaResult = {\n  kind: ResourceKind\n  data: GithubResource | null\n  isLoading: boolean\n  error: Error | null\n  refetch: () => void\n  invalidReason?: \"EMPTY_URL\" | \"INVALID_GITHUB_URL\"\n}\n\nasync function fetcher(endpoint: string): Promise<GithubResource> {\n  const res = await fetch(endpoint, {\n    headers: { Accept: \"application/vnd.github+json\" },\n    cache: \"force-cache\",\n  })\n  if (!res.ok) {\n    const rateRemaining = res.headers.get(\"x-ratelimit-remaining\")\n    const isRateLimited = res.status === 403 && rateRemaining === \"0\"\n    throw new GithubApiError(\n      `GitHub request failed: ${res.status}`,\n      res.status,\n      isRateLimited ? \"RATE_LIMITED\" : \"HTTP_ERROR\",\n    )\n  }\n  const json = (await res.json()) as unknown\n  // If using our server proxy endpoint, JSON is already normalized\n  if (endpoint.startsWith(\"/api/github/resource\")) {\n    return json as GithubResource\n  }\n  return normalizeGithubResource(json)\n}\n\nexport function useGithubReplica(url: string, opts: UseGithubReplicaOptions = {}): UseGithubReplicaResult {\n  const trimmed = (url ?? \"\").trim()\n  const invalidReason = !trimmed\n    ? (\"EMPTY_URL\" as const)\n    : parseGithubUrl(trimmed).kind === \"unknown\"\n    ? (\"INVALID_GITHUB_URL\" as const)\n    : undefined\n\n  const endpoint = invalidReason ? null : clientEndpointFor(trimmed, opts.useServer)\n  const { data, error, isLoading, mutate } = useSWR<GithubResource>(endpoint, endpoint ? fetcher : null, {\n    revalidateOnFocus: opts.revalidateOnFocus ?? false,\n    refreshInterval: opts.refreshInterval ?? 7 * 60 * 1000,\n    suspense: opts.suspense,\n  })\n\n  const parsed = parseGithubUrl(trimmed)\n  const kind: ResourceKind = parsed.kind\n\n  return {\n    kind,\n    data: data ?? null,\n    isLoading: Boolean(isLoading) && !error,\n    error: error ?? null,\n    refetch: () => mutate(),\n    invalidReason,\n  }\n}\n"
+    }
+  ]
+}

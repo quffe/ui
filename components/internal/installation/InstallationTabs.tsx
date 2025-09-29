@@ -146,15 +146,15 @@ function getImportPath(componentName: string): string {
     "file-input": "@/components/Form/FileInput",
     "password-input": "@/components/Form/PasswordInput",
     "date-range-picker": "@/components/Form/DateRangePicker",
-    "github-mention": "@/components/Mentions/Github/GithubMention",
-    "github-mention-swr": "@/components/Mentions/Github/GithubMention",
-    "github-mention-react-query": "@/components/Mentions/Github/GithubMention",
+    "github-replica": "@/components/Replica/Github/GithubReplica",
+    "github-replica-swr": "@/components/Replica/Github/GithubReplica",
+    "github-replica-react-query": "@/components/Replica/Github/GithubReplica",
   }
 
   if (hooks.includes(componentName) || componentName.startsWith("use")) {
     // Special-case hook variants so imports stay stable
-    if (componentName === "use-github-mention-plain") {
-      return `import { useGithubMention } from "@/hooks/use-github-mention"`
+    if (componentName === "use-github-replica-plain") {
+      return `import { useGithubReplica } from "@/hooks/use-github-replica"`
     }
     const hookName = componentName.startsWith("use-")
       ? componentName.replace("use-", "use").replace(/-([a-z])/g, (_, char) => char.toUpperCase())

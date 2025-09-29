@@ -73,15 +73,15 @@ export const config = {
       modal: "modal/modal",
       "modal-trigger": "modal/modal-trigger",
 
-      // Mentions
-      "github-mention": "mentions/github-mention",
-      "github-mention-swr": "mentions/github-mention-swr",
-      "github-mention-react-query": "mentions/github-mention-react-query",
+      // Replica
+      "github-replica": "replica/github-replica",
+      "github-replica-swr": "replica/github-replica-swr",
+      "github-replica-react-query": "replica/github-replica-react-query",
 
       // Hooks
-      "use-github-mention": "hooks/use-github-mention",
-      "use-github-mention-plain": "hooks/use-github-mention-plain",
-      "use-github-mention-react-query": "hooks/use-github-mention-react-query",
+      "use-github-replica": "hooks/use-github-replica",
+      "use-github-replica-plain": "hooks/use-github-replica-plain",
+      "use-github-replica-react-query": "hooks/use-github-replica-react-query",
       "use-mobile": "hooks/use-mobile",
       useCopyToClipboard: "hooks/useCopyToClipboard",
       useCountdown: "hooks/useCountdown",
