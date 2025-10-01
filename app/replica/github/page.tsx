@@ -20,6 +20,7 @@ import { GithubReplica } from "@/components/Replica/Github/GithubReplica"
 import { getExampleCode } from "@/lib/serverUtils"
 import { DocsPage, PropsTable, type PropsTableRow, type TocItem } from "@/components/internal/docs"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/internal/ui/code-block"
 
 import { Example as BasicExample } from "@/examples/replica/github/basic"
 import { Example as StatesExample } from "@/examples/replica/github/states"
@@ -60,13 +61,184 @@ const componentPropsRows: PropsTableRow[] = [
   },
 ]
 
+const pullResourceRows: PropsTableRow[] = [
+  {
+    prop: "number",
+    type: "number",
+    description: "Pull request number displayed in the header and tooltip.",
+  },
+  {
+    prop: "state",
+    type: "'open' | 'closed'",
+    description: "Open or closed state used for badges and icon colouring.",
+  },
+  {
+    prop: "merged",
+    type: "boolean",
+    description: "Indicates whether the pull request is merged.",
+  },
+  {
+    prop: "title",
+    type: "string",
+    description: "Human-readable pull request title rendered in the card.",
+  },
+  {
+    prop: "labels",
+    type: "LabelMeta[]",
+    description: "Normalized labels with id, name, and colour information.",
+  },
+  {
+    prop: "base.repo.full_name",
+    type: "string | null",
+    description: "Target repository full name used for context in the tooltip.",
+  },
+  {
+    prop: "head.ref",
+    type: "string | null",
+    description: "Source branch for the pull request surfaced in the tooltip.",
+  },
+]
+
+const issueResourceRows: PropsTableRow[] = [
+  {
+    prop: "number",
+    type: "number",
+    description: "Issue number displayed alongside the repository owner/name.",
+  },
+  {
+    prop: "state",
+    type: "'open' | 'closed'",
+    description: "Status that controls the icon and colour treatments.",
+  },
+  {
+    prop: "title",
+    type: "string",
+    description: "Issue title shown both inline and in the tooltip heading.",
+  },
+  {
+    prop: "body",
+    type: "string | null",
+    description: "Markdown body snippet extracted for tooltip preview text.",
+  },
+  {
+    prop: "comments",
+    type: "number | undefined",
+    description: "Comment count used to render metadata inside the tooltip.",
+  },
+  {
+    prop: "labels",
+    type: "LabelMeta[] | undefined",
+    description: "Issue labels normalised for consistent colouring.",
+  },
+]
+
+const repoResourceRows: PropsTableRow[] = [
+  {
+    prop: "full_name",
+    type: "string",
+    description: "Repository owner/name combination displayed as the title.",
+  },
+  {
+    prop: "description",
+    type: "string | null",
+    description: "Repository description shown as supporting text in the tooltip.",
+  },
+  {
+    prop: "stargazers_count",
+    type: "number | undefined",
+    description: "Star count surfaced as inline metadata.",
+  },
+  {
+    prop: "forks_count",
+    type: "number | undefined",
+    description: "Fork count available for additional stats renderers.",
+  },
+  {
+    prop: "language",
+    type: "string | null",
+    description: "Primary language label paired with an optional colour swatch.",
+  },
+  {
+    prop: "pushed_at",
+    type: "string | null",
+    description: "Timestamp used to display recency in the tooltip.",
+  },
+]
+
+const userResourceRows: PropsTableRow[] = [
+  {
+    prop: "login",
+    type: "string",
+    description: "GitHub username displayed in the card and tooltip header.",
+  },
+  {
+    prop: "name",
+    type: "string | null",
+    description: "Optional display name rendered when available.",
+  },
+  {
+    prop: "avatar_url",
+    type: "string | null",
+    description: "Avatar URL used for the preview badge and tooltip.",
+  },
+  {
+    prop: "bio",
+    type: "string | null",
+    description: "Profile bio text shown in the tooltip body.",
+  },
+  {
+    prop: "followers",
+    type: "number | undefined",
+    description: "Follower count normalised for stat displays.",
+  },
+  {
+    prop: "location",
+    type: "string | null",
+    description: "Optional location field available for custom layouts.",
+  },
+]
+
 const toc: TocItem[] = [
   { id: "overview", title: "Overview" },
+  { id: "quickstart", title: "Quickstart" },
   { id: "installation", title: "Installation" },
+  { id: "server-proxy", title: "Server proxy" },
+  { id: "supported-urls", title: "Supported URLs" },
   { id: "demos", title: "Demos" },
   { id: "props", title: "Props" },
-  { id: "server-proxy", title: "Server proxy" },
+  { id: "data-contract", title: "Data contract" },
+  { id: "customizing", title: "Customize the experience" },
 ]
+
+const quickstartCode = `import { GithubReplica } from "@/components/Replica/Github/GithubReplica"
+
+export function GithubCard() {
+  return (
+    <GithubReplica
+      url="https://github.com/vercel/next.js/pull/61000"
+      useServer
+    />
+  )
+}
+`
+
+const customizeCode = `import { GithubRepoReplica } from "@/components/Replica/Github/views"
+import { GithubReplicaDisplay } from "@/components/Replica/Github/GithubReplicaDisplay"
+import { useGithubReplica } from "@/hooks/use-github-replica"
+
+export function RepoHeadline({ url }: { url: string }) {
+  const { data, isLoading, error } = useGithubReplica(url, { useServer: true })
+
+  if (isLoading) return <span>Loading...</span>
+  if (error || !data) return null
+
+  if (data.kind === "repo") {
+    return <GithubRepoReplica data={data} linkProps={{ target: "_blank" }} />
+  }
+
+  return <GithubReplicaDisplay resource={data} />
+}
+`
 
 export default async function GithubReplicaPage() {
   return (
@@ -119,6 +291,25 @@ export default async function GithubReplicaPage() {
                   useGithubReplica
                 </Link>{" "}
                 hook instead.
+              </p>
+            </section>
+
+            <section id="quickstart" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Quickstart</h2>
+                <p className="text-muted-foreground">
+                  Drop the component anywhere in your UI, pass a GitHub URL, and enable{" "}
+                  <code className="font-mono text-xs">useServer</code>{" "}
+                  when you have the proxy route deployed for higher rate limits.
+                </p>
+              </div>
+              <CodeBlock language="tsx" filename="components/GithubCard.tsx">
+                {quickstartCode}
+              </CodeBlock>
+              <p className="text-sm text-muted-foreground">
+                The component handles loading, errors, and hover previews automatically. Use the{" "}
+                <code className="font-mono text-xs">onError</code>{" "}callback to hook into failures
+                or fall back to a custom layout.
               </p>
             </section>
 
@@ -184,6 +375,20 @@ export default async function GithubReplicaPage() {
                 </p>
               </div>
               <GithubReplica url="https://github.com/vercel/next.js" useServer />
+              <div className="grid gap-4 md:grid-cols-1">
+                <div className="overflow-x-auto">
+                  <CodeBlock language="bash" filename=".env.local">
+                    {`GITHUB_TOKEN=ghp_your_token_here`}
+                  </CodeBlock>
+                </div>
+                <div className="overflow-x-auto">
+                  <CodeBlock language="bash" filename="verify.sh">
+                    {`curl \
+  -H "Authorization: token $GITHUB_TOKEN" \
+  "http://localhost:3000/api/github/resource?url=https://github.com/vercel/next.js"`}
+                  </CodeBlock>
+                </div>
+              </div>
               <div className="grid gap-4 rounded-lg border border-border bg-muted/40 p-4 text-sm">
                 <div>
                   <p className="font-medium">
@@ -227,6 +432,43 @@ export default async function GithubReplicaPage() {
               </div>
             </section>
 
+            <section id="supported-urls" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Supported URLs</h2>
+                <p className="text-muted-foreground">
+                  The replica parses the URL with{" "}
+                  <code className="font-mono text-xs">parseGithubUrl</code>{" "}
+                  and gracefully handles invalid input before any network request fires.
+                </p>
+              </div>
+              <ul className="grid gap-2 text-sm text-muted-foreground">
+                <li>
+                  <code className="font-mono text-xs">https://github.com/org/repo/pull/123</code> —
+                  Pull requests with hover tooltips showing branch info, labels, and merge status.
+                </li>
+                <li>
+                  <code className="font-mono text-xs">https://github.com/org/repo/issues/456</code>{" "}
+                  — Issues with body snippets, labels, and comment counts.
+                </li>
+                <li>
+                  <code className="font-mono text-xs">https://github.com/org/repo</code> —
+                  Repositories with stars, forks, language, and recency metadata.
+                </li>
+                <li>
+                  <code className="font-mono text-xs">https://github.com/octocat</code> — User
+                  profiles with avatars, bios, and follower counts.
+                </li>
+              </ul>
+              <p className="text-sm text-muted-foreground">
+                When the URL is empty or malformed, the hook surfaces an{" "}
+                <code className="font-mono text-xs">invalidReason</code>{" "}
+                and the component renders the built-in error state. Use the{" "}
+                <code className="font-mono text-xs">onError</code>{" "}
+                callback to capture precise API failures (including rate limiting) and roll your own
+                recovery UX.
+              </p>
+            </section>
+
             <section id="demos" className="scroll-mt-24 space-y-8">
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Demos</h2>
@@ -261,6 +503,64 @@ export default async function GithubReplicaPage() {
                 Tip: Open links in a new tab with{" "}
                 <code>{"{ target: '_blank', rel: 'noopener noreferrer' }"}</code> via{" "}
                 <code className="font-mono text-xs">linkProps</code>.
+              </p>
+            </section>
+
+            <section id="data-contract" className="scroll-mt-24 space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Data contract</h2>
+                <p className="text-muted-foreground">
+                  <code className="font-mono text-xs">useGithubReplica</code>{" "}
+                  returns a typed{" "}
+                  <code className="font-mono text-xs">GithubResource</code>{" "}
+                  union so you can plug the data into bespoke layouts without guessing field names.
+              </p>
+              </div>
+              <CodeBlock language="ts" filename="@/lib/github/types.ts">
+                {`import type { GithubResource } from "@/lib/github/types"`}
+              </CodeBlock>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold tracking-tight">Pull requests</h3>
+                  <PropsTable rows={pullResourceRows} />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold tracking-tight">Issues</h3>
+                  <PropsTable rows={issueResourceRows} />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold tracking-tight">Repositories</h3>
+                  <PropsTable rows={repoResourceRows} />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold tracking-tight">Users</h3>
+                  <PropsTable rows={userResourceRows} />
+                </div>
+              </div>
+            </section>
+
+            <section id="customizing" className="scroll-mt-24 space-y-4">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Customize the experience</h2>
+                <p className="text-muted-foreground">
+                  Import view components directly from{" "}
+                  <code className="font-mono text-xs">@/components/Replica/Github/views</code> to
+                  reuse GitHub-styled building blocks. Combine them with
+                  <code className="font-mono text-xs">GithubReplicaDisplay</code> or the hook to
+                  swap layouts per resource type.
+                </p>
+              </div>
+              <CodeBlock language="tsx" filename="components/RepoHeadline.tsx">
+                {customizeCode}
+              </CodeBlock>
+              <p className="text-sm text-muted-foreground">
+                For deeper control, explore the dedicated{" "}
+                <Link className="underline" href="/replica/github/views">
+                  GitHub view components
+                </Link>
+                {" "}documentation. If you only need to intercept failures, use the{" "}
+                <code className="font-mono text-xs">onError</code>{" "}prop to expose retry UIs,
+                logging, or rate-limit messaging while keeping the default card design.
               </p>
             </section>
           </DocsPage>
