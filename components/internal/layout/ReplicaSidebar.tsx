@@ -93,6 +93,14 @@ export function ReplicaSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/replica/github/views"}>
+                  <Link href="/replica/github/views">
+                    <LayoutList className="size-4" />
+                    <span>GitHub views</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
