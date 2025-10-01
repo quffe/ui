@@ -55,7 +55,7 @@ export function GithubIssueReplica({ data, className, linkProps }: GithubIssueRe
       <TooltipContent
         sideOffset={12}
         align="start"
-        className="grid min-w-sm max-w-lg gap-3 text-sm text-foreground"
+        className="grid min-w-sm max-w-lg gap-3 text-sm border border-border bg-popover p-5 text-popover-foreground shadow-lg"
       >
         <div className="flex items-baseline gap-1 text-muted-foreground">
           <Link

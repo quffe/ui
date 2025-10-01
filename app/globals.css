@@ -194,3 +194,7 @@
     border-radius: 3px;
   }
 }
+/* Hide tooltip arrows globally */
+[data-slot="tooltip-content"] .bg-primary.fill-primary {
+  display: none !important;
+}

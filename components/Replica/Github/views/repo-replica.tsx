@@ -102,13 +102,13 @@ export function GithubRepoReplica({ data, className, linkProps }: GithubRepoRepl
       <TooltipContent
         sideOffset={12}
         align="start"
-        className="flex min-w-[220px] max-w-sm flex-col gap-3.5 text-sm"
+        className="flex min-w-[220px] max-w-sm flex-col gap-3.5 text-sm border border-border bg-popover p-5 text-popover-foreground shadow-lg"
       >
         <div className="flex items-center gap-2">
           <Book className="size-4 text-muted-foreground" />
           <Link
             href={data.html_url}
-            className="font-semibold text-foreground leading-snug hover:underline"
+            className="font-semibold text-foreground leading-snug hover:text-blue-500"
           >
             {data.full_name}
           </Link>
