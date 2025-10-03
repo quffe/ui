@@ -4,7 +4,9 @@
   "category": "Replica",
   "namespace": "@quffeui/replica",
   "description": "Standalone GitHub user view with profile hovercard",
-  "dependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "avatar",
     "tooltip"

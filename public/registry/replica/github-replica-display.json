@@ -3,7 +3,7 @@
   "type": "registry:component",
   "category": "Replica",
   "namespace": "@quffeui/replica",
-  "description": "GithubReplicaDisplay component",
+  "description": "Renderer that routes GitHub resources to specific replica views",
   "dependencies": [],
   "registryDependencies": [],
   "files": [

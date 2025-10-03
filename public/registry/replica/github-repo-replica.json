@@ -4,7 +4,9 @@
   "category": "Replica",
   "namespace": "@quffeui/replica",
   "description": "Standalone GitHub repository view with owner preview",
-  "dependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "avatar",
     "badge",

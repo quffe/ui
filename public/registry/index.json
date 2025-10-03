@@ -221,9 +221,102 @@
       "type": "registry:component",
       "category": "Replica",
       "namespace": "@quffeui/replica",
-      "description": "GithubReplicaDisplay component",
+      "description": "Renderer that routes GitHub resources to specific replica views",
       "dependencies": [],
       "registryDependencies": []
+    },
+    {
+      "name": "github-issue-replica",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "Standalone GitHub issue view with tooltip metadata",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ]
+    },
+    {
+      "name": "github-pull-replica",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "Standalone GitHub pull request view with branch context",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "tooltip"
+      ]
+    },
+    {
+      "name": "github-repo-replica",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "Standalone GitHub repository view with owner preview",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "badge",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "github-user-replica",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "Standalone GitHub user view with profile hovercard",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "github-replica-swr",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "GitHub Replica component bundled with SWR hook",
+      "dependencies": [
+        "swr"
+      ],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "avatar",
+        "tooltip",
+        "separator",
+        "skeleton",
+        "button"
+      ]
+    },
+    {
+      "name": "github-replica-react-query",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "GitHub Replica component bundled with React Query hook",
+      "dependencies": [
+        "@tanstack/react-query"
+      ],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "avatar",
+        "tooltip",
+        "separator",
+        "skeleton",
+        "button"
+      ]
     },
     {
       "name": "use-github-replica-react-query",
@@ -334,6 +427,14 @@
       "type": "registry:hook",
       "namespace": "@quffeui/hooks",
       "description": "Hook that runs effect only when state changes",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "use-github-replica-plain",
+      "type": "registry:hook",
+      "namespace": "@quffeui/hooks",
+      "description": "use-github-replica-plain hook",
       "dependencies": [],
       "registryDependencies": []
     }
