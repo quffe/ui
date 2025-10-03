@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "UI Components Documentation",
+  title: "QuffeUI Documentation",
   description: "A comprehensive collection of reusable UI components",
 }
 

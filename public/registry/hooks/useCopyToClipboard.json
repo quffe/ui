@@ -1,7 +1,7 @@
 {
   "name": "useCopyToClipboard",
   "type": "registry:hook",
-  "namespace": "@ui-components/hooks",
+  "namespace": "@quffeui/hooks",
   "description": "Hook for copying text to clipboard with feedback",
   "dependencies": [],
   "registryDependencies": [],

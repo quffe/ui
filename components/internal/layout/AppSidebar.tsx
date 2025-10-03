@@ -61,7 +61,7 @@ export function AppSidebar() {
             <FileText className="size-4" />
           </div>
           <div className="flex flex-col gap-0.5 leading-none">
-            <span className="font-semibold">UI Components</span>
+            <span className="font-semibold">QuffeUI</span>
             <span className="text-xs">Documentation</span>
           </div>
         </div>

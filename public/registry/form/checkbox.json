@@ -2,7 +2,7 @@
   "name": "checkbox",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "Checkbox component",
   "dependencies": [],
   "registryDependencies": [],

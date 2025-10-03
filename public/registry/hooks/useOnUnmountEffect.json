@@ -1,7 +1,7 @@
 {
   "name": "useOnUnmountEffect",
   "type": "registry:hook",
-  "namespace": "@ui-components/hooks",
+  "namespace": "@quffeui/hooks",
   "description": "Hook that runs cleanup effect only on component unmount",
   "dependencies": [],
   "registryDependencies": [],

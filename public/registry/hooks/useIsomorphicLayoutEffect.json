@@ -1,7 +1,7 @@
 {
   "name": "useIsomorphicLayoutEffect",
   "type": "registry:hook",
-  "namespace": "@ui-components/hooks",
+  "namespace": "@quffeui/hooks",
   "description": "Hook that uses layoutEffect on client, effect on server",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "name": "github-user-replica",
   "type": "registry:component",
   "category": "Replica",
-  "namespace": "@ui-components/replica",
+  "namespace": "@quffeui/replica",
   "description": "Standalone GitHub user view with profile hovercard",
   "dependencies": [],
   "registryDependencies": [

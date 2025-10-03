@@ -1,4 +1,4 @@
-# UI Components Library
+# QuffeUI
 
 A comprehensive Next.js React UI components library built with TypeScript, Tailwind CSS v4, and shadcn/ui patterns. Features a complete registry system with namespace support for easy distribution and installation.
 
@@ -34,30 +34,30 @@ This library supports **shadcn/ui CLI 3.0+ namespace features** for organized co
 
 ```bash
 # Install all form components
-npx shadcn@latest add @ui-components/form/input-amount @ui-components/form/password-input
+npx shadcn@latest add @quffeui/form/input-amount @quffeui/form/password-input
 
 # Install navigation components  
-npx shadcn@latest add @ui-components/navigation/dropdown @ui-components/navigation/select-dropdown
+npx shadcn@latest add @quffeui/navigation/dropdown @quffeui/navigation/select-dropdown
 
 # Install data components
-npx shadcn@latest add @ui-components/data/data-table
+npx shadcn@latest add @quffeui/data/data-table
 
 # Install modal components
-npx shadcn@latest add @ui-components/modal/modal @ui-components/modal/modal-trigger
+npx shadcn@latest add @quffeui/modal/modal @quffeui/modal/modal-trigger
 
 # Install custom hooks
-npx shadcn@latest add @ui-components/hooks/useLocalStorage @ui-components/hooks/useKeyboardShortcut
+npx shadcn@latest add @quffeui/hooks/useLocalStorage @quffeui/hooks/useKeyboardShortcut
 ```
 
 ### Available Namespaces
 
 | Namespace | Description | Components |
 |-----------|-------------|------------|
-| `@ui-components/form` | Form-specific components | InputAmount, OtpInput, PasswordInput, FileInput, Input, Textarea, Checkbox, RadioGroup, Select |
-| `@ui-components/navigation` | Navigation components | Dropdown, SelectDropdown |  
-| `@ui-components/data` | Data visualization | DataTable |
-| `@ui-components/modal` | Modal and overlay components | Modal, ModalTrigger |
-| `@ui-components/hooks` | Custom React hooks | useLocalStorage, useKeyboardShortcut, useOnUnmountEffect, etc. |
+| `@quffeui/form` | Form-specific components | InputAmount, OtpInput, PasswordInput, FileInput, Input, Textarea, Checkbox, RadioGroup, Select |
+| `@quffeui/navigation` | Navigation components | Dropdown, SelectDropdown |  
+| `@quffeui/data` | Data visualization | DataTable |
+| `@quffeui/modal` | Modal and overlay components | Modal, ModalTrigger |
+| `@quffeui/hooks` | Custom React hooks | useLocalStorage, useKeyboardShortcut, useOnUnmountEffect, etc. |
 
 ### Configuration
 
@@ -66,7 +66,7 @@ Add the registry configuration to your `components.json` (rewritten to static fi
 ```json
 {
   "registries": {
-    "@ui-components": "http://localhost:3000/api/registry/{name}"
+    "@quffeui": "http://localhost:3000/api/registry/{name}"
   }
 }
 ```

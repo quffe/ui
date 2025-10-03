@@ -2,7 +2,7 @@
   "name": "input-amount",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "Specialized input for monetary amounts with currency support",
   "dependencies": [],
   "registryDependencies": [

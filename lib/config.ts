@@ -37,7 +37,7 @@ export const config = {
     get url() {
       return getSiteUrl()
     },
-    name: process.env.NEXT_PUBLIC_SITE_NAME || "UI Components",
+    name: process.env.NEXT_PUBLIC_SITE_NAME || "QuffeUI",
     description:
       process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
       "A comprehensive collection of reusable UI components",
@@ -97,7 +97,7 @@ export const config = {
     }
 
     const namespacePath = namespaceMap[componentName] || componentName
-    return `@ui-components/${namespacePath}`
+    return `@quffeui/${namespacePath}`
   },
 
   // CLI installation command generator
@@ -114,7 +114,7 @@ export const config = {
   // Get namespace path for display (e.g., "form/otp-input")
   getNamespacePath: (componentName: string) => {
     const componentUrl = config.getComponentUrl(componentName)
-    // Extract the path after the namespace prefix (e.g., "@ui-components/form/input-amount" -> "form/input-amount")
+    // Extract the path after the namespace prefix (e.g., "@quffeui/form/input-amount" -> "form/input-amount")
     return componentUrl.includes("/") ? componentUrl.split("/").slice(1).join("/") : componentUrl
   },
 }

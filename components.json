@@ -19,6 +19,6 @@
   },
   "iconLibrary": "lucide",
   "registries": {
-    "@ui-components": "http://localhost:3000/api/registry/{name}"
+    "@quffeui": "http://localhost:3000/api/registry/{name}"
   }
 }

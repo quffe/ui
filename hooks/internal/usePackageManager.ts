@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 
 export type PackageManager = "pnpm" | "npm" | "yarn" | "bun"
 
-const STORAGE_KEY = "ui-components-package-manager"
+const STORAGE_KEY = "quffeui-package-manager"
 const DEFAULT_PACKAGE_MANAGER: PackageManager = "pnpm"
 
 // Global state management

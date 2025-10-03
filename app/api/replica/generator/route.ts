@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     name: `github-replica-${slug}`,
     type: "registry:component",
     category: "Replica",
-    namespace: "@ui-components/replica",
+    namespace: "@quffeui/replica",
     description: `Static GitHub Replica snapshot for ${url}`,
     dependencies: [],
     registryDependencies: snapshot.registryDependencies,

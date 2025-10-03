@@ -2,7 +2,7 @@
   "name": "radio-group",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "RadioGroup component",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "name": "github-issue-replica",
   "type": "registry:component",
   "category": "Replica",
-  "namespace": "@ui-components/replica",
+  "namespace": "@quffeui/replica",
   "description": "Standalone GitHub issue view with tooltip metadata",
   "dependencies": [],
   "registryDependencies": [

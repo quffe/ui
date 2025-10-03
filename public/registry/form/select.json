@@ -2,7 +2,7 @@
   "name": "select",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "Select component",
   "dependencies": [],
   "registryDependencies": [],

@@ -2,7 +2,7 @@
   "name": "date-range-picker",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "Date range picker with presets and dual calendar view",
   "dependencies": [
     "lucide-react",

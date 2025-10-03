@@ -2,7 +2,7 @@
   "name": "otp-input",
   "type": "registry:component",
   "category": "Form",
-  "namespace": "@ui-components/form",
+  "namespace": "@quffeui/form",
   "description": "One-time password input with multiple fields",
   "dependencies": [],
   "registryDependencies": [

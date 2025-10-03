@@ -2,7 +2,7 @@
   "name": "modal-trigger",
   "type": "registry:component",
   "category": "Modal",
-  "namespace": "@ui-components/modal",
+  "namespace": "@quffeui/modal",
   "description": "Modal trigger component with button integration",
   "dependencies": [
     "class-variance-authority"

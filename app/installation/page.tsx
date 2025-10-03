@@ -262,7 +262,7 @@ export default function InstallationPage() {
     "utils": "@/lib/utils"
   },
   "registries": {
-    "@ui-components": "http://localhost:3000/api/registry/{name}"
+    "@quffeui": "http://localhost:3000/api/registry/{name}"
   }
 }`}
                   </CodeBlock>
@@ -306,19 +306,19 @@ export default function InstallationPage() {
                     <p className="text-sm font-medium mb-2">Available Namespaces:</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       <div>
-                        <p className="font-mono text-primary">@ui-components/form/*</p>
+                        <p className="font-mono text-primary">@quffeui/form/*</p>
                         <p className="text-muted-foreground">Form controls & inputs</p>
                       </div>
                       <div>
-                        <p className="font-mono text-primary">@ui-components/navigation/*</p>
+                        <p className="font-mono text-primary">@quffeui/navigation/*</p>
                         <p className="text-muted-foreground">Navigation components</p>
                       </div>
                       <div>
-                        <p className="font-mono text-primary">@ui-components/data/*</p>
+                        <p className="font-mono text-primary">@quffeui/data/*</p>
                         <p className="text-muted-foreground">Data visualization</p>
                       </div>
                       <div>
-                        <p className="font-mono text-primary">@ui-components/hooks/*</p>
+                        <p className="font-mono text-primary">@quffeui/hooks/*</p>
                         <p className="text-muted-foreground">Custom React hooks</p>
                       </div>
                     </div>

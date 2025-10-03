@@ -2,7 +2,7 @@
   "name": "modal",
   "type": "registry:component",
   "category": "Modal",
-  "namespace": "@ui-components/modal",
+  "namespace": "@quffeui/modal",
   "description": "Flexible modal component with customizable sizing",
   "dependencies": [
     "lucide-react",

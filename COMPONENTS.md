@@ -1,4 +1,4 @@
-# UI Components Registry
+# QuffeUI Registry
 
 A comprehensive collection of reusable UI components built with React, TypeScript, and Tailwind CSS.
 
@@ -28,7 +28,7 @@ NEXT_PUBLIC_REGISTRY_URL=https://your-domain.com/api/registry
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 # Site branding
-NEXT_PUBLIC_SITE_NAME=Your UI Components
+NEXT_PUBLIC_SITE_NAME=Your QuffeUI
 NEXT_PUBLIC_SITE_DESCRIPTION=A comprehensive collection of reusable UI components
 ```
 
@@ -37,18 +37,18 @@ NEXT_PUBLIC_SITE_DESCRIPTION=A comprehensive collection of reusable UI component
 ### Data Components
 - **DataTable** - A powerful data table with sorting, filtering, and pagination
   ```bash
-  pnpm dlx shadcn@latest add https://ui-components.dev/api/registry/data-table
+  pnpm dlx shadcn@latest add https://quffeui.dev/api/registry/data-table
   ```
 
 ### Input Components
 - **InputAmount** - Specialized input for monetary amounts with currency support
   ```bash
-  pnpm dlx shadcn@latest add https://ui-components.dev/api/registry/input-amount
+  pnpm dlx shadcn@latest add https://quffeui.dev/api/registry/input-amount
   ```
 
 - **OtpInput** - One-time password input with multiple fields
   ```bash
-  pnpm dlx shadcn@latest add https://ui-components.dev/api/registry/otp-input
+  pnpm dlx shadcn@latest add https://quffeui.dev/api/registry/otp-input
   ```
 
 ## Prerequisites

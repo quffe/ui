@@ -75,7 +75,7 @@ export default function Introduction() {
         <div className="container mx-auto max-w-6xl">
           {/* Hero Section */}
           <div className="mb-16 text-center">
-            <h1 className="text-6xl font-bold tracking-tight mb-6">UI Components</h1>
+            <h1 className="text-6xl font-bold tracking-tight mb-6">QuffeUI</h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               A comprehensive collection of beautifully designed, accessible, and reusable UI
               components built with React, TypeScript, and Tailwind CSS.

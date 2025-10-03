@@ -1,0 +1,16 @@
+{
+  "name": "github-replica-display",
+  "type": "registry:component",
+  "category": "Replica",
+  "namespace": "@quffeui/replica",
+  "description": "GithubReplicaDisplay component",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "type": "registry:component",
+      "path": "Replica/Github/GithubReplicaDisplay.tsx",
+      "content": "\"use client\"\n\nimport type { ComponentProps } from \"react\"\nimport type { GithubResource } from \"@/lib/github/types\"\n\nimport { GithubPullReplica } from \"./views/pull-replica\"\nimport { GithubIssueReplica } from \"./views/issue-replica\"\nimport { GithubUserReplica } from \"./views/user-replica\"\nimport { GithubRepoReplica } from \"./views/repo-replica\"\n\nexport type GithubReplicaDisplayProps = {\n  resource: GithubResource\n  className?: string\n  linkProps?: ComponentProps<\"a\">\n}\n\nexport function GithubReplicaDisplay({\n  resource,\n  className,\n  linkProps,\n}: GithubReplicaDisplayProps) {\n  switch (resource.kind) {\n    case \"pull\":\n      return <GithubPullReplica data={resource} className={className} linkProps={linkProps} />\n    case \"issue\":\n      return <GithubIssueReplica data={resource} className={className} linkProps={linkProps} />\n    case \"user\":\n      return <GithubUserReplica data={resource} className={className} linkProps={linkProps} />\n    case \"repo\":\n      return <GithubRepoReplica data={resource} className={className} linkProps={linkProps} />\n    default:\n      return <div className={className}>Unsupported GitHub URL</div>\n  }\n}\n"
+    }
+  ]
+}

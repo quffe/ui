@@ -214,7 +214,7 @@ function generateComponentRegistry(component) {
     name: component.name,
     type: "registry:component",
     category: component.category,
-    namespace: `@ui-components/${namespace}`,
+    namespace: `@quffeui/${namespace}`,
     description: getComponentDescription(component.displayName, component.category),
     dependencies: COMMON_DEPS[component.displayName] || [],
     registryDependencies: REGISTRY_DEPS[component.displayName] || [],
@@ -234,7 +234,7 @@ function generateHookRegistry(hook) {
   const registry = {
     name: hook.name,
     type: "registry:hook",
-    namespace: "@ui-components/hooks",
+    namespace: "@quffeui/hooks",
     description: getHookDescription(hook.name),
     dependencies: [],
     registryDependencies: [],
@@ -260,7 +260,7 @@ function generateIndexRegistry(components, hooks) {
       name: component.name,
       type: "registry:component",
       category: component.category,
-      namespace: `@ui-components/${namespace}`,
+      namespace: `@quffeui/${namespace}`,
       description: getComponentDescription(component.displayName, component.category),
       dependencies: COMMON_DEPS[component.displayName] || [],
       registryDependencies: REGISTRY_DEPS[component.displayName] || [],
@@ -272,7 +272,7 @@ function generateIndexRegistry(components, hooks) {
     items.push({
       name: hook.name,
       type: "registry:hook",
-      namespace: "@ui-components/hooks",
+      namespace: "@quffeui/hooks",
       description: getHookDescription(hook.name),
       dependencies: [],
       registryDependencies: [],
@@ -284,23 +284,23 @@ function generateIndexRegistry(components, hooks) {
 
   // Full registry index schema for static hosting
   return {
-    name: "@ui-components",
+    name: "@quffeui",
     type: "registry:index",
     description:
       "A comprehensive UI components library with TypeScript, Tailwind CSS v4, and shadcn/ui patterns",
     homepage: siteUrl,
-    author: "UI Components Library",
+    author: "QuffeUI Library",
     items,
-    namespace: "@ui-components",
+    namespace: "@quffeui",
     namespaces: {
-      "@ui-components": "Main UI components registry",
-      "@ui-components/ui": "Base UI primitives (Button, Card, Input, etc.)",
-      "@ui-components/form": "Form-specific components (InputAmount, OtpInput, etc.)",
-      "@ui-components/data": "Data visualization components (DataTable)",
-      "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
-      "@ui-components/modal": "Modal and overlay components",
-      "@ui-components/replica": "Replica and integrations",
-      "@ui-components/hooks": "Custom React hooks",
+      "@quffeui": "Main UI components registry",
+      "@quffeui/ui": "Base UI primitives (Button, Card, Input, etc.)",
+      "@quffeui/form": "Form-specific components (InputAmount, OtpInput, etc.)",
+      "@quffeui/data": "Data visualization components (DataTable)",
+      "@quffeui/navigation": "Navigation components (Dropdown, SelectDropdown)",
+      "@quffeui/modal": "Modal and overlay components",
+      "@quffeui/replica": "Replica and integrations",
+      "@quffeui/hooks": "Custom React hooks",
     },
   }
 }

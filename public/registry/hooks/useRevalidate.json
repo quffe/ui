@@ -1,7 +1,7 @@
 {
   "name": "useRevalidate",
   "type": "registry:hook",
-  "namespace": "@ui-components/hooks",
+  "namespace": "@quffeui/hooks",
   "description": "Hook for SWR data revalidation",
   "dependencies": [],
   "registryDependencies": [],

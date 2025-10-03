@@ -130,12 +130,12 @@ function useCopyToClipboard(options?: UseCopyToClipboardOptions): UseCopyToClipb
 Pick one of the following depending on your stack:
 
 - SWR (default)
-  - Install via shadcn CLI: `@ui-components/hooks/use-github-replica`
+  - Install via shadcn CLI: `@quffeui/hooks/use-github-replica`
   - Adds a dependency on `swr`.
   - Usage: `import { useGithubReplica } from "@/hooks/use-github-replica"`
 
 - React Query (optional)
-  - Install via shadcn CLI: `@ui-components/hooks/use-github-replica-react-query`
+  - Install via shadcn CLI: `@quffeui/hooks/use-github-replica-react-query`
   - Adds a dependency on `@tanstack/react-query`.
   - Usage: `import { useGithubReplicaQuery } from "@/hooks/use-github-replica-react-query"`
 
@@ -145,9 +145,9 @@ Pick one of the following depending on your stack:
   - Client Components: call `getGithubResource(url)` inside an effect.
 
 CLI quick refs
-- Plain (default): `@ui-components/hooks/use-github-replica-plain`
-- SWR: `@ui-components/hooks/use-github-replica`
-- React Query: `@ui-components/hooks/use-github-replica-react-query`
+- Plain (default): `@quffeui/hooks/use-github-replica-plain`
+- SWR: `@quffeui/hooks/use-github-replica`
+- React Query: `@quffeui/hooks/use-github-replica-react-query`
 
 Notes
 - Both hooks support invalid URLs and expose `invalidReason` for quick checks.
@@ -440,7 +440,7 @@ function useRevalidate(): UseRevalidateReturn
 
 ## Installation
 
-These hooks are part of the UI Components library. They're located in the `/hooks` directory and can be imported directly:
+These hooks are part of the QuffeUI library. They're located in the `/hooks` directory and can be imported directly:
 
 ```tsx
 import { useMobile } from "@/hooks/use-mobile"

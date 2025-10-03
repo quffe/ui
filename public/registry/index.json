@@ -1,15 +1,15 @@
 {
-  "name": "@ui-components",
+  "name": "@quffeui",
   "type": "registry:index",
   "description": "A comprehensive UI components library with TypeScript, Tailwind CSS v4, and shadcn/ui patterns",
   "homepage": "http://localhost:3000",
-  "author": "UI Components Library",
+  "author": "QuffeUI Library",
   "items": [
     {
       "name": "data-table",
       "type": "registry:component",
       "category": "Data",
-      "namespace": "@ui-components/data",
+      "namespace": "@quffeui/data",
       "description": "A powerful data table with sorting, filtering, and pagination",
       "dependencies": [
         "@tanstack/react-table",
@@ -24,7 +24,7 @@
       "name": "checkbox",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Checkbox component",
       "dependencies": [],
       "registryDependencies": []
@@ -33,7 +33,7 @@
       "name": "file-input",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "File upload input with drag and drop support",
       "dependencies": [
         "lucide-react"
@@ -47,7 +47,7 @@
       "name": "input",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Input component",
       "dependencies": [],
       "registryDependencies": []
@@ -56,7 +56,7 @@
       "name": "password-input",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Password input with toggle visibility",
       "dependencies": [
         "lucide-react"
@@ -70,7 +70,7 @@
       "name": "radio-group",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "RadioGroup component",
       "dependencies": [],
       "registryDependencies": []
@@ -79,7 +79,7 @@
       "name": "select",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Select component",
       "dependencies": [],
       "registryDependencies": []
@@ -88,7 +88,7 @@
       "name": "textarea",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Textarea component",
       "dependencies": [],
       "registryDependencies": []
@@ -97,7 +97,7 @@
       "name": "dropdown",
       "type": "registry:component",
       "category": "Navigation",
-      "namespace": "@ui-components/navigation",
+      "namespace": "@quffeui/navigation",
       "description": "Searchable dropdown with Command and Popover primitives",
       "dependencies": [
         "lucide-react"
@@ -112,7 +112,7 @@
       "name": "select",
       "type": "registry:component",
       "category": "Navigation",
-      "namespace": "@ui-components/navigation",
+      "namespace": "@quffeui/navigation",
       "description": "Select component",
       "dependencies": [],
       "registryDependencies": []
@@ -121,7 +121,7 @@
       "name": "select-dropdown",
       "type": "registry:component",
       "category": "Navigation",
-      "namespace": "@ui-components/navigation",
+      "namespace": "@quffeui/navigation",
       "description": "Custom dropdown with keyboard navigation",
       "dependencies": [
         "lucide-react",
@@ -135,7 +135,7 @@
       "name": "modal",
       "type": "registry:component",
       "category": "Modal",
-      "namespace": "@ui-components/modal",
+      "namespace": "@quffeui/modal",
       "description": "Flexible modal component with customizable sizing",
       "dependencies": [
         "lucide-react",
@@ -149,7 +149,7 @@
       "name": "modal-trigger",
       "type": "registry:component",
       "category": "Modal",
-      "namespace": "@ui-components/modal",
+      "namespace": "@quffeui/modal",
       "description": "Modal trigger component with button integration",
       "dependencies": [
         "class-variance-authority"
@@ -163,7 +163,7 @@
       "name": "date-range-picker",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Date range picker with presets and dual calendar view",
       "dependencies": [
         "lucide-react",
@@ -180,7 +180,7 @@
       "name": "input-amount",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "Specialized input for monetary amounts with currency support",
       "dependencies": [],
       "registryDependencies": [
@@ -192,7 +192,7 @@
       "name": "otp-input",
       "type": "registry:component",
       "category": "Form",
-      "namespace": "@ui-components/form",
+      "namespace": "@quffeui/form",
       "description": "One-time password input with multiple fields",
       "dependencies": [],
       "registryDependencies": [
@@ -203,7 +203,7 @@
       "name": "github-replica",
       "type": "registry:component",
       "category": "Replica",
-      "namespace": "@ui-components/replica",
+      "namespace": "@quffeui/replica",
       "description": "Compact metadata card for GitHub resources (PRs, Issues, Users, Repos)",
       "dependencies": [],
       "registryDependencies": [
@@ -217,9 +217,18 @@
       ]
     },
     {
+      "name": "github-replica-display",
+      "type": "registry:component",
+      "category": "Replica",
+      "namespace": "@quffeui/replica",
+      "description": "GithubReplicaDisplay component",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
       "name": "use-github-replica-react-query",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "use-github-replica-react-query hook",
       "dependencies": [],
       "registryDependencies": []
@@ -227,7 +236,7 @@
     {
       "name": "use-github-replica",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "use-github-replica hook",
       "dependencies": [],
       "registryDependencies": []
@@ -235,7 +244,7 @@
     {
       "name": "use-mobile",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook to detect mobile viewport and breakpoints",
       "dependencies": [],
       "registryDependencies": []
@@ -243,7 +252,7 @@
     {
       "name": "useCopyToClipboard",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook for copying text to clipboard with feedback",
       "dependencies": [],
       "registryDependencies": []
@@ -251,7 +260,7 @@
     {
       "name": "useCountdown",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook for countdown timers with auto-decrement",
       "dependencies": [],
       "registryDependencies": []
@@ -259,7 +268,7 @@
     {
       "name": "useIsomorphicLayoutEffect",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that uses layoutEffect on client, effect on server",
       "dependencies": [],
       "registryDependencies": []
@@ -267,7 +276,7 @@
     {
       "name": "useKeyboardShortcut",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook for handling keyboard shortcuts with context",
       "dependencies": [],
       "registryDependencies": []
@@ -275,7 +284,7 @@
     {
       "name": "useLocalStorage",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook for persisting state to localStorage with SSR support",
       "dependencies": [],
       "registryDependencies": []
@@ -283,7 +292,7 @@
     {
       "name": "useOnMountEffect",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that runs effect only on component mount",
       "dependencies": [],
       "registryDependencies": []
@@ -291,7 +300,7 @@
     {
       "name": "useOnMountLayoutEffect",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that runs layout effect only on component mount",
       "dependencies": [],
       "registryDependencies": []
@@ -299,7 +308,7 @@
     {
       "name": "useOnUnmountEffect",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that runs cleanup effect only on component unmount",
       "dependencies": [],
       "registryDependencies": []
@@ -307,7 +316,7 @@
     {
       "name": "useOnWindowResize",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that responds to window resize events",
       "dependencies": [],
       "registryDependencies": []
@@ -315,7 +324,7 @@
     {
       "name": "useRevalidate",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook for SWR data revalidation",
       "dependencies": [],
       "registryDependencies": []
@@ -323,21 +332,21 @@
     {
       "name": "useStateChangeEffect",
       "type": "registry:hook",
-      "namespace": "@ui-components/hooks",
+      "namespace": "@quffeui/hooks",
       "description": "Hook that runs effect only when state changes",
       "dependencies": [],
       "registryDependencies": []
     }
   ],
-  "namespace": "@ui-components",
+  "namespace": "@quffeui",
   "namespaces": {
-    "@ui-components": "Main UI components registry",
-    "@ui-components/ui": "Base UI primitives (Button, Card, Input, etc.)",
-    "@ui-components/form": "Form-specific components (InputAmount, OtpInput, etc.)",
-    "@ui-components/data": "Data visualization components (DataTable)",
-    "@ui-components/navigation": "Navigation components (Dropdown, SelectDropdown)",
-    "@ui-components/modal": "Modal and overlay components",
-    "@ui-components/replica": "Replica and integrations",
-    "@ui-components/hooks": "Custom React hooks"
+    "@quffeui": "Main UI components registry",
+    "@quffeui/ui": "Base UI primitives (Button, Card, Input, etc.)",
+    "@quffeui/form": "Form-specific components (InputAmount, OtpInput, etc.)",
+    "@quffeui/data": "Data visualization components (DataTable)",
+    "@quffeui/navigation": "Navigation components (Dropdown, SelectDropdown)",
+    "@quffeui/modal": "Modal and overlay components",
+    "@quffeui/replica": "Replica and integrations",
+    "@quffeui/hooks": "Custom React hooks"
   }
 }

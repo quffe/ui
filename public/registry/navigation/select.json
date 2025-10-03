@@ -2,7 +2,7 @@
   "name": "select",
   "type": "registry:component",
   "category": "Navigation",
-  "namespace": "@ui-components/navigation",
+  "namespace": "@quffeui/navigation",
   "description": "Select component",
   "dependencies": [],
   "registryDependencies": [],

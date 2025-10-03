@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
 
   const baseHeaders: Record<string, string> = {
     Accept: "application/vnd.github+json",
-    "User-Agent": "ui-components/gh-resource",
+    "User-Agent": "quffeui/gh-resource",
   }
 
   if (ifNoneMatch) baseHeaders["If-None-Match"] = ifNoneMatch

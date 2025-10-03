@@ -1,7 +1,7 @@
 {
   "name": "useOnMountEffect",
   "type": "registry:hook",
-  "namespace": "@ui-components/hooks",
+  "namespace": "@quffeui/hooks",
   "description": "Hook that runs effect only on component mount",
   "dependencies": [],
   "registryDependencies": [],
