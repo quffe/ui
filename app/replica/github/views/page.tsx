@@ -100,7 +100,7 @@ export default async function GithubViewsPage() {
           >
             <section id="overview" className="scroll-mt-24 space-y-4">
               <p className="text-sm text-muted-foreground">
-                Each view mirrors part of GitHub's UI - pull requests, issues, repositories, and user
+                Each view mirrors part of GitHub&apos;s UI - pull requests, issues, repositories, and user
                 profiles - without fetching data itself. Pair them with
                 <Link className="underline" href="/replica/github">
                   GithubReplica
