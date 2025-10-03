@@ -83,9 +83,6 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
-      react-idle-timer:
-        specifier: ^5.7.2
-        version: 5.7.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@19.1.1)
@@ -2216,12 +2213,6 @@ packages:
     resolution: {integrity: sha512-Dlq/5LAZgF0Gaz6yiqZCf6VCcZs1ghAJyrsu84Q/GT0gV+mCxbfmKNoGRKBYMJ8IEdGPqu49YWXD02GCknEDkw==}
     peerDependencies:
       react: ^19.1.1
-
-  react-idle-timer@5.7.2:
-    resolution: {integrity: sha512-+BaPfc7XEUU5JFkwZCx6fO1bLVK+RBlFH+iY4X34urvIzZiZINP6v2orePx3E6pAztJGE7t4DzvL7if2SL/0GQ==}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -4756,11 +4747,6 @@ snapshots:
     dependencies:
       react: 19.1.1
       scheduler: 0.26.0
-
-  react-idle-timer@5.7.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
-    dependencies:
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
 
   react-is@16.13.1: {}
 
