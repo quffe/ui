@@ -84,8 +84,8 @@ function PullTooltip({ data }: { data: GithubPullResource }) {
   const baseLabel = formatRepoBranchLabel(baseRepo, data.base?.ref ?? null)
   const headLabel = formatRepoBranchLabel(headRepo, data.head?.ref ?? null)
   const statusMeta = getPullStatusMeta(data.merged ? "merged" : data.draft ? "draft" : data.state)
-  const originalStatusClass =
-    typeof statusMeta.icon.props?.className === "string" ? statusMeta.icon.props.className : ""
+  const originalStatusClass: string =
+    typeof statusMeta.icon.props?.className === "string" ? statusMeta.icon.props?.className : ""
   const cleanedStatusClass = originalStatusClass
     .split(" ")
     .filter(cls => cls && !/^size-/.test(cls))
@@ -262,7 +262,14 @@ function formatRepoBranchLabel(repo: string | null, ref: string | null) {
   return `${repoName}:${ref}`
 }
 
-function getPullStatusMeta(status: "merged" | "draft" | "open" | "closed") {
+interface PullStatusMeta {
+  label: 'Merged' | 'Draft' | 'Open' | 'Closed'
+  className: string
+  icon: React.JSX.Element
+  // icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>
+}
+
+function getPullStatusMeta(status: "merged" | "draft" | "open" | "closed"): PullStatusMeta {
   const base = "inline-flex items-center gap-1 rounded-full text-white"
   const iconClass = "size-4 align-text-bottom"
   if (status === "merged")
