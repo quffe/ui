@@ -263,7 +263,7 @@ function formatRepoBranchLabel(repo: string | null, ref: string | null) {
 }
 
 interface PullStatusMeta {
-  label: 'Merged' | 'Draft' | 'Open' | 'Closed'
+  label: "Merged" | "Draft" | "Open" | "Closed"
   className: string
   icon: React.JSX.Element
   // icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>

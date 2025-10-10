@@ -193,6 +193,20 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const currentRows = table.getRowModel().rows
+  const currentRowCount = currentRows.length
+  const totalResults = onPaginationChange ? totalCount : table.getFilteredRowModel().rows.length
+  const firstItemIndex = currentRowCount > 0 ? pagination.pageIndex * pagination.pageSize + 1 : 0
+  const lastItemIndex = currentRowCount > 0 ? firstItemIndex + currentRowCount - 1 : 0
+  const paginationSummary =
+    totalResults === 0
+      ? "No results"
+      : currentRowCount === 0
+        ? "No results on this page"
+        : `Showing ${firstItemIndex} to ${lastItemIndex} of ${totalResults} results`
+  const shouldRenderSummary =
+    onPaginationChange !== undefined || totalResults === 0 || currentRowCount > 0
+
   return (
     <div className="w-full rounded-md border">
       <Table className="min-w-full">
@@ -217,8 +231,8 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map(row => {
+          {currentRowCount ? (
+            currentRows.map(row => {
               const isSelectable = singleAction && onRowClick
 
               const handleRowKeyDown = isSelectable
@@ -268,13 +282,7 @@ export function DataTable<TData, TValue>({
       {hidePagination ? null : (
         <div className="flex items-center justify-between space-x-2 border-t p-4">
           <div className="text-sm text-muted-foreground">
-            {onPaginationChange && totalCount > 0 && (
-              <span aria-live="polite">
-                Showing {pagination.pageIndex * pagination.pageSize + 1} to{" "}
-                {Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalCount)} of{" "}
-                {totalCount} results
-              </span>
-            )}
+            {shouldRenderSummary && <span aria-live="polite">{paginationSummary}</span>}
           </div>
           <div className="flex items-center space-x-1">
             <Button

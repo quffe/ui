@@ -32,6 +32,7 @@ export function ModalTrigger({
   contentClassName,
   buttonProps,
   renderContent,
+  passCloseToChildren,
   onOpen,
   onClose,
 }: ModalTriggerProps) {
@@ -53,6 +54,23 @@ export function ModalTrigger({
       return renderContent({ onClose: handleClose })
     }
 
+    if (passCloseToChildren) {
+      return React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+          const existingOnClose = (child.props as { onClose?: (...args: unknown[]) => void })
+            .onClose
+
+          return React.cloneElement(child, {
+            onClose: (...args: unknown[]) => {
+              existingOnClose?.(...args)
+              handleClose()
+            },
+          })
+        }
+        return child
+      })
+    }
+
     // Default: render children as-is
     return children
   }
@@ -60,11 +78,32 @@ export function ModalTrigger({
   return (
     <>
       {React.isValidElement(trigger) ? (
-        React.cloneElement(trigger as React.ReactElement<{ onClick?: () => void }>, {
-          onClick: handleOpen,
-        })
+        (() => {
+          const originalOnClick = (
+            trigger.props as {
+              onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+            }
+          ).onClick
+
+          return React.cloneElement(trigger, {
+            onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+              originalOnClick?.(event)
+              if (!event.defaultPrevented) {
+                handleOpen()
+              }
+            },
+          })
+        })()
       ) : (
-        <Button onClick={handleOpen} {...buttonProps}>
+        <Button
+          {...buttonProps}
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            buttonProps?.onClick?.(event)
+            if (!event.defaultPrevented) {
+              handleOpen()
+            }
+          }}
+        >
           {trigger}
         </Button>
       )}

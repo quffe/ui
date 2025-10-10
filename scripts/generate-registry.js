@@ -272,8 +272,7 @@ function generateComponentRegistry(component) {
     category: component.category,
     namespace: `@quffeui/${namespace}`,
     description:
-      component.description ||
-      getComponentDescription(component.displayName, component.category),
+      component.description || getComponentDescription(component.displayName, component.category),
     dependencies: component.dependencies || COMMON_DEPS[component.displayName] || [],
     registryDependencies:
       component.registryDependencies || REGISTRY_DEPS[component.displayName] || [],
@@ -321,8 +320,7 @@ function generateIndexRegistry(components, hooks) {
       category: component.category,
       namespace: `@quffeui/${namespace}`,
       description:
-        component.description ||
-        getComponentDescription(component.displayName, component.category),
+        component.description || getComponentDescription(component.displayName, component.category),
       dependencies: component.dependencies || COMMON_DEPS[component.displayName] || [],
       registryDependencies:
         component.registryDependencies || REGISTRY_DEPS[component.displayName] || [],
@@ -388,17 +386,15 @@ function writeRegistryFile(relPath, content) {
 
 function listRegistryFiles(dir = REGISTRY_DIR, relBase = "") {
   if (!fs.existsSync(dir)) return []
-  return fs
-    .readdirSync(dir, { withFileTypes: true })
-    .flatMap(entry => {
-      const absPath = path.join(dir, entry.name)
-      const relPath = relBase ? path.join(relBase, entry.name) : entry.name
-      if (entry.isDirectory()) {
-        return listRegistryFiles(absPath, relPath)
-      }
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    const absPath = path.join(dir, entry.name)
+    const relPath = relBase ? path.join(relBase, entry.name) : entry.name
+    if (entry.isDirectory()) {
+      return listRegistryFiles(absPath, relPath)
+    }
 
-      return [normalizeRelPath(relPath)]
-    })
+    return [normalizeRelPath(relPath)]
+  })
 }
 
 function removeEmptyDirectories(dir) {
@@ -452,10 +448,8 @@ function main() {
       console.warn(`⚠️ Missing target component for alias ${aliasConfig.alias}`)
       return
     }
-    const baseDeps =
-      target.dependencies || COMMON_DEPS[target.displayName] || []
-    const baseRegistryDeps =
-      target.registryDependencies || REGISTRY_DEPS[target.displayName] || []
+    const baseDeps = target.dependencies || COMMON_DEPS[target.displayName] || []
+    const baseRegistryDeps = target.registryDependencies || REGISTRY_DEPS[target.displayName] || []
     const aliasComponent = {
       ...target,
       name: aliasConfig.alias,
@@ -464,12 +458,10 @@ function main() {
         new Set([...(Array.isArray(baseDeps) ? baseDeps : []), ...(aliasConfig.dependencies || [])])
       ),
       registryDependencies: Array.from(
-        new Set(
-          [
-            ...(Array.isArray(baseRegistryDeps) ? baseRegistryDeps : []),
-            ...(aliasConfig.registryDependencies || []),
-          ]
-        )
+        new Set([
+          ...(Array.isArray(baseRegistryDeps) ? baseRegistryDeps : []),
+          ...(aliasConfig.registryDependencies || []),
+        ])
       ),
     }
     components.push(aliasComponent)

@@ -299,8 +299,8 @@ export default async function GithubReplicaPage() {
                 <h2 className="text-2xl font-semibold tracking-tight">Quickstart</h2>
                 <p className="text-muted-foreground">
                   Drop the component anywhere in your UI, pass a GitHub URL, and enable{" "}
-                  <code className="font-mono text-xs">useServer</code>{" "}
-                  when you have the proxy route deployed for higher rate limits.
+                  <code className="font-mono text-xs">useServer</code> when you have the proxy route
+                  deployed for higher rate limits.
                 </p>
               </div>
               <CodeBlock language="tsx" filename="components/GithubCard.tsx">
@@ -308,8 +308,8 @@ export default async function GithubReplicaPage() {
               </CodeBlock>
               <p className="text-sm text-muted-foreground">
                 The component handles loading, errors, and hover previews automatically. Use the{" "}
-                <code className="font-mono text-xs">onError</code>{" "}callback to hook into failures
-                or fall back to a custom layout.
+                <code className="font-mono text-xs">onError</code> callback to hook into failures or
+                fall back to a custom layout.
               </p>
             </section>
 
@@ -437,8 +437,8 @@ export default async function GithubReplicaPage() {
                 <h2 className="text-2xl font-semibold tracking-tight">Supported URLs</h2>
                 <p className="text-muted-foreground">
                   The replica parses the URL with{" "}
-                  <code className="font-mono text-xs">parseGithubUrl</code>{" "}
-                  and gracefully handles invalid input before any network request fires.
+                  <code className="font-mono text-xs">parseGithubUrl</code> and gracefully handles
+                  invalid input before any network request fires.
                 </p>
               </div>
               <ul className="grid gap-2 text-sm text-muted-foreground">
@@ -461,9 +461,8 @@ export default async function GithubReplicaPage() {
               </ul>
               <p className="text-sm text-muted-foreground">
                 When the URL is empty or malformed, the hook surfaces an{" "}
-                <code className="font-mono text-xs">invalidReason</code>{" "}
-                and the component renders the built-in error state. Use the{" "}
-                <code className="font-mono text-xs">onError</code>{" "}
+                <code className="font-mono text-xs">invalidReason</code> and the component renders
+                the built-in error state. Use the <code className="font-mono text-xs">onError</code>{" "}
                 callback to capture precise API failures (including rate limiting) and roll your own
                 recovery UX.
               </p>
@@ -510,11 +509,10 @@ export default async function GithubReplicaPage() {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Data contract</h2>
                 <p className="text-muted-foreground">
-                  <code className="font-mono text-xs">useGithubReplica</code>{" "}
-                  returns a typed{" "}
-                  <code className="font-mono text-xs">GithubResource</code>{" "}
-                  union so you can plug the data into bespoke layouts without guessing field names.
-              </p>
+                  <code className="font-mono text-xs">useGithubReplica</code> returns a typed{" "}
+                  <code className="font-mono text-xs">GithubResource</code> union so you can plug
+                  the data into bespoke layouts without guessing field names.
+                </p>
               </div>
               <CodeBlock language="ts" filename="@/lib/github/types.ts">
                 {`import type { GithubResource } from "@/lib/github/types"`}
@@ -557,9 +555,9 @@ export default async function GithubReplicaPage() {
                 For deeper control, explore the dedicated{" "}
                 <Link className="underline" href="/replica/github/views">
                   GitHub view components
-                </Link>
-                {" "}documentation. If you only need to intercept failures, use the{" "}
-                <code className="font-mono text-xs">onError</code>{" "}prop to expose retry UIs,
+                </Link>{" "}
+                documentation. If you only need to intercept failures, use the{" "}
+                <code className="font-mono text-xs">onError</code> prop to expose retry UIs,
                 logging, or rate-limit messaging while keeping the default card design.
               </p>
             </section>

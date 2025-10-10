@@ -100,12 +100,13 @@ export default async function GithubViewsPage() {
           >
             <section id="overview" className="scroll-mt-24 space-y-4">
               <p className="text-sm text-muted-foreground">
-                Each view mirrors part of GitHub&apos;s UI - pull requests, issues, repositories, and user
-                profiles - without fetching data itself. Pair them with
+                Each view mirrors part of GitHub&apos;s UI - pull requests, issues, repositories,
+                and user profiles - without fetching data itself. Pair them with
                 <Link className="underline" href="/replica/github">
                   GithubReplica
                 </Link>
-                , <Link className="underline" href="/replica/hooks/useGithubReplica">
+                ,{" "}
+                <Link className="underline" href="/replica/hooks/useGithubReplica">
                   useGithubReplica
                 </Link>
                 , or your own backend responses.
@@ -225,11 +226,10 @@ export default async function GithubViewsPage() {
                 </h2>
                 <p className="text-muted-foreground">
                   Mix-and-match views with{" "}
-                  <code className="font-mono text-xs">GithubReplicaDisplay</code>{" "}
-                  or your own cards. Use the normalized{" "}
-                  <code className="font-mono text-xs">GithubResource</code>{" "}
-                  union to switch on the resource kind.
-              </p>
+                  <code className="font-mono text-xs">GithubReplicaDisplay</code> or your own cards.
+                  Use the normalized <code className="font-mono text-xs">GithubResource</code> union
+                  to switch on the resource kind.
+                </p>
               </div>
               <CodeBlock language="tsx" filename="components/GithubSummary.tsx">
                 {composeCode}

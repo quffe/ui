@@ -100,10 +100,10 @@ export default function ReplicaIntroductionPage() {
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
-                Replica packages the most common GitHub touchpoints—pull requests, issues, repos, and
-                user profiles—into polished components that you can embed anywhere. Each component is
-                built on QuffeUI primitives, making them accessible, theme-aware, and easy to compose
-                alongside the rest of your design system.
+                Replica packages the most common GitHub touchpoints—pull requests, issues, repos,
+                and user profiles—into polished components that you can embed anywhere. Each
+                component is built on QuffeUI primitives, making them accessible, theme-aware, and
+                easy to compose alongside the rest of your design system.
               </p>
               <p>
                 Use Replica components to power changelog highlights, product onboarding flows,
@@ -138,7 +138,9 @@ export default function ReplicaIntroductionPage() {
             </CardHeader>
             <CardContent className="space-y-6 text-sm text-muted-foreground">
               <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-foreground">1. Install the Replica kit</h3>
+                <h3 className="text-sm font-semibold text-foreground">
+                  1. Install the Replica kit
+                </h3>
                 <CodeBlock language="bash" showCopyButton={true}>
                   pnpm dlx shadcn@latest add @quffeui/replica/github-replica
                 </CodeBlock>
@@ -159,7 +161,9 @@ export function Example() {
                 </CodeBlock>
               </div>
               <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-foreground">3. Configure tokens (optional)</h3>
+                <h3 className="text-sm font-semibold text-foreground">
+                  3. Configure tokens (optional)
+                </h3>
                 <p>
                   Add a `GITHUB_TOKEN` to your `.env.local` to increase API limits. The Replica API
                   route automatically rotates through multiple tokens when provided.
@@ -171,11 +175,16 @@ export function Example() {
           <Card>
             <CardHeader>
               <CardTitle>Available experiences</CardTitle>
-              <CardDescription>Fine-tuned layouts for the most important GitHub entities.</CardDescription>
+              <CardDescription>
+                Fine-tuned layouts for the most important GitHub entities.
+              </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 sm:grid-cols-2">
               {experiences.map(experience => (
-                <div key={experience.title} className="rounded-lg border border-dashed border-border p-4">
+                <div
+                  key={experience.title}
+                  className="rounded-lg border border-dashed border-border p-4"
+                >
                   <h3 className="font-semibold text-foreground">{experience.title}</h3>
                   <p className="text-sm text-muted-foreground mt-2">{experience.blurb}</p>
                 </div>
@@ -186,11 +195,16 @@ export function Example() {
           <Card>
             <CardHeader>
               <CardTitle>Data delivery modes</CardTitle>
-              <CardDescription>Choose the transport layer that fits your surface area.</CardDescription>
+              <CardDescription>
+                Choose the transport layer that fits your surface area.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {dataModes.map(mode => (
-                <div key={mode.label} className="flex flex-col gap-2 rounded-lg border border-border p-4">
+                <div
+                  key={mode.label}
+                  className="flex flex-col gap-2 rounded-lg border border-border p-4"
+                >
                   <Badge className="w-fit" variant="outline">
                     {mode.label}
                   </Badge>
@@ -207,14 +221,21 @@ export function Example() {
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-muted-foreground">
               <p>
-                Jump into the <Link href="/replica/generator" className="text-primary underline">Replica generator</Link> to build rich embeds for documentation or onboarding flows.
+                Jump into the{" "}
+                <Link href="/replica/generator" className="text-primary underline">
+                  Replica generator
+                </Link>{" "}
+                to build rich embeds for documentation or onboarding flows.
               </p>
               <p>
-                Explore the <Link href="/replica/github" className="text-primary underline">GitHub Replica docs</Link> for component-specific props, layout overrides, and advanced data examples.
+                Explore the{" "}
+                <Link href="/replica/github" className="text-primary underline">
+                  GitHub Replica docs
+                </Link>{" "}
+                for component-specific props, layout overrides, and advanced data examples.
               </p>
               <p>
-                Need a custom entity? Compose with the exported view primitives under
-                {" "}
+                Need a custom entity? Compose with the exported view primitives under{" "}
                 <code className="rounded bg-muted px-1.5 py-0.5 text-xs text-foreground">
                   @/components/Replica/Github/views
                 </code>{" "}

@@ -38,16 +38,22 @@ export const useLocalStorage = <T,>(
     }
   }, [keyName]) // Remove defaultValue from dependencies
 
-  const setValue = (newValue: Parameters<typeof setStoredValue>[0]) => {
-    try {
-      if (typeof window !== "undefined") {
-        // Always use JSON serialization for consistency
-        window.localStorage.setItem(keyName, JSON.stringify(newValue))
+  const setValue: Dispatch<SetStateAction<T>> = newValue => {
+    setStoredValue(prevValue => {
+      const nextValue =
+        typeof newValue === "function" ? (newValue as (previousValue: T) => T)(prevValue) : newValue
+
+      try {
+        if (typeof window !== "undefined") {
+          // Always use JSON serialization for consistency
+          window.localStorage.setItem(keyName, JSON.stringify(nextValue))
+        }
+      } catch (error) {
+        console.warn(`Error setting localStorage key "${keyName}":`, error)
       }
-      setStoredValue(newValue)
-    } catch (error) {
-      console.warn(`Error setting localStorage key "${keyName}":`, error)
-    }
+
+      return nextValue
+    })
   }
 
   return [storedValue, setValue]

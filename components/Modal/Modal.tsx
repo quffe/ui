@@ -80,6 +80,9 @@ export function Modal({
   const modalRef = React.useRef<HTMLDivElement>(null)
   const [isClosing, setIsClosing] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
+  const previousOverflowRef = React.useRef<string | null>(null)
+  const titleId = React.useId()
+  const descriptionId = React.useId()
 
   // Handle component mount for client-side rendering
   React.useEffect(() => {
@@ -104,15 +107,22 @@ export function Modal({
       }
     }
 
-    if (open) {
-      document.addEventListener("keydown", handleKeyDown)
-      // Prevent scrolling on the body when modal is open
-      document.body.style.overflow = "hidden"
+    if (!open) {
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown)
+      }
     }
+
+    document.addEventListener("keydown", handleKeyDown)
+    previousOverflowRef.current = document.body.style.overflow
+    document.body.style.overflow = "hidden"
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
-      document.body.style.overflow = ""
+      if (previousOverflowRef.current !== null) {
+        document.body.style.overflow = previousOverflowRef.current
+        previousOverflowRef.current = null
+      }
     }
   }, [open, closeOnEsc, handleClose])
 
@@ -136,8 +146,8 @@ export function Modal({
       onClick={handleOutsideClick}
       role="dialog"
       aria-modal="true"
-      aria-labelledby={title ? "modal-title" : undefined}
-      aria-describedby={description ? "modal-description" : undefined}
+      aria-labelledby={title ? titleId : undefined}
+      aria-describedby={description ? descriptionId : undefined}
     >
       <div
         ref={modalRef}
@@ -161,12 +171,12 @@ export function Modal({
         {(title || description) && (
           <div className="p-6 pb-0">
             {title && (
-              <h2 id="modal-title" className="text-lg font-semibold leading-none tracking-tight">
+              <h2 id={titleId} className="text-lg font-semibold leading-none tracking-tight">
                 {title}
               </h2>
             )}
             {description && (
-              <p id="modal-description" className="mt-2 text-sm text-muted-foreground">
+              <p id={descriptionId} className="mt-2 text-sm text-muted-foreground">
                 {description}
               </p>
             )}

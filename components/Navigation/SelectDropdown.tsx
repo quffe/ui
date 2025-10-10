@@ -49,6 +49,7 @@ interface DropdownProps<T> extends VariantProps<typeof dropdownVariants> {
   ariaLabelledBy?: string
   description?: string
   "aria-label"?: string
+  serializeValue?: (value: T | null) => string
 }
 
 export function SelectDropdown<T>({
@@ -68,6 +69,7 @@ export function SelectDropdown<T>({
   ariaLabelledBy,
   description,
   "aria-label": ariaLabelDeprecated,
+  serializeValue,
 }: DropdownProps<T>) {
   const [isOpen, setIsOpen] = React.useState(false)
   const dropdownRef = React.useRef<HTMLDivElement>(null)
@@ -81,6 +83,30 @@ export function SelectDropdown<T>({
 
   // Find the selected option
   const selectedOption = options.find(option => option.value === value) ?? null
+
+  const hiddenInputValue = React.useMemo(() => {
+    if (serializeValue) {
+      return serializeValue(value)
+    }
+
+    if (value === null || value === undefined) {
+      return ""
+    }
+
+    if (typeof value === "string") {
+      return value
+    }
+
+    if (typeof value === "number" || typeof value === "boolean") {
+      return String(value)
+    }
+
+    try {
+      return JSON.stringify(value)
+    } catch {
+      return ""
+    }
+  }, [value, serializeValue])
 
   const normalizedOptions = React.useMemo(
     () =>
@@ -280,14 +306,7 @@ export function SelectDropdown<T>({
       <span id={liveRegionId} className="sr-only" aria-live="polite">
         {selectedOption ? `Selected ${selectedOption.label}` : "No option selected"}
       </span>
-      {name && (
-        <input
-          type="hidden"
-          name={name}
-          value={value !== null ? String(value) : ""}
-          required={required}
-        />
-      )}
+      {name && <input type="hidden" name={name} value={hiddenInputValue} required={required} />}
     </div>
   )
 }
