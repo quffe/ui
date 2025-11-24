@@ -78,6 +78,7 @@ export function InstallationTabs({ componentName, className }: InstallationTabsP
 
 function getComponentName(componentName: string): string {
   const nameMap: Record<string, string> = {
+    "candle-chart": "CandleChart",
     "data-table": "DataTable",
     "input-amount": "InputAmount",
     "otp-input": "OtpInput",
@@ -136,6 +137,7 @@ function getImportPath(componentName: string): string {
 
   // Component category mapping based on actual folder structure
   const categoryComponents: Record<string, string> = {
+    "candle-chart": "@/components/Data/CandleChart",
     "data-table": "@/components/Data/DataTable",
     dropdown: "@/components/Navigation/Dropdown",
     "select-dropdown": "@/components/Navigation/SelectDropdown",

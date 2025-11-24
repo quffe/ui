@@ -67,6 +67,7 @@ export const config = {
       "select-dropdown": "navigation/select-dropdown",
 
       // Data components
+      "candle-chart": "data/candle-chart",
       "data-table": "data/data-table",
 
       // Modal components

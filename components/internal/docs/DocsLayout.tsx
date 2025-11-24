@@ -17,11 +17,16 @@ interface DocsLayoutProps {
 
 export function DocsLayout({ toc, header, children, className }: DocsLayoutProps) {
   const content = Children.toArray(children)
+  const tocItems = toc ?? []
+  const hasToc = tocItems.length > 0
 
   return (
     <div
       className={cn(
-        "flex flex-col gap-12 lg:grid lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-16",
+        "flex flex-col gap-12",
+        hasToc
+          ? "lg:grid lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-16"
+          : "lg:mx-auto lg:max-w-3xl",
         className
       )}
     >
@@ -29,14 +34,14 @@ export function DocsLayout({ toc, header, children, className }: DocsLayoutProps
         {header ? <DocsPageHeader {...header} /> : null}
         {content}
       </div>
-      {toc?.length ? (
+      {hasToc ? (
         <aside className="hidden lg:block">
           <div className="sticky top-8 w-64">
             <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               On this page
             </p>
             <nav aria-label="Table of contents" className="space-y-2 text-sm">
-              {toc.map(item => (
+              {tocItems.map(item => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}

@@ -27,6 +27,7 @@ import { Example as OtpInputExample } from "@/examples/components/otp-input/basi
 import { Example as DateRangePickerExample } from "@/examples/components/date-range-picker/basic"
 import { Example as DropdownExample } from "@/examples/components/dropdown/basic"
 import { Example as InputSelectExample } from "@/examples/components/input-select/basic"
+import { Example as CandleChartExample } from "@/examples/components/candle-chart/basic"
 import { getExampleCode } from "@/lib/serverUtils"
 
 // Raw imports
@@ -39,8 +40,18 @@ const otpInputCode = getExampleCode("components/otp-input/basic.tsx")
 const dateRangePickerCode = getExampleCode("components/date-range-picker/basic.tsx")
 const dropdownCode = getExampleCode("components/dropdown/basic.tsx")
 const inputSelectCode = getExampleCode("components/input-select/basic.tsx")
+const candleChartCode = getExampleCode("components/candle-chart/basic.tsx")
 
 const components = [
+  {
+    name: "candle-chart",
+    title: "CandleChart",
+    description: "Opinionated candlestick chart for OHLC trading data.",
+    category: "Data",
+    preview: <CandleChartExample />,
+    code: candleChartCode,
+    docUrl: "/docs/candle-chart",
+  },
   {
     name: "data-table",
     title: "DataTable",

@@ -1,5 +1,6 @@
 import {
   Table,
+  CandlestickChart,
   DollarSign,
   Hash,
   Calendar,
@@ -30,6 +31,13 @@ export const components = [
     url: "/docs/data-table",
     icon: Table,
     description: "Powerful data table with sorting and pagination",
+    category: "Data & Display",
+  },
+  {
+    title: "CandleChart",
+    url: "/docs/candle-chart",
+    icon: CandlestickChart,
+    description: "Candlestick visualization for OHLC trading data",
     category: "Data & Display",
   },
   {

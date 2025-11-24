@@ -39,6 +39,10 @@ NEXT_PUBLIC_SITE_DESCRIPTION=A comprehensive collection of reusable UI component
   ```bash
   pnpm dlx shadcn@latest add https://quffeui.dev/api/registry/data-table
   ```
+- **CandleChart** - Candlestick visualization for OHLC trading data
+  ```bash
+  pnpm dlx shadcn@latest add https://quffeui.dev/api/registry/candle-chart
+  ```
 
 ### Input Components
 - **InputAmount** - Specialized input for monetary amounts with currency support
